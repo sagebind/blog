@@ -1,0 +1,35 @@
+.portfolio {
+    text-align: center;
+    background: url("/images/ticks.png");
+}
+
+.portfolio-item {
+    display: inline-block;
+    position: relative;
+    width: 19.5em;
+    margin: 0.5em;
+    border: 0.0675em solid $color-border-light;
+    box-shadow: 0 0 0.5em $color-border-light;
+    background-color: #fff;
+
+    .portfolio-item-figure {
+        display: block;
+        width: 100%;
+    }
+
+    figcaption {
+        display: block;
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        bottom: 0;
+        padding: 0 1em;
+        opacity: 0;
+        background-color: transparentize($color-highlight, 0.2);
+        @include transition(opacity, 0.2s);
+    }
+
+    &:hover figcaption {
+        opacity: 1;
+    }
+}

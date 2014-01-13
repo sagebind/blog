@@ -1,0 +1,61 @@
+/* * * * * * * * * * * *
+ * creates a cross-browser linear gradient
+ */
+@mixin gradient-linear($ending-point, $stops...) {
+    background-color: nth(nth($stops, 1), 1); /* show the first color stop in old browsers */
+
+    // default values (bottom)
+    $starting-point: top;
+    $webkit-starting-point: left top;
+    $webkit-ending-point: left bottom;
+    $ie-filter-type: 0;
+    $ie-filter-start: nth(nth($stops, 1), 1);
+    $ie-filter-end: nth(nth($stops, length($stops)), 1);
+
+    // get the opposing starting point
+    @if $ending-point == top {
+        $starting-point: bottom;
+    }
+    @else if $ending-point == right {
+        $starting-point: left;
+    }
+    @else if $ending-point == left {
+        $starting-point: right;
+    }
+
+    // horizontal gradient?
+    @if $ending-point == left or $ending-point == right {
+        // calculate safari4 points
+        $webkit-starting-point: $starting-point top;
+        $webkit-ending-point: $ending-point top;
+
+        // change ie filter direction
+        $ie-filter-type: 1;
+    }
+    @else {
+        // calculate safari4 points
+        $webkit-starting-point: left $starting-point;
+        $webkit-ending-point: left $ending-point;
+    }
+
+    // generate safari4 color stops
+    $webkit-stops: ();
+    @each $stop in $stops {
+        $webkit-stops: append($webkit-stops, color-stop(nth($stop, 2), nth($stop, 1)), comma);
+    }
+
+    // swap colors to fix ie gradient direction
+    @if $ending-point == top or $ending-point == left {
+        $ie-filter-start: nth(nth($stops, length($stops)), 1);
+        $ie-filter-end: nth(nth($stops, 1), 1);
+    }
+
+    // browser-specific properties
+    background-image: -moz-linear-gradient($starting-point, $stops...); /* firefox3.6+ */
+    background-image: -webkit-gradient(linear, $webkit-starting-point, $webkit-ending-point, $webkit-stops...); /* safari4+ */
+    background-image: -webkit-linear-gradient($starting-point, $stops...); /* chrome10+ & safari5.1+ */
+    background-image: -ms-linear-gradient($starting-point, $stops...); /* ie10+ */
+    background-image: -o-linear-gradient($starting-point, $stops...); /* opera 11.10+ */
+    background-image: linear-gradient(to $ending-point, $stops...); /* standard */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str($ie-filter-start)}', endColorstr='#{ie-hex-str($ie-filter-end)}', gradientType=#{$ie-filter-type}); /* ie6-9 */
+}

@@ -1,0 +1,91 @@
+pre, code {
+    font-family: $font-monospace;
+    line-height: 1em;
+}
+
+pre[class*="language-"], :not(pre) > code[class*="language-"] {
+    display: block;
+    position: relative;
+    overflow: auto;
+    margin: 1em 0;
+    padding: 1em 1em 0.5em 1em;
+
+    @include border-radius(0.25em);
+    background-image: url("/images/zigzag.png");
+    @include vendor-prefix(box-shadow, inset 0 0 1em #191919);
+
+    direction: ltr;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    @include vendor-prefix(tab-size, 4);
+    @include vendor-prefix(hyphens, none);
+    counter-reset: linenumber;
+
+    /* line numbers */
+    &.line-numbers {
+        padding-left: 4em;
+    }
+
+    .line-numbers-rows {
+        display: block;
+        position: absolute;
+        top: 1em;
+        left: 1em;
+        padding: 0 0.75em 0 0;
+        border-right: 0.125em dashed $color-border-dark;
+
+        span {
+            counter-increment: linenumber;
+
+            &:before {
+                display: block;
+                text-align: right;
+                content: counter(linenumber);
+            }
+        }
+    }
+
+    /* colors */
+    .token, .punctuation, .variable {
+        color: $color-text-light;
+    }
+
+    .comment, .line-numbers-rows {
+        color: $color-border-dark;
+    }
+
+    .keyword, .operator {
+        color: #f92672;
+    }
+
+    .function, .class-name {
+        color: #66d9ef;
+    }
+
+    .constant, .number, .boolean {
+        color: #ae81ff;
+    }
+
+    .string {
+        color: #a6e22e;
+    }
+
+    .package {
+        color: #fd971f;
+    }
+
+    a {
+        color: inherit !important;
+        text-decoration: underline;
+    }
+
+    /* selection */
+    &::-moz-selection, ::-moz-selection {
+        background-color: #999;
+    }
+
+    &::selection, ::selection {
+        background-color: #999;
+    }
+}

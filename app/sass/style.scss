@@ -1,0 +1,76 @@
+/* * * * * * * * * * * *
+ * mixins
+ */
+@import "mixins/vendor-prefix";
+@import "mixins/gradients";
+
+
+/* * * * * * * * * * * *
+ * viewport settings
+ */
+@viewport {
+    zoom: 1.0;
+    width: extend-to-zoom;
+}
+
+@-ms-viewport {
+    zoom: 1.0;
+    width: extend-to-zoom;
+}
+
+
+/* * * * * * * * * * * *
+ * variables
+ */
+$page-width-max: 64em;  /* 1024/16 */
+$screen-medium: 72em;   /* 1152/16 */
+$screen-small: 40em;    /* 576/16 */
+$screen-tiny: 24em;    /* 384/16 */
+
+$color-border-dark: hsl(0, 0%, 15%);
+$color-border-light: hsl(0, 0%, 80%);
+$color-text-light: hsl(0, 0%, 95%);
+$color-text-dark: hsl(0, 0%, 5%);
+$color-text-faint: hsl(0, 0%, 55%);
+$color-highlight: hsl(164, 100%, 33%);
+$color-accent: hsl(11, 82%, 53%);
+
+
+/* * * * * * * * * * * *
+ * imports
+ */
+@import "modules/typography";
+@import "modules/layout";
+@import "modules/page-header";
+@import "modules/forms";
+@import "modules/code";
+@import "modules/portfolio";
+@import "modules/profile";
+
+
+/* * * * * * * * * * * *
+ * print adjustments
+ */
+@media print {
+    .page-header, .page-footer {
+        display: none;
+    }
+
+    a:link {
+        word-wrap: break-word;
+        color: inherit;
+        text-decoration: underline;
+
+        &:after {
+            content: " (http://stephencoakley.com" attr(href) ")";
+        }
+
+        &[href^="http:"]:after, &[href^="https:"]:after {
+            content: " (" attr(href) ")";
+        }
+
+        &[href^="#"]:after {
+            display: none;
+        }
+    }
+}

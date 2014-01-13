@@ -1,0 +1,41 @@
+/* * * * * * * * * * * *
+ * generates vendor-prefixed properties for a given property
+ */
+@mixin vendor-prefix($property, $value, $prefixes: moz webkit ms o khtml) {
+    @each $prefix in $prefixes {
+        -#{$prefix}-#{$property}: $value;
+    }
+
+    #{$property}: $value;
+}
+
+
+@mixin border-radius($radius...) {
+    @include vendor-prefix(border-radius, $radius);
+}
+
+
+/* * * * * * * * * * * *
+ * css3 transitions
+ */
+@mixin transition($property: null, $duration: null, $timing-function: null, $delay: null) {
+    @if $property {
+        @include vendor-prefix(transition-property, $property);
+    }
+
+    @if $duration {
+        @include vendor-prefix(transition-duration, $duration);
+    }
+
+    @if $timing-function {
+        @include vendor-prefix(transition-timing-function, $timing-function);
+    }
+
+    @if $delay {
+        @include vendor-prefix(transition-delay, $delay);
+    }
+}
+
+@mixin transform($transforms...) {
+    @include vendor-prefix(transform, $transforms...);
+}
