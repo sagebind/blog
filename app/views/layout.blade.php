@@ -60,12 +60,12 @@
         <aside class="style-photo social">
             <div class="container">
                 <h1>Me on the web</h1>
-                <a class="social-link icon-twitter" rel="me" href="http://twitter.com/coderstephen"></a>
-                <a class="social-link icon-googleplus" rel="me" href="http://gplus.to/coderstephen"></a>
-                <a class="social-link icon-facebook" rel="me" href="http://facebook.com/coderstephen"></a>
+                <a class="social-link icon-twitter" rel="me" href="http://bit.ly/codrst-tw"></a>
+                <a class="social-link icon-googleplus" rel="me" href="http://bit.ly/codrst-plus"></a>
+                <a class="social-link icon-facebook" rel="me" href="http://bit.ly/codrst-fb"></a>
                 <a class="social-link icon-linkedin" rel="me" href="http://linkedin.com/in/coderstephen"></a>
-                <a class="social-link icon-github" href="http://github.com/coderstephen"></a>
-                <a class="social-link icon-stackoverflow" href="http://stackoverflow.com/users/2044560/coderstephen"></a>
+                <a class="social-link icon-github" href="http://bit.ly/codrst-github"></a>
+                <a class="social-link icon-stackoverflow" href="http://bit.ly/codrst-stack"></a>
             </div>
         </aside>
 
