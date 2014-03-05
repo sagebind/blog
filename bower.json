@@ -1,0 +1,8 @@
+{
+    "name": "coderstephen/website",
+    "dependencies": {
+        "prism": "gh-pages",
+        "html5shiv": "*",
+        "modernizr": "*"
+    }
+}

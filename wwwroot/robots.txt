@@ -6,10 +6,5 @@ Disallow: /fonts/
 Disallow: /images/
 Disallow: /js/
 Disallow: /favicon.ico
-Disallow: /favicon.16.png
-Disallow: /favicon.32.png
-Disallow: /favicon.48.png
-Disallow: /favicon.64.png
-Disallow: /favicon.128.png
 Disallow: /index.php
 Disallow: /blog/create

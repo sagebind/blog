@@ -1,26 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="stephencoakley.com" default="build" basedir=".">
+<project name="stephencoakley-website" default="build" basedir=".">
     <property name="dir.project" value="."/>
     <property name="dir.app" value="${dir.project}/app"/>
     <property name="dir.public" value="${dir.project}/wwwroot"/>
-
     <property name="sass.input" value="${dir.app}/sass/style.scss"/>
     <property name="sass.output" value="${dir.public}/css/style.css"/>
     <property name="sass.style" value="compressed"/>
-
     <property name="ftp.host" value="stephencoakley.com"/>
     <property name="ftp.port" value="21"/>
     <property name="ftp.username" value="phing"/>
     <property name="ftp.password" value="EtTHuoEMv4pnM48"/>
-    <property name="ftp.dir" value="/"/>
-
+    <property name="ftp.dir" value="/website/"/>
     <property name="test.host" value="localhost"/>
     <property name="test.port" value="8080"/>
 
     <target name="build">
         <echo>Compiling SASS to CSS...</echo>
 
-        <exec executable="sass">
+        <exec executable="sass" passthru="true">
             <arg line="--style ${sass.style}"/>
             <arg value="--no-cache"/>
             <arg value="--trace"/>
@@ -35,10 +32,15 @@
 
         <ftpdeploy host="${ftp.host}" port="${ftp.port}" username="${ftp.username}" password="${ftp.password}" dir="${ftp.dir}" depends="true" mode="binary" passive="true" level="info">
             <fileset dir="${dir.project}">
+                <include name="app/**"/>
+                <include name="bootstrap/**"/>
+                <include name="vendor/**"/>
+            </fileset>
+        </ftpdeploy>
+
+        <ftpdeploy host="${ftp.host}" port="${ftp.port}" username="${ftp.username}" password="${ftp.password}" dir="/wwwroot" depends="true" mode="binary" passive="true" level="info">
+            <fileset dir="${dir.public}">
                 <include name="**"/>
-                <exclude name="resources/"/>
-                <exclude name=".git*"/>
-                <exclude name="*.sublime-*"/>
             </fileset>
         </ftpdeploy>
     </target>
@@ -46,7 +48,7 @@
     <target name="test" depends="build">
         <echo>Starting development server at ${test.host}:${test.port}...</echo>
 
-        <exec executable="php">
+        <exec executable="php" passthru="true">
             <arg line="-S ${test.host}:${test.port}"/>
             <arg line="-t ${dir.public}"/>
         </exec>

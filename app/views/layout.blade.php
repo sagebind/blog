@@ -6,32 +6,47 @@
         <meta name="description" content="Programming">
         <meta name="keywords" content="Stephen Coakley, programming, web development, apps, php">
         <meta name="author" content="Stephen Coakley">
-        <meta name="google-site-verification" content="8zITdJXRKp2p18XWdQZlSKP0-GvSCT2i0Rjzafs1gKg">
         <link href="/blog/feed" type="application/atom+xml" rel="alternate" title="Blog Feed">
 
-        <link rel="icon" type="image/png" href="/favicon.128.png" sizes="128x128">
-        <link rel="icon" type="image/png" href="/favicon.64.png" sizes="64x64">
-        <link rel="icon" type="image/png" href="/favicon.48.png" sizes="48x48">
-        <link rel="icon" type="image/png" href="/favicon.32.png" sizes="32x32">
+        <link rel="icon" type="image/png" href="/images/favicon.128.png" sizes="128x128">
+        <link rel="icon" type="image/png" href="/images/favicon.64.png" sizes="64x64">
+        <link rel="icon" type="image/png" href="/images/favicon.48.png" sizes="48x48">
+        <link rel="icon" type="image/png" href="/images/favicon.32.png" sizes="32x32">
         <link rel="shortcut icon" href="/favicon.ico">
-        <link rel="icon" type="image/png" href="/favicon.16.png" sizes="16x16">
-        <link rel="apple-touch-icon" href="/favicon.128.png">
+        <link rel="icon" type="image/png" href="/images/favicon.16.png" sizes="16x16">
+        <link rel="apple-touch-icon" href="/images/favicon.128.png">
         <meta name="msapplication-TileColor" content="#D83434">
-        <meta name="msapplication-TileImage" content="/favicon.128.png">
+        <meta name="msapplication-TileImage" content="/images/favicon.128.png">
 
         <meta name="viewport" content="initial-scale=1">
         <link rel="stylesheet" href="/css/reset.css">
         <link rel="stylesheet" href="/css/style.css">
 
         <!--[if lt IE 9]>
-        <script src="/js/html5shiv.js"></script>
+        <script src="/components/html5shiv/dist/html5shiv.js"></script>
         <![endif]-->
 
         @section('scripts')
-            <script src="/js/mootools-core-1.4.5-full-nocompat-yc.js"></script>
-            <script src="/js/mootools-more-1.4.0.1.js"></script>
-            <script src="/js/prism.js"></script>
+            <script src="/components/mootools-core-1.4.5-full-nocompat-yc.js"></script>
+            <script src="/components/mootools-more-1.4.0.1.js"></script>
+            <script src="/components/prism/prism.js"></script>
         @show
+
+        <!-- Piwik -->
+        <script type="text/javascript">
+          var _paq = _paq || [];
+          _paq.push(["trackPageView"]);
+          _paq.push(["enableLinkTracking"]);
+
+          (function() {
+            var u=(("https:" == document.location.protocol) ? "https" : "http") + "://analytics.stephencoakley.com/";
+            _paq.push(["setTrackerUrl", u+"piwik.php"]);
+            _paq.push(["setSiteId", "1"]);
+            var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+            g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+          })();
+        </script>
+        <!-- End Piwik Code -->
     </head>
 
     <body class="page">
@@ -83,7 +98,5 @@
                 </div>
             </div>
         </footer>
-
-        <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-42213127-1', 'stephencoakley.com');ga('send', 'pageview');</script>
     </body>
 </html>
