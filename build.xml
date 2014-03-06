@@ -53,4 +53,10 @@
             <arg line="-t ${dir.public}"/>
         </exec>
     </target>
+
+    <target name="update-deps">
+        <exec executable="bower" passthru="true">
+            <arg value="install"/>
+        </exec>
+    </target>
 </project>
