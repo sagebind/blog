@@ -58,4 +58,16 @@
             <p>Are you hiring developers through <a href="http://odesk.com" target="_blank">oDesk</a>? View my <a href="http://odesk.com/users/~01050b02e7dfac9e14">oDesk profile</a> and send me an interview request for your project.</p>
         </div>
     </div>
+
+    <aside class="style-photo social">
+        <div class="container">
+            <h1>Me on the web</h1>
+            <a class="social-link icon-twitter" rel="me" href="http://bit.ly/codrst-tw"></a>
+            <a class="social-link icon-googleplus" rel="me" href="http://bit.ly/codrst-plus"></a>
+            <a class="social-link icon-facebook" rel="me" href="http://bit.ly/codrst-fb"></a>
+            <a class="social-link icon-linkedin" rel="me" href="http://linkedin.com/in/coderstephen"></a>
+            <a class="social-link icon-github" href="http://bit.ly/codrst-github"></a>
+            <a class="social-link icon-stackoverflow" href="http://bit.ly/codrst-stack"></a>
+        </div>
+    </aside>
 @stop

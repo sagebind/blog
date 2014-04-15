@@ -2,6 +2,7 @@
 	"name": "coderstephen/website",
 	"require": {
 		"laravel/framework": "4.1.*",
+		"phly/mustache": "~1.2",
         "michelf/php-markdown": "1.*"
 	},
 	"autoload": {
