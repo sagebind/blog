@@ -21,6 +21,7 @@
 
     <body>
         <main>
+            <h1><?=$subject?></h1>
             <?=$content?>
         </main>
     </body>
