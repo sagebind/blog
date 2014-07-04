@@ -8,7 +8,7 @@
             body {
                 max-width: 48em;
                 margin: auto;
-                padding: 1em;
+                padding: 2em;
                 font-size: 1em;
                 font-family: "Calibri", "Helvetica", sans-serif;
             }

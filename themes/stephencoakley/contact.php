@@ -13,7 +13,7 @@
         <p>Want to contact me? Send me a message using the beautifully crafted form below.</p>
     </div>
 
-    <form id="contactForm" name="contact" action="/contact" method="post">
+    <form id="contactForm" name="contact" action="/contact/post" method="post">
         <fieldset>
             <label for="nameTextBox">Your name</label>
             <input type="text" id="nameTextBox" name="name" placeholder="John Doe" required>

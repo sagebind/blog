@@ -1,5 +1,5 @@
 <?php
-define('APP_MODE', 'debug');
+define('APP_MODE', 'production');
 define('APP_ROOT', APP_MODE === 'production' ? dirname(__DIR__) . '/blog' : dirname(__DIR__));
 chdir(APP_ROOT);
 
@@ -17,7 +17,7 @@ $app = new Slim\Slim(array('view' => new Textpress\View(),'mode' => APP_MODE));
 $textpress = new Textpress\Textpress($app, $config);
 
 // register extra routes
-$app->post('/contact', function () use ($textpress)
+$app->post('/contact/post', function () use ($textpress)
 {
     $controller = new Coderstephen\Blog\ContactController($textpress);
     $controller->post();
