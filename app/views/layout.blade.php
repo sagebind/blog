@@ -29,7 +29,6 @@
         @section('scripts')
             <script src="/components/mootools-core-1.4.5-full-nocompat-yc.js"></script>
             <script src="/components/mootools-more-1.4.0.1.js"></script>
-            <script src="/components/prism/prism.js"></script>
         @show
 
         <!-- Piwik -->
@@ -86,5 +85,7 @@
                 </div>
             </div>
         </footer>
+        
+        <script src="/components/prism/prism.js" data-default-language="php"></script>
     </body>
 </html>

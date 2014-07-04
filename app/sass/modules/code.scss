@@ -22,6 +22,8 @@ pre[class*="language-"], :not(pre) > code[class*="language-"] {
     @include vendor-prefix(hyphens, none);
     counter-reset: linenumber;
 
+    color: $color-text-light;
+
     /* line numbers */
     &.line-numbers {
         padding-left: 4em;
@@ -51,11 +53,11 @@ pre[class*="language-"], :not(pre) > code[class*="language-"] {
         color: $color-text-light;
     }
 
-    .comment, .line-numbers-rows {
-        color: $color-border-dark;
+    .comment, .prolog, .doctype, .cdata, .line-numbers-rows {
+        color: $color-border-light;
     }
 
-    .keyword, .operator {
+    .keyword, .operator, .entity, .atrule, .attr-value {
         color: #f92672;
     }
 
@@ -63,15 +65,15 @@ pre[class*="language-"], :not(pre) > code[class*="language-"] {
         color: #66d9ef;
     }
 
-    .constant, .number, .boolean {
+    .constant, .number, .boolean, .property, .tag, .symbol {
         color: #ae81ff;
     }
 
-    .string {
+    .string, .selector, .attr-name, .builtin {
         color: #a6e22e;
     }
 
-    .package {
+    .package, .namespace {
         color: #fd971f;
     }
 
