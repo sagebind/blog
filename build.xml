@@ -1,48 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="stephencoakley-website" default="build" basedir=".">
-    <property name="dir.project" value="."/>
-    <property name="dir.app" value="${dir.project}/app"/>
-    <property name="dir.public" value="${dir.project}/wwwroot"/>
-    <property name="sass.input" value="${dir.app}/sass/style.scss"/>
-    <property name="sass.output" value="${dir.public}/css/style.css"/>
-    <property name="sass.style" value="compressed"/>
+<project name="blog" default="build" basedir=".">
+    <property name="project.publicdir" value="${project.basedir}/wwwroot"/>
+
+    <property name="scss.input" value="${project.basedir}/scss/style.scss"/>
+    <property name="scss.output" value="${project.publicdir}/css/style.css"/>
+    <property name="scss.style" value="compressed"/>
+
     <property name="ftp.host" value="stephencoakley.com"/>
     <property name="ftp.port" value="21"/>
     <property name="ftp.username" value="phing"/>
     <property name="ftp.password" value="EtTHuoEMv4pnM48"/>
-    <property name="ftp.dir" value="/website/"/>
+
     <property name="test.host" value="localhost"/>
     <property name="test.port" value="8080"/>
 
+    <target name="bower-install">
+        <echo>Installing Bower dependencies...</echo>
+
+        <exec executable="bower" passthru="true">
+            <arg value="install"/>
+        </exec>
+
+        <!-- move bourbon to sass vendor directory -->
+        <move file="${project.publicdir}/components/bourbon" todir="${project.basedir}/scss/vendor" overwrite="true"/>
+    </target>
+
     <target name="build">
-        <echo>Compiling SASS to CSS...</echo>
+        <echo>Compiling SCSS to CSS...</echo>
 
         <exec executable="sass" passthru="true">
-            <arg line="--style ${sass.style}"/>
+            <arg line="--style ${scss.style}"/>
             <arg value="--no-cache"/>
             <arg value="--trace"/>
 
-            <arg file="${sass.input}"/>
-            <arg file="${sass.output}"/>
+            <arg file="${scss.input}"/>
+            <arg file="${scss.output}"/>
         </exec>
     </target>
 
-    <target name="deploy" depends="build">
-        <echo>Copying build to ${ftp.host}...</echo>
-
-        <ftpdeploy host="${ftp.host}" port="${ftp.port}" username="${ftp.username}" password="${ftp.password}" dir="${ftp.dir}" depends="true" mode="binary" passive="true" level="info">
-            <fileset dir="${dir.project}">
-                <include name="app/**"/>
-                <include name="bootstrap/**"/>
-                <include name="vendor/**"/>
+    <target name="clean">
+        <delete>
+            <fileset dir="${project.basedir}/cache">
+                <include name="*"/>
             </fileset>
-        </ftpdeploy>
-
-        <ftpdeploy host="${ftp.host}" port="${ftp.port}" username="${ftp.username}" password="${ftp.password}" dir="/wwwroot" depends="true" mode="binary" passive="true" level="info">
-            <fileset dir="${dir.public}">
-                <include name="**"/>
-            </fileset>
-        </ftpdeploy>
+        </delete>
     </target>
 
     <target name="test" depends="build">
@@ -50,13 +51,28 @@
 
         <exec executable="php" passthru="true">
             <arg line="-S ${test.host}:${test.port}"/>
-            <arg line="-t ${dir.public}"/>
+            <arg line="-t ${project.publicdir}"/>
         </exec>
     </target>
 
-    <target name="update-deps">
-        <exec executable="bower" passthru="true">
-            <arg value="install"/>
-        </exec>
+    <target name="deploy" depends="build,clean">
+        <echo>Copying build to ${ftp.host}...</echo>
+
+        <ftpdeploy host="${ftp.host}" port="${ftp.port}" username="${ftp.username}" password="${ftp.password}" dir="/blog" depends="true" mode="binary" passive="true" level="info">
+            <fileset dir="${dir.project}">
+                <include name="articles/**"/>
+                <include name="cache/**"/>
+                <include name="src/**"/>
+                <include name="themes/**"/>
+                <include name="vendor/**"/>
+                <include name="config.json"/>
+            </fileset>
+        </ftpdeploy>
+
+        <ftpdeploy host="${ftp.host}" port="${ftp.port}" username="${ftp.username}" password="${ftp.password}" dir="/wwwroot" depends="true" mode="binary" passive="true" level="info">
+            <fileset dir="${project.publicdir}">
+                <include name="**"/>
+            </fileset>
+        </ftpdeploy>
     </target>
 </project>

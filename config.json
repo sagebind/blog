@@ -1,0 +1,93 @@
+{
+    "site.name"        : "Stephen Coakley",
+    "site.title"       : "Software developer and web designer",
+    "site.description" : "I'm a software developer based in Wisconsin",
+    "author.name"      : "Stephen Coakley",
+    "article.path"     : "articles",
+    "date.format"      : "d M, Y",
+    "themes.path"      : "themes",
+    "active.theme"     : "stephencoakley",
+    "layout.file"      : "layout",
+    "file.extension"   : ".md",
+    "disqus.username"  : "",
+    "markdown"         : true,
+    "assets.prefix"    : "",
+    "prefix"           : "",
+    "google.analytics" : false,
+    "cache": {
+        "enabled": true,
+        "expiry" : 24,
+        "path"   : "cache"
+    },
+    "routes": {
+        "__root__": {
+            "route"    : "/",
+            "template"  :"index",
+            "layout"   : "layout"
+        },
+        "article": {
+            "route"    : "/:year/:month/:date/:article",
+            "template"  :"article",
+            "conditions": {
+                "year"    : "(19|20)\\d\\d",
+                "month"    :"([1-9]|[01][0-9])",
+                "date"     :"([1-9]|[0-3][0-9])"
+            }
+        },
+        "category": {
+            "route"    : "/category/:category",
+            "template" : "index"
+        },
+        "tag": {
+            "route"    : "/tag/:tag",
+            "template" : "index"
+        },
+        "archives": {
+            "route"    : "/archives(/:year(/:month(/:date)))",
+            "template" : "archives",
+            "conditions": {
+                "year"     : "(19|20)\\d\\d",
+                "month"    : "([1-9]|[01][0-2])"
+            }
+        },
+        "blog": {
+            "route"    : "/blog",
+            "template" : "blog"
+        },
+        "about": {
+            "route"    : "/about",
+            "template" : "about",
+            "title"    : "About me"
+        },
+        "portfolio": {
+            "route"    : "/portfolio",
+            "template" : "portfolio",
+            "title"    : "Portfolio"
+        },
+        "projects": {
+            "route"    : "/projects",
+            "template" : "projects",
+            "title"    : "Projects"
+        },
+        "contact": {
+            "route"    : "/contact",
+            "template" : "contact",
+            "title"    : "Contact"
+        },
+        "rss": {
+            "route"    : "/feed/rss(.xml)",
+            "template" : "rss",
+            "layout"   : false
+        },
+        "atom": {   
+            "route"    : "/feed(/atom(.xml))",
+            "template" : "atom",
+            "layout"   : false
+        },
+        "sitemap": { 
+            "route"    : "/sitemap.xml",
+            "template" : "sitemap",
+            "layout"   : false
+        }
+    }
+}

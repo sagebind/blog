@@ -1,49 +1,27 @@
 <?php
-/**
- * Laravel - A PHP Framework For Web Artisans
- *
- * @package  Laravel
- * @author   Taylor Otwell <taylorotwell@gmail.com>
- */
+define('APP_MODE', 'debug');
+define('APP_ROOT', APP_MODE === 'production' ? dirname(__DIR__) . '/blog' : dirname(__DIR__));
+chdir(APP_ROOT);
 
-/*
-|--------------------------------------------------------------------------
-| Register The Auto Loader
-|--------------------------------------------------------------------------
-|
-| Composer provides a convenient, automatically generated class loader
-| for our application. We just need to utilize it! We'll require it
-| into the script here so that we do not have to worry about the
-| loading of any our classes "manually". Feels great to relax.
-|
-*/
+// require composer autoloader
+require APP_ROOT . '/vendor/autoload.php';
 
-require __DIR__.'/../bootstrap/autoload.php';
+// load config file
+$config = json_decode(file_get_contents(APP_ROOT . '/config.json'), true);
 
-/*
-|--------------------------------------------------------------------------
-| Turn On The Lights
-|--------------------------------------------------------------------------
-|
-| We need to illuminate PHP development, so let's turn on the lights.
-| This bootstraps the framework and gets it ready for use, then it
-| will load up this application so that we can run it and send
-| the responses back to the browser and delight these users.
-|
-*/
+// create an instance of Slim with custom view
+// and set the configurations from config file
+$app = new Slim\Slim(array('view' => new Textpress\View(),'mode' => APP_MODE));
 
-$app = require_once __DIR__.'/../bootstrap/start.php';
+// create an object of Textpress and pass the object of Slim to it
+$textpress = new Textpress\Textpress($app, $config);
 
-/*
-|--------------------------------------------------------------------------
-| Run The Application
-|--------------------------------------------------------------------------
-|
-| Once we have the application, we can simply call the run method,
-| which will execute the request and send the response back to
-| the client's browser allowing them to enjoy the creative
-| and wonderful application we have whipped up for them.
-|
-*/
+// register extra routes
+$app->post('/contact', function () use ($textpress)
+{
+    $controller = new Coderstephen\Blog\ContactController($textpress);
+    $controller->post();
+});
 
-$app->run();
+// finally run Textpress
+$textpress->run();
