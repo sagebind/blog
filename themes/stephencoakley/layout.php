@@ -81,7 +81,7 @@
                 </a>
 
                 <div class="footer-content">
-                    <p class="page-copyright">Copyright &copy; 2013 Stephen Coakley. All Rights Reserved.</p>
+                    <p class="page-copyright">Copyright &copy; Stephen Coakley. All Rights Reserved.</p>
                     <p>Hosted by my lovely provider <a href="http://hostek.com">Hostek.com</a></p>
                 </div>
             </div>
