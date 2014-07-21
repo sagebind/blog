@@ -59,7 +59,7 @@
         <echo>Copying build to ${ftp.host}...</echo>
 
         <ftpdeploy host="${ftp.host}" port="${ftp.port}" username="${ftp.username}" password="${ftp.password}" dir="/blog" depends="true" mode="binary" passive="true" level="info">
-            <fileset dir="${dir.project}">
+            <fileset dir="${project.basedir}">
                 <include name="articles/**"/>
                 <include name="cache/**"/>
                 <include name="src/**"/>
