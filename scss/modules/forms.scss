@@ -3,6 +3,8 @@ label {
 }
 
 input, textarea {
+    // get rid of firefox mobile input styling
+    background-image: none;
     resize: none;
     font-size: 1em;
     font-family: $font-body;
