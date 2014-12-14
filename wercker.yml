@@ -14,3 +14,9 @@ build:
       #- script:
       #    name: run unit tests
       #    code: phpunit
+deploy:
+  steps:
+    - duleorlovic/ftp-deploy:
+        destination: ftp://stephencoakley.com/sites/blog-test
+        username: wercker
+        password: $PASSWORD
