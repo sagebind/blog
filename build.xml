@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="blog" default="build" basedir=".">
-    <property name="project.publicdir" value="${project.basedir}/wwwroot"/>
+    <property name="project.publicdir" value="${project.basedir}/public"/>
 
-    <property name="scss.input" value="${project.basedir}/scss/style.scss"/>
+    <property name="scss.input" value="${project.basedir}/styles/main.scss"/>
     <property name="scss.output" value="${project.publicdir}/css/style.css"/>
     <property name="scss.style" value="compressed"/>
 
@@ -14,21 +14,41 @@
     <property name="test.host" value="localhost"/>
     <property name="test.port" value="8080"/>
 
-    <target name="bower-install">
-        <echo>Installing Bower dependencies...</echo>
+    <!-- cleans old build files and cache -->
+    <target name="clean">
+        <echo>Cleaning cache...</echo>
+        <delete>
+            <fileset dir="${project.basedir}/cache">
+                <include name="*"/>
+            </fileset>
+        </delete>
 
-        <exec executable="bower" passthru="true">
-            <arg value="install"/>
-        </exec>
-
-        <!-- move bourbon to sass vendor directory -->
-        <move file="${project.publicdir}/components/bourbon" todir="${project.basedir}/scss/vendor" overwrite="true"/>
+        <echo>Cleaning old build files...</echo>
+        <delete>
+            <fileset dir="${project.basedir}">
+                <include name="*.buildfile" />
+            </fileset>
+        </delete>
     </target>
 
-    <target name="build">
-        <echo>Compiling SCSS to CSS...</echo>
+    <target name="fileWatch">
+        <mkdir dir="${project.publicdir}/css"/>
+        <exec executable="sass" passthru="true" checkreturn="true">
+            <arg line="--style ${scss.style}"/>
+            <arg value="--no-cache"/>
+            <arg value="--trace"/>
+            <arg value="--watch"/>
 
-        <exec executable="sass" passthru="true">
+            <arg value="${scss.input}:${scss.output}"/>
+        </exec>
+    </target>
+
+    <!-- compiles source files and writes deploy info -->
+    <target name="build" depends="clean">
+
+        <echo>Compiling SCSS to CSS...</echo>
+        <mkdir dir="${project.publicdir}/css"/>
+        <exec executable="sass" passthru="true" checkreturn="true">
             <arg line="--style ${scss.style}"/>
             <arg value="--no-cache"/>
             <arg value="--trace"/>
@@ -36,29 +56,32 @@
             <arg file="${scss.input}"/>
             <arg file="${scss.output}"/>
         </exec>
+
+        <echo>Writing last commit diff...</echo>
+        <exec
+            command="git diff-tree --no-commit-id --name-only --diff-filter=ACMRT -r master"
+            dir="${project.basedir}"
+            output="${project.basedir}/commit-diff.buildfile"/>
+
+        <mkdir dir="${project.basedir}/cache"/>
     </target>
 
-    <target name="clean">
-        <delete>
-            <fileset dir="${project.basedir}/cache">
-                <include name="*"/>
+    <!-- deploys only public assets -->
+    <target name="deployPublic" depends="build">
+        <echo>Copying public assets to ${ftp.host}...</echo>
+
+        <ftpdeploy host="${ftp.host}" port="${ftp.port}" username="${ftp.username}" password="${ftp.password}" dir="/wwwroot" depends="true" mode="binary" passive="true" level="info">
+            <fileset dir="${project.publicdir}">
+                <include name="**"/>
             </fileset>
-        </delete>
+        </ftpdeploy>
     </target>
 
-    <target name="test" depends="build">
-        <echo>Starting development server at ${test.host}:${test.port}...</echo>
-
-        <exec executable="php" passthru="true">
-            <arg line="-S ${test.host}:${test.port}"/>
-            <arg line="-t ${project.publicdir}"/>
-        </exec>
-    </target>
-
-    <target name="deploy" depends="build,clean">
+    <!-- deploys a complete build to live site -->
+    <target name="deploy" depends="build,deployPublic">
         <echo>Copying build to ${ftp.host}...</echo>
 
-        <ftpdeploy host="${ftp.host}" port="${ftp.port}" username="${ftp.username}" password="${ftp.password}" dir="/blog" depends="true" mode="binary" passive="true" level="info">
+        <ftpdeploy host="${ftp.host}" port="${ftp.port}" username="${ftp.username}" password="${ftp.password}" dir="/sites/blog" depends="true" mode="binary" passive="true" level="info">
             <fileset dir="${project.basedir}">
                 <include name="articles/**"/>
                 <include name="cache/**"/>
@@ -68,11 +91,26 @@
                 <include name="config.json"/>
             </fileset>
         </ftpdeploy>
+    </target>
 
-        <ftpdeploy host="${ftp.host}" port="${ftp.port}" username="${ftp.username}" password="${ftp.password}" dir="/wwwroot" depends="true" mode="binary" passive="true" level="info">
-            <fileset dir="${project.publicdir}">
-                <include name="**"/>
+    <!-- deploys just the last commit to live site -->
+    <target name="deployCommit" depends="build,deployPublic">
+        <echo>Deploying build diff for last commit to ${ftp.host}...</echo>
+
+        <ftpdeploy host="${ftp.host}" port="${ftp.port}" username="${ftp.username}" password="${ftp.password}" dir="/sites/blog" depends="true" mode="binary" passive="true" level="info">
+            <fileset dir="${project.basedir}" includesfile="${project.basedir}/commit-diff.buildfile">
+                <include name="public/css/*"/>
             </fileset>
         </ftpdeploy>
+    </target>
+
+    <!-- starts a test server -->
+    <target name="testServer" depends="build">
+        <echo>Starting development server at ${test.host}:${test.port}...</echo>
+
+        <exec executable="php" passthru="true">
+            <arg line="-S ${test.host}:${test.port}"/>
+            <arg line="-t ${project.publicdir}"/>
+        </exec>
     </target>
 </project>

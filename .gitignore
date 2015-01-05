@@ -1,9 +1,12 @@
-# ignore dependencies
+# composer dependencies
 vendor/
 
-#ignore cache files
+# cache files
 cache/*
 
-# ignore ide project files
+# build files
+*.buildfile
+
+# ide project files
 *.sublime-project
 *.sublime-workspace
