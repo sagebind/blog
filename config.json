@@ -9,13 +9,13 @@
     "active.theme"     : "stephencoakley",
     "layout.file"      : "layout",
     "file.extension"   : ".md",
-    "disqus.username"  : "",
+    "disqus.username"  : "coderstephenblog",
     "markdown"         : true,
     "assets.prefix"    : "",
     "prefix"           : "",
     "google.analytics" : false,
     "cache": {
-        "enabled": true,
+        "enabled": false,
         "expiry" : 24,
         "path"   : "cache"
     },
