@@ -25,6 +25,9 @@
         "psr-0": {
             "Coderstephen": "src",
             "Textpress" : "src/shameerc"
+        },
+        "psr-4": {
+            "Textpress\\": "tests/src"
         }
     }
 }
