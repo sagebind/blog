@@ -1,6 +1,5 @@
 <?php
-define('APP_MODE', 'production');
-define('APP_ROOT', APP_MODE === 'production' ? dirname(__DIR__) . '/blog' : dirname(__DIR__));
+define('APP_ROOT', dirname(__DIR__));
 chdir(APP_ROOT);
 
 // require composer autoloader
