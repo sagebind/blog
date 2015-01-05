@@ -1,8 +1,8 @@
-<header class="main-heading">
-    <h1 class="container">About me</h1>
-</header>
+<div class="content style-default">
+    <header class="main-heading">
+        <h1 class="container">About me</h1>
+    </header>
 
-<div class="content-section style-default">
     <div class="container">
         <address itemscope class="profile vcard" itemtype="http://data-vocabulary.org/Person">
             <a href="http://gravatar.com/coderstephen">

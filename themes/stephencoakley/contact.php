@@ -1,8 +1,7 @@
-<header class="main-heading">
-    <h1 class="container">Contact</h1>
-</header>
-
-<div class="content-section style-default">
+<div class="content style-default">
+    <header class="main-heading">
+        <h1 class="container">Contact</h1>
+    </header>
     <?php if (isset($successMessage)): ?>
         <div class="container message success"><?=$successMessage?></div>
     <?php elseif (isset($errorMessage)): ?>
@@ -41,8 +40,8 @@
         </fieldset>
 
         <div class="form-buttons">
-            <input class="button button-highlight" type="submit" value="Send Message">
-            <input class="button button-grey" type="reset" value="Start Over">
+            <input type="submit" value="Send Message">
+            <input type="reset" value="Start Over">
         </div>
     </form>
 </div>

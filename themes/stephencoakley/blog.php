@@ -1,8 +1,5 @@
-<header class="main-heading">
+<div class="content style-default">
     <h1 class="container">Blog</h1>
-</header>
-
-<div class="content-section style-default">
     <div class="container">
         <p><em class="big">Welcome to my blog,</em> where I post interesting thoughts on web development and programming, demos and examples of code, and rants about the internet and software.</p>
 

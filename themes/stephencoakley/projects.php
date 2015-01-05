@@ -1,8 +1,8 @@
-<header class="main-heading">
-    <h1 class="container">Projects</h1>
-</header>
+<div class="content style-default">
+    <header class="main-heading">
+        <h1 class="container">Projects</h1>
+    </header>
 
-<div class="content-section style-default">
     <section class="content-section">
         <div class="container">
             <h2 class="title">Torque</h2>

@@ -1,4 +1,4 @@
-<div class="content-section style-default">
+<div class="content style-default">
     <article class="container">
         <h1><?php echo $article->getTitle(); ?></h1>
     <div class="postmeta">
@@ -10,9 +10,9 @@
     </div>
         <?php echo $article->getContent(); ?>
 
-        
+
     <div class="tags">
-      Tags : 
+      Tags :
       <?php
         foreach ($article->getTags() as $slug => $tag) {
           echo '<span class="tag"><a href="/tag/' . $slug .'">' . $tag->name . "</a></span>";
