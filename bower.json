@@ -1,9 +1,0 @@
-{
-    "name": "coderstephen/website",
-    "dependencies": {
-        "bourbon": "~4.0",
-        "prism": "gh-pages",
-        "html5shiv": "*",
-        "modernizr": "*"
-    }
-}
