@@ -1,0 +1,13 @@
+.button {
+    display: inline-block;
+    border-radius: 0.25em;
+    padding: 0.75em;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.button:hover {
+    color: $color-white;
+    background-color: $color-jade;
+    text-decoration: none;
+}

@@ -1,0 +1,90 @@
+label {
+    @extend h5;
+}
+
+input, textarea {
+    // get rid of firefox mobile input styling
+    background-image: none;
+    resize: none;
+    font-size: 1em;
+    font-family: $font-body;
+}
+
+input[type="text"], input[type="search"], input[type="email"], input[type="password"], textarea {
+    //display: inline-block;
+    padding: 0.5em;
+    border-radius: 0.25em; /* 8/16 */
+    border: 0.0675em solid $color-border-light; /* 2/16 */
+    color: $color-text-dark;
+    @include transition(box-shadow 0.2s ease-out);
+
+    &:focus {
+        border-color: $color-jade;
+        box-shadow: 0 0 0.5em $color-jade;
+    }
+}
+
+.message {
+    display: block;
+    padding: 0.5em;
+    border-radius: 0.5em;
+    border: 0.25em solid;
+
+    &.success {
+        background-color: hsl(110, 60%, 70%);
+        border-color: hsl(110, 60%, 60%);
+    }
+
+    &.error {
+        background-color: hsl(0, 60%, 70%);
+        border-color: hsl(0, 60%, 60%);
+    }
+}
+
+/* form layout */
+form {
+    display: block;
+    max-width: 40em;
+    margin: 0 auto 2em auto;
+    font-size: 1.125em;
+
+    fieldset {
+        display: block;
+        margin: 2em 0;
+    }
+
+    input[type="text"],
+    input[type="search"],
+    input[type="email"],
+    input[type="password"],
+    textarea {
+        display: block;
+        width: 100%;
+    }
+
+    small {
+        padding: 0.5em;
+    }
+
+    .form-buttons {
+        font-size: 1.25em;
+        text-align: center;
+        margin-top: 2em;
+
+        .button {
+            margin: 0 0.5em;
+        }
+    }
+
+    .form-note {
+        color: $color-text-faint;
+    }
+}
+
+input[type="reset"] {
+    @extend %button-color-gray;
+}
+
+input[type="button"], input[type="submit"] {
+    @extend %button-color-highlight;
+}

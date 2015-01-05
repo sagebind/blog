@@ -29,7 +29,7 @@
 @include font-face("Nymphette", "/fonts/nymphette");
 
 $font-body: "Source Sans Pro", "Calibri", sans-serif;
-$font-heading: "League Gothic", "Arial Black", sans-serif;
+$font-heading: "Josefin Slab", serif;
 $font-monospace: "Source Code Pro", "Consolas", monospace;
 
 
@@ -37,21 +37,22 @@ $font-monospace: "Source Code Pro", "Consolas", monospace;
  * selection
  */
 ::selection, *::selection {
-    background-color: lighten($color-highlight, 15%);
+    background-color: lighten($color-jade, 15%);
 }
 ::-moz-selection, *::-moz-selection {
-    background-color: lighten($color-highlight, 15%);
+    background-color: lighten($color-jade, 15%);
 }
 
 
-/* * * * * * * * * * * *
- * global
+/**
+ * Nicer font rendering in webkit
  */
-body, input, button {
-    font-size: 100%;
+html, input, button {
     -webkit-font-smoothing: antialiased;
 }
-.page {
+
+
+body {
     font-family: $font-body;
 }
 
@@ -110,18 +111,19 @@ blockquote {
  */
 h1, h2, h3, h4, h5, h6 {
     display: block;
-    margin: 0.5em 0;
+    margin: 0.25em 0;
     line-height: 1.25em;
-    font-family: $font-heading;
     font-weight: normal;
 }
 
 h1 {
-    font-size: 4em; /* 64/16 */
+    font-weight: bold;
+    font-family: $font-heading;
+    font-size: 3em; /* 64/16 */
 }
 
 h2 {
-    font-size: 3em; /* 48/16 */
+    font-size: 2.25em; /* 48/16 */
 }
 
 h3 {
@@ -144,12 +146,6 @@ h6 {
 /* * * * * * * * * * * *
  * inline elements
  */
-strong {
-    font-weight: bold;
-}
-em {
-    font-style: italic;
-}
 
 .big {
     font-style: normal;
@@ -165,16 +161,37 @@ small {
 }
 
 a {
-    color: $color-highlight;
+    color: $color-jade;
     text-decoration: none;
     @include transition(color, 0.2s);
 
     &:hover, &:focus {
-        color: lighten($color-highlight, 10%);
+        color: lighten($color-jade, 10%);
         text-decoration: underline;
     }
 }
 
 mark {
-    background-color: lighten($color-highlight, 5%);
+    background: lighten($color-jade, 5%);
+}
+
+/* change colours to suit your needs */
+ins {
+    background-color: #ff9;
+    color: #000;
+    text-decoration: none;
+}
+/* change colours to suit your needs */
+mark {
+    background-color: #ff9;
+    color: #000;
+    font-style: italic;
+    font-weight: bold;
+}
+del {
+    text-decoration: line-through;
+}
+abbr[title], dfn[title] {
+    border-bottom: 1px dotted;
+    cursor: help;
 }

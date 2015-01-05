@@ -1,0 +1,23 @@
+@media print {
+    .page-header, .page-footer {
+        display: none;
+    }
+
+    a:link {
+        word-wrap: break-word;
+        color: inherit;
+        text-decoration: underline;
+
+        &:after {
+            content: " (http://stephencoakley.com" attr(href) ")";
+        }
+
+        &[href^="http:"]:after, &[href^="https:"]:after {
+            content: " (" attr(href) ")";
+        }
+
+        &[href^="#"]:after {
+            display: none;
+        }
+    }
+}
