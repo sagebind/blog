@@ -1,12 +1,11 @@
 $susy: (
-  container: 64rem,
+  container: 60rem,
   columns: 12,
   gutters: .25
 );
 
 @mixin layout-box {
-    background-color: $color-white;
-    //border: 0.125em solid $color-white-smoke;
+    padding: 2rem;
 }
 
 @viewport {
@@ -31,15 +30,18 @@ body {
 }
 
 .page-header, .page-footer {
-    padding: 2em;
+    @include layout-box;
     background-color: $color-blue-bark;
     color: $color-white;
+    a:not(.button) {
+        @include fancy-underline($color-blue-bark, $color-jade);
+    }
 }
 
 .content {
+    @include layout-box;
     @include container;
-    font-size: 1.25rem;
-    padding: 2rem;
+    font-size: 1.5rem;
 }
 
 @media (min-width: 56rem) {
@@ -57,6 +59,7 @@ body {
 
     .page-footer {
         @include position(fixed, null null 0 0);
+        @include linear-gradient(transparentize($color-blue-bark, 1) 0%, $color-blue-bark 25%);
     }
 }
 
@@ -64,4 +67,16 @@ body {
     @include position(fixed, null 0 0 null);
     margin: 1.5rem;
     font-size: 1.25em;
+}
+
+#disqus_thread {
+    margin-top: 2em;
+}
+
+hr {
+    margin: 3em 0;
+}
+
+.center {
+    text-align: center;
 }

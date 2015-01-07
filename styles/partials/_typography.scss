@@ -56,17 +56,42 @@ body {
     font-family: $font-body;
 }
 
+@function shadow-gen($color) {
+    $shadows: ();
+    @for $i from 1 through 5 {
+        $shadows: $shadows, (.03em * $i) 0 $color, (-.03em * $i) 0 $color;
+    }
+    @return $shadows;
+}
+
+@mixin fancy-underline($background-color, $color, $height: 0.0625em) {
+    // add clip shadow
+    text-shadow: shadow-gen($background-color);
+
+    // draw the underline using an image
+    background-image: linear-gradient($color, $color);
+    background-size: 1px $height;
+    background-repeat: repeat-x;
+    background-position: 0% 85%;
+
+    &::selection {
+        text-shadow: shadow-gen(lighten($color-jade, 15%));
+    }
+    &::-moz-selection {
+        text-shadow: shadow-gen(lighten($color-jade, 15%));
+    }
+}
+
 
 /* * * * * * * * * * * *
  * block elements
  */
 p, ul, ol, blockquote {
     display: block;
-    margin: 1.5em 0;
-    line-height: 1.5em;
+    margin: 1.25em 0;
+    line-height: 1.75em;
     direction: ltr;
     text-align: left;
-    font-size: 1.125em;
     font-weight: normal;
 }
 
@@ -111,35 +136,30 @@ blockquote {
  */
 h1, h2, h3, h4, h5, h6 {
     display: block;
-    margin: 0.25em 0;
     line-height: 1.25em;
     font-weight: normal;
+    margin: 0;
 }
-
 h1 {
+    margin: 0.25em 0;
     font-weight: bold;
     font-family: $font-heading;
-    font-size: 3em; /* 64/16 */
+    font-size: 2.75em; /* 64/16 */
 }
-
 h2 {
-    font-size: 2.25em; /* 48/16 */
+    font-size: 1.5em; /* 48/16 */
 }
-
 h3 {
-    font-size: 2.25em; /* 36/16 */
+    font-size: 1.5em; /* 36/16 */
 }
-
 h4 {
-    font-size: 1.5em; /* 24/16 */
+    font-size: 1.3125em; /* 24/16 */
 }
-
 h5 {
-    font-size: 1.3125em; /* 21/16 */
+    font-size: 1.125em; /* 21/16 */
 }
-
 h6 {
-    font-size: 1.125em; /* 18/16 */
+    font-size: 0.9125em; /* 18/16 */
 }
 
 
@@ -167,7 +187,13 @@ a {
 
     &:hover, &:focus {
         color: lighten($color-jade, 10%);
-        text-decoration: underline;
+    }
+
+    &:not(.button) {
+        @include fancy-underline($color-white, $color-jade);
+        &:hover, &:focus {
+            @include fancy-underline($color-white, lighten($color-jade, 10%));
+        }
     }
 }
 

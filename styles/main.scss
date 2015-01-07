@@ -8,6 +8,7 @@ $screen-tiny: 24em;    /* 384/16 */
 @import "vendor/susy/susy";
 
 @import "modules/colors";
+@import "modules/theme";
 
 @import "partials/reset";
 @import "partials/typography";
