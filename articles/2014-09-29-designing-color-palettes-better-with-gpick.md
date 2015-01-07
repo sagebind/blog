@@ -2,7 +2,7 @@
     "title" : "Designing Color Palettes Better with Gpick",
     "author": "Stephen Coakley",
     "date": "29-09-2014",
-    "tag": "web desgn",
+    "tag": "web design",
     "category": "News"
 }
 
