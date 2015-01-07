@@ -1,101 +1,11 @@
-pre, code {
+code {
+    padding: 0.125em 0.3175em;
     font-family: $font-monospace;
+    font-size: 0.75em;
+    background: $color-white-smoke;
+    @include rounded;
 }
 
-pre[class*="language-"], :not(pre) > code[class*="language-"] {
-    line-height: 1.2em;
-    font-size: 0.9em;
-    display: block;
-    position: relative;
-    overflow: auto;
-    margin: 1em 0;
-    padding: 1em 1em 0.5em 1em;
-
-    border-radius: 0.25em;
-    background-image: url("/images/zigzag.png");
-    box-shadow: inset 0 0 1em #191919;
-
-    direction: ltr;
-    text-align: left;
-    white-space: pre;
-    word-spacing: normal;
-    tab-size: 4;
-    counter-reset: linenumber;
-
-    color: $color-text-light;
-
-    /* line numbers */
-    //&.line-numbers {
-        padding-left: 3em;
-    //}
-
-    .line-numbers-rows {
-        display: block;
-        position: absolute;
-        pointer-events: none;
-        top: 1em;
-        left: 1em;
-        padding: 0 0.75em 0 0;
-        border-right: 0.125em dashed $color-border-dark;
-
-        span {
-            pointer-events: none;
-            display: block;
-            counter-increment: linenumber;
-
-            &:before {
-                display: block;
-                text-align: right;
-                font-size: 0.8em;
-                content: counter(linenumber);
-            }
-
-            &:last-child {
-                display: none;
-            }
-        }
-    }
-
-    /* colors */
-    .token, .punctuation, .variable {
-        color: $color-text-light;
-    }
-
-    .comment, .prolog, .doctype, .cdata, .line-numbers-rows {
-        color: $color-border-light;
-    }
-
-    .keyword, .operator, .entity, .atrule, .attr-value {
-        color: #f92672;
-    }
-
-    .function, .class-name {
-        color: #66d9ef;
-    }
-
-    .constant, .number, .boolean, .property, .tag, .symbol {
-        color: #ae81ff;
-    }
-
-    .string, .selector, .attr-name, .builtin {
-        color: #a6e22e;
-    }
-
-    .package, .namespace {
-        color: #fd971f;
-    }
-
-    a {
-        color: inherit !important;
-        text-decoration: underline;
-    }
-
-    /* selection */
-    &::-moz-selection, ::-moz-selection {
-        background-color: #999;
-    }
-
-    &::selection, ::selection {
-        background-color: #999;
-    }
+pre > code {
+    line-height: 1.25em;
 }

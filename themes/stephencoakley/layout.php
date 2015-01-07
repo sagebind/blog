@@ -23,25 +23,13 @@
 
         <meta name="viewport" content="initial-scale=1">
         <link rel="stylesheet" href="<?php echo $global['assets.prefix'];?>/css/style.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
 
         <!--[if lt IE 9]>
         <script src="<?php echo $global['assets.prefix'];?>/js/html5shiv.min.js"></script>
         <![endif]-->
-        <script src="<?php echo $global['assets.prefix'];?>/js/prism.min.js"></script>
-
-        <script type="text/javascript">
-          var _paq = _paq || [];
-          _paq.push(["trackPageView"]);
-          _paq.push(["enableLinkTracking"]);
-
-          (function() {
-            var u=(("https:" == document.location.protocol) ? "https" : "http") + "://analytics.stephencoakley.com/";
-            _paq.push(["setTrackerUrl", u+"piwik.php"]);
-            _paq.push(["setSiteId", "1"]);
-            var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
-            g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
-          })();
-        </script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
     </head>
 
     <body id="top">
@@ -54,7 +42,7 @@
                 <p><em class="big">Hello there.</em> I'm a software developer based in Wisconsin. I design and develop websites and web apps, program applications, and code awesome projects.</p>
             </div>
 
-            <nav class="container flow-inner">
+            <nav class="center">
                 <a class="button" href="/">Home</a>
                 <a class="button" href="/blog">Blog</a>
                 <a class="button" href="/portfolio">Portfolio</a>
@@ -71,5 +59,19 @@
             <p class="page-copyright">All content and design copyright &copy; Stephen Coakley.</p>
             <p>Hosted by my lovely provider <a href="http://hostek.com">Hostek.com</a></p>
         </footer>
+
+        <script>
+          var _paq = _paq || [];
+          _paq.push(["trackPageView"]);
+          _paq.push(["enableLinkTracking"]);
+
+          (function() {
+            var u=(("https:" == document.location.protocol) ? "https" : "http") + "://analytics.stephencoakley.com/";
+            _paq.push(["setTrackerUrl", u+"piwik.php"]);
+            _paq.push(["setSiteId", "1"]);
+            var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+            g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+          })();
+        </script>
     </body>
 </html>
