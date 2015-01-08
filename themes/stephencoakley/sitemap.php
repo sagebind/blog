@@ -1,5 +1,5 @@
-<?php 
-header("Content-Type:text/xml");
+<?php
+header("Content-Type: application/xml; charset=utf-8");
 echo '<?xml version="1.0" encoding="UTF-8"?>'; ?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
@@ -8,7 +8,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>'; ?>
 		<changefreq>weekly</changefreq>
 		<priority>1</priority>
 	</url>
-	<?php 
+	<?php
 		if (!empty($sitemapData)) {
 			foreach ($sitemapData as $data) {
 				?>

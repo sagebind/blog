@@ -1,5 +1,5 @@
 <?php
-header("Content-Type:text/xml");
+header("Content-Type: application/atom+xml");
 if($articles) {
     reset($articles);
     $key = key($articles);
@@ -7,12 +7,12 @@ if($articles) {
    // create simplexml object
     $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" ?><feed xmlns="http://www.w3.org/2005/Atom" />', LIBXML_NOERROR|LIBXML_ERR_NONE|LIBXML_ERR_FATAL);
     // add channel information
-    
+
     $xml->addChild('title', $global['site.name']);
-    
+
     $link = $xml->addChild('link');
     $link->addAttribute("href", "http://" . $_SERVER['HTTP_HOST']);
-    
+
     $link = $xml->addChild('link');
     $link->addAttribute("href", "http://" . $_SERVER['HTTP_HOST'] . "/feed/atom.xml");
     $link->addAttribute("rel","self");
@@ -21,8 +21,8 @@ if($articles) {
     $xml->addChild('updated', $lastBuildDate);
     $xml->addChild('id', "http://" . $_SERVER['HTTP_HOST'] . "/feed/atom");
     $author = $xml->addChild("author");
-    $author->addChild("name","John Doe");
-    $author->addChild("email","johndoe@example.com");
+    $author->addChild("name","Stephen Coakley");
+    $author->addChild("email","me@stephencoakley.com");
     foreach($articles as $article) {
         $entry = $xml->addChild('entry');
         $entry->addChild('title', $article->getTitle());

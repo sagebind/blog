@@ -16,12 +16,5 @@ $app = new Slim\Slim(array('view' => new Textpress\View(),'mode' => APP_MODE));
 // create an object of Textpress and pass the object of Slim to it
 $textpress = new Textpress\Textpress($app, $config);
 
-// register extra routes
-$app->post('/contact/post', function () use ($textpress)
-{
-    $controller = new Coderstephen\Blog\ContactController($textpress);
-    $controller->post();
-});
-
 // finally run Textpress
 $textpress->run();
