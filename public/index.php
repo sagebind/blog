@@ -1,5 +1,6 @@
 <?php
 define('APP_ROOT', dirname(__DIR__));
+define('APP_MODE', '');
 chdir(APP_ROOT);
 
 // require composer autoloader
