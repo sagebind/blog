@@ -9,11 +9,11 @@
 
     <div class="portfolio">
         <figure class="item">
-            <img class="portfolio-item-figure" src="/images/portfolio/nccquizzing.png" alt="Screenshot of nccquizzing.org">
+            <img class="portfolio-item-figure" src="/content/images/nccquizzing.png" alt="Screenshot of nccquizzing.org">
         </figure>
 
         <figure class="item">
-            <img class="portfolio-item-figure" src="/images/portfolio/beloitfmc.png" alt="Screenshot of beloitfmc.org">
+            <img class="portfolio-item-figure" src="/content/images/beloitfmc.png" alt="Screenshot of beloitfmc.org">
         </figure>
     </div>
 
