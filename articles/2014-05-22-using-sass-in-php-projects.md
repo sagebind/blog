@@ -1,6 +1,6 @@
 {
     "title" : "Using Sass in PHP Projects",
-    "author": "Stephen Coakley",
+    "author": "Stephen",
     "date": "22-05-2014",
     "tag": "php, sass, building"
 }
@@ -17,7 +17,7 @@ In order to improve the Sass workflow, I sought a better solution and I ran acro
 
 First we need to download the library into our project. You can download scssphp from its website, but we are interested in its package on [Packagist](http://packagist.org). It should be no secret that I’m a big advocate of [Composer](http://getcomposer.org). I believe that it is one of the biggest changes in the community that will serve to PHP's advance into the future as a language. But that's for another blog post.
 
-Anyway, let's get started with scssphp. First let's add `leafo/scssphp` as a dependency to our project's `composer.json` file:
+Anyway, let's get started with scssphp. First add `leafo/scssphp` as a dependency to your project's `composer.json` file:
 
 ``` json
 {
@@ -27,7 +27,7 @@ Anyway, let's get started with scssphp. First let's add `leafo/scssphp` as a dep
 }
 ```
 
-The current version as of this writing is 0.0.10 (it's still a bit experimental). Check the library's website to determine what version is the latest and what one you should use.
+The current version as of this writing is 0.0.10 (still a bit experimental). Check the library's website to determine what version is the latest and what one you should use.
 
 After running `composer install`, scssphp should be downloaded and ready to go.
 
@@ -58,7 +58,7 @@ My typical workflow for PHP-based projects uses [Phing](http://www.phing.info) a
 </project>
 ```
 
-Let's update the build file to use scssphp to compile our SCSS files:
+Here is the newly updated build file using scssphp as my SCSS compiler:
 
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
