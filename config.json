@@ -40,7 +40,8 @@
         },
         "tag": {
             "route"    : "/tag/:tag",
-            "template" : "index"
+            "template" : "tag",
+            "title"    : "Blog Posts"
         },
         "archives": {
             "route"    : "/archives(/:year(/:month(/:date)))",
