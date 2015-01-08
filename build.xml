@@ -45,9 +45,8 @@
 
     <!-- compiles source files and writes deploy info -->
     <target name="build" depends="clean">
-
         <echo>Compiling SCSS to CSS...</echo>
-        <mkdir dir="${project.publicdir}/css"/>
+        <mkdir dir="${project.publicdir}/assets/css"/>
         <exec executable="sass" passthru="true" checkreturn="true">
             <arg line="--style ${scss.style}"/>
             <arg value="--no-cache"/>
@@ -81,10 +80,9 @@
     <target name="deploy" depends="build,deployPublic">
         <echo>Copying build to ${ftp.host}...</echo>
 
-        <ftpdeploy host="${ftp.host}" port="${ftp.port}" username="${ftp.username}" password="${ftp.password}" dir="/sites/blog" depends="true" mode="binary" passive="true" level="info">
+        <ftpdeploy host="${ftp.host}" port="${ftp.port}" username="${ftp.username}" password="${ftp.password}" dir="/" depends="true" mode="binary" passive="true" level="info">
             <fileset dir="${project.basedir}">
                 <include name="articles/**"/>
-                <include name="cache/**"/>
                 <include name="src/**"/>
                 <include name="themes/**"/>
                 <include name="vendor/**"/>
