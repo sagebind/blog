@@ -4,7 +4,7 @@
     "site.description" : "I'm a software developer based in Wisconsin",
     "author.name"      : "Stephen Coakley",
     "article.path"     : "articles",
-    "date.format"      : "d M, Y",
+    "date.format"      : "F j, Y",
     "themes.path"      : "themes",
     "active.theme"     : "stephencoakley",
     "layout.file"      : "layout",
@@ -52,39 +52,25 @@
         },
         "blog": {
             "route"    : "/blog",
-            "template" : "blog"
-        },
-        "about": {
-            "route"    : "/about",
-            "template" : "about",
-            "title"    : "About me"
+            "template" : "blog",
+            "title"    : "Blog Posts"
         },
         "portfolio": {
             "route"    : "/portfolio",
             "template" : "portfolio",
             "title"    : "Portfolio"
         },
-        "projects": {
-            "route"    : "/projects",
-            "template" : "projects",
-            "title"    : "Projects"
-        },
-        "contact": {
-            "route"    : "/contact",
-            "template" : "contact",
-            "title"    : "Contact"
-        },
         "rss": {
             "route"    : "/feed/rss(.xml)",
             "template" : "rss",
             "layout"   : false
         },
-        "atom": {   
+        "atom": {
             "route"    : "/feed(/atom(.xml))",
             "template" : "atom",
             "layout"   : false
         },
-        "sitemap": { 
+        "sitemap": {
             "route"    : "/sitemap.xml",
             "template" : "sitemap",
             "layout"   : false
