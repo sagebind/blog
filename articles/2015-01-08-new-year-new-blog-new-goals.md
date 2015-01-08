@@ -5,7 +5,7 @@
     "tag": "life, web-design"
 }
 
-A new year has come; 2014 is gone and 2015 is here. Just like the year, I've decided to retire my old website and bring an entirely new redesign live. Now I am not really into the whole "New Years Resolution" concept, but the idea of starting fresh on a blank slate has merit. I had been meditating on this for a few weeks and concluded that I really need a fresh start in many areas of my life; this blog is just one of them.
+A new year has come; 2014 is gone and 2015 is here. Just like the old year has been retired, I've decided to retire my old website and bring an entirely new redesign live. Now I am not really into the whole "New Years Resolution" concept, but the idea of starting fresh on a blank slate has merit. I had been meditating on this for a few weeks and concluded that I really need a fresh start in many areas of my life; this blog is just one of them.
 
 ## A word about the old design
 Let me explain a little bit why I decided to retire the old design. I don't like to "toot my own horn", as the expression goes, but my former design was pretty slick. I spent months planning, designing, and implementing it. It was really the most effort I ever put into a website design, and gosh I was proud of it then.
