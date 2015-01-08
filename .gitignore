@@ -1,12 +1,9 @@
 # composer dependencies
-vendor/
+/vendor/
 
 # cache files
-cache/*
+/cache/*
 
 # build files
 *.buildfile
-
-# ide project files
-*.sublime-project
-*.sublime-workspace
+/public/assets/css/*
