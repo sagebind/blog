@@ -1,0 +1,49 @@
+// Create grid
+@function -neat-new-grid($column-width, $gutter-width, $total-columns) {
+  $new-grid: (#{$COLUMN-WIDTH}: $column-width, #{$GUTTER-WIDTH}: $gutter-width, #{$TOTAL-COLUMNS}: $total-columns);
+
+  @return $new-grid;
+}
+
+// Getters
+@function -neat-grid-column-width($grid) {
+  $column-width: if(type-of($grid) == map, map-get($grid, #{$COLUMN-WIDTH}), null);
+  @return $column-width;
+}
+
+@function -neat-grid-gutter-width($grid) {
+  $gutter-width: if(type-of($grid) == map, map-get($grid, #{$GUTTER-WIDTH}), null);
+  @return $gutter-width;
+}
+
+@function -neat-grid-total-columns($grid) {
+  $total-columns: if(type-of($grid) == map, map-get($grid, #{$TOTAL-COLUMNS}), null);
+  @return $total-columns;
+}
+
+// Setters
+@function -neat-grid-set-column-width($grid, $new-value) {
+  $new-grid: -neat-new-grid($new-value, -neat-grid-gutter-width($grid), -neat-grid-total-columns($grid));
+  @return $new-grid;
+}
+
+@function -neat-grid-set-gutter-width($grid, $new-value) {
+  $new-grid: -neat-new-grid(-neat-grid-column-width($grid), $new-value, -neat-grid-total-columns($grid));
+  @return $new-grid;
+}
+
+@function -neat-grid-set-total-columns($grid, $new-value) {
+  $new-grid: -neat-new-grid(-neat-grid-column-width($grid), -neat-grid-gutter-width($grid), $new-value);
+  @return $new-grid;
+}
+
+// Introspection
+@function -neat-is-grid($var) {
+  @if -neat-grid-column-width($var)
+  and -neat-grid-gutter-width($var)
+  and -neat-grid-total-columns($var) {
+    @return true;
+  } @else {
+    @return false;
+  }
+}

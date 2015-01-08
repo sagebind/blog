@@ -2,31 +2,31 @@
  * fonts
  */
 /* source sans */
-@include font-face("Source Sans Pro", "/fonts/sourcesanspro-regular");
-@include font-face("Source Sans Pro", "/fonts/sourcesanspro-italic", $style: italic);
-@include font-face("Source Sans Pro", "/fonts/sourcesanspro-bold", $weight: bold);
-@include font-face("Source Sans Pro", "/fonts/sourcesanspro-bolditalic", $weight: bold, $style: italic);
+@include font-face("Source Sans Pro", "/assets/fonts/sourcesanspro-regular");
+@include font-face("Source Sans Pro", "/assets/fonts/sourcesanspro-italic", $style: italic);
+@include font-face("Source Sans Pro", "/assets/fonts/sourcesanspro-bold", $weight: bold);
+@include font-face("Source Sans Pro", "/assets/fonts/sourcesanspro-bolditalic", $weight: bold, $style: italic);
 
 /* league gothic */
-@include font-face("League Gothic", "/fonts/leaguegothic-regular");
-@include font-face("League Gothic", "/fonts/leaguegothic-italic", $style: italic);
+@include font-face("League Gothic", "/assets/fonts/leaguegothic-regular");
+@include font-face("League Gothic", "/assets/fonts/leaguegothic-italic", $style: italic);
 
 /* josefin slab */
-@include font-face("Josefin Slab", "/fonts/josefinslab-regular");
-@include font-face("Josefin Slab", "/fonts/josefinslab-bold", $weight: bold);
+@include font-face("Josefin Slab", "/assets/fonts/josefinslab-regular");
+@include font-face("Josefin Slab", "/assets/fonts/josefinslab-bold", $weight: bold);
 
 /* rochester */
-@include font-face("Rochester", "/fonts/rochester-regular");
+@include font-face("Rochester", "/assets/fonts/rochester-regular");
 
 /* source code */
-@include font-face("Source Code Pro", "/fonts/sourcecodepro-regular");
-@include font-face("Source Code Pro", "/fonts/sourcecodepro-bold", $weight: bold);
+@include font-face("Source Code Pro", "/assets/fonts/sourcecodepro-regular");
+@include font-face("Source Code Pro", "/assets/fonts/sourcecodepro-bold", $weight: bold);
 
 /* chunkfive */
-@include font-face("ChunkFive", "/fonts/chunkfive");
+@include font-face("ChunkFive", "/assets/fonts/chunkfive");
 
 /* nymphette */
-@include font-face("Nymphette", "/fonts/nymphette");
+@include font-face("Nymphette", "/assets/fonts/nymphette");
 
 $font-body: "Source Sans Pro", "Calibri", sans-serif;
 $font-heading: "Josefin Slab", serif;

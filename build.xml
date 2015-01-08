@@ -3,7 +3,7 @@
     <property name="project.publicdir" value="${project.basedir}/public"/>
 
     <property name="scss.input" value="${project.basedir}/styles/main.scss"/>
-    <property name="scss.output" value="${project.publicdir}/css/style.css"/>
+    <property name="scss.output" value="${project.publicdir}/assets/css/style.css"/>
     <property name="scss.style" value="compressed"/>
 
     <property name="ftp.host" value="stephencoakley.com"/>
@@ -32,7 +32,7 @@
     </target>
 
     <target name="fileWatch">
-        <mkdir dir="${project.publicdir}/css"/>
+        <mkdir dir="${project.publicdir}/assets/css"/>
         <exec executable="sass" passthru="true" checkreturn="true">
             <arg line="--style ${scss.style}"/>
             <arg value="--no-cache"/>

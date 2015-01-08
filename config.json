@@ -11,7 +11,7 @@
     "file.extension"   : ".md",
     "disqus.username"  : "coderstephenblog",
     "markdown"         : true,
-    "assets.prefix"    : "",
+    "assets.prefix"    : "/assets",
     "prefix"           : "",
     "google.analytics" : false,
     "cache": {
