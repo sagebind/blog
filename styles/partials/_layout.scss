@@ -37,6 +37,7 @@ html, body {
 
 .page-footer p {
     line-height: 1.125em;
+    text-align: center;
 
     &:last-child {
         margin-bottom: 0;
@@ -45,11 +46,8 @@ html, body {
 
 @media (min-width: 56rem) {
     .page-header {
-        width: 20rem;
-    }
-
-    .page-header {
         @include position(fixed, 0 null 0 0);
+        width: 20rem;
     }
 
     main {
@@ -59,12 +57,13 @@ html, body {
 
 @media (min-width: 56rem) and (min-height: 45rem) {
     .page-footer {
-        width: 20rem;
-    }
-
-    .page-footer {
         @include position(fixed, null null 0 0);
+        width: 20rem;
         padding-top: 0;
+
+        p {
+            text-align: left;
+        }
     }
 }
 
