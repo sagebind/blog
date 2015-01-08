@@ -1,7 +1,4 @@
 html {
-    /* use border-box as the default box model */
-    @include box-sizing(border-box);
-
     /* corrects text resizing oddly in IE 6/7 when body `font-size` is set using `em` units */
     font-size: 100%;
 

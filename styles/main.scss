@@ -1,17 +1,17 @@
-$page-width-max: 64em;  /* 1024/16 */
-$screen-medium: 72em;   /* 1152/16 */
-$screen-small: 40em;    /* 576/16 */
-$screen-tiny: 24em;    /* 384/16 */
-
+// import third-party components
 @import "vendor/font-awesome/font-awesome";
 @import "vendor/bourbon/bourbon";
 @import "vendor/susy/susy";
 
+// import modules
 @import "modules/colors";
 @import "modules/theme";
 
+// import partials
 @import "partials/reset";
 @import "partials/typography";
 @import "partials/layout";
+@import "partials/header";
+@import "partials/content";
 @import "partials/buttons";
 @import "partials/code";

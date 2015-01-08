@@ -1,13 +1,12 @@
 $susy: (
-  container: 60rem,
+  container: 64rem,
   columns: 12,
-  gutters: .25
+  gutters: .5
 );
 
-@mixin layout-box {
-    padding: 2rem;
-}
-
+/**
+ * Set default viewport settings.
+ */
 @viewport {
     zoom: 1.0;
     width: extend-to-zoom;
@@ -19,33 +18,33 @@ $susy: (
 
 @include global-box-sizing(border-box);
 
+/**
+ * Set user-preferred font size.
+ */
 html, body {
     height: 100%;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    font-size: 100%; /* base font size */
 }
 
 .page-header, .page-footer {
     @include layout-box;
     background-color: $color-blue-bark;
     color: $color-white;
-    a:not(.button) {
+
+    a:not(.button):not(.no-underline) {
         @include fancy-underline($color-blue-bark, $color-jade);
     }
 }
 
-.content {
-    @include layout-box;
-    @include container;
-    font-size: 1.5rem;
+.page-footer p {
+    line-height: 1.125em;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 
 @media (min-width: 56rem) {
-    .page-header, .page-footer {
+    .page-header {
         width: 20rem;
     }
 
@@ -56,27 +55,22 @@ body {
     main {
         margin-left: 20rem;
     }
+}
+
+@media (min-width: 56rem) and (min-height: 45rem) {
+    .page-footer {
+        width: 20rem;
+    }
 
     .page-footer {
         @include position(fixed, null null 0 0);
-        @include linear-gradient(transparentize($color-blue-bark, 1) 0%, $color-blue-bark 25%);
+        padding-top: 0;
     }
 }
 
-.top-link {
-    @include position(fixed, null 0 0 null);
-    margin: 1.5rem;
-    font-size: 1.25em;
-}
 
-#disqus_thread {
-    margin-top: 2em;
-}
-
-hr {
-    margin: 3em 0;
-}
-
-.center {
-    text-align: center;
+.content {
+    @include layout-box;
+    @include container;
+    font-size: 1.25rem;
 }

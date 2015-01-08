@@ -1,12 +1,24 @@
 .button {
     display: inline-block;
-    @include rounded;
     padding: 0.75em;
+    @include rounded;
+    text-align: center;
+    line-height: normal;
     font-weight: bold;
     background-color: hsla(0, 0%, 0%, 0.1);
 
     &:hover, &:focus {
         color: $color-white;
         background-color: $color-jade;
+    }
+}
+
+.top-link {
+    @include position(fixed, null 0 0 null);
+    margin: 1rem;
+    font-size: 1.25em;
+
+    @media (min-width: 56rem) {
+        display: none;
     }
 }

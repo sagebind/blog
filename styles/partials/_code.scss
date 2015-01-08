@@ -1,11 +1,10 @@
 code {
-    padding: 0.125em 0.3175em;
+    @include theme-media-box;
     font-family: $font-monospace;
     font-size: 0.75em;
-    background: $color-white-smoke;
-    @include rounded;
 }
 
 pre > code {
     line-height: 1.25em;
+    white-space: pre-wrap;
 }

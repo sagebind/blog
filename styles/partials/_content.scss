@@ -1,0 +1,51 @@
+.comments {
+    margin-top: 2em;
+}
+
+hr {
+    margin: 3em 0;
+}
+
+.center {
+    text-align: center;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.portfolio {
+    @include container;
+
+    figure {
+        @include gallery(6);
+        margin-bottom: 2em;
+
+        @media (max-width: 48rem) {
+            @include gallery(12);
+            float: none;
+        }
+    }
+}
+
+.tag {
+    @include theme-media-box;
+    display: inline-block;
+    white-space: nowrap;
+    margin-left: 1em;
+    padding: 0.25em 0.5em;
+
+    &::before {
+        display: block;
+        position: absolute;
+        content: "";
+        background-color: transparent;
+        border-top: 0.75em solid transparent;
+        border-bottom: 0.75em solid transparent;
+        border-right: 0.75em solid $color-white-smoke;
+        margin-left: -1.125em;
+        margin-top: -0.25em;
+    }
+}
