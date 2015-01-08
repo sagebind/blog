@@ -1,6 +1,6 @@
 {
     "title" : "Using Sass in PHP Projects",
-    "author": "Stephen",
+    "author": "Stephen Coakley",
     "date": "22-05-2014",
     "tag": "php, sass, building"
 }
