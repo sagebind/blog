@@ -32,6 +32,8 @@
         <script src="<?php echo $global['assets.prefix'];?>/components/mootools-more-1.4.0.1.js"></script>
         <script src="<?php echo $global['assets.prefix'];?>/components/prism/prism.js"></script>
 
+        <script src="//widget.battleforthenet.com/widget.min.js" async></script>
+
         <!-- Piwik -->
         <script type="text/javascript">
           var _paq = _paq || [];
