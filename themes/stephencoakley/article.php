@@ -1,28 +1,27 @@
 <div class="content style-default">
-    <article class="container">
-        <h1><?php echo $article->getTitle(); ?></h1>
-    <div class="postmeta">
-    <span class="date"><?php  echo $article->getDate($global['date.format']);  ?></span> /
-    <span class="author-by"> By </span>
-    <span class="author"><?php  echo $article->getAuthor()
-                        ? $article->getAuthor()
-                        : $global['author.name'] ;  ?></span>
-    </div>
+    <p><a href="/blog"><i class="fa fa-arrow-left"></i> All Articles</a></p>
+
+    <article>
+        <p class="postmeta"><small>
+            <span class="date"><i class="fa fa-calendar-o"></i> <?=$article->getDate($global['date.format'])?></span>
+            <span class="author-by"> by </span>
+            <span class="author"><?=$article->getAuthor()?$article->getAuthor():$global['author.name']?></span>
+        </small></p>
+
+        <h1><?=$article->getTitle()?></h1>
+
         <?php echo $article->getContent(); ?>
 
-
-    <div class="tags">
-      Tags :
-      <?php
-        foreach ($article->getTags() as $slug => $tag) {
-          echo '<span class="tag"><a href="/tag/' . $slug .'">' . $tag->name . "</a></span>";
-        }
-        ?>
-    </div>
+        <small class="tags">
+            <i class="fa fa-tags"></i>
+            <?php foreach ($article->getTags() as $slug => $tag):?>
+                <span class="tag"><a href="/tag/<?=$slug?>"><?=$tag->name?></a></span>
+            <?php endforeach;?>
+        </small>
     </article>
 
     <?php if ($global['disqus.username']): ?>
-        <div id="disqus_thread" class="container"></div>
+        <div id="disqus_thread" class="comments"></div>
         <script type="text/javascript">
             var disqus_developer = 1;
             var disqus_shortname = '<?=$global['disqus.username']?>';
@@ -33,6 +32,5 @@
             })();
         </script>
         <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-        <!--<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>-->
     <?php endif; ?>
 </div>
