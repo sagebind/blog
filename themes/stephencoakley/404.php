@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title><?=(isset($global['title'])?$global['title'].' - ':'').$global['site.name']?></title>
+        <title>Page not found - <?=$global['site.name']?></title>
         <meta name="description" content="<?php echo $global['site.description']; ?>">
         <meta name="keywords" content="Stephen Coakley, programming, web development, apps, php">
         <meta name="author" content="<?=$global['author.name']?>">

@@ -11,14 +11,14 @@
         <h1><?=$article->getTitle()?></h1>
 
         <?php echo $article->getContent(); ?>
-
-        <small class="tags">
-            <i class="fa fa-tags"></i>
-            <?php foreach ($article->getTags() as $slug => $tag):?>
-                <span class="tag"><a href="/tag/<?=$slug?>"><?=$tag->name?></a></span>
-            <?php endforeach;?>
-        </small>
     </article>
+
+    <p class="tags"><small>
+        <i class="fa fa-tags"></i>
+        <?php foreach ($article->getTags() as $slug => $tag):?>
+            <span class="tag"><a href="/tag/<?=$slug?>"><?=$tag->name?></a></span>
+        <?php endforeach;?>
+    </small></p>
 
     <?php if ($global['disqus.username']): ?>
         <div id="disqus_thread" class="comments"></div>

@@ -74,7 +74,7 @@ body {
  */
 p, ul, ol, blockquote, pre {
     display: block;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     line-height: 1.75em;
     direction: ltr;
     text-align: left;
@@ -123,12 +123,10 @@ blockquote {
 h1, h2, h3, h4, h5, h6 {
     display: block;
     line-height: 1.25em;
-    font-weight: normal;
-    margin: 0;
+    font-weight: bold;
+    margin: 0 0 1rem 0;
 }
 h1 {
-    margin: 0.25em 0;
-    font-weight: bold;
     font-family: $font-heading;
     font-size: 2.75em; /* 64/16 */
 }

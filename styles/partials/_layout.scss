@@ -38,6 +38,7 @@ html, body {
 .page-footer p {
     line-height: 1.125em;
     text-align: center;
+    margin-bottom: 1rem;
 
     &:last-child {
         margin-bottom: 0;
@@ -71,5 +72,11 @@ html, body {
 .content {
     @include layout-box;
     @include container;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
     font-size: 1.25rem;
+
+    @media (min-width: 72rem) {
+        font-size: 1.5rem;
+    }
 }

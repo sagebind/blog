@@ -3,11 +3,15 @@
 }
 
 hr {
-    margin: 3em 0;
+    margin: 2em 0;
 }
 
 .center {
     text-align: center;
+}
+
+article {
+    margin-bottom: 3rem;
 }
 
 img {
@@ -36,6 +40,7 @@ img {
     white-space: nowrap;
     margin-left: 1em;
     padding: 0.25em 0.5em;
+    line-height: normal;
 
     &::before {
         display: block;
