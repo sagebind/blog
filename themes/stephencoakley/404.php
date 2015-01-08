@@ -5,27 +5,26 @@
         <title><?=(isset($global['title'])?$global['title'].' - ':'').$global['site.name']?></title>
         <meta name="description" content="<?php echo $global['site.description']; ?>">
         <meta name="keywords" content="Stephen Coakley, programming, web development, apps, php">
-        <meta name="author" content="<?php echo $global['author.name']; ?>">
-        <link href="/blog/feed" type="application/atom+xml" rel="alternate" title="Blog Feed">
+        <meta name="author" content="<?=$global['author.name']?>">
+        <link href="/feed/atom" type="application/atom+xml" rel="alternate" title="Blog Feed">
 
-        <link rel="icon" type="image/png" href="<?php echo $global['assets.prefix'];?>/images/favicon.128.png" sizes="128x128">
-        <link rel="icon" type="image/png" href="<?php echo $global['assets.prefix'];?>/images/favicon.64.png" sizes="64x64">
-        <link rel="icon" type="image/png" href="<?php echo $global['assets.prefix'];?>/images/favicon.48.png" sizes="48x48">
-        <link rel="icon" type="image/png" href="<?php echo $global['assets.prefix'];?>/images/favicon.32.png" sizes="32x32">
-        <link rel="shortcut icon" href="<?php echo $global['assets.prefix'];?>/favicon.ico">
-        <link rel="icon" type="image/png" href="<?php echo $global['assets.prefix'];?>/images/favicon.16.png" sizes="16x16">
-        <link rel="apple-touch-icon" href="<?php echo $global['assets.prefix'];?>/images/favicon.128.png">
+        <link rel="icon" type="image/png" href="<?=$global['assets.prefix']?>/images/favicon.128.png" sizes="128x128">
+        <link rel="icon" type="image/png" href="<?=$global['assets.prefix']?>/images/favicon.64.png" sizes="64x64">
+        <link rel="icon" type="image/png" href="<?=$global['assets.prefix']?>/images/favicon.48.png" sizes="48x48">
+        <link rel="icon" type="image/png" href="<?=$global['assets.prefix']?>/images/favicon.32.png" sizes="32x32">
+        <link rel="shortcut icon" href="/favicon.ico">
+        <link rel="icon" type="image/png" href="<?=$global['assets.prefix']?>/images/favicon.16.png" sizes="16x16">
+        <link rel="apple-touch-icon" href="<?=$global['assets.prefix']?>/images/favicon.128.png">
         <meta name="msapplication-TileColor" content="#D83434">
-        <meta name="msapplication-TileImage" content="<?php echo $global['assets.prefix'];?>/images/favicon.128.png">
+        <meta name="msapplication-TileImage" content="<?=$global['assets.prefix']?>/images/favicon.128.png">
 
         <meta name="viewport" content="initial-scale=1">
-        <link rel="stylesheet" href="<?php echo $global['assets.prefix'];?>/css/style.css">
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+        <link rel="stylesheet" href="<?=$global['assets.prefix']?>/css/style.css">
 
         <!--[if lt IE 9]>
-        <script src="<?php echo $global['assets.prefix'];?>/js/html5shiv.min.js"></script>
+        <script src="<?=$global['assets.prefix']?>/js/html5shiv.min.js"></script>
         <![endif]-->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+        <script src="<?=$global['assets.prefix']?>/js/highlight.pack.js"></script>
         <script>hljs.initHighlightingOnLoad();</script>
     </head>
 
@@ -33,7 +32,7 @@
         <header class="page-header">
             <p class="center">
                 <a class="site-logo no-underline" href="/" rel="home">
-                    <img src="/images/logo-white.svg">
+                    <img src="<?=$global['assets.prefix']?>/images/logo-white.svg">
                     <span class="site-logo-text">Stephen Coakley</span>
                 </a>
             </p>
@@ -51,7 +50,7 @@
             <div class="content">
                 <h1>This is not the page you are looking for.</h1>
 
-                <p><img src="/images/yoda.png"></p>
+                <p><img src="<?=$global['assets.prefix']?>/images/yoda.png"></p>
 
                 <p class="big">Found, the page you requested, was not. Perhaps, try another link at the top or left you will, hmm? Since came so far, you have, enjoy a random ASCII string, you will.</p>
 
@@ -62,7 +61,7 @@
                     }
                 ?>"</code></pre>
 
-                <p>Those Insecticons must be eating my hard drives again...</p>
+                <p>Those darned Insecticons must be eating my hard drives again...</p>
             </div>
 
             <a class="button top-link fa fa-arrow-up" href="#top"></a>
