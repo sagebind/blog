@@ -2,10 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title><?php
-            $title= (isset($global['title'])) ? $global['title'] : $global['site.title'];
-            echo $title .' - '. $global['site.name'];
-        ?></title>
+        <title><?=(isset($global['title'])?$global['title'].' - ':'').$global['site.name']?></title>
         <meta name="description" content="<?php echo $global['site.description']; ?>">
         <meta name="keywords" content="Stephen Coakley, programming, web development, apps, php">
         <meta name="author" content="<?php echo $global['author.name']; ?>">
@@ -34,18 +31,19 @@
 
     <body id="top">
         <header class="page-header">
-            <div class="title">
-                <a class="site-logo" href="/" rel="home">
+            <p class="center">
+                <a class="site-logo no-underline" href="/" rel="home">
+                    <img src="/images/logo-white.svg">
                     <span class="site-logo-text">Stephen Coakley</span>
                 </a>
+            </p>
 
-                <p><em class="big">Hello there.</em> I'm a software developer based in Wisconsin. I design and develop websites and web apps, program applications, and code awesome projects.</p>
-            </div>
+            <p class="bio-text">Disciple of Christ, software developer, PHP enthusiast, techie, guitarist and musician, amateur photographer, lover of literature.</p>
 
-            <nav class="center">
+            <nav>
                 <a class="button" href="/">Home</a>
-                <a class="button" href="/blog">Blog</a>
                 <a class="button" href="/portfolio">Portfolio</a>
+                <a class="button" href="/blog">Blog</a>
             </nav>
         </header>
 
@@ -53,25 +51,16 @@
             <?php echo $content; ?>
 
             <a class="button top-link fa fa-arrow-up" href="#top"></a>
+
+            <footer class="page-footer">
+                <p>Get in touch with me: <a href="mailto:me@stephencoakley.com">me@stephencoakley.com</a></p>
+                <p class="page-copyright">All content and design copyright &copy; Stephen Coakley.</p>
+                <p>Hosted by my lovely provider <a href="http://hostek.com">Hostek.com</a>.</p>
+            </footer>
         </main>
 
-        <footer class="page-footer">
-            <p class="page-copyright">All content and design copyright &copy; Stephen Coakley.</p>
-            <p>Hosted by my lovely provider <a href="http://hostek.com">Hostek.com</a></p>
-        </footer>
-
         <script>
-          var _paq = _paq || [];
-          _paq.push(["trackPageView"]);
-          _paq.push(["enableLinkTracking"]);
-
-          (function() {
-            var u=(("https:" == document.location.protocol) ? "https" : "http") + "://analytics.stephencoakley.com/";
-            _paq.push(["setTrackerUrl", u+"piwik.php"]);
-            _paq.push(["setSiteId", "1"]);
-            var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
-            g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
-          })();
+            var _paq=_paq||[];_paq.push(["trackPageView"]);_paq.push(["enableLinkTracking"]);(function(){var e=("https:"==document.location.protocol?"https":"http")+"://analytics.stephencoakley.com/";_paq.push(["setTrackerUrl",e+"piwik.php"]);_paq.push(["setSiteId","1"]);var t=document,n=t.createElement("script"),r=t.getElementsByTagName("script")[0];n.type="text/javascript";n.defer=true;n.async=true;n.src=e+"piwik.js";r.parentNode.insertBefore(n,r)})();
         </script>
     </body>
 </html>
