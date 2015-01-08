@@ -1,0 +1,58 @@
+/**
+ * Creates a social icon sprite definition.
+ *
+ * @param  length $x The horizontal position of the icon.
+ * @param  length $y The vertical position of the icon.
+ */
+@mixin social-icon-sprite($x, $y) {
+    $icon-sprite-size: 4.7725em;
+
+    display: inline-block;
+    width: 3.8em;
+    height: 3.8em;
+    background: {
+        image: url("/assets/images/social-icons.png");
+        size: 42em;
+        position: (0 - ($icon-sprite-size * $x)) (0 - ($icon-sprite-size * $y));
+    }
+    opacity: 0.75;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+/**
+ * Define some icons by specifying their position in the sprite sheet.
+ */
+.social-icon-twitter {
+    @include social-icon-sprite(0, 0);
+}
+.social-icon-gplus {
+    @include social-icon-sprite(2, 0);
+}
+.social-icon-facebook {
+    background-position: -291px -59px;
+    @include social-icon-sprite(5, 1);
+}
+.social-icon-linkedin {
+    @include social-icon-sprite(8, 2);
+}
+.social-icon-github {
+    @include social-icon-sprite(5, 4);
+}
+.social-icon-stackoverflow {
+    @include social-icon-sprite(5, 0);
+}
+
+/**
+ * A block layout for displaying a row of social icons nicely.
+ */
+.social-icons {
+    margin: 3rem 0;
+    text-align: center;
+
+    [class^="social-icon-"] {
+        margin: 0.25em;
+    }
+}

@@ -48,6 +48,15 @@
 
         <main role="main">
             <?php echo $content; ?>
+            <hr>
+            <aside class="social-icons">
+                <a class="social-icon-twitter no-underline" href="http://bit.ly/codrst-tw"></a>
+                <a class="social-icon-gplus no-underline" href="http://bit.ly/codrst-plus"></a>
+                <a class="social-icon-facebook no-underline" href="http://bit.ly/codrst-fb"></a>
+                <a class="social-icon-linkedin no-underline" href="http://linkedin.com/in/coderstephen"></a>
+                <a class="social-icon-github no-underline" href="http://bit.ly/codrst-github"></a>
+                <a class="social-icon-stackoverflow no-underline" href="http://bit.ly/codrst-stack"></a>
+            </aside>
 
             <a class="button top-link fa fa-arrow-up" href="#top"></a>
 
@@ -57,6 +66,7 @@
                 <p>Hosted by my lovely provider <a href="http://hostek.com">Hostek.com</a>.</p>
             </footer>
         </main>
+
 
         <script>
             var _paq=_paq||[];_paq.push(["trackPageView"]);_paq.push(["enableLinkTracking"]);(function(){var e=("https:"==document.location.protocol?"https":"http")+"://analytics.stephencoakley.com/";_paq.push(["setTrackerUrl",e+"piwik.php"]);_paq.push(["setSiteId","1"]);var t=document,n=t.createElement("script"),r=t.getElementsByTagName("script")[0];n.type="text/javascript";n.defer=true;n.async=true;n.src=e+"piwik.js";r.parentNode.insertBefore(n,r)})();
