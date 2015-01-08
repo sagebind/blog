@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="blog" default="build" basedir=".">
-    <property name="project.publicdir" value="${project.basedir}/public"/>
+    <property name="project.publicdir" value="${project.basedir}/wwwroot"/>
 
     <property name="scss.input" value="${project.basedir}/styles/main.scss"/>
     <property name="scss.output" value="${project.publicdir}/assets/css/style.css"/>
@@ -65,39 +65,34 @@
         <mkdir dir="${project.basedir}/cache"/>
     </target>
 
-    <!-- deploys only public assets -->
-    <target name="deployPublic" depends="build">
-        <echo>Copying public assets to ${ftp.host}...</echo>
-
-        <ftpdeploy host="${ftp.host}" port="${ftp.port}" username="${ftp.username}" password="${ftp.password}" dir="/wwwroot" depends="true" mode="binary" passive="true" level="info">
-            <fileset dir="${project.publicdir}">
-                <include name="**"/>
-            </fileset>
-        </ftpdeploy>
-    </target>
-
     <!-- deploys a complete build to live site -->
-    <target name="deploy" depends="build,deployPublic">
+    <target name="deploy" depends="build">
         <echo>Copying build to ${ftp.host}...</echo>
 
-        <ftpdeploy host="${ftp.host}" port="${ftp.port}" username="${ftp.username}" password="${ftp.password}" dir="/" depends="true" mode="binary" passive="true" level="info">
+        <ftpdeploy host="${ftp.host}" port="${ftp.port}" username="${ftp.username}" password="${ftp.password}" dir="/" depends="true" mode="binary" passive="true" level="info" rawdatafallback="true">
             <fileset dir="${project.basedir}">
                 <include name="articles/**"/>
                 <include name="src/**"/>
                 <include name="themes/**"/>
                 <include name="vendor/**"/>
+                <include name="wwwroot/**"/>
                 <include name="config.json"/>
             </fileset>
         </ftpdeploy>
     </target>
 
     <!-- deploys just the last commit to live site -->
-    <target name="deployCommit" depends="build,deployPublic">
+    <target name="deployCommit" depends="build">
         <echo>Deploying build diff for last commit to ${ftp.host}...</echo>
 
-        <ftpdeploy host="${ftp.host}" port="${ftp.port}" username="${ftp.username}" password="${ftp.password}" dir="/sites/blog" depends="true" mode="binary" passive="true" level="info">
+        <ftpdeploy host="${ftp.host}" port="${ftp.port}" username="${ftp.username}" password="${ftp.password}" dir="/" mode="binary" passive="true" level="info">
             <fileset dir="${project.basedir}" includesfile="${project.basedir}/commit-diff.buildfile">
-                <include name="public/css/*"/>
+                <include name="wwwroot/assets/css/*"/>
+                <exclude name="styles/**"/>
+                <exclude name="tests/**"/>
+                <exclude name="build.xml"/>
+                <exclude name="composer.*"/>
+                <exclude name="phpunit.xml.dist"/>
             </fileset>
         </ftpdeploy>
     </target>
