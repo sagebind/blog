@@ -1,23 +1,34 @@
-.page-header nav {
-    @include container;
+.page-header {
+    background-color: $color-midnight;
+    color: $color-white;
 
-    a {
-        @include span(1 of 3 .125 fluid);
+    a:not(.button):not(.no-underline) {
+        @include fancy-underline($color-midnight, $color-jade);
+    }
 
-        &:last-child {
-            @include span(last 1 of 3 .125 fluid);
-        }
+    @include respond-to(large) {
+        font-size: 1.125em;
     }
 }
 
-@media (min-width: 56rem) {
-    .page-header {
-        font-size: 1.125em;
+@include with-layout(auto 3 .0625 fluid) {
+    .page-header nav {
+        @include container;
 
-        nav a, nav a:last-child {
-            display: block;
-            width: 100%;
-            margin-bottom: 1em;
+        a {
+            @include span(1);
+
+            &:last-child {
+                @include span(last 1);
+            }
+        }
+
+        @include respond-to(large) {
+            a, a:last-child {
+                display: block;
+                width: 100%;
+                margin-bottom: 1em;
+            }
         }
     }
 }
@@ -41,7 +52,7 @@
         color: $color-white;
     }
 
-    @media (min-width: 56rem) {
+    @include respond-to(medium) {
         img, .site-logo-text {
             float: none;
         }

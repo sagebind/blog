@@ -1,6 +1,6 @@
 .button {
     display: inline-block;
-    padding: 0.75em;
+    padding: 0.5em 0.75em;
     @include rounded;
     text-align: center;
     line-height: normal;
@@ -17,8 +17,13 @@
     @include position(fixed, null 0 0 null);
     margin: 1rem;
     font-size: 1.25em;
+    opacity: 0.5;
 
-    @media (min-width: 56rem) {
+    &:hover {
+        opacity: 1;
+    }
+
+    @include respond-to(medium) {
         display: none;
     }
 }

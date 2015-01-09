@@ -7,12 +7,14 @@
 // import modules
 @import "modules/colors";
 @import "modules/theme";
+@import "modules/responsive";
 
 // import partials
 @import "partials/reset";
 @import "partials/typography";
 @import "partials/layout";
 @import "partials/header";
+@import "partials/footer";
 @import "partials/content";
 @import "partials/buttons";
 @import "partials/code";

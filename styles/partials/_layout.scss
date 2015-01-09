@@ -25,27 +25,18 @@ html, body {
     height: 100%;
 }
 
-.page-header, .page-footer {
+main, .page-header, .page-footer {
     @include layout-box;
-    background-color: $color-midnight;
-    color: $color-white;
-
-    a:not(.button):not(.no-underline) {
-        @include fancy-underline($color-midnight, $color-jade);
-    }
 }
 
-.page-footer p {
-    line-height: 1.125em;
-    text-align: center;
-    margin-bottom: 1rem;
-
-    &:last-child {
-        margin-bottom: 0;
-    }
+.content {
+    @include container;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-size: 1.25rem;
 }
 
-@media (min-width: 56rem) {
+@include respond-to(medium) {
     .page-header {
         @include position(fixed, 0 null 0 0);
         width: 20rem;
@@ -54,29 +45,10 @@ html, body {
     main {
         margin-left: 20rem;
     }
-}
 
-@media (min-width: 56rem) and (min-height: 45rem) {
     .page-footer {
         @include position(fixed, null null 0 0);
         width: 20rem;
         padding-top: 0;
-
-        p {
-            text-align: left;
-        }
-    }
-}
-
-
-.content {
-    @include layout-box;
-    @include container;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    font-size: 1.25rem;
-
-    @media (min-width: 72rem) {
-        font-size: 1.5rem;
     }
 }

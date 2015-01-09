@@ -1,0 +1,22 @@
+.page-footer {
+    background-color: $color-midnight;
+    color: $color-white;
+
+    a:not(.button):not(.no-underline) {
+        @include fancy-underline($color-midnight, $color-jade);
+    }
+}
+
+.page-footer p {
+    line-height: 1.125em;
+    text-align: center;
+    margin-bottom: 0.75rem;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    @include respond-to(medium) {
+        text-align: left;
+    }
+}
