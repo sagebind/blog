@@ -6,4 +6,4 @@
 
 # build files
 *.buildfile
-/public/assets/css/*
+/wwwroot/assets/css/*
