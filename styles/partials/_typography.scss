@@ -58,7 +58,7 @@ body {
     background-image: linear-gradient($color, $color);
     background-size: 1px $height;
     background-repeat: repeat-x;
-    background-position: 0% 90%;
+    background-position: 0% 85%;
 
     &::selection {
         text-shadow: shadow-gen(lighten($color-jade, 15%));
