@@ -5,14 +5,14 @@
  * @param  length $y The vertical position of the icon.
  */
 @mixin social-icon-sprite($x, $y) {
-    $icon-sprite-size: 4.7725em;
+    $icon-sprite-size: 4em;
 
     display: inline-block;
-    width: 3.8em;
-    height: 3.8em;
+    width: $icon-sprite-size;
+    height: $icon-sprite-size;
     background: {
         image: url("/assets/images/social-icons.png");
-        size: 42em;
+        size: $icon-sprite-size * 9;
         position: (0 - ($icon-sprite-size * $x)) (0 - ($icon-sprite-size * $y));
     }
     opacity: 0.75;
@@ -32,7 +32,6 @@
     @include social-icon-sprite(2, 0);
 }
 .social-icon-facebook {
-    background-position: -291px -59px;
     @include social-icon-sprite(5, 1);
 }
 .social-icon-linkedin {
