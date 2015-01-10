@@ -1,0 +1,4 @@
+Sitemap: http:/stephencoakley.com/sitemap.xml
+User-agent: *
+Disallow: /.htaccess
+Disallow: /assets/
