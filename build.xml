@@ -46,7 +46,9 @@
     <!-- compiles source files and writes deploy info -->
     <target name="build" depends="clean">
         <echo>Compiling SCSS to CSS...</echo>
+
         <mkdir dir="${project.publicdir}/assets/css"/>
+
         <exec executable="sass" passthru="true" checkreturn="true">
             <arg line="--style ${scss.style}"/>
             <arg value="--no-cache"/>
@@ -55,14 +57,6 @@
             <arg file="${scss.input}"/>
             <arg file="${scss.output}"/>
         </exec>
-
-        <echo>Writing last commit diff...</echo>
-        <exec
-            command="git diff-tree --no-commit-id --name-only --diff-filter=ACMRT -r master"
-            dir="${project.basedir}"
-            output="${project.basedir}/commit-diff.buildfile"/>
-
-        <mkdir dir="${project.basedir}/cache"/>
     </target>
 
     <!-- deploys a complete build to live site -->
@@ -83,6 +77,13 @@
 
     <!-- deploys just the last commit to live site -->
     <target name="deployCommit" depends="build">
+        <echo>Writing last commit diff...</echo>
+
+        <exec
+            command="git diff-tree --no-commit-id --name-only --diff-filter=ACMRT -r master"
+            dir="${project.basedir}"
+            output="${project.basedir}/commit-diff.buildfile"/>
+
         <echo>Deploying build diff for last commit to ${ftp.host}...</echo>
 
         <ftpdeploy host="${ftp.host}" port="${ftp.port}" username="${ftp.username}" password="${ftp.password}" dir="/" mode="binary" passive="true" level="info">
