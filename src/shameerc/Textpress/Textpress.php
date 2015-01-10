@@ -349,7 +349,7 @@ class Textpress
         foreach ($this->allArticles as  $article) {
             $sitemapData[] = array(
                     'loc' => $article->getUrl(),
-                    'lastmod' => $article->getDate(),
+                    'lastmod' => $article->getDate('Y-m-d'),
                     'changefreq' => 'daily',
                     'priority' => '0.9'
                 );

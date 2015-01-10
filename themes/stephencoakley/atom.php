@@ -1,5 +1,5 @@
 <?php
-header("Content-Type: application/atom+xml");
+Slim\Slim::getInstance()->response->headers->set('Content-Type', 'application/atom+xml');
 
 if ($articles) {
     reset($articles);

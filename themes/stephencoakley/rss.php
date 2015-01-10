@@ -1,5 +1,5 @@
 <?php
-header("Content-Type: application/rss+xml");
+Slim\Slim::getInstance()->response->headers->set('Content-Type', 'application/rss+xml');
 
 if ($articles) {
     reset($articles);

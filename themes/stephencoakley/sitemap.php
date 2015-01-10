@@ -1,25 +1,22 @@
 <?php
-header("Content-Type: application/xml; charset=utf-8");
-echo '<?xml version="1.0" encoding="UTF-8"?>'; ?>
+Slim\Slim::getInstance()->response->headers->set('Content-Type', 'application/xml; charset=utf-8');
+
+?><?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
-		<loc><?php echo $baseUrl;?></loc>
-		<lastmod><?php echo date('c', strtotime('-1 days'));?></lastmod>
+		<loc><?=$baseUrl?></loc>
+		<lastmod><?=date('c', strtotime('-1 days'))?></lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>1</priority>
 	</url>
-	<?php
-		if (!empty($sitemapData)) {
-			foreach ($sitemapData as $data) {
-				?>
-				<url>
-					<loc><?php echo $data['loc']; ?></loc>
-					<lastmod><?php echo $data['lastmod']; ?></lastmod>
-					<changefreq><?php echo $data['changefreq']; ?></changefreq>
-					<priority><?php echo $data['priority']; ?></priority>
-				</url>
-				<?php
-			}
-		}
-	?>
+	<?php if (!empty($sitemapData)): ?>
+		<?php foreach ($sitemapData as $data): ?>
+		<url>
+			<loc><?=$data['loc']?></loc>
+			<lastmod><?=$data['lastmod']?></lastmod>
+			<changefreq><?=$data['changefreq']?></changefreq>
+			<priority><?=$data['priority']?></priority>
+		</url>
+		<?php endforeach; ?>
+	<?php endif; ?>
 </urlset>
