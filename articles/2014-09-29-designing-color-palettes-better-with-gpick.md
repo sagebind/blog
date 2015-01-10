@@ -1,7 +1,7 @@
 {
     "title" : "Designing Color Palettes Better with Gpick",
     "author": "Stephen Coakley",
-    "date": "29-09-2014",
+    "date": "2014-09-29",
     "tag": "web design, tools"
 }
 
@@ -9,7 +9,7 @@ When you are designing a website, colors are your bread and butter. Layout, bala
 
 [Gpick](https://code.google.com/p/gpick/) is an awesome color picker desktop app that works on both Windows and Linux. Tons of color picker extensions are available for popular web browsers, but desktop apps have the advantage of being able to select colors from any program or screen, not just from web pages. Gpick follows your mouse cursor and displays the color under your cursor in its window. It also has an optional magnifying glass that follows your cursor, but that feature didn't work for me on Windows 8.
 
-![Gpick](/content/images/gpick.png)
+![Gpick](/content/images/2014-09-29-gpick.png)
 
 Web designer-useful features include its color format support and auto-naming. I had a hard time finding a program that let me get a color value in HSL (Hue-Saturation-Lightness), my preferred format in CSS, but Gpick supports them all: HSV, HSL, RGB, LCH, CMYK, and of course hex RGB. Gpick is also able to automatically give a name to any color, finding the closest named color in its database. This is an incredibly useful and convenient feature if you are using a CSS preprocessor like Sass. Life is easier if you have [Sass color variables that don't suck](http://davidwalsh.name/sass-color-variables-dont-suck), and Gpick makes it even easier to do so than [Name That Color](http://chir.ag/projects/name-that-color), a neat color naming tool that I used previously.
 

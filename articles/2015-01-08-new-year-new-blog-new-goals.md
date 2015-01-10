@@ -1,7 +1,7 @@
 {
     "title" : "New Year, New Blog, New Goals",
     "author": "Stephen Coakley",
-    "date": "08-01-2015",
+    "date": "2015-01-08",
     "tag": "life, web-design"
 }
 
