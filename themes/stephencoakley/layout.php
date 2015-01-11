@@ -58,7 +58,7 @@
                 <a class="social-icon-stackoverflow no-underline" href="http://bit.ly/codrst-stack"></a>
             </aside>
 
-            <a class="button top-link fa fa-arrow-up" href="#top"></a>
+            <a class="button top-link" href="#top"><i class="fa fa-arrow-up"></i></a>
         </main>
 
         <footer class="page-footer">

@@ -1,5 +1,9 @@
 @mixin layout-box {
     padding: 2rem;
+
+    @include respond-to(tiny) {
+        padding: 2rem 1rem;
+    }
 }
 
 @mixin rounded {
