@@ -24,6 +24,8 @@
         <!--[if lt IE 9]>
         <script src="<?=$global['assets.prefix']?>/js/html5shiv.min.js"></script>
         <![endif]-->
+        <script type="text/javascript" src="<?=$global['assets.prefix']?>/js/jquery.min.js"></script>
+        <script type="text/javascript" src="<?=$global['assets.prefix']?>/js/smoothbox.jquery2.min.js"></script>
         <script src="<?=$global['assets.prefix']?>/js/highlight.pack.js"></script>
         <script>hljs.initHighlightingOnLoad();</script>
     </head>

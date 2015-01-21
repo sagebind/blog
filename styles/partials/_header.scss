@@ -2,7 +2,7 @@
     background-color: $color-midnight;
     color: $color-white;
 
-    a:not(.button):not(.no-underline) {
+    a:not(.button) {
         @include fancy-underline($color-midnight, $color-jade);
     }
 

@@ -51,20 +51,22 @@ body {
 }
 
 @mixin fancy-underline($background-color, $color, $height: 0.0625em) {
-    // add clip shadow
-    text-shadow: shadow-gen($background-color);
+    :not(.no-underline):not(.sb-nav) > & {
+        // add clip shadow
+        text-shadow: shadow-gen($background-color);
 
-    // draw the underline using an image
-    background-image: linear-gradient($color, $color);
-    background-size: 1px $height;
-    background-repeat: repeat-x;
-    background-position: 0% 85%;
+        // draw the underline using an image
+        background-image: linear-gradient($color, $color);
+        background-size: 1px $height;
+        background-repeat: repeat-x;
+        background-position: 0% 85%;
 
-    &::selection {
-        text-shadow: shadow-gen(lighten($color-jade, 15%));
-    }
-    &::-moz-selection {
-        text-shadow: shadow-gen(lighten($color-jade, 15%));
+        &::selection {
+            text-shadow: shadow-gen(lighten($color-jade, 15%));
+        }
+        &::-moz-selection {
+            text-shadow: shadow-gen(lighten($color-jade, 15%));
+        }
     }
 }
 

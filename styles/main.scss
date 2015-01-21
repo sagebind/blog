@@ -3,6 +3,7 @@
 @import "vendor/bourbon/bourbon";
 @import "vendor/susy/susy";
 @import "vendor/highlight.js/github";
+@import "vendor/smoothbox";
 
 // import modules
 @import "modules/responsive";
@@ -16,6 +17,7 @@
 @import "partials/header";
 @import "partials/footer";
 @import "partials/content";
+@import "partials/images";
 @import "partials/buttons";
 @import "partials/code";
 @import "partials/social-icons";

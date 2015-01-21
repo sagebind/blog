@@ -14,40 +14,6 @@ article {
     margin-bottom: 3rem;
 }
 
-main img, main figure {
-    display: block;
-    max-width: 100%;
-}
-
-main :not(figure) > img, main figure {
-    @include rounded;
-    overflow: hidden;
-    margin: 0 auto 2em auto;
-    border: 0.25em solid $color-white-smoke;
-}
-
-figure > figcaption {
-    padding: 1em;
-    text-align: center;
-    font-style: italic;
-    color: $color-midnight;
-    background-color: $color-white-smoke;
-}
-
-.portfolio {
-    @include container;
-
-    figure {
-        @include gallery(6);
-        margin-bottom: 2em;
-
-        @media (max-width: 48rem) {
-            @include gallery(12);
-            float: none;
-        }
-    }
-}
-
 .tag {
     @include theme-media-box;
     display: inline-block;

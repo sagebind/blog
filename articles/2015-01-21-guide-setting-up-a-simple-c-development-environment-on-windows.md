@@ -17,17 +17,17 @@ Some of the editors I would recommend are:
 - Visual Studio Community 2013 ([download](http://www.visualstudio.com/en-us/products/visual-studio-community-vs))
 
 <figure>
-    <img src="/content/images/2015-01-21-sublime-text.png">
+    <a class="sb" href="/content/images/2015-01-21-sublime-text.png"><img src="/content/images/2015-01-21-sublime-text.png"></a>
     <figcaption>Sublime Text 3, a lightning-fast, powerful cross-platform editor that hides behind a sleek interface.</figcaption>
 </figure>
 
 <figure>
-    <img src="/content/images/2015-01-21-notepadplusplus.png">
+    <a class="sb" href="/content/images/2015-01-21-notepadplusplus.png"><img src="/content/images/2015-01-21-notepadplusplus.png"></a>
     <figcaption>Notepad++, a capable Windows-only editor with an easy-to-understand interface and tons of features.</figcaption>
 </figure>
 
 <figure>
-    <img src="/content/images/2015-01-21-visual-studio-community.png">
+    <a class="sb" href="/content/images/2015-01-21-visual-studio-community.png"><img src="/content/images/2015-01-21-visual-studio-community.png"></a>
     <figcaption>Visual Studio Community 2013 Edition, a free version of Microsoft's powerful Visual Studio IDE that supports many languages, compiling, GUI-building, and debugging out of the box.</figcaption>
 </figure>
 
@@ -45,11 +45,11 @@ If you are using Notepad++ or Sublime Text, then you will also need to install [
 
 To install Mingw-w64 for Windows, visit the downloads page [here](http://mingw-w64.sourceforge.net/download.php#mingw-builds) and click on the "SourceForge" link to start the download. After the download is complete, double-click on the file to run the installer. You will probably want to change the installation settings to something similar to the following:
 
-![Mingw-w64 Install Settings](/content/images/2015-01-21-mingw-w64-install-settings.png)
+<a class="sb" href="/content/images/2015-01-21-mingw-w64-install-settings.png"><img src="/content/images/2015-01-21-mingw-w64-install-settings.png"></a>
 
 By default, the installer will install Mingw-w64 into a unique folder for the version downloaded. This is handy if you want to install multiple compiler versions, but isn't necessary for most situations. To make build files simpler, remove the last folder part of the install path. It should look something like this:
 
-![Mingw-w64 Install Path](/content/images/2015-01-21-mingw-w64-install-path.png)
+<a class="sb" href="/content/images/2015-01-21-mingw-w64-install-path.png"><img src="/content/images/2015-01-21-mingw-w64-install-path.png"></a>
 
 After the installation is complete, you should have a Windows-compatible GCC C++ compiler installed and ready to go. If you want to use the compiler from the command line directly, you can. Check out [this quick guide](http://pages.cs.wisc.edu/~beechung/ref/gcc-intro.html) for typical usage, or check [GNU's extensive documentation](https://gcc.gnu.org/onlinedocs/) for details. Keep in mind that the binaries are not added to your `%PATH%` automatically, so you may want to do so manually if you want to call the compiler by hand.
 
@@ -66,7 +66,7 @@ Just download the above script and put it into Sublime Text's package folder. Yo
 
 That's it! Now, to compile a C++ file, just open it in Sublime Text and hit Ctrl+B (or by clicking "Tools > Build"). Out will come an executable `.exe` file with the same name as the main `.cpp` file that you compiled. You can even run the file immediately after compiling by hitting Ctrl+Shift+B. Your program's output will be displayed in the output window at the bottom of Sublime Text.
 
-![Sublime Text 3 Build](/content/images/2015-01-21-sublime-text-build.png)
+<a class="sb" href="/content/images/2015-01-21-sublime-text-build.png"><img src="/content/images/2015-01-21-sublime-text-build.png"></a>
 
 Note that this doesn't work for programs that take input (`std::cin` and the like); you will need to run such programs from the command line or by opening them from file explorer.
 
@@ -75,7 +75,7 @@ Also note that this compiles other `.cpp` files in the same folder as the main f
 ### Notepad++
 Notepad++ doesn't have a way of running build commands built-in, but you can use the standard NppExec plugin to run arbitrary commands. We can use this to run the compiler for us. First, open the plugin manager (Plugins > Plugin Manager > Show Plugin Manager). Find "NppExec" in the "Available" tab, check the checkbox, and click "Install".
 
-![Notepad++ Plugin Manager](/content/images/2015-01-21-notepadplusplus-plugin-manager.png)
+<a class="sb" href="/content/images/2015-01-21-notepadplusplus-plugin-manager.png"><img src="/content/images/2015-01-21-notepadplusplus-plugin-manager.png"></a>
 
 Now we can open the plugin and tell it how to run the compiler. Open NppExec by going to "Plugins > NppExec > Execute" (or the F6 key) and paste in the following code:
 
@@ -87,7 +87,7 @@ Depending on your installation settings, you may need to tweak the first part of
 
 You can save this script to use later by clicking the "Save" button and giving it a name. Pressing the "OK" button will try to compile the currently open file. Now when you are writing your C++ programs, to compile, simply open up your main file, open NppExec, and run the script. Out will come an executable `.exe` file with the same name as the `.cpp` file, which you can run from the command line.
 
-![Notepad++ Build](/content/images/2015-01-21-notepadplusplus-build.png)
+<a class="sb" href="/content/images/2015-01-21-notepadplusplus-build.png"><img src="/content/images/2015-01-21-notepadplusplus-build.png"></a>
 
 Just like the Sublime Text script, this compiles other `.cpp` files in the same folder as the main file but not files in subfolders. Again, if you need to organize files into subfolders, you will need to use the compiler by hand.
 
