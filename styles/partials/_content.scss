@@ -14,10 +14,24 @@ article {
     margin-bottom: 3rem;
 }
 
-img {
+main img, main figure {
     display: block;
     max-width: 100%;
-    margin: 0 auto;
+}
+
+main :not(figure) > img, main figure {
+    @include rounded;
+    overflow: hidden;
+    margin: 0 auto 2em auto;
+    border: 0.25em solid $color-white-smoke;
+}
+
+figure > figcaption {
+    padding: 1em;
+    text-align: center;
+    font-style: italic;
+    color: $color-midnight;
+    background-color: $color-white-smoke;
 }
 
 .portfolio {

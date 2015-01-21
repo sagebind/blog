@@ -79,6 +79,10 @@ p, ul, ol, blockquote, pre {
     direction: ltr;
     text-align: left;
     font-weight: normal;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 
 ul, ol {

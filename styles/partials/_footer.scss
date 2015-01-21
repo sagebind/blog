@@ -12,10 +12,6 @@
     text-align: center;
     margin-bottom: 0.75rem;
 
-    &:last-child {
-        margin-bottom: 0;
-    }
-
     @include respond-to(medium) {
         text-align: left;
     }
