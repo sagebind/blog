@@ -10,7 +10,10 @@ A new year has come; 2014 is gone and 2015 is here. Just like the old year has b
 ## A word about the old design
 Let me explain a little bit why I decided to retire the old design. I don't like to "toot my own horn", as the expression goes, but my former design was pretty slick. I spent months planning, designing, and implementing it. It was really the most effort I ever put into a website design, and gosh I was proud of it then.
 
-![Old design](/content/images/2015-01-08-old-design.png)
+<figure>
+    <a class="sb" href="/content/images/2015-01-08-old-design.png"><img src="/content/images/2015-01-08-old-design.png"></a>
+    <figcaption>The old website design.</figcaption>
+</figure>
 
 It wasn't until afterwards that I decided I wanted a blog, so the blog aspect was kind of shoe-horned into the old website. I had rolled my own article system and posting interface using [Laravel](http://laravel.com)'s model system. I didn't spend much time adapting the design to fit the blog aspect in. The design wasn't much of a blog-friendly design to start with since I didn't originally plan to start a blog. It ended up looking a little out of place; I didn't like it too much and nothing really came of the blog. In fact, I only ever posted twice (you can still read them, I ported them over to the new system). This was probably the main issue with the old site -- I didn't like my blog, so I wasn't motivated to write for it.
 
