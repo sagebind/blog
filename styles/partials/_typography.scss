@@ -51,7 +51,7 @@ body {
 }
 
 @mixin fancy-underline($background-color, $color, $height: 0.0625em) {
-    :not(.no-underline):not(.sb-nav) > & {
+    &:not(.no-underline):not(.sb-nav) {
         // add clip shadow
         text-shadow: shadow-gen($background-color);
 
