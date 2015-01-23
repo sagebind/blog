@@ -1,5 +1,5 @@
 <?php
-Slim\Slim::getInstance()->response->headers->set('Content-Type', 'application/rss+xml');
+Slim\Slim::getInstance()->response->headers->set('Content-Type', 'application/xml; charset=utf-8');
 
 if ($articles) {
     reset($articles);
@@ -22,7 +22,7 @@ if ($articles) {
         $item->addChild('link', $article->getUrl());
         $guid = $item->addChild('guid', $article->getUrl());
         $guid->addAttribute("isPermaLink", 'false');
-        $item->description = "<![CDATA[" . $article->getContent() . "]]>";
+        $item->description = $article->getContent();
         $item->addChild('pubDate', date(DATE_RSS, strtotime($article->getDate())));
     }
 

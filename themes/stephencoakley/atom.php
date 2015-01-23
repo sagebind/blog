@@ -1,5 +1,5 @@
 <?php
-Slim\Slim::getInstance()->response->headers->set('Content-Type', 'application/atom+xml');
+Slim\Slim::getInstance()->response->headers->set('Content-Type', 'application/xml; charset=utf-8');
 
 if ($articles) {
     reset($articles);
@@ -32,7 +32,7 @@ if ($articles) {
         $link->addAttribute("href", $article->getUrl());
         $entry->addChild('id', $article->getUrl());
         $entry->addChild("summary");
-        $entry->summary = "<![CDATA[" . $article->getContent() . "]]>";
+        $entry->summary = $article->getContent();
         $entry->summary->addAttribute("type", "html");
         $entry->addChild('updated', date('c', strtotime($article->getDate())));
     }
