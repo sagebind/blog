@@ -41,7 +41,7 @@ If you are using Visual Studio, then you're done! Visual Studio comes with Micro
 
 There is a catch, though. Microsoft's compiler isn't quite the same as the standard [GNU Compiler Collection](http://gcc.gnu.org) and code that compiles in one may not necessarily compile in another. If you'll need to submit your programs in source code form, for like a school project, you may be better off with using a GCC-like compiler.
 
-If you are using Notepad++ or Sublime Text, then you will also need to install [Mingw-w64](http://mingw-w64.sourceforge.net). There are a couple other C/C++ compilers and ports of GCC for Windows out there, but I've found anything based on MinGW to be standards-supporting and lightweight. Mingw-w64 is a fork of MinGW that distributes compilers in simple installers and includes 64-bit support by default.
+If you are using Notepad++ or Sublime Text, then you will also need to install [Mingw-w64](http://mingw-w64.sourceforge.net). There are a couple other C/C++ compilers and software for running GCC on Windows out there, namely [Cygwin](https://www.cygwin.com/), but I've found anything based on MinGW to be standards-supporting and very lightweight. Mingw-w64 is a fork of MinGW that distributes compilers in simple installers and includes 64-bit support by default.
 
 To install Mingw-w64 for Windows, visit the downloads page [here](http://mingw-w64.sourceforge.net/download.php#mingw-builds) and click on the "SourceForge" link to start the download. After the download is complete, double-click on the file to run the installer. You will probably want to change the installation settings to something similar to the following:
 
