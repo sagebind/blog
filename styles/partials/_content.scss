@@ -34,3 +34,23 @@ article {
         margin-top: -0.25em;
     }
 }
+
+/**
+ * Internet Countdown banner
+ */
+.countdown-banner {
+    margin: -2em -2em 4em -2em;
+    padding: 2em;
+    background-color: #0f1620;
+
+    .content {
+        margin: {
+            top: 0;
+            bottom: 0;
+        }
+    }
+
+    .content > div {
+        display: inline-block;
+    }
+}
