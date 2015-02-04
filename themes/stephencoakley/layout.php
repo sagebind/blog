@@ -56,8 +56,9 @@
             </aside>
 
             <?php echo $content; ?>
-            <hr>
-            <aside class="social-icons">
+
+            <aside class="content social-icons">
+                <hr>
                 <a class="social-icon-twitter no-underline" href="http://bit.ly/codrst-tw"></a>
                 <a class="social-icon-gplus no-underline" href="http://bit.ly/codrst-plus"></a>
                 <a class="social-icon-facebook no-underline" href="http://bit.ly/codrst-fb"></a>
