@@ -3,6 +3,15 @@
 
     <div class="portfolio">
         <figure class="item">
+            <img class="portfolio-item-figure" src="/content/images/uwwintervarsity.jpg" alt="Screenshot of uwwintervarsity.com">
+
+            <figcaption>
+                <p>A website for the <a href="http://www.intervarsity.org">InterVarsity Christian Fellowship</a> chapter at the University of Wisconsin-Whitewater in Whitewater, Wisconsin.</p>
+                <a class="button button-grey" href="http://uwwintervarsity.com" target="_blank">View</a>
+            </figcaption>
+        </figure>
+
+        <figure class="item">
             <img class="portfolio-item-figure" src="/content/images/nccquizzing.jpg" alt="Screenshot of nccquizzing.org">
 
             <figcaption>
