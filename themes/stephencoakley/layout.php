@@ -39,7 +39,7 @@
                 </a>
             </p>
 
-            <p class="bio-text">Disciple of Christ, software developer, PHP enthusiast, techie, guitarist and musician, amateur photographer, lover of literature.</p>
+            <p class="bio-text">Disciple of Christ, software developer, college student, PHP enthusiast, techie, guitarist and musician, amateur photographer, lover of literature.</p>
 
             <nav>
                 <a class="button" href="/">Home</a>
