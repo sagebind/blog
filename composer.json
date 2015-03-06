@@ -19,6 +19,8 @@
         "swiftmailer/swiftmailer": "@stable"
     },
     "require-dev": {
+        "codegyre/robo": "*",
+        "coderstephen/robo-ftp": "~0.1",
         "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
