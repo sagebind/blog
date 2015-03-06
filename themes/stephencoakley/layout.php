@@ -49,12 +49,6 @@
         </header>
 
         <main role="main">
-            <aside class="countdown-banner">
-                <div class="content center">
-                    <div><script src="https://fightforthefuture.github.io/countdown-widget/widget.min.js"></script></div>
-                </div>
-            </aside>
-
             <?php echo $content; ?>
 
             <aside class="content social-icons">
