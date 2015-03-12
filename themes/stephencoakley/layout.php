@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title><?=(isset($global['title'])?$global['title'].' - ':'').$global['site.name']?></title>
+        <title><?=(isset($global['title']) ? $global['title'].' - ' : '').$global['site.name']?></title>
         <meta name="description" content="<?php echo $global['site.description']; ?>">
         <meta name="keywords" content="Stephen Coakley, programming, web development, apps, php">
         <meta name="author" content="<?=$global['author.name']?>">
@@ -65,9 +65,8 @@
         </main>
 
         <footer class="page-footer">
-            <p>Get in touch with me: <a href="mailto:me@stephencoakley.com">me@stephencoakley.com</a></p>
-            <p class="page-copyright">All content and design copyright &copy; Stephen Coakley.</p>
-            <p>Hosted by my lovely provider <a href="http://hostek.com">Hostek.com</a>.</p>
+            <p>Email me at &lt;<a href="mailto:me@stephencoakley.com">me@stephencoakley.com</a>&gt;</p>
+            <p class="page-copyright">&copy; Stephen Coakley 2013-2015.</p>
         </footer>
 
         <script>

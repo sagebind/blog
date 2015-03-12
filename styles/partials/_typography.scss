@@ -184,13 +184,6 @@ a {
     &:hover, &:focus {
         color: lighten($color-jade, 10%);
     }
-
-    &:not(.button):not(.no-underline) {
-        @include fancy-underline($color-white, $color-jade);
-        &:hover, &:focus {
-            @include fancy-underline($color-white, lighten($color-jade, 10%));
-        }
-    }
 }
 
 mark {
