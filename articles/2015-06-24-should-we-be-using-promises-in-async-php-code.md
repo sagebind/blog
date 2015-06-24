@@ -12,7 +12,7 @@ I am currently working on an architectural redesign for [Evflow](http://github.c
 ## We need promises!
 I'd love to talk your ear off about all the exciting, cool new things I have in the works for Evflow (including a better name!), but that is not the subject of this post. Instead, let's consider promises for a moment. For those of you who don't know what a "promise" is, it is like an alternative to callbacks for delayed functions. I'd recommend reading an article such as [this one](http://www.html5rocks.com/en/tutorials/es6/promises/#toc-async) to get up to speed.
 
-Promises have taken the JavaScript world by storm, but what does this have to do with PHP? Well, JavaScript *needs* something like promises to avoid callback hell, since a large number of things in JavaScript are already asynchronous. If we want to create asynchronous systems in PHP, which me and [others as well](https://medium.com/@assertchris/a-case-for-async-php-f33e5e31ebba) are convinced of, it would be prudent to learn from the mistakes of other languages and get it right the first time. Consider the following code:
+Promises have taken the JavaScript world by storm, but what does this have to do with PHP? Well, JavaScript *needs* something like promises to avoid callback hell, since a large number of things in JavaScript are already asynchronous. If we want to create asynchronous systems in PHP, which me and [others as well](https://medium.com/@assertchris/a-case-for-async-php-f33e5e31ebba) are convinced of doing, it would be prudent to learn from the mistakes of other languages and get it right the first time. Consider the following code:
 
 ```php
 $asyncFS = new CoolAsyncFileSystemImpl();
