@@ -2,7 +2,7 @@
     "title" : "Integrating Guzzle 6 Asynchronous Requests with ReactPHP",
     "author": "Stephen Coakley",
     "date": "2015-06-11",
-    "tag": "php, reactphp, guzzle"
+    "tag": "php, async, reactphp, guzzle"
 }
 
 One of my current "toy" side-projects at the moment is [a better PHP API client for Slack](http://github.com/coderstephen/slack-client). There are a handful of incomplete ones already on [Packagist](https://packagist.org/search/?q=slack), but I decided to add another one to the list anyway. It uses [Guzzle](https://github.com/guzzle/guzzle) for making regular API calls, and [PHPWS](https://github.com/Devristo/phpws) (a WebSocket library) for connecting to Slack's real-time messaging API. It's actually a pretty cool project so far, though it still is under construction.
