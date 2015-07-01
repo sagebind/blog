@@ -49,3 +49,7 @@ But are promises really the answer? With things like generators and [coroutines]
 **[Take the survey!](https://stephencoakley.typeform.com/to/FBa4ga)**
 
 I will analyze the survey results and post my response here when the survey ends, which will be in one week from now, on July 1. Feel free to let me know what you think in the comments below.
+
+---
+
+**Update:** I have analyzed and discussed the survey results and posted them [here](/2015/07/01/what-are-coroutines-promises-in-php-survey-results), but the survey is still open if you'd like to take it.
