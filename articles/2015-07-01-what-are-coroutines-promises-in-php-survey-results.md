@@ -31,7 +31,7 @@ And now the question I'd like to address the most in this post: coroutines.
 
 A significant portion of you had never heard of "coroutines". Now this doesn't surprise me, since they are not even close to mainstream in PHP, and they aren't incredibly mainstream outside PHP to my knowledge either. I'd recommend you read [Nikita Popov's article about coroutines](https://nikic.github.io/2012/12/22/Cooperative-multitasking-using-coroutines-in-PHP.html), though it is by no means a gentle introduction, which I have yet to find a good one.
 
-Coroutines not only make writing asynchronous code simpler to read and write (in my opinion), but it also give back the power of exception handling to your code. Last post, I presented the following example code using promises to simplify messy callbacks:
+Coroutines not only make writing asynchronous code simpler to read and write (in my opinion), but it also gives back the power of exception handling to your code. Last post, I presented the following example code using promises to simplify messy callbacks:
 
 ```php
 $asyncFS = new CoolAsyncFileSystemImpl();
