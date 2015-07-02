@@ -40,5 +40,5 @@
         <a class="button" data-color="grey" href="mailto:me@stephencoakley.com">Contact Me</a>
     </p>
 
-    <p>Are you hiring developers through <a href="http://odesk.com" target="_blank">oDesk</a>? View my <a href="http://odesk.com/users/~01050b02e7dfac9e14">oDesk profile</a> and send me an interview request for your project.</p>
+    <p>Are you hiring developers through <a href="http://upwork.com" target="_blank">Upwork</a>? View my <a href="https://www.upwork.com/o/profiles/users/_~01050b02e7dfac9e14/">Upwork profile</a> and send me an interview request for your project.</p>
 </div>
