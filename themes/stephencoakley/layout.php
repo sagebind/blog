@@ -39,7 +39,9 @@
                 </a>
             </p>
 
-            <p class="bio-text">Disciple of Christ, software developer, college student, PHP enthusiast, techie, guitarist and musician, amateur photographer, lover of literature.</p>
+            <p class="bio-text">Disciple of Christ, software developer, and college student. I write about crazy ideas and programming experiences, mostly in web development, terminal-fu, and really low-level cool stuff. I mostly use PHP, C/C++, and all the undiscovered and/or unpopular languages.</p>
+
+            <p>If you don't want to read about awesome things in PHP, you're in the wrong place.</p>
 
             <nav>
                 <a class="button" href="/">Home</a>
