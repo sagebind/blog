@@ -39,7 +39,7 @@
                 </a>
             </p>
 
-            <p class="bio-text">Disciple of Christ, software developer, and college student. I write about crazy ideas and programming experiences, mostly in web development, terminal-fu, and really low-level cool stuff. I mostly use PHP, C/C++, and all the undiscovered and/or unpopular languages.</p>
+            <p class="bio-text">Disciple of Christ, software developer, and college student. I write about my crazy ideas and programming experiences.</p>
 
             <p>If you don't want to read about awesome things in PHP, you're in the wrong place.</p>
 
