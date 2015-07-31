@@ -2,7 +2,7 @@
     "title": "What Are Coroutines? - Promises in PHP Survey Results",
     "author": "Stephen Coakley",
     "date": "2015-07-01",
-    "tag": "php, async"
+    "category": "php"
 }
 
 Hello again! As promised, I am back with this post to share with you the results of my survey about Promises in PHP, as described [in my previous post](/2015/06/24/should-we-be-using-promises-in-async-php). If you want to download a copy of the results, scroll to the bottom of this post where I have a report attached.

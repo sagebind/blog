@@ -21,6 +21,10 @@ article {
     margin-bottom: 3rem;
 }
 
+.postmeta {
+    margin: 0;
+}
+
 .tag {
     @include theme-media-box;
     display: inline-block;

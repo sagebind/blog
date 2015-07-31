@@ -411,6 +411,11 @@ class Textpress
                          case 'atom':
                              $self->allArticles = array_slice($self->allArticles, 0, 10);
                              break;
+                         case 'rss_category':
+                         case 'atom_category':
+                             $self->filterArticles('category', $args[0]);
+                             $self->allArticles = array_slice($self->allArticles, 0, 10);
+                             break;
                          case 'sitemap':
                              $self->setSitemapData();
                              break;
@@ -423,9 +428,9 @@ class Textpress
                          case 'archives':
                              $self->loadArchives($args);
                              break;
-                         case 'category':
                          case 'tag':
-                             $self->slim->view()->appendGlobalData(array("tag" => $args[0]));
+                         case 'category':
+                             $self->slim->view()->appendGlobalData(array("category" => $args[0]));
                              $self->filterArticles($key, $args[0]);
                              break;
 

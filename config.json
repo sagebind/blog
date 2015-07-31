@@ -36,12 +36,8 @@
         },
         "category": {
             "route"    : "/category/:category",
-            "template" : "index"
-        },
-        "tag": {
-            "route"    : "/tag/:tag",
-            "template" : "tag",
-            "title"    : "Blog Posts"
+            "template" : "category",
+            "title"    : "Articles"
         },
         "archives": {
             "route"    : "/archives(/:year(/:month(/:date)))",
@@ -54,7 +50,7 @@
         "blog": {
             "route"    : "/blog",
             "template" : "blog",
-            "title"    : "Blog Posts"
+            "title"    : "Articles"
         },
         "portfolio": {
             "route"    : "/portfolio",
@@ -66,8 +62,18 @@
             "template" : "rss",
             "layout"   : false
         },
+        "rss_category": {
+            "route"    : "/feed/:category/rss(.xml)",
+            "template" : "rss",
+            "layout"   : false
+        },
         "atom": {
             "route"    : "/feed(/atom(.xml))",
+            "template" : "atom",
+            "layout"   : false
+        },
+        "atom_category": {
+            "route"    : "/feed/:category(/atom(.xml))",
             "template" : "atom",
             "layout"   : false
         },

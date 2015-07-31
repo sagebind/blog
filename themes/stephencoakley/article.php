@@ -2,23 +2,23 @@
     <p><a href="/blog"><i class="fa fa-arrow-left"></i> All Articles</a></p>
 
     <article>
+        <h1><?=$article->getTitle()?></h1>
+
         <p class="postmeta"><small>
             <span class="date"><i class="fa fa-calendar-o"></i> <?=$article->getDate($global['date.format'])?></span>
             <span class="author-by"> by </span>
             <span class="author"><?=$article->getAuthor()?$article->getAuthor():$global['author.name']?></span>
-        </small></p>
 
-        <h1><?=$article->getTitle()?></h1>
+            <?php if (!empty($article->getCategories())): ?>
+                <?php $category = array_keys($article->getCategories())[0]; ?>
+                <p class="category">
+                    Posted under <a href="/category/<?=$category?>"><?=$category?></a>
+                </p>
+            <?php endif; ?>
+        </small></p>
 
         <?php echo $article->getContent(); ?>
     </article>
-
-    <p class="tags"><small>
-        <i class="fa fa-tags"></i>
-        <?php foreach ($article->getTags() as $slug => $tag):?>
-            <span class="tag"><a href="/tag/<?=$slug?>"><?=$tag->name?></a></span>
-        <?php endforeach;?>
-    </small></p>
 
     <?php if ($global['disqus.username']): ?>
         <div id="disqus_thread" class="comments"></div>
