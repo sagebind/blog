@@ -1,5 +1,6 @@
 <?php
-Slim\Slim::getInstance()->response->headers->set('Content-Type', 'application/xml; charset=utf-8');
+$slim = Slim\Slim::getInstance();
+$slim->response->headers->set('Content-Type', 'application/xml; charset=utf-8');
 
 if ($articles) {
     reset($articles);
@@ -15,12 +16,12 @@ if ($articles) {
     $link->addAttribute("href", "http://" . $_SERVER['HTTP_HOST']);
 
     $link = $xml->addChild('link');
-    $link->addAttribute("href", "http://" . $_SERVER['HTTP_HOST'] . "/feed/atom.xml");
+    $link->addAttribute("href", "http://" . $_SERVER['HTTP_HOST'] . $slim->request->getResourceUri());
     $link->addAttribute("rel", "self");
 
     $xml->addChild('subtitle', $global['site.title']);
     $xml->addChild('updated', $lastBuildDate);
-    $xml->addChild('id', "http://" . $_SERVER['HTTP_HOST'] . "/feed/atom");
+    $xml->addChild('id', "http://" . $_SERVER['HTTP_HOST'] . $slim->request->getResourceUri());
     $author = $xml->addChild("author");
     $author->addChild("name", "Stephen Coakley");
     $author->addChild("email", "me@stephencoakley.com");
@@ -28,12 +29,22 @@ if ($articles) {
     foreach ($articles as $article) {
         $entry = $xml->addChild('entry');
         $entry->addChild('title', $article->getTitle());
+
         $link = $entry->addChild('link');
         $link->addAttribute("href", $article->getUrl());
+
+        $author = $xml->addChild("author");
+        $author->addChild("name", "Stephen Coakley");
+        $author->addChild("email", "me@stephencoakley.com");
+
         $entry->addChild('id', $article->getUrl());
         $entry->addChild("summary");
         $entry->summary = $article->getContent();
         $entry->summary->addAttribute("type", "html");
+
+        $category = $entry->addChild('category');
+        $category->addAttribute("term", array_keys($article->getCategories())[0]);
+
         $entry->addChild('updated', date('c', strtotime($article->getDate())));
     }
 

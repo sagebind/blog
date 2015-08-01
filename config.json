@@ -57,24 +57,24 @@
             "template" : "portfolio",
             "title"    : "Portfolio"
         },
-        "rss": {
-            "route"    : "/feed/rss(.xml)",
-            "template" : "rss",
-            "layout"   : false
-        },
-        "rss_category": {
-            "route"    : "/feed/:category/rss(.xml)",
-            "template" : "rss",
-            "layout"   : false
-        },
         "atom": {
-            "route"    : "/feed(/atom(.xml))",
+            "route"    : "/feed(.atom)",
             "template" : "atom",
             "layout"   : false
         },
         "atom_category": {
-            "route"    : "/feed/:category(/atom(.xml))",
+            "route"    : "/feed/:category(.atom)",
             "template" : "atom",
+            "layout"   : false
+        },
+        "rss": {
+            "route"    : "/feed(.rss)",
+            "template" : "rss",
+            "layout"   : false
+        },
+        "rss_category": {
+            "route"    : "/feed/:category(.rss)",
+            "template" : "rss",
             "layout"   : false
         },
         "sitemap": {
