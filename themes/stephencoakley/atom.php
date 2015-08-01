@@ -33,7 +33,7 @@ if ($articles) {
         $link = $entry->addChild('link');
         $link->addAttribute("href", $article->getUrl());
 
-        $author = $xml->addChild("author");
+        $author = $entry->addChild("author");
         $author->addChild("name", "Stephen Coakley");
         $author->addChild("email", "me@stephencoakley.com");
 
