@@ -6,7 +6,7 @@
         <meta name="description" content="<?php echo $global['site.description']; ?>">
         <meta name="keywords" content="Stephen Coakley, programming, web development, apps, php">
         <meta name="author" content="<?=$global['author.name']?>">
-        <link href="/feed/atom" type="application/atom+xml" rel="alternate" title="Blog Feed">
+        <link href="http://feeds.feedburner.com/stephencoakley" type="application/atom+xml" rel="alternate" title="Blog Feed">
 
         <link rel="icon" type="image/png" href="<?=$global['assets.prefix']?>/images/favicon.128.png" sizes="128x128">
         <link rel="icon" type="image/png" href="<?=$global['assets.prefix']?>/images/favicon.64.png" sizes="64x64">
@@ -24,6 +24,8 @@
         <!--[if lt IE 9]>
         <script src="<?=$global['assets.prefix']?>/js/html5shiv.min.js"></script>
         <![endif]-->
+        <script type="text/javascript" src="<?=$global['assets.prefix']?>/js/jquery.min.js"></script>
+        <script type="text/javascript" src="<?=$global['assets.prefix']?>/js/smoothbox.jquery2.min.js"></script>
         <script src="<?=$global['assets.prefix']?>/js/highlight.pack.js"></script>
         <script>hljs.initHighlightingOnLoad();</script>
     </head>
@@ -37,7 +39,9 @@
                 </a>
             </p>
 
-            <p class="bio-text">Disciple of Christ, software developer, PHP enthusiast, techie, guitarist and musician, amateur photographer, lover of literature.</p>
+            <p class="bio-text">Disciple of Christ, software developer, and college student. I write about my crazy ideas and programming experiences.</p>
+
+            <p>If you don't want to read about awesome things in PHP, you're in the wrong place.</p>
 
             <nav>
                 <a class="button" href="/">Home</a>
