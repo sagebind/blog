@@ -1,7 +1,14 @@
 RewriteEngine on
 
+# cron jobs
+Redirect 301 /cron/php7-docker-nightly.job https://registry.hub.docker.com/u/coderstephen/php7/trigger/551f4886-4a15-4acf-9a4e-2ccd87eab90d/
+
 # moved pages
 RewriteRule ^blog/post/using-sass-in-php-projects(.*)$ http://stephencoakley.com/2014/05/22/using-sass-in-php-projects$1 [R=301,L]
+
+# moved feeds
+RewriteRule ^feed/atom(\.xml)?$ http://stephencoakley.com/feed [R=301,L]
+RewriteRule ^feed/rss(\.xml)?$ http://stephencoakley.com/feed.rss [R=301,L]
 
 # main router
 RewriteCond %{REQUEST_FILENAME} !-f
