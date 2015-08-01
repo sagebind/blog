@@ -6,7 +6,7 @@
         <meta name="description" content="<?php echo $global['site.description']; ?>">
         <meta name="keywords" content="Stephen Coakley, programming, web development, apps, php">
         <meta name="author" content="<?=$global['author.name']?>">
-        <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Blog Feed">
+        <link href="/feed" type="application/atom+xml" rel="alternate" title="Blog Feed">
 
         <link rel="icon" type="image/png" href="<?=$global['assets.prefix']?>/images/favicon.128.png" sizes="128x128">
         <link rel="icon" type="image/png" href="<?=$global['assets.prefix']?>/images/favicon.64.png" sizes="64x64">
