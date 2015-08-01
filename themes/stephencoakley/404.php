@@ -50,7 +50,7 @@
             <div class="content">
                 <h1>This is not the page you are looking for.</h1>
 
-                <p><img src="<?=$global['assets.prefix']?>/images/yoda.png" style="border: none;"></p>
+                <p><img src="<?=$global['assets.prefix']?>/images/yoda.png" style="border: none;" draggable="false"></p>
 
                 <p class="big">Found, the page you requested, was not. Perhaps, try another link at the top or left you will, hmm? Since came so far, you have, enjoy a random ASCII string, you will.</p>
 
