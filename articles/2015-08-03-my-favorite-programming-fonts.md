@@ -29,6 +29,8 @@ Input is a result of an incredible attention to detail and a feat of great desig
 
 Input offers tons of styles and can even be [customized when you download it](http://input.fontbureau.com/preview/). It has several different weights and styles and supports italics. It also boasts very good support for a wide range of Unicode character and terminal formatting characters.
 
+*Edit: Input Mono supports [Powerline](https://github.com/powerline/powerline) fonts as well and is [officially supported](https://github.com/powerline/fonts/tree/master/InputMono).*
+
 An interesting idea behind Input is the creators' [advocacy for proportional fonts](http://input.fontbureau.com/info/) in coding. Most editors don't seem to handle proportional fonts too well, so Input comes in three flavors: Input Sans, Input Serif, and Input Mono, which is essentially the monospace version of Input Sans. All three are programmer-friendly fonts, but I use Input Mono because the editor support for proportional fonts just isn't there yet.
 
 ## [Inconsolata](http://www.levien.com/type/myfonts/inconsolata.html)
