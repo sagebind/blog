@@ -27,9 +27,7 @@ Input is a result of an incredible attention to detail and a feat of great desig
 
 ![Input Mono](/content/images/2015-08-03-input-mono.png)
 
-Input offers tons of styles and can even be [customized when you download it](http://input.fontbureau.com/preview/). It has several different weights and styles and supports italics. It also boasts very good support for a wide range of Unicode character and terminal formatting characters.
-
-*Edit: Input Mono supports [Powerline](https://github.com/powerline/powerline) fonts as well and is [officially supported](https://github.com/powerline/fonts/tree/master/InputMono).*
+Input offers tons of styles and can even be [customized when you download it](http://input.fontbureau.com/preview/). It has several different weights and styles and supports italics. It also boasts very good support for a wide range of Unicode character and terminal formatting characters, such as [Powerline](https://github.com/powerline/powerline) symbols.
 
 An interesting idea behind Input is the creators' [advocacy for proportional fonts](http://input.fontbureau.com/info/) in coding. Most editors don't seem to handle proportional fonts too well, so Input comes in three flavors: Input Sans, Input Serif, and Input Mono, which is essentially the monospace version of Input Sans. All three are programmer-friendly fonts, but I use Input Mono because the editor support for proportional fonts just isn't there yet.
 
@@ -48,7 +46,7 @@ A modern remake of Courier, Courier Prime is a set of fonts that re-imagine the 
 Supports a wide Unicode range and has an italic variant. The Courier Prime fonts are completely free under the [SIL Open Font License (OFL)](http://scripts.sil.org/OFL).
 
 ## [Monoid](http://larsenwork.com/monoid/)
-If you like really sharp fonts that work well under 9pt, then Monoid is an excellent choice. It is [open source](https://github.com/larsenwork/monoid), supports ligatures, and has several styles and settings that [can be tweaked when when downloading](http://larsenwork.com/monoid/#settings).
+If you like really sharp fonts that work well under 9pt, then Monoid is an excellent choice. It is [open source](https://github.com/larsenwork/monoid), supports ligatures, Powerline symbols, and has several styles and settings that [can be tweaked when when downloading](http://larsenwork.com/monoid/#settings).
 
 ![Monoid](/content/images/2015-08-03-monoid.png)
 
@@ -59,8 +57,12 @@ Hermit is probably the most unique font on this list. It has a personality of it
 
 ![Hermit](/content/images/2015-08-03-hermit.png)
 
-Hermit is open-source, supports the complete Latin-0 character set, and has dedicated [Powerline](https://github.com/powerline/powerline) symbols. It also features three thickness variations to suit your tastes.
+Hermit is open-source, supports the complete Latin-0 character set, and has dedicated Powerline symbols. It also features three thickness variations to suit your tastes.
 
 ---
 
 Of course there are other fonts out there. If I didn't list your favorite, it's not because I think it's bad; these are just my favorites. For the sake of those who are still looking for a font to stick with, please share the fonts you use with others.
+
+---
+
+Edit: Noted that Input Mono and Monoid come with Powerline glyphs.
