@@ -65,4 +65,4 @@ Of course there are other fonts out there. If I didn't list your favorite, it's 
 
 ---
 
-Edit: Noted that Input Mono and Monoid come with Powerline glyphs.
+*Edit: Noted that Input Mono and Monoid come with Powerline glyphs.*
