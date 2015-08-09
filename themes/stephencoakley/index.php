@@ -3,26 +3,12 @@
 
     <p>I am experienced in many areas of computer programming, including web programming, desktop programs, databases, command-line apps, administrative scripts, and software APIs.</p>
 
-    <hr/>
-
-    <h1>Portfolio</h1>
-
-    <div class="portfolio">
-        <figure class="item">
-            <img class="portfolio-item-figure" src="/content/images/uwwintervarsity.jpg" alt="Screenshot of uwwintervarsity.com">
-        </figure>
-
-        <figure class="item">
-            <img class="portfolio-item-figure" src="/content/images/nccquizzing.jpg" alt="Screenshot of nccquizzing.org">
-        </figure>
-    </div>
-
-    <p><a class="button" href="/portfolio">Show Me More <span class="fa fa-arrow-right"></span></a></p>
+    <p>Occasionally, I post thoughtful articles here that usually involve Linux scripting, asynchronous or parallel computing, web development and design, or <a href="http://php.net">PHP</a> in some way.</p>
 
     <hr/>
 
-    <h1>Recent Blog Posts</h1>
-    <?php foreach (new LimitIterator(new ArrayIterator($articles), 0, 2) as $article): ?>
+    <h1>Recent Articles</h1>
+    <?php foreach (new LimitIterator(new ArrayIterator($articles), 0, 3) as $article): ?>
         <article>
             <h2><a href="<?php echo $article->getUrl(); ?>"><?php echo $article->getTitle(); ?></a></h2>
             <p><?php echo $article->getSummary(250); ?>...</p>
@@ -30,6 +16,21 @@
     <?php endforeach; ?>
 
     <p><a class="button" href="/blog">View All <i class="fa fa-arrow-right"></i></a></p>
+
+    <hr/>
+
+    <h1>Portfolio</h1>
+    <div class="portfolio">
+        <figure class="item">
+            <img class="portfolio-item-figure" src="/content/images/loafseven.png" alt="Screenshot of loafseven.com">
+        </figure>
+
+        <figure class="item">
+            <img class="portfolio-item-figure" src="/content/images/uwwintervarsity.jpg" alt="Screenshot of uwwintervarsity.com">
+        </figure>
+    </div>
+
+    <p><a class="button" href="/portfolio">Show Me More <span class="fa fa-arrow-right"></span></a></p>
 
     <hr/>
 

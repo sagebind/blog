@@ -50,6 +50,9 @@ body {
     @return $shadows;
 }
 
+/**
+ * A really fancy underline.
+ */
 @mixin fancy-underline($background-color, $color, $height: 0.0625em) {
     :not(.no-underline):not(.sb-nav) > &:not(.no-underline):not(.sb-nav) {
         // add clip shadow
@@ -66,6 +69,20 @@ body {
         }
         &::-moz-selection {
             text-shadow: shadow-gen(lighten($color-jade, 15%));
+        }
+    }
+}
+
+/**
+ * A more controlled underline, though not as fancy as the one above.
+ */
+@mixin underline($color: currentColor, $height: 0.0625em) {
+    &:not(.no-underline) {
+        background: {
+            image: linear-gradient($color, $color);
+            size: 1px $height;
+            position: 0% 85%;
+            repeat: repeat-x;
         }
     }
 }
@@ -183,6 +200,10 @@ a {
 
     &:hover, &:focus {
         color: lighten($color-jade, 10%);
+    }
+
+    &:not(.button) {
+        @include underline;
     }
 }
 

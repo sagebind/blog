@@ -41,7 +41,7 @@
 
             <p class="bio-text">Disciple of Christ, software developer, and college student. I write about my crazy ideas and programming experiences.</p>
 
-            <p>If you don't want to read about awesome things in PHP, you're in the wrong place.</p>
+            <p class="bio-text">If you don't want to read about awesome things in PHP, you're in the wrong place.</p>
 
             <nav>
                 <a class="button" href="/">Home</a>
@@ -59,9 +59,11 @@
                 <p class="big">Found, the page you requested, was not. Perhaps, try another link at the top or left you will, hmm? Since came so far, you have, enjoy a random ASCII string, you will.</p>
 
                 <pre><code class="json" style="word-wrap:break-word;">"<?php
-                    for ($i = 0; $i < 1000; $i++) {
-                        $char = chr(rand(32, 126));
-                        if ($char !== '<') echo $char;
+                    for ($i = 0; $i < 1000; ++$i) {
+                        $char = chr(mt_rand(32, 126));
+                        if ($char !== '<') {
+                            echo $char;
+                        }
                     }
                 ?>"</code></pre>
 
@@ -71,7 +73,7 @@
             <a class="button top-link fa fa-arrow-up" href="#top"></a>
 
             <footer class="page-footer">
-                <p class="page-copyright">All content and design copyright &copy; Stephen Coakley.</p>
+                <p class="page-copyright">&copy; 2013-2015 Stephen Coakley. All code samples are under the <a href="http://opensource.org/licenses/MIT">MIT license</a>.</p>
                 <p>Hosted by my lovely provider <a href="http://hostek.com">Hostek.com</a>.</p>
             </footer>
         </main>

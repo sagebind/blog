@@ -41,7 +41,7 @@
 
             <p class="bio-text">Disciple of Christ, software developer, and college student. I write about my crazy ideas and programming experiences.</p>
 
-            <p>If you don't want to read about awesome things in PHP, you're in the wrong place.</p>
+            <p class="bio-text">If you don't want to read about awesome things in PHP, you're in the wrong place.</p>
 
             <nav>
                 <a class="button" href="/">Home</a>
@@ -67,8 +67,8 @@
         </main>
 
         <footer class="page-footer">
-            <p>Email me at &lt;<a href="mailto:me@stephencoakley.com">me@stephencoakley.com</a>&gt;</p>
-            <p class="page-copyright">&copy; Stephen Coakley 2013-2015.</p>
+            <p class="page-copyright">&copy; 2013-2015 Stephen Coakley. All code samples are under the <a href="http://opensource.org/licenses/MIT">MIT license</a>.</p>
+            <p>Hosted by my lovely provider <a href="http://hostek.com">Hostek.com</a>.</p>
         </footer>
 
         <script>
