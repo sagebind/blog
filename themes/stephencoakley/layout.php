@@ -68,7 +68,6 @@
 
         <footer class="page-footer">
             <p class="page-copyright">&copy; 2013-2015 Stephen Coakley. All code samples are under the <a href="http://opensource.org/licenses/MIT">MIT license</a>.</p>
-            <p>Hosted by my lovely provider <a href="http://hostek.com">Hostek.com</a>.</p>
         </footer>
 
         <script>
