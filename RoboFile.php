@@ -11,10 +11,15 @@ class RoboFile extends \Robo\Tasks
     public $ftp_username = 'phing';
     public $ftp_password = 'EtTHuoEMv4pnM48';
 
+    private $serverIp = '104.236.61.234';
+
     public function clean()
     {
         $this->say('Cleaning...');
-        $this->_cleanDir('cache');
+
+        if (is_dir('build')) {
+            $this->_cleanDir('build');
+        }
     }
 
     public function fileWatch()
@@ -42,6 +47,34 @@ class RoboFile extends \Robo\Tasks
              ->arg($this->scss_input)
              ->arg($this->scss_output)
              ->run();
+    }
+
+    public function buildDocker()
+    {
+        $this->build();
+
+        $this->taskExec('docker')
+            ->arg('build')
+            ->arg('-t coderstephen/blog')
+            ->arg('.')
+            ->run();
+    }
+
+    public function deployDocker()
+    {
+        $this->buildDocker();
+
+        $this->_mkdir('build');
+        $this->taskExec('docker')
+            ->arg('save')
+            ->arg('-o build/blog.tar')
+            ->arg('coderstephen/blog')
+            ->run();
+
+        $this->taskExec('scp')
+            ->arg('build/blog.tar')
+            ->arg('root@' . $this->serverIp . ':/root/')
+            ->run();
     }
 
     public function deploy()

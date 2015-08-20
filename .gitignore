@@ -1,10 +1,8 @@
 # composer dependencies
-/vendor/
-
-# cache files
-/cache/*
+vendor/
 
 # build files
+build/
 *.buildfile
 /wwwroot/assets/css/*
 

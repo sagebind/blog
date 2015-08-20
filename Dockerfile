@@ -14,7 +14,13 @@ RUN apt-get update && apt-get install -y appserver-dist; \
 
 # Copy website to appserver directory
 ADD appserver.xml /opt/appserver/etc/appserver/appserver.xml
-ADD . /opt/appserver/webapps/blog/
+ADD articles    /opt/appserver/webapps/blog/articles
+ADD src         /opt/appserver/webapps/blog/src
+ADD themes      /opt/appserver/webapps/blog/themes
+ADD vendor      /opt/appserver/webapps/blog/vendor
+ADD wwwroot     /opt/appserver/webapps/blog/wwwroot
+ADD config.json /opt/appserver/webapps/blog/
+RUN chown -R www-data:www-data /opt/appserver/webapps/blog
 
 EXPOSE 80
 
