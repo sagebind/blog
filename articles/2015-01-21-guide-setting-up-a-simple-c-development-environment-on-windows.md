@@ -45,11 +45,11 @@ If you are using Notepad++ or Sublime Text, then you will also need to install [
 
 To install MinGW-w64 for Windows, visit the downloads page [here](http://MinGW-w64.sourceforge.net/download.php#mingw-builds) and click on the "SourceForge" link to start the download. After the download is complete, double-click on the file to run the installer. You will probably want to change the installation settings to something similar to the following:
 
-<a class="sb" href="/content/images/2015-01-21-MinGW-w64-install-settings.png"><img src="/content/images/2015-01-21-MinGW-w64-install-settings.png"></a>
+<a class="sb" href="/content/images/2015-01-21-mingw-w64-install-settings.png"><img src="/content/images/2015-01-21-mingw-w64-install-settings.png"></a>
 
 By default, the installer will install MinGW-w64 into a unique folder for the version downloaded. This is handy if you want to install multiple compiler versions, but isn't necessary for most situations. To make build files simpler, remove the last folder part of the install path. It should look something like this:
 
-<a class="sb" href="/content/images/2015-01-21-MinGW-w64-install-path.png"><img src="/content/images/2015-01-21-MinGW-w64-install-path.png"></a>
+<a class="sb" href="/content/images/2015-01-21-mingw-w64-install-path.png"><img src="/content/images/2015-01-21-mingw-w64-install-path.png"></a>
 
 After the installation is complete, you should have a Windows-compatible GCC C++ compiler installed and ready to go. If you want to use the compiler from the command line directly, you can. Check out [this quick guide](http://pages.cs.wisc.edu/~beechung/ref/gcc-intro.html) for typical usage, or check [GNU's extensive documentation](https://gcc.gnu.org/onlinedocs/) for details. Keep in mind that the binaries are not added to your `%PATH%` automatically, so you may want to do so manually if you want to call the compiler by hand.
 
