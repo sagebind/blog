@@ -28,7 +28,17 @@ class Article
 
     public function dateString(): string
     {
-        return $this->date->format("F n, Y");
+        return $this->date->format('F n, Y');
+    }
+
+    public function dateLongString(): string
+    {
+        return $this->date->format('c');
+    }
+
+    public function dateRssString(): string
+    {
+        return $this->date->format(\DateTime::RSS);
     }
 
     public function author()

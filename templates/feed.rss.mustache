@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+    <channel>
+        <title>Stephen Coakley</title>
+        <link>http://stephencoakley.com</link>
+        <description>Software developer and web designer</description>
+        <pubDate>{{pubDate}}</pubDate>
+
+        {{#articles}}
+        <item>
+            <title>{{title}}</title>
+            <link>http://stephencoakley.com/{{slug}}</link>
+            <guid>http://stephencoakley.com/{{slug}}</guid>
+            <description>
+                {{content}}
+            </description>
+            <pubDate>{{dateRssString}}</pubDate>
+        </item>
+        {{/articles}}
+    </channel>
+</rss>

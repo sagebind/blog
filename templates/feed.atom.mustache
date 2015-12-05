@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>Stephen Coakley</title>
+    <link href="http://stephencoakley.com"/>
+    <link href="http://stephencoakley.com/feed" rel="self"/>
+    <subtitle>Software developer and web designer</subtitle>
+    <updated>{{updated}}</updated>
+    <id>http://stephencoakley.com/feed</id>
+    <author>
+        <name>Stephen Coakley</name>
+        <email>me@stephencoakley.com</email>
+    </author>
+
+    {{#articles}}
+    <entry>
+        <title>{{title}}</title>
+        <link href="http://stephencoakley.com/{{slug}}"/>
+        <author>
+            <name>Stephen Coakley</name>
+            <email>me@stephencoakley.com</email>
+        </author>
+        <id>http://stephencoakley.com/{{slug}}</id>
+        <summary type="html">
+            {{content}}
+        </summary>
+        <category term="{{category}}"/>
+        <updated>{{dateLongString}}</updated>
+    </entry>
+    {{/articles}}
+</feed>

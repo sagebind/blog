@@ -32,6 +32,14 @@ class Application
             $r->addRoute('GET', '/portfolio', actions\PortfolioAction::class);
             $r->addRoute('GET', '/{year:\\d{4}}/{month:\\d{2}}/{day:\\d{2}}/{name}', actions\ArticleAction::class);
             $r->addRoute('GET', '/{asset:(?:content|assets)/[^?]+}[?{query}]', actions\AssetAction::class);
+
+            // Complicated feed routes :/
+            $r->addRoute('GET', '/sitemap.xml', actions\SitemapAction::class);
+            $r->addRoute('GET', '/feed[/{category:[a-z]+}]', actions\AtomFeedAction::class);
+            $r->addRoute('GET', '/feed.atom', actions\AtomFeedAction::class);
+            $r->addRoute('GET', '/feed/{category:[a-z]+}.atom', actions\AtomFeedAction::class);
+            $r->addRoute('GET', '/feed.rss', actions\RssFeedAction::class);
+            $r->addRoute('GET', '/feed/{category:[a-z]+}.rss', actions\RssFeedAction::class);
         });
 
         $this->server = new Server(function ($request, $socket) {
@@ -85,14 +93,6 @@ class Application
     }
 
     private function handleRequest(RequestInterface $request, SocketInterface $socket): \Generator {
-        printf(
-            "Hello to %s:%d from %s:%d!\n",
-            $socket->getRemoteAddress(),
-            $socket->getRemotePort(),
-            $socket->getLocalAddress(),
-            $socket->getLocalPort()
-        );
-
         $dispatched = $this->dispatcher->dispatch(
             $request->getMethod(),
             $request->getRequestTarget()
