@@ -2,10 +2,4 @@
 vendor/
 
 # build files
-build/
-*.buildfile
-/wwwroot/assets/css/*
-
-# ide files
-*.sublime-project
-*.sublime-workspace
+/static/assets/css/*

@@ -2,8 +2,6 @@
 
 class RoboFile extends \Robo\Tasks
 {
-    use RoboFtp\FtpDeploy;
-
     public $scss_input = 'styles/main.scss';
     public $scss_output = 'wwwroot/assets/css/style.css';
     public $scss_style = 'compressed';

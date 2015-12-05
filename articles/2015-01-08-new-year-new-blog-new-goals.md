@@ -1,9 +1,9 @@
-{
-    "title" : "New Year, New Blog, New Goals",
-    "author": "Stephen Coakley",
-    "date": "2015-01-08",
-    "category": "life"
-}
+title       = "New Year, New Blog, New Goals"
+author      = "Stephen Coakley"
+date        = "2015-01-08"
+category    = "life"
+
+---
 
 A new year has come; 2014 is gone and 2015 is here. Just like the old year has been retired, I've decided to retire my old website and bring an entirely new redesign live. Now I am not really into the whole "New Years Resolution" concept, but the idea of starting fresh on a blank slate has merit. I had been meditating on this for a few weeks and concluded that I really need a fresh start in many areas of my life; this blog is just one of them.
 

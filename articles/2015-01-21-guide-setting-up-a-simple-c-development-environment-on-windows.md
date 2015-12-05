@@ -1,9 +1,9 @@
-{
-    "title" : "Guide: Setting Up A Simple C++ Development Environment On Windows",
-    "author": "Stephen Coakley",
-    "date": "2015-01-21",
-    "category": "cplusplus"
-}
+title       = "Guide: Setting Up A Simple C++ Development Environment On Windows"
+author      = "Stephen Coakley"
+date        = "2015-01-21"
+category    = "cplusplus"
+
+---
 
 This is a guide for people just starting out with C++ and need an easy way to write and run C++ programs on their Windows machine. If that sounds like you, then hopefully this guide will be of some help to you.
 

@@ -1,8 +1,0 @@
-{
-	"title": "Test article",
-	"date": "06-02-2012",
-	"slug": "test-article",
-	"tag": "test"
-}
-
-Test article content

@@ -1,1 +1,0 @@
-From template <?php echo $test; ?>.

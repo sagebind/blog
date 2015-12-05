@@ -1,0 +1,46 @@
+{{<layout}}
+{{$content}}
+<div class="content">
+    <p><em class="big">Hello there.</em> I'm a software developer based in Wisconsin. I design and develop websites and web apps, program applications, and code awesome projects.</p>
+
+    <p>I am experienced in many areas of computer programming, including web programming, desktop programs, databases, command-line apps, administrative scripts, and software APIs.</p>
+
+    <p>Occasionally, I post thoughtful articles here that usually involve Linux scripting, asynchronous or parallel computing, web development and design, or <a href="http://php.net">PHP</a> in some way.</p>
+
+    <hr/>
+
+    <h1>Recent Articles</h1>
+    {{#articles}}
+        {{>article-summary}}
+    {{/articles}}
+
+    <p><a class="button" href="/blog">View All <i class="fa fa-arrow-right"></i></a></p>
+
+    <hr/>
+
+    <h1>Portfolio</h1>
+    <div class="portfolio">
+        <figure class="item">
+            <img class="portfolio-item-figure" src="/content/images/loafseven.png" alt="Screenshot of loafseven.com">
+        </figure>
+
+        <figure class="item">
+            <img class="portfolio-item-figure" src="/content/images/uwwintervarsity.jpg" alt="Screenshot of uwwintervarsity.com">
+        </figure>
+    </div>
+
+    <p><a class="button" href="/portfolio">Show Me More <span class="fa fa-arrow-right"></span></a></p>
+
+    <hr/>
+
+    <h1>Contact Me</h1>
+    <p><em class="big">Like what you see? Shoot me an email.</em> If you have a cool project you want me to work on, just let me know the name of the project and what my role would be in your message. Are you a non-profit organization with an aging website that needs redesigned? Send me an email, and we'll talk.</p>
+
+    <p class="center">
+        <a class="button" data-color="grey" href="mailto:me@stephencoakley.com">Contact Me</a>
+    </p>
+
+    <p>Are you hiring developers through <a href="http://upwork.com" target="_blank">Upwork</a>? View my <a href="https://www.upwork.com/o/profiles/users/_~01050b02e7dfac9e14/">Upwork profile</a> and send me an interview request for your project.</p>
+</div>
+{{/content}}
+{{/layout}}

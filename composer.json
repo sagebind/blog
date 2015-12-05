@@ -1,35 +1,20 @@
 {
-    "name": "shameerc/textpress",
-    "type": "application",
-    "keywords": ["blog","flatfile","markdown"],
-    "license": "MIT",
-    "version": "2.0.0",
-    "description": "A flat-file blog engine for PHP",
-    "homepage": "http://textpress.shameerc.com",
-    "authors": [
-        {
-            "name": "Shameer C",
-            "homepage": "http://blog.shameerc.com"
-        }
-    ],
     "require": {
-        "php": ">=5.3.3",
-        "michelf/php-markdown" : "1.4.*",
-        "slim/slim": ">=2.3",
-        "swiftmailer/swiftmailer": "@stable"
+        "php": ">=5.6.1",
+        "icicleio/http": "^0.2.1",
+        "phly/phly-mustache": "^2.0",
+        "league/commonmark": "^0.12.0",
+        "evenement/evenement": "^2.0",
+        "nikic/fast-route": "^0.6.0",
+        "yosymfony/toml": "^0.3.3",
+        "dflydev/apache-mime-types": "^1.0"
     },
     "require-dev": {
-        "codegyre/robo": "*",
-        "coderstephen/robo-ftp": "~0.1",
-        "phpunit/phpunit": "3.7.*"
+        "codegyre/robo": "*"
     },
     "autoload": {
-        "psr-0": {
-            "Coderstephen": "src",
-            "Textpress" : "src/shameerc"
-        },
         "psr-4": {
-            "Textpress\\": "tests/src"
+            "coderstephen\\blog\\": "src"
         }
     }
 }
