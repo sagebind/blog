@@ -16,9 +16,11 @@ Running the application server couldn't be easier. It is as simple as executing
 By default the server will listen on port `8080`.
 
 ## Building
-The site uses [SASS stylesheets](http://sass-lang.org), so before you can view the site properly, you will need to compile the assets. This can be done with
+The site uses [Sass stylesheets](http://sass-lang.org), so before you can view the site properly, you will need to compile the assets. This can be done with
 
     $ vendor/bin/robo build
+
+You will need to have Sass installed first for this to work. See [their website](http://sass-lang.com) for installation instructions.
 
 This site runs as a [Docker](https://www.docker.com) container in production. To build the appropriate container, you can simply run
 
