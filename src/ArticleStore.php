@@ -13,6 +13,11 @@ class ArticleStore implements \IteratorAggregate
     private $commonMarkConverter;
     private $path;
 
+    /**
+     * Creates a new article store.
+     *
+     * @param string $path The path to the directory containing the article flat files.
+     */
     public function __construct(string $path)
     {
         $this->cache = new MemoryCache();
@@ -59,8 +64,15 @@ class ArticleStore implements \IteratorAggregate
         return new \ArrayIterator(array_reverse($articles));
     }
 
+    /**
+     * Loads an article by its file name.
+     *
+     * @param  string  $name The file name.
+     * @return Article       The parsed article.
+     */
     private function getArticleFromFile(string $name): Article
     {
+        // Check for a cache hit first.
         if ($this->cache->has($name)) {
             return $this->cache->get($name);
         }
@@ -70,6 +82,7 @@ class ArticleStore implements \IteratorAggregate
             throw new \Exception('The article "' . $path . '" does not exist.');
         }
 
+        // This is blocking, but hopefully it only happens once.
         $data = file_get_contents($path);
 
         // Parse the article file into metatdata header and contents.

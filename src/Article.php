@@ -1,6 +1,9 @@
 <?php
 namespace coderstephen\blog;
 
+/**
+ * Value object for an article.
+ */
 class Article
 {
     private $metatdata;
@@ -8,6 +11,9 @@ class Article
     private $content;
     private $slug;
 
+    /**
+     * Creates a new article object from its values.
+     */
     public function __construct(array $metatdata, string $content, string $slug)
     {
         $this->metatdata = $metatdata;
