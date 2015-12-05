@@ -14,8 +14,8 @@ ADD templates       /app/templates
 ADD composer.json   /app/composer.json
 ADD composer.lock   /app/composer.lock
 
-RUN cd /app
-    && curl -sS https://getcomposer.org/installer | php
+RUN cd /app \
+    && curl -sS https://getcomposer.org/installer | php \
     && php composer.phar install
 
 EXPOSE 8080
