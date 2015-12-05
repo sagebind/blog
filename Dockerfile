@@ -1,33 +1,18 @@
-FROM debian:8
+FROM php:7-cli
 MAINTAINER Stephen Coakley <me@stephencoakley.com>
 
-RUN apt-get update && apt-get install -y \
-    curl \
-    php5-cli \
-    php5-fpm
+RUN docker-php-ext-configure mbstring \
+    && docker-php-ext-install mbstring
 
-# Install appserver.io
-RUN echo "deb http://deb.appserver.io/ jessie main" > /etc/apt/sources.list.d/appserver.list && \
-    curl http://deb.appserver.io/appserver.gpg -s -S | apt-key add -
-RUN apt-get update && apt-get install -y appserver-dist; \
-    chmod +x /etc/init.d/appserver*
+RUN mkdir /app
 
-# Copy website to appserver directory
-ADD appserver.xml /opt/appserver/etc/appserver/appserver.xml
-ADD articles    /opt/appserver/webapps/blog/articles
-ADD src         /opt/appserver/webapps/blog/src
-ADD themes      /opt/appserver/webapps/blog/themes
-ADD vendor      /opt/appserver/webapps/blog/vendor
-ADD wwwroot     /opt/appserver/webapps/blog/wwwroot
-ADD config.json /opt/appserver/webapps/blog/
-RUN chown -R www-data:www-data /opt/appserver/webapps/blog
+ADD articles    /app/articles
+ADD bin         /app/bin
+ADD src         /app/src
+ADD static      /app/static
+ADD templates   /app/templates
+ADD vendor      /app/vendor
 
-EXPOSE 80
+EXPOSE 8080
 
-# Create a startup script to start the web server
-ADD start.sh /opt/appserver/start.sh
-RUN chmod +x /opt/appserver/start.sh
-CMD ["/opt/appserver/start.sh"]
-
-# Clean up extra space
-RUN apt-get clean && rm -rf /tmp/* /var/tmp/*
+ENTRYPOINT ["/app/bin/server"]
