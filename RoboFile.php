@@ -43,7 +43,7 @@ class RoboFile extends \Robo\Tasks
 
         $this->taskExec('docker')
             ->arg('build')
-            ->arg('-t coderstephen/blog')
+            ->arg('-t stephencoakley.com')
             ->arg('.')
             ->run();
     }
@@ -56,7 +56,7 @@ class RoboFile extends \Robo\Tasks
         $this->taskExec('docker')
             ->arg('save')
             ->arg('-o build/blog.tar')
-            ->arg('coderstephen/blog')
+            ->arg('stephencoakley.com')
             ->run();
 
         $this->taskExec('scp')
