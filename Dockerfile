@@ -6,12 +6,17 @@ RUN docker-php-ext-configure mbstring \
 
 RUN mkdir /app
 
-ADD articles    /app/articles
-ADD bin         /app/bin
-ADD src         /app/src
-ADD static      /app/static
-ADD templates   /app/templates
-ADD vendor      /app/vendor
+ADD articles        /app/articles
+ADD bin             /app/bin
+ADD src             /app/src
+ADD static          /app/static
+ADD templates       /app/templates
+ADD composer.json   /app/composer.json
+ADD composer.lock   /app/composer.lock
+
+RUN cd /app
+    && curl -sS https://getcomposer.org/installer | php
+    && php composer.phar install
 
 EXPOSE 8080
 
