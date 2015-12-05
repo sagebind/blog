@@ -1,8 +1,10 @@
 FROM php:7-cli
 MAINTAINER Stephen Coakley <me@stephencoakley.com>
 
-RUN docker-php-ext-configure mbstring zip \
-    && docker-php-ext-install mbstring zip
+RUN docker-php-ext-configure mbstring \
+    && docker-php-ext-install mbstring \
+    && docker-php-ext-configure zip \
+    && docker-php-ext-install zip
 
 RUN mkdir /app
 
