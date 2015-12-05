@@ -5,11 +5,6 @@ class RoboFile extends \Robo\Tasks
     public $scss_input = 'styles/main.scss';
     public $scss_output = 'static/assets/css/style.css';
     public $scss_style = 'compressed';
-    public $ftp_host = 'stephencoakley.com';
-    public $ftp_username = 'phing';
-    public $ftp_password = 'EtTHuoEMv4pnM48';
-
-    private $serverIp = '104.236.61.234';
 
     public function fileWatch()
     {
