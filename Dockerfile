@@ -13,7 +13,6 @@ ADD src             /app/src
 ADD static/assets   /app/static/assets
 ADD styles          /app/styles
 ADD templates       /app/templates
-ADD vendor          /app/vendor
 ADD composer.json   /app/composer.json
 ADD composer.lock   /app/composer.lock
 ADD RoboFile.php    /app/RoboFile.php
