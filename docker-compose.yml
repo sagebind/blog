@@ -6,3 +6,4 @@ app:
     volumes:
         - /srv/www/blog/articles:/app/articles
         - /srv/www/blog/static/content:/app/static/content
+    restart: always
