@@ -3,7 +3,4 @@ app:
     container_name: stephencoakley.com
     ports:
         - "127.0.0.1:8001:8080"
-    volumes:
-        - /srv/www/blog/articles:/app/articles
-        - /srv/www/blog/static/content:/app/static/content
     restart: always

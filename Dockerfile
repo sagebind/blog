@@ -6,11 +6,10 @@ RUN apt-get update \
     && docker-php-ext-install zip \
     && docker-php-ext-install mbstring
 
-RUN mkdir -p /app/static
-
+ADD articles        /app/articles
 ADD bin             /app/bin
 ADD src             /app/src
-ADD static/assets   /app/static/assets
+ADD static          /app/static
 ADD styles          /app/styles
 ADD templates       /app/templates
 ADD composer.json   /app/composer.json
@@ -21,8 +20,6 @@ WORKDIR /app
 RUN curl -sS https://getcomposer.org/installer | php \
     && php composer.phar install \
     && vendor/bin/robo build
-
-VOLUME ["/app/articles", "/app/static/content"]
 
 EXPOSE 8080
 
