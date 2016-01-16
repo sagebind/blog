@@ -1,9 +1,9 @@
-title       = "Designing Color Palettes Better with Gpick"
-author      = "Stephen Coakley"
-date        = "2014-09-29"
-category    = "web design"
-
----
++++
+title = "Designing Color Palettes Better with Gpick"
+author = "Stephen Coakley"
+date = "2014-09-29"
+category = "web design"
++++
 
 When you are designing a website, colors are your bread and butter. Layout, balance, and organization are all important, but if your colors are bland, flashy, or poorly coordinated, then all your work will have been for naught. This applies to pretty much any other kind of design as well as web design. Great color schemes can make or break a website design, and a great color picker should be a tool that every designer should have in their arsenal even if you only use it occasionally.
 

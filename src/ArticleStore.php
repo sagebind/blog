@@ -85,10 +85,15 @@ class ArticleStore implements \IteratorAggregate
         // This is blocking, but hopefully it only happens once.
         $data = file_get_contents($path);
 
-        // Parse the article file into metatdata header and contents.
-        $pos = strpos($data, '---');
-        $metatdata = substr($data, 0, $pos);
-        $contents = ltrim(substr($data, $pos + 3));
+        // If a TOML front matter block is given, parse the contained metadata.
+        if (strpos($data, '+++') === 0) {
+            $data = substr($data, 3);
+            $pos = strpos($data, '+++');
+            $metatdata = substr($data, 0, $pos);
+            $contents = ltrim(substr($data, $pos + 3));
+        } else {
+            $contents = $data;
+        }
 
         // Parse header into an array of options.
         $metatdata = Toml::parse($metatdata);
