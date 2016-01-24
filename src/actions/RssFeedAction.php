@@ -1,6 +1,7 @@
 <?php
 namespace coderstephen\blog\actions;
 
+use Carbon\Carbon;
 use Icicle\Http\Message\RequestInterface;
 use Icicle\Http\Message\Response;
 use Icicle\Stream\MemorySink;
@@ -16,7 +17,7 @@ class RssFeedAction extends Action
         }
 
         $html = $this->app->getRenderer()->render('feed.rss', [
-            'pubDate' => date(\DateTime::RSS),
+            'pubDate' => Carbon::now(),
             'articles' => $articles,
         ]);
 

@@ -6,7 +6,8 @@
         "league/commonmark": "^0.12.0",
         "nikic/fast-route": "^0.6.0",
         "phly/phly-mustache": "^2.0",
-        "yosymfony/toml": "^0.3.3"
+        "yosymfony/toml": "^0.3.3",
+        "nesbot/carbon": "^1.21"
     },
     "require-dev": {
         "codegyre/robo": "*"

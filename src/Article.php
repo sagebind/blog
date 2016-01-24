@@ -1,25 +1,37 @@
 <?php
 namespace coderstephen\blog;
 
+use Carbon\Carbon;
+use League\CommonMark\DocParser;
+use League\CommonMark\Environment;
+use League\CommonMark\HtmlRenderer;
+
+
 /**
  * Value object for an article.
  */
 class Article
 {
-    private $metatdata;
-    private $date;
-    private $content;
-    private $slug;
+    protected $document;
+    protected $metatdata;
+    protected $date;
+    protected $slug;
+    private $renderer;
 
     /**
      * Creates a new article object from its values.
      */
-    public function __construct(array $metatdata, string $content, string $slug)
+    public function __construct(array $metatdata, string $text, string $slug)
     {
         $this->metatdata = $metatdata;
-        $this->date = new \DateTimeImmutable($this->metatdata['date'] ?? 'now');
-        $this->content = $content;
+        $this->date = new Carbon($this->metatdata['date'] ?? 'now');
         $this->slug = $slug;
+
+        // Parse the Markdown document.
+        $environment = Environment::createCommonMarkEnvironment();
+        $parser = new DocParser($environment);
+        $this->renderer = new HtmlRenderer($environment);
+        $this->document = $parser->parse($text);
     }
 
     public function title(): string
@@ -27,24 +39,14 @@ class Article
         return $this->metatdata['title'];
     }
 
-    public function date(): \DateTimeImmutable
+    public function date(): Carbon
     {
         return $this->date;
     }
 
     public function dateString(): string
     {
-        return $this->date->format('F n, Y');
-    }
-
-    public function dateLongString(): string
-    {
-        return $this->date->format('c');
-    }
-
-    public function dateRssString(): string
-    {
-        return $this->date->format(\DateTime::RSS);
+        return $this->date->format('F j, Y');
     }
 
     public function author()
@@ -59,12 +61,23 @@ class Article
 
     public function summary($length = 250): string
     {
-        return preg_replace('/\s+?(\S+)?$/', '', substr(strip_tags($this->content), 0, $length));
+        $html = $this->renderer->renderBlock($this->document->firstChild());
+        $stripped = strip_tags($html);
+
+        if (strlen($stripped) <= $length) {
+            return $stripped;
+        }
+
+        while ($stripped[$length] !== ' ') {
+            --$length;
+        }
+
+        return substr($stripped, 0, $length) . '...';
     }
 
-    public function content(): string
+    public function text(): string
     {
-        return $this->content;
+        return $this->renderer->renderBlock($this->document);
     }
 
     public function slug(): string

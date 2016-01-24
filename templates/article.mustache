@@ -9,7 +9,7 @@
         <h1>{{article.title}}</h1>
 
         <p class="postmeta"><small>
-            <span class="date"><i class="fa fa-calendar-o"></i> {{article.dateString}}</span>
+            <span class="date">{{article.dateString}}</span>
             <span class="author-by"> by </span>
             <span class="author">{{article.author}}</span>
 
@@ -20,7 +20,7 @@
             {{/article.category}}
         </small></p>
 
-        {{{article.content}}}
+        {{{article.text}}}
     </article>
 
     <div id="disqus_thread" class="comments"></div>

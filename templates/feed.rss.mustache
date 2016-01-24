@@ -4,7 +4,7 @@
         <title>Stephen Coakley</title>
         <link>http://stephencoakley.com</link>
         <description>Software developer and web designer</description>
-        <pubDate>{{pubDate}}</pubDate>
+        <pubDate>{{pubDate.toRssString}}</pubDate>
 
         {{#articles}}
         <item>
@@ -14,7 +14,7 @@
             <description>
                 {{content}}
             </description>
-            <pubDate>{{dateRssString}}</pubDate>
+            <pubDate>{{date.toRssString}}</pubDate>
         </item>
         {{/articles}}
     </channel>

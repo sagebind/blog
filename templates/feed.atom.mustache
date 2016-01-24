@@ -4,7 +4,7 @@
     <link href="http://stephencoakley.com"/>
     <link href="http://stephencoakley.com/feed" rel="self"/>
     <subtitle>Software developer and web designer</subtitle>
-    <updated>{{updated}}</updated>
+    <updated>{{updated.toAtomString}}</updated>
     <id>http://stephencoakley.com/feed</id>
     <author>
         <name>Stephen Coakley</name>
@@ -24,7 +24,7 @@
             {{content}}
         </summary>
         <category term="{{category}}"/>
-        <updated>{{dateLongString}}</updated>
+        <updated>{{date.toAtomString}}</updated>
     </entry>
     {{/articles}}
 </feed>

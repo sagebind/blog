@@ -1,7 +1,7 @@
 <?php
 namespace coderstephen\blog;
 
-use League\CommonMark\CommonMarkConverter;
+use Carbon\Carbon;
 use Yosymfony\Toml\Toml;
 
 /**
@@ -21,7 +21,6 @@ class ArticleStore implements \IteratorAggregate
     public function __construct(string $path)
     {
         $this->cache = new MemoryCache();
-        $this->commonMarkConverter = new CommonMarkConverter();
         $this->path = $path;
     }
 
@@ -50,18 +49,24 @@ class ArticleStore implements \IteratorAggregate
      * Gets an iterator that iterates over each article.
      *
      * This list is never cached.
+     *
+     * @param bool $unpublished Whether articles not yet published should be fetched.
      */
-    public function getIterator(): \Iterator
+    public function getIterator($unpublished = false): \Iterator
     {
-        $articles = [];
+        $articles = new \SplDoublyLinkedList();
 
         foreach (new \GlobIterator($this->path . '/*.md') as $file) {
             if ($file->isFile()) {
-                $articles[] = $this->getArticleFromFile($file->getFilename());
+                $article = $this->getArticleFromFile($file->getFilename());
+
+                if ($unpublished || !$article->date()->isFuture()) {
+                    $articles->unshift($article);
+                }
             }
         }
 
-        return new \ArrayIterator(array_reverse($articles));
+        return new \IteratorIterator($articles);
     }
 
     /**
@@ -97,9 +102,6 @@ class ArticleStore implements \IteratorAggregate
 
         // Parse header into an array of options.
         $metatdata = Toml::parse($metatdata);
-
-        // Parse contents Markdown into HTML.
-        $contents = $this->commonMarkConverter->convertToHtml($contents);
 
         // Parse the slug.
         $slug = str_replace('-', '/', substr($name, 0, 11)) . substr($name, 11, -3);

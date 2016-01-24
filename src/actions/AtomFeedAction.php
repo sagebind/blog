@@ -1,6 +1,7 @@
 <?php
 namespace coderstephen\blog\actions;
 
+use Carbon\Carbon;
 use Icicle\Http\Message\RequestInterface;
 use Icicle\Http\Message\Response;
 use Icicle\Stream\MemorySink;
@@ -16,7 +17,7 @@ class AtomFeedAction extends Action
         }
 
         $html = $this->app->getRenderer()->render('feed.atom', [
-            'updated' => date('c'),
+            'updated' => Carbon::now(),
             'articles' => $articles,
         ]);
 
