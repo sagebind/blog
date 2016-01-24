@@ -3,6 +3,7 @@ namespace coderstephen\blog;
 
 use FastRoute;
 use Icicle\Http\Message\RequestInterface;
+use Icicle\Http\Message\Response;
 use Icicle\Http\Server\Server;
 use Icicle\Loop;
 use Icicle\Socket\SocketInterface;
@@ -81,23 +82,11 @@ class Application
 
     /**
      * Runs the application.
-     *
-     * Note that this method takes control of running the event loop. This is necessary
-     * so that the server can recover from runtime errors and restart itself.
-     *
-     * Also, yeah, I'm using goto for, uh, *coughs* performance reasons. Shut up.
      */
     public function run(int $port)
     {
         $this->server->listen($port);
-
-        loop:
-        try {
-            Loop\run();
-        } catch (\Throwable $e) {
-            echo "Server crashed!\n" . $e . "\nResarting...\n";
-            goto loop;
-        }
+        Loop\run();
     }
 
     /**
