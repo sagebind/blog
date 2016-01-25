@@ -1,7 +1,7 @@
 +++
 title = "Designing Color Palettes Better with Gpick"
 author = "Stephen Coakley"
-date = "2014-09-29"
+date = "2014-09-29 America/Chicago"
 category = "web design"
 +++
 

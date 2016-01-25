@@ -1,7 +1,7 @@
 +++
 title = "Integrating Guzzle 6 Asynchronous Requests with ReactPHP"
 author = "Stephen Coakley"
-date = "2015-06-11"
+date = "2015-06-11 America/Chicago"
 category = "php"
 +++
 

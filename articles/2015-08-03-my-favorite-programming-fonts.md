@@ -1,7 +1,7 @@
 +++
 title = "My Favorite Programming Fonts"
 author = "Stephen Coakley"
-date = "2015-08-03"
+date = "2015-08-03 America/Chicago"
 category = "workflow"
 +++
 

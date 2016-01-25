@@ -1,7 +1,7 @@
 +++
 title = "Using Sass in PHP Projects"
 author = "Stephen Coakley"
-date = "2014-05-22"
+date = "2014-05-22 America/Chicago"
 category = "php"
 +++
 
