@@ -1,77 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>{{$title}}Stephen Coakley{{/title}}</title>
-        <meta name="description" content="I'm a software developer based in Wisconsin">
-        <meta name="keywords" content="Stephen Coakley, programming, web development, apps, php">
-        <meta name="author" content="Stephen Coakley">
-        <link href="http://feeds.feedburner.com/stephencoakley" type="application/atom+xml" rel="alternate" title="Blog Feed">
 
-        <link rel="icon" type="image/png" href="/assets/images/favicon.128.png" sizes="128x128">
-        <link rel="icon" type="image/png" href="/assets/images/favicon.64.png" sizes="64x64">
-        <link rel="icon" type="image/png" href="/assets/images/favicon.48.png" sizes="48x48">
-        <link rel="icon" type="image/png" href="/assets/images/favicon.32.png" sizes="32x32">
-        <link rel="shortcut icon" href="/assets/imagesfavicon.ico">
-        <link rel="icon" type="image/png" href="/assets/images/favicon.16.png" sizes="16x16">
-        <link rel="apple-touch-icon" href="/assets/images/favicon.128.png">
-        <meta name="msapplication-TileColor" content="#D83434">
-        <meta name="msapplication-TileImage" content="/assets/images/favicon.128.png">
+<head>
+    <meta charset="utf-8">
+    <title>{{$title}}Stephen Coakley{{/title}}
+    </title>
+    <meta name="description" content="I'm a software developer based in Wisconsin">
+    <meta name="keywords" content="Stephen Coakley, programming, web development, apps, php">
+    <meta name="author" content="Stephen Coakley">
+    <link href="http://feeds.feedburner.com/stephencoakley" type="application/atom+xml" rel="alternate" title="Blog Feed">
 
-        <meta name="viewport" content="initial-scale=1">
-        <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="icon" type="image/png" href="/assets/images/favicon.128.png" sizes="128x128">
+    <link rel="icon" type="image/png" href="/assets/images/favicon.64.png" sizes="64x64">
+    <link rel="icon" type="image/png" href="/assets/images/favicon.48.png" sizes="48x48">
+    <link rel="icon" type="image/png" href="/assets/images/favicon.32.png" sizes="32x32">
+    <link rel="shortcut icon" href="/assets/imagesfavicon.ico">
+    <link rel="icon" type="image/png" href="/assets/images/favicon.16.png" sizes="16x16">
+    <link rel="apple-touch-icon" href="/assets/images/favicon.128.png">
+    <meta name="msapplication-TileColor" content="#D83434">
+    <meta name="msapplication-TileImage" content="/assets/images/favicon.128.png">
 
-        <!--[if lt IE 9]>
+    <meta name="viewport" content="initial-scale=1">
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+    <!--[if lt IE 9]>
         <script src="/assets/js/html5shiv.min.js"></script>
         <![endif]-->
-        <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
-        <script type="text/javascript" src="/assets/js/smoothbox.jquery2.min.js"></script>
-        <script src="/assets/js/highlight.pack.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script>
-    </head>
+    <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/js/smoothbox.jquery2.min.js"></script>
+    <script src="/assets/js/highlight.pack.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+</head>
 
-    <body id="top">
-        <header class="page-header">
-            <p class="center">
-                <a class="site-logo no-underline" href="/" rel="home">
-                    <img src="/assets/images/logo-white.svg">
-                    <span class="site-logo-text">Stephen Coakley</span>
-                </a>
-            </p>
+<body id="top">
+    <header class="page-header">
+        <p class="center">
+            <a class="site-logo no-underline" href="/" rel="home">
+                <img src="/assets/images/logo-white.svg">
+                <span class="site-logo-text">Stephen Coakley</span>
+            </a>
+        </p>
 
-            <p class="bio-text">Disciple of Christ, software developer, and college student. I write about my crazy ideas and programming experiences.</p>
+        <p class="bio-text">Disciple of Christ, software developer, and college student. I write about my crazy ideas and programming experiences.</p>
 
-            <p class="bio-text">If you don't want to read about awesome things in PHP, you're in the wrong place.</p>
+        <p class="bio-text">If you don't want to read about awesome things in PHP, you're in the wrong place.</p>
 
-            <nav>
-                <a class="button" href="/">Home</a>
-                <a class="button" href="/portfolio">Portfolio</a>
-                <a class="button" href="/blog">Blog</a>
-            </nav>
-        </header>
+        <nav>
+            <a class="button" href="/">Home</a>
+            <a class="button" href="/portfolio">Portfolio</a>
+            <a class="button" href="/blog">Blog</a>
+        </nav>
+    </header>
 
-        <main role="main">
-            {{$content}}{{/content}}
+    <main role="main">
+        {{$content}}{{/content}}
 
-            <aside class="content social-icons">
-                <hr>
-                <a class="social-icon-twitter no-underline" href="http://bit.ly/codrst-tw"></a>
-                <a class="social-icon-gplus no-underline" href="http://bit.ly/codrst-plus"></a>
-                <a class="social-icon-facebook no-underline" href="http://bit.ly/codrst-fb"></a>
-                <a class="social-icon-linkedin no-underline" href="http://linkedin.com/in/coderstephen"></a>
-                <a class="social-icon-github no-underline" href="http://bit.ly/codrst-github"></a>
-                <a class="social-icon-stackoverflow no-underline" href="http://bit.ly/codrst-stack"></a>
-            </aside>
+        <aside class="content social-icons">
+            <hr>
+            <a class="social-icon-twitter no-underline" href="http://bit.ly/codrst-tw"></a>
+            <a class="social-icon-gplus no-underline" href="http://bit.ly/codrst-plus"></a>
+            <a class="social-icon-facebook no-underline" href="http://bit.ly/codrst-fb"></a>
+            <a class="social-icon-linkedin no-underline" href="http://linkedin.com/in/coderstephen"></a>
+            <a class="social-icon-github no-underline" href="http://bit.ly/codrst-github"></a>
+            <a class="social-icon-stackoverflow no-underline" href="http://bit.ly/codrst-stack"></a>
+        </aside>
 
-            <a class="button top-link" href="#top"><i class="fa fa-arrow-up"></i></a>
-        </main>
+        <a class="button top-link" href="#top"><i class="fa fa-arrow-up"></i></a>
+    </main>
 
-        <footer class="page-footer">
-            <p class="page-copyright">&copy; 2013-2015 Stephen Coakley. All code samples are under the <a href="http://opensource.org/licenses/MIT">MIT license</a>.</p>
-        </footer>
+    <footer class="page-footer">
+        <p class="page-copyright">&copy; 2013-2016 Stephen Coakley. All code samples are under the <a href="http://opensource.org/licenses/MIT">MIT license</a>.</p>
+    </footer>
 
-        <script>
-            var _paq=_paq||[];_paq.push(["trackPageView"]);_paq.push(["enableLinkTracking"]);(function(){var e=("https:"==document.location.protocol?"https":"http")+"://analytics.stephencoakley.com/";_paq.push(["setTrackerUrl",e+"piwik.php"]);_paq.push(["setSiteId","1"]);var t=document,n=t.createElement("script"),r=t.getElementsByTagName("script")[0];n.type="text/javascript";n.defer=true;n.async=true;n.src=e+"piwik.js";r.parentNode.insertBefore(n,r)})();
-        </script>
-    </body>
+    <script>
+        var _paq = _paq || [];
+        _paq.push(["trackPageView"]);
+        _paq.push(["enableLinkTracking"]);
+        (function() {
+            var e = ("https:" == document.location.protocol ? "https" : "http") + "://analytics.stephencoakley.com/";
+            _paq.push(["setTrackerUrl", e + "piwik.php"]);
+            _paq.push(["setSiteId", "1"]);
+            var t = document,
+                n = t.createElement("script"),
+                r = t.getElementsByTagName("script")[0];
+            n.type = "text/javascript";
+            n.defer = true;
+            n.async = true;
+            n.src = e + "piwik.js";
+            r.parentNode.insertBefore(n, r)
+        })();
+    </script>
+</body>
+
 </html>
