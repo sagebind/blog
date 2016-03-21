@@ -1,10 +1,6 @@
-version: '2'
-services:
-    app:
-        build:
-            context: .
-        image: blog
-        container_name: stephencoakley.com
-        ports:
-            - "127.0.0.1:8001:8080"
-        restart: always
+app:
+    build: .
+    container_name: stephencoakley.com
+    ports:
+        - "127.0.0.1:8001:8080"
+    restart: always
