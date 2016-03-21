@@ -1,7 +1,7 @@
 +++
 title = "Iterators Are Awesome"
 author = "Stephen Coakley"
-date = "2016-03-21 America/Chicago"
+date = "2016-03-22 America/Chicago"
 category = "software-design"
 +++
 
