@@ -186,7 +186,7 @@ for current in numbers {
 }
 ```
 
-Iterators in Rust implement the [`Iterator`](https://doc.rust-lang.org/std/iter/trait.Iterator.html) trait, which provides a lot of built-in methods, but we only need the `next()` method to perform iteration:
+Iterators in Rust implement the [`Iterator`](https://doc.rust-lang.org/std/iter/trait.Iterator.html) trait, which provides a lot of built-in methods, but we only need the `next()` method to perform iteration. Below is the manual way of using iterators:
 
 ```rust
 let mut iter = numbers.iter();
@@ -199,3 +199,15 @@ loop {
     }
 }
 ```
+
+Here we are getting an iterator for `numbers` and putting it into a mutable `iter` variable (`mut` means the object can be modified). Then we run a loop where we call `iter.next()` which returns an `Option<T>`, which is Rust's way of saying that there may or may not be some value returned. If `Some` value was returned, we add it to the `sum`; otherwise the iterator reached the end and we just `break` out of the loop.
+
+
+## And so what we have learned...
+So what did we learn from this and how can we apply it in practice? Iterators are, admittedly, not practical in _every_ situation. Conversely, in many cases where you're working with some sort of collection or data set, iterators are a powerful abstraction that can not only make the code easier to read, but also offer a level of flexibility that allows your code to work against many different types of collections.
+
+To bring them even further, I will challenge you to begin thinking about problems in a more iterative fashion. What other kinds of problems or algorithms can you simplify using iterators? You can write your own iterators that generate the Fibonacci sequence, alternate between multiple other iterators, or even an iterator that never stops and turns a finite sequence of items into a cycle.
+
+---
+
+As always, please share this article if you think it was helpful, or leave a comment below if you have more to add or have questions you would like me to answer.
