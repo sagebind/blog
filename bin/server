@@ -3,4 +3,4 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 $app = new coderstephen\blog\Application(dirname(__DIR__));
-$app->run(8080);
+$app->run(8000);

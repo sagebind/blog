@@ -1,10 +1,8 @@
-FROM php:7-cli
+FROM php:7-alpine
 MAINTAINER Stephen Coakley <me@stephencoakley.com>
 
-RUN apt-get update \
-    && apt-get install zlib1g-dev ruby-sass git -y \
-    && docker-php-ext-install zip \
-    && docker-php-ext-install mbstring
+RUN apk add --no-cache ruby ruby-irb ruby-rdoc \
+    && gem install sass
 
 ADD articles        /app/articles
 ADD bin             /app/bin
@@ -21,6 +19,6 @@ RUN curl -sS https://getcomposer.org/installer | php \
     && php composer.phar install \
     && vendor/bin/robo build
 
-EXPOSE 8080
+EXPOSE 8000
 
 ENTRYPOINT ["/app/bin/server"]

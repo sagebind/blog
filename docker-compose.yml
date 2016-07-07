@@ -1,6 +1,7 @@
 app:
     build: .
-    container_name: stephencoakley.com
     ports:
-        - "127.0.0.1:8001:8080"
-    restart: always
+        - "127.0.0.1:8001:8000"
+    restart: on-failure
+    environment:
+      - VIRTUAL_HOST=stephencoakley.com
