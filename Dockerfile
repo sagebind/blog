@@ -2,6 +2,7 @@ FROM php:7-alpine
 MAINTAINER Stephen Coakley <me@stephencoakley.com>
 
 RUN apk add --no-cache git ruby ruby-irb ruby-rdoc \
+    && docker-php-ext-install sockets \
     && gem install sass
 
 ADD articles        /app/articles
