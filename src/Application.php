@@ -2,12 +2,8 @@
 namespace coderstephen\blog;
 
 use FastRoute;
-use Icicle\Http\Message\RequestInterface;
-use Icicle\Http\Message\Response;
 use Icicle\Http\Server\Server;
 use Icicle\Loop;
-use Icicle\Socket\SocketInterface;
-use Icicle\Stream\MemorySink;
 
 /**
  * Main entry point for the server application. Manages HTTP connections and objects
@@ -50,19 +46,17 @@ class Application
         });
 
         // Create the server object.
-        $this->server = new Server(function ($request, $socket) {
-            try {
-                yield $this->handleRequest($request, $socket);
-            } catch (\Throwable $e) {
-                echo $e;
-                throw $e;
-            }
-        });
+        $this->server = new Server(new RequestHandler($this));
 
         // Create some core services.
         $this->renderer = new Renderer($path . '/templates');
         $this->assetManager = new AssetManager($path . '/static');
         $this->articleStore = new ArticleStore($path . '/articles');
+    }
+
+    public function getDispatcher(): FastRoute\Dispatcher
+    {
+        return $this->dispatcher;
     }
 
     public function getRenderer(): Renderer
@@ -87,63 +81,5 @@ class Application
     {
         $this->server->listen($port);
         Loop\run();
-    }
-
-    /**
-     * Handles an incoming HTTP request and dispatches it to the appropriate action.
-     *
-     * @param  RequestInterface $request The HTTP request message.
-     * @param  SocketInterface  $socket  The client socket connection.
-     *
-     * @return \Generator
-     *
-     * @resolve \Icicle\Http\Message\Response The appropriate HTTP response.
-     */
-    private function handleRequest(RequestInterface $request, SocketInterface $socket): \Generator {
-        $dispatched = $this->dispatcher->dispatch(
-            $request->getMethod(),
-            $request->getRequestTarget()
-        );
-
-        switch ($dispatched[0]) {
-            case FastRoute\Dispatcher::NOT_FOUND: // no route found
-                $randomStr = '';
-                for ($i = 0; $i < 1000; ++$i) {
-                    $char = chr(mt_rand(32, 126));
-                    if ($char !== '<') {
-                        $randomStr .= $char;
-                    }
-                }
-
-                $html = $this->renderer->render('404', [
-                    'randomStr' => $randomStr,
-                ]);
-
-                $sink = new MemorySink();
-                yield $sink->end($html);
-
-                $response = new Response(404, [
-                    'Content-Type' => 'text/html',
-                    'Content-Length' => $sink->getLength(),
-                ], $sink);
-                break;
-
-            case FastRoute\Dispatcher::METHOD_NOT_ALLOWED: // HTTP request method not allowed
-                $sink = new MemorySink();
-                yield $sink->end('405 Method Not Allowed');
-
-                $response = new Response(405, [
-                    'Content-Type' => 'text/plain',
-                    'Content-Length' => $sink->getLength(),
-                ], $sink);
-                break;
-
-            case FastRoute\Dispatcher::FOUND: // route was found
-                $action = new $dispatched[1]($this);
-                $response = yield $action->handle($request, $dispatched[2]);
-                break;
-        }
-
-        yield $response;
     }
 }

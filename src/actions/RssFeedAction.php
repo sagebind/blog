@@ -2,13 +2,12 @@
 namespace coderstephen\blog\actions;
 
 use Carbon\Carbon;
-use Icicle\Http\Message\RequestInterface;
-use Icicle\Http\Message\Response;
+use Icicle\Http\Message\{BasicResponse, Request};
 use Icicle\Stream\MemorySink;
 
 class RssFeedAction extends Action
 {
-    public function handle(RequestInterface $request, array $args): \Generator
+    public function handle(Request $request, array $args): \Generator
     {
         if (isset($args['category'])) {
             $articles = $this->app->getArticleStore()->getByCategory($args['category']);
@@ -22,9 +21,9 @@ class RssFeedAction extends Action
         ]);
 
         $sink = new MemorySink();
-        yield $sink->end($html);
+        yield from $sink->end($html);
 
-        yield new Response(200, [
+        return new BasicResponse(200, [
             'Content-Type' => 'application/xml',
             'Content-Length' => $sink->getLength(),
         ], $sink);

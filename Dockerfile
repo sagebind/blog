@@ -1,7 +1,7 @@
 FROM php:7-alpine
 MAINTAINER Stephen Coakley <me@stephencoakley.com>
 
-RUN apk add --no-cache ruby ruby-irb ruby-rdoc \
+RUN apk add --no-cache git ruby ruby-irb ruby-rdoc \
     && gem install sass
 
 ADD articles        /app/articles
@@ -21,4 +21,4 @@ RUN curl -sS https://getcomposer.org/installer | php \
 
 EXPOSE 8000
 
-ENTRYPOINT ["/app/bin/server"]
+CMD ["/app/bin/server"]

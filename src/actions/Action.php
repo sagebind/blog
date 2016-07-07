@@ -2,7 +2,7 @@
 namespace coderstephen\blog\actions;
 
 use coderstephen\blog\Application;
-use Icicle\Http\Message\RequestInterface;
+use Icicle\Http\Message\Request;
 
 /**
  * Represents a single action that can handle a request and return a response.
@@ -30,5 +30,5 @@ abstract class Action
      *
      * @resolve \Icicle\Http\Message\Response The HTTP response to respond with.
      */
-    public abstract function handle(RequestInterface $request, array $args): \Generator;
+    public abstract function handle(Request $request, array $args): \Generator;
 }
