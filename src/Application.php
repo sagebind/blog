@@ -77,9 +77,11 @@ class Application
     /**
      * Runs the application.
      */
-    public function run(int $port)
+    public function run(int $port, string $address = '*')
     {
-        $this->server->listen($port);
+        $this->server->listen($port, $address, [
+            'backlog' => defined('SOMAXCONN') ? SOMAXCONN : 128
+        ]);
         Loop\run();
     }
 }
