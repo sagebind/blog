@@ -20,6 +20,6 @@ RUN curl -sS https://getcomposer.org/installer | php \
     && php composer.phar install \
     && vendor/bin/robo build
 
-EXPOSE 8000
+EXPOSE 80
 
 CMD ["/app/bin/server"]

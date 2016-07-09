@@ -1,7 +1,14 @@
-app:
-    build: .
-    ports:
-        - "8000:8000"
-    restart: on-failure
-    environment:
-      - VIRTUAL_HOST=stephencoakley.com
+version: '2'
+
+services:
+    app:
+        build: .
+        container_name: stephencoakley.com.local
+        networks:
+            - proxy
+        restart: on-failure
+
+networks:
+    proxy:
+        external:
+            name: proxy
