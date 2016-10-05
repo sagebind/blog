@@ -3,7 +3,7 @@ version: '2'
 services:
     app:
         build: .
-        container_name: stephencoakley.com.local
+        container_name: stephencoakley.local
         networks:
             - proxy
         restart: on-failure
