@@ -1,11 +1,14 @@
-code {
+pre, code {
     @include theme-media-box;
     font-family: $font-monospace;
+}
+
+code {
     font-size: 0.75em;
 }
 
 pre > code {
-    line-height: 1.25em;
+    line-height: 1.75em;
     white-space: pre-wrap;
 }
 

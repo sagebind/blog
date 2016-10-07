@@ -13,5 +13,5 @@
 @mixin theme-media-box {
     @include rounded;
     padding: 0.125em 0.3175em;
-    background: $color-white-smoke;
+    background: $color-white-smoke !important;
 }

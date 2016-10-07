@@ -122,21 +122,9 @@ ol {
 }
 
 blockquote {
-    position: relative;
-    margin: 1.5em 3em;
-    font-size: 1.25em;
-    quotes: "\201C" "\201D" "\2018" "\2019";
-
-    &:before {
-        display: block;
-        position: absolute;
-        top: 0;
-        left: -0.5em;
-        font-size: 4em;
-        vertical-align: middle;
-        opacity: 0.2;
-        content: open-quote;
-    }
+    color: #555;
+    padding-left: 1rem;
+    border-left: 4px solid rgba(0, 0, 0, 0.1);
 }
 
 
