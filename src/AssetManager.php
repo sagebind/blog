@@ -1,5 +1,5 @@
 <?php
-namespace coderstephen\blog;
+namespace sagebind\blog;
 
 use Dflydev\ApacheMimeTypes;
 

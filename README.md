@@ -1,4 +1,4 @@
-# coderstephen's blog
+# Blog
 This is the source code for my blog. It is a standalone PHP application that is also its own web server. At its core is [`icicleio/http`](http://github.com/icicleio/http), which provides an asynchronous, pure PHP web server.
 
 ## Overview
@@ -6,7 +6,7 @@ My blog doesn't use any databases, message queues, or any external services. Art
 
 Every page is rendered through one or more [Mustache](https://mustache.github.io) templates, which can be found in the `templates` directory.
 
-The server itself is managed by an instance of [`coderstephen\blog\Application`](src/Application.php), which uses the excellent [FastRoute router](https://github.com/nikic/FastRoute) by [Nikita Popov](https://github.com/nikic) to dispatch requests to a designated *action*, which is an object that handles a single request and uses the renderer to render templates and views. Actions are available under the [`coderstephen\blog\actions`](src/actions) namespace.
+The server itself is managed by an instance of [`sagebind\blog\Application`](src/Application.php), which uses the excellent [FastRoute router](https://github.com/nikic/FastRoute) by [Nikita Popov](https://github.com/nikic) to dispatch requests to a designated *action*, which is an object that handles a single request and uses the renderer to render templates and views. Actions are available under the [`sagebind\blog\actions`](src/actions) namespace.
 
 ## Running the server
 Running the application server couldn't be easier. It is as simple as executing

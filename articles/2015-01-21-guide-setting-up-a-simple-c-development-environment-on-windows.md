@@ -60,7 +60,7 @@ It is fairly easy to configure Sublime Text and Notepad++ to use the MinGW-w64 c
 ### Sublime Text
 Sublime Text has a build system already built-in, but the C/C++ builder doesn't work properly with MinGW out of the box. Instead, we will create a new build file that will use the MinGW-w64 compiler we installed. I took the liberty of making such a file:
 
-<script src="https://gist.github.com/coderstephen/9039773048a3900fa49a.js"></script>
+<script src="https://gist.github.com/sagebind/9039773048a3900fa49a.js"></script>
 
 Just download the above script and put it into Sublime Text's package folder. You can open this folder by clicking "Preferences > Browse Packages...". Depending on your installation settings, you may need to tweak the `path` property to the correct folder of your MinGW-w64 binaries folder.
 

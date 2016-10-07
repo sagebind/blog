@@ -1,5 +1,5 @@
 <?php
-namespace coderstephen\blog;
+namespace sagebind\blog;
 
 /**
  * Literally a cache that stores stuff in variables. That's it.

@@ -1,5 +1,5 @@
 <?php
-namespace coderstephen\blog;
+namespace sagebind\blog;
 
 use Carbon\Carbon;
 use Yosymfony\Toml\Toml;

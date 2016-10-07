@@ -16,7 +16,7 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "coderstephen\\blog\\": "src"
+            "sagebind\\blog\\": "src"
         }
     }
 }

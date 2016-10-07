@@ -1,0 +1,25 @@
+.isso-comment {
+    font-size: 1.1rem;
+    @include display(flex);
+    @include justify-content(space-between);
+    @include align-items(flex-start);
+
+    .avatar {
+        margin: 0 1rem 0 0 !important;
+        @include flex-grow(0);
+        @include flex-shrink(0);
+        @include flex-basis(2em);
+    }
+
+    .text-wrapper {
+        @include flex-grow(1);
+    }
+
+    .isso-follow-up {
+        padding: 0 !important;
+    }
+
+    p {
+        margin: 1.25em 0 !important;
+    }
+}

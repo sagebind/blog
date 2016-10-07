@@ -1,7 +1,7 @@
 <?php
-namespace coderstephen\blog\actions;
+namespace sagebind\blog\actions;
 
-use coderstephen\blog\Application;
+use sagebind\blog\Application;
 use Icicle\Http\Message\Request;
 
 /**

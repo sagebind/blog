@@ -1,5 +1,5 @@
 <?php
-namespace coderstephen\blog;
+namespace sagebind\blog;
 
 use FastRoute;
 use Icicle\Http\Server\Server;

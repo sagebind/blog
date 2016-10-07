@@ -1,5 +1,5 @@
 <?php
-namespace coderstephen\blog\actions;
+namespace sagebind\blog\actions;
 
 use Carbon\Carbon;
 use Icicle\Http\Message\{BasicResponse, Request};

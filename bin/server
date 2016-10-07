@@ -2,5 +2,5 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
 
-$app = new coderstephen\blog\Application(dirname(__DIR__));
+$app = new sagebind\blog\Application(dirname(__DIR__));
 $app->run(80);

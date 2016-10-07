@@ -99,4 +99,4 @@ While the results of the survey can be concluded, I think the search for the bes
 
 If you'd like to save the results of the survey for your own records, you can download a PDF version [here](/content/2015-07-01-promises-in-php-survey-results.pdf).
 
-As always, feel free to let me know what you think in the comments below, or reach out to me on [Twitter](http://twitter.com/coderstephen).
+As always, feel free to let me know what you think in the comments below, or reach out to me on [Twitter](http://twitter.com/sagebind).

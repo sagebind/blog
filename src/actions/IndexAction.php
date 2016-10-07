@@ -1,5 +1,5 @@
 <?php
-namespace coderstephen\blog\actions;
+namespace sagebind\blog\actions;
 
 use Icicle\Http\Message\{BasicResponse, Request};
 use Icicle\Stream\MemorySink;

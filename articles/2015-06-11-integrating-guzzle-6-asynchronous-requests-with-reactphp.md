@@ -5,7 +5,7 @@ date = "2015-06-11 America/Chicago"
 category = "php"
 +++
 
-One of my current "toy" side-projects at the moment is [a better PHP API client for Slack](http://github.com/coderstephen/slack-client). There are a handful of incomplete ones already on [Packagist](https://packagist.org/search/?q=slack), but I decided to add another one to the list anyway. It uses [Guzzle](https://github.com/guzzle/guzzle) for making regular API calls, and [PHPWS](https://github.com/Devristo/phpws) (a WebSocket library) for connecting to Slack's real-time messaging API. It's actually a pretty cool project so far, though it still is under construction.
+One of my current "toy" side-projects at the moment is [a better PHP API client for Slack](http://github.com/sagebind/slack-client). There are a handful of incomplete ones already on [Packagist](https://packagist.org/search/?q=slack), but I decided to add another one to the list anyway. It uses [Guzzle](https://github.com/guzzle/guzzle) for making regular API calls, and [PHPWS](https://github.com/Devristo/phpws) (a WebSocket library) for connecting to Slack's real-time messaging API. It's actually a pretty cool project so far, though it still is under construction.
 
 One of the interesting problems I ran into while writing this library was how to make API calls and connect to WebSockets simultaneously. To be as snappy as possible, I wanted the entire library to be asynchronous, so I decided to use [ReactPHP](http://reactphp.org) at the core since it is reasonably mature project for asynchronous processing. This would allow you to both connect to Slack and do other things at once, such as you might need in a chat bot. PHPWS also uses React, so instant profit! Guzzle, however, has its own take on async operations, so I set out to make Guzzle and React become friends.
 
@@ -148,7 +148,7 @@ $promise->then(function (ResponseInterface $response) {
 });
 ```
 
-On the surface, this looks great! In fact, at the time of this writing, this is how my Slack client is [working around the problem](https://github.com/coderstephen/slack-client/blob/v0.1.1/src/ApiClient.php#L147). Requests actually get handled, React's event loop isn't overtly locked, and other scheduled tasks still run. All isn't dragons and unicorns, however. The event loop is still being halted synchronously to wait for each request when the time comes for `wait()` to be called. Even worse, requests are waited for in the order they are made and not in the order that the responses are received. So, we need a better solution.
+On the surface, this looks great! In fact, at the time of this writing, this is how my Slack client is [working around the problem](https://github.com/sagebind/slack-client/blob/v0.1.1/src/ApiClient.php#L147). Requests actually get handled, React's event loop isn't overtly locked, and other scheduled tasks still run. All isn't dragons and unicorns, however. The event loop is still being halted synchronously to wait for each request when the time comes for `wait()` to be called. Even worse, requests are waited for in the order they are made and not in the order that the responses are received. So, we need a better solution.
 
 ### Using a React event loop -- a better way
 The most reliable way is to take advantage of Guzzle's use of cURL multi handles to integrate cURL into React. Now, this requires that you use the `CurlMultiHandler` [handler](http://guzzle.readthedocs.org/en/latest/handlers-and-middleware.html). Since we need direct access to the handler instance, we need to create Guzzle's handler manually:

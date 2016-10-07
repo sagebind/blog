@@ -1,5 +1,5 @@
 <?php
-namespace coderstephen\blog;
+namespace sagebind\blog;
 
 use Phly\Mustache\Mustache;
 use Phly\Mustache\Resolver\ResolverInterface;
