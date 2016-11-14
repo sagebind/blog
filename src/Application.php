@@ -30,10 +30,10 @@ class Application
         // Register some routes.
         $this->dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
             $r->addRoute('GET', '/', actions\IndexAction::class);
-            $r->addRoute('GET', '/blog', actions\BlogAction::class);
+            $r->addRoute('GET', '/articles', actions\ArticleListAction::class);
             $r->addRoute('GET', '/category/{category}', actions\CategoryAction::class);
-            $r->addRoute('GET', '/portfolio', actions\PortfolioAction::class);
-            $r->addRoute('GET', '/{year:\\d{4}}/{month:\\d{2}}/{day:\\d{2}}/{name}', actions\ArticleAction::class);
+            $r->addRoute('GET', '/stuff', actions\StuffAction::class);
+            $r->addRoute('GET', '/{year:\\d{4}}/{month:\\d{2}}/{day:\\d{2}}/{name}', actions\ArticleViewAction::class);
             $r->addRoute('GET', '/{asset:(?:content|assets)/[^?]+}[?{query}]', actions\AssetAction::class);
 
             // Complicated feed routes :/

@@ -1,7 +1,7 @@
 <?php
 namespace sagebind\blog;
 
-use Carbon\Carbon;
+use Cake\Chronos\Date;
 use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
 use League\CommonMark\HtmlRenderer;
@@ -24,7 +24,8 @@ class Article
     public function __construct(array $metatdata, string $text, string $slug)
     {
         $this->metatdata = $metatdata;
-        $this->date = new Carbon($this->metatdata['date'] ?? 'now');
+        $this->date = Date::parse($this->metatdata['date'] ?? 'now');
+        $this->date->setToStringFormat('F j, Y');
         $this->slug = $slug;
 
         // Parse the Markdown document.
@@ -34,19 +35,30 @@ class Article
         $this->document = $parser->parse($text);
     }
 
+    /**
+     * Checks if the article is published and should be listed publicly.
+     */
+    public function isPublished(): bool
+    {
+        if (isset($this->metadata['unpublished'])) {
+            return !$this->metadata['unpublished'];
+        }
+
+        if ($this->date->isFuture()) {
+            return false;
+        }
+
+        return true;
+    }
+
     public function title(): string
     {
         return $this->metatdata['title'];
     }
 
-    public function date(): Carbon
+    public function date(): Date
     {
         return $this->date;
-    }
-
-    public function dateString(): string
-    {
-        return $this->date->format('F j, Y');
     }
 
     public function author()

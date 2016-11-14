@@ -1,10 +1,12 @@
 .button {
     display: inline-block;
-    padding: 0.5em 0.75em;
+    padding: 0.5em 1em;
     @include rounded;
     text-align: center;
     line-height: normal;
-    font-weight: bold;
+    font-weight: normal;
+    font-size: 1rem;
+    text-transform: uppercase;
     background-color: hsla(0, 0%, 0%, 0.1);
 
     &:hover, &:focus {
@@ -14,10 +16,12 @@
 }
 
 .top-link {
-    @include position(fixed, null 0 0 null);
+    position: fixed;
+    right: 0;
+    bottom: 0;
     margin: 1rem;
     font-size: 1.25em;
-    opacity: 0.5;
+    opacity: 0.6;
 
     &:hover {
         opacity: 1;

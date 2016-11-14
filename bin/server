@@ -2,5 +2,8 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
 
+define("ENVIRONMENT", getenv("ENVIRONMENT") ?: "PROD");
+
+
 $app = new sagebind\blog\Application(dirname(__DIR__));
-$app->run(80);
+$app->run(ENVIRONMENT === "LOCAL" ? 8000 : 80);

@@ -1,24 +1,23 @@
 .isso-comment {
     font-size: 1.1rem;
-    @include display(flex);
-    @include justify-content(space-between);
-    @include align-items(flex-start);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 
     .avatar {
         margin: 0 1rem 0 0 !important;
-        @include flex-grow(0);
-        @include flex-shrink(0);
-        @include flex-basis(2em);
+        flex-grow: 0;
+        flex-shrink: 0;
+        flex-basis: 2em;
     }
 
     .text-wrapper {
-        @include flex-grow(1);
-        @include flex-shrink(1);
-        @include flex-basis(auto);
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: auto;
         min-width: 0;
         overflow-wrap: break-word;
         word-wrap: break-word;
-        -ms-word-break: break-all;
         word-break: break-word;
     }
 

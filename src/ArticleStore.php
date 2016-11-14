@@ -1,7 +1,6 @@
 <?php
 namespace sagebind\blog;
 
-use Carbon\Carbon;
 use Yosymfony\Toml\Toml;
 
 /**
@@ -54,19 +53,21 @@ class ArticleStore implements \IteratorAggregate
      */
     public function getIterator($unpublished = false): \Iterator
     {
-        $articles = new \SplDoublyLinkedList();
+        $files = array_reverse(glob($this->path . '/*.md'));
 
-        foreach (new \GlobIterator($this->path . '/*.md') as $file) {
+        foreach ($files as $file) {
+            $file = new \SplFileInfo($file);
+
             if ($file->isFile()) {
-                $article = $this->getArticleFromFile($file->getFilename());
+                try {
+                    $article = $this->getArticleFromFile($file->getFilename());
 
-                if ($unpublished || !$article->date()->isFuture()) {
-                    $articles->unshift($article);
-                }
+                    if ($unpublished || $article->isPublished()) {
+                        yield $article;
+                    }
+                } catch (\Throwable $e) {}
             }
         }
-
-        return new \IteratorIterator($articles);
     }
 
     /**
@@ -96,12 +97,13 @@ class ArticleStore implements \IteratorAggregate
             $pos = strpos($data, '+++');
             $metatdata = substr($data, 0, $pos);
             $contents = ltrim(substr($data, $pos + 3));
-        } else {
-            $contents = $data;
-        }
 
-        // Parse header into an array of options.
-        $metatdata = Toml::parse($metatdata);
+            // Parse header into an array of options.
+            $metatdata = Toml::parse($metatdata);
+        } else {
+            // Front matter not found, invalid article.
+            throw new \Exception("Invalid article file!");
+        }
 
         // Parse the slug.
         $slug = str_replace('-', '/', substr($name, 0, 11)) . substr($name, 11, -3);

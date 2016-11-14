@@ -1,15 +1,11 @@
 {{<layout}}
-{{$title}}Articles in category &ldquo;{{category}}&rdquo; - Stephen Coakley{{/title}}
+    {{$title}}Articles in category &ldquo;{{category}}&rdquo; - Stephen Coakley{{/title}}
 
-{{$content}}
-<div class="content">
-    <p><a href="/blog"><i class="fa fa-arrow-left"></i> All Articles</a></p>
+    {{$content}}
+        <h1>Articles in category &ldquo;{{category}}&rdquo;</h1>
 
-    <h1>Articles in category &ldquo;{{category}}&rdquo;</h1>
-
-    {{#articles}}
-        {{>article-summary}}
-    {{/articles}}
-</div>
-{{/content}}
+        {{#articles}}
+            {{>articleSummary}}
+        {{/articles}}
+    {{/content}}
 {{/layout}}

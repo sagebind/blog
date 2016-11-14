@@ -1,17 +1,9 @@
 .comments {
-    margin-top: 2em;
-}
-
-hr {
-    margin: 2em 0;
+    margin-top: 3rem;
 }
 
 .center {
     text-align: center;
-}
-
-article {
-    margin-bottom: 3rem;
 }
 
 .postmeta, .category {
@@ -36,24 +28,5 @@ article {
         border-right: 0.75em solid $color-white-smoke;
         margin-left: -1.125em;
         margin-top: -0.25em;
-    }
-}
-
-/**
- * Internet Countdown banner
- */
-.countdown-banner {
-    background-color: #283548;
-
-    .content {
-        margin: {
-            top: 0;
-            bottom: 0;
-        }
-        padding: 1em 0;
-    }
-
-    .content > div {
-        display: inline-block;
     }
 }

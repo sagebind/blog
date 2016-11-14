@@ -1,0 +1,53 @@
+.logo {
+    display: inline-block;
+    font-family: $font-heading;
+    font-weight: bold;
+
+    & > img {
+        float: left;
+        height: 5em;
+    }
+
+    & > span {
+        display: block;
+        float: right;
+        line-height: 3.33em;
+        margin: 0 0 0 0.5em;
+        font-size: 1.5em;
+        color: $color-white;
+    }
+
+    @include respond-to(medium) {
+        & > img, & > span {
+            float: none;
+        }
+
+        & > span {
+            margin: 0.5em 0 0 0;
+            line-height: normal;
+        }
+    }
+
+    &:hover {
+        & > img {
+            animation: kodana-click 1.5s ease-out 1;
+        }
+    }
+}
+
+@keyframes kodana-click {
+    0%   { transform: rotate(0deg); }
+    55%  { transform: rotate(85deg); }
+    62%  { transform: rotate(85deg); }
+    65%  { transform: rotate(-10deg); }
+    68%  { transform: rotate(65deg); }
+    71%  { transform: rotate(-8deg); }
+    74%  { transform: rotate(45deg); }
+    77%  { transform: rotate(-6deg); }
+    79%  { transform: rotate(30deg); }
+    82%  { transform: rotate(-4deg); }
+    85%  { transform: rotate(20deg); }
+    89%  { transform: rotate(-2deg); }
+    94%  { transform: rotate(15deg); }
+    100% { transform: rotate(0deg); }
+}

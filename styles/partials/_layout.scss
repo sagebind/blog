@@ -1,46 +1,73 @@
-$susy: (
-  container: 56rem,
-  columns: 12,
-  gutters: .5
-);
-
-/**
- * Set default viewport settings.
- */
-@viewport {
-    zoom: 1.0;
-    width: extend-to-zoom;
-}
-@-ms-viewport {
-    zoom: 1.0;
-    width: extend-to-zoom;
-}
-
-@include global-box-sizing(border-box);
-
-/**
- * Set user-preferred font size.
- */
-html, body {
-    height: 100%;
-}
-
-.content, .page-header, .page-footer {
+.layout-header {
     @include layout-box;
+    @include no-collapse;
+
+    background-color: $color-midnight;
+    color: $color-white;
+}
+
+.layout-nav {
+    $spacing: 1rem;
+
+    display: flex;
+    justify-content: space-between;
+
+    & > * {
+        display: block;
+        flex-grow: 1;
+
+        &:not(:first-child) {
+            margin-left: $spacing / 2;
+        }
+    }
+
+    @include respond-to(large) {
+        display: block;
+
+        & > * {
+            margin-top: $spacing;
+            margin-bottom: $spacing;
+            margin-left: 0 !important;
+        }
+    }
 }
 
 .content {
-    @include container;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    @include layout-box;
+
+    max-width: $max-width;
+    margin: 2rem auto;
     padding-top: 0;
     padding-bottom: 0;
-    font-size: 1.25rem;
+    font-size: 1.125em;
+}
+
+.layout-footer {
+    @include layout-box;
+    @include no-collapse;
+
+    background-color: $color-midnight;
+    color: $color-white;
+
+    & > .icons {
+        line-height: normal;
+    }
+
+    p {
+        font-size: 0.9em;
+        text-align: center;
+    }
 }
 
 @include respond-to(medium) {
-    .page-header {
-        @include position(fixed, 0 null 0 0);
+    .layout-header, .layout-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+    }
+
+    .layout-header {
+        top: 0;
         width: 20rem;
     }
 
@@ -48,8 +75,7 @@ html, body {
         margin-left: 20rem;
     }
 
-    .page-footer {
-        @include position(fixed, null null 0 0);
+    .layout-footer {
         width: 20rem;
         padding-top: 0;
     }

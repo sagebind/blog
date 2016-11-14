@@ -1,5 +1,4 @@
-# composer dependencies
-vendor/
-
-# build files
-/static/assets/css/*
+/static/assets/css
+/vendor
+.sass-cache
+composer.phar

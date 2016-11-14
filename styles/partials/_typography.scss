@@ -1,6 +1,3 @@
-/* * * * * * * * * * * *
- * fonts
- */
 /* source sans */
 @include font-face("Source Sans Pro", "/assets/fonts/sourcesanspro-regular");
 @include font-face("Source Sans Pro", "/assets/fonts/sourcesanspro-italic", $style: italic);
@@ -15,21 +12,6 @@
 @include font-face("Source Code Pro", "/assets/fonts/sourcecodepro-regular");
 @include font-face("Source Code Pro", "/assets/fonts/sourcecodepro-bold", $weight: bold);
 
-$font-body: "Source Sans Pro", "Calibri", sans-serif;
-$font-heading: "Josefin Slab", serif;
-$font-monospace: "Source Code Pro", "Consolas", monospace;
-
-
-/* * * * * * * * * * * *
- * selection
- */
-::selection, *::selection {
-    background-color: lighten($color-jade, 15%);
-}
-::-moz-selection, *::-moz-selection {
-    background-color: lighten($color-jade, 15%);
-}
-
 
 /**
  * Nicer font rendering in webkit
@@ -42,67 +24,6 @@ body {
     font-family: $font-body;
 }
 
-@function shadow-gen($color) {
-    $shadows: ();
-    @for $i from 1 through 5 {
-        $shadows: $shadows, (.03em * $i) 0 $color, (-.03em * $i) 0 $color;
-    }
-    @return $shadows;
-}
-
-/**
- * A really fancy underline.
- */
-@mixin fancy-underline($background-color, $color, $height: 0.0625em) {
-    :not(.no-underline):not(.sb-nav) > &:not(.no-underline):not(.sb-nav) {
-        // add clip shadow
-        text-shadow: shadow-gen($background-color);
-
-        // draw the underline using an image
-        background-image: linear-gradient($color, $color);
-        background-size: 1px $height;
-        background-repeat: repeat-x;
-        background-position: 0% 85%;
-
-        &::selection {
-            text-shadow: shadow-gen(lighten($color-jade, 15%));
-        }
-        &::-moz-selection {
-            text-shadow: shadow-gen(lighten($color-jade, 15%));
-        }
-    }
-}
-
-/**
- * A more controlled underline, though not as fancy as the one above.
- */
-@mixin underline($color: currentColor, $height: 0.0625em) {
-    &:not(.no-underline) {
-        background: {
-            image: linear-gradient($color, $color);
-            size: 1px $height;
-            position: 0% 85%;
-            repeat: repeat-x;
-        }
-    }
-}
-
-
-/**
- * block elements
- */
-p, ul, ol, blockquote, pre {
-    display: block;
-    margin: 1.75em 0;
-    line-height: 1.75em;
-    direction: ltr;
-    text-align: left;
-    font-weight: normal;
-
-    &:last-child {
-        margin-bottom: 0;
-    }
-}
 
 ul, ol {
     margin: 1.5em 0 1.5em 2em;
@@ -113,14 +34,6 @@ ul, ol {
     }
 }
 
-ul {
-    list-style: disc;
-}
-
-ol {
-    list-style: decimal;
-}
-
 blockquote {
     color: #555;
     padding-left: 1rem;
@@ -128,33 +41,45 @@ blockquote {
 }
 
 
-/* * * * * * * * * * * *
- * headings
- */
 h1, h2, h3, h4, h5, h6 {
-    display: block;
-    line-height: 1.25em;
     font-weight: bold;
-    margin: 1rem 0;
 }
+
 h1 {
     font-family: $font-heading;
-    font-size: 2.75em; /* 64/16 */
+    font-size: 3em;
+    line-height: $line-height * 0.75;
+
+    @include respond-to(small) {
+        font-size: 2em;
+    }
 }
 h2 {
-    font-size: 1.5em; /* 24/16 */
+    font-size: 1.5em;
+
+    @include respond-to(small) {
+        font-size: 1.25em;
+    }
 }
 h3 {
-    font-size: 1.25em; /* 20/16 */
+    font-size: 1.25em;
+
+    @include respond-to(small) {
+        font-size: 1.125em;
+    }
 }
 h4 {
-    font-size: 1.125em; /* 21/16 */
+    font-size: 1.125em;
+
+    @include respond-to(small) {
+        font-size: 1.0625em;
+    }
 }
 h5 {
     font-size: 1em;
 }
 h6 {
-    font-size: 0.9125em; /* 14/16 */
+    font-size: 0.9125em;
 }
 
 
@@ -181,10 +106,11 @@ small {
 a {
     color: $color-jade;
     text-decoration: none;
-    @include transition(background-color 0.2s ease,
-                        color 0.2s ease,
-                        opacity 0.2s ease,
-                        text-shadow 0.2s ease);
+    cursor: pointer;
+    transition: background-color 0.2s ease,
+                color 0.2s ease,
+                opacity 0.2s ease,
+                text-shadow 0.2s ease;
 
     &:hover, &:focus {
         color: lighten($color-jade, 10%);

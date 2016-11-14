@@ -7,10 +7,7 @@
         "nikic/fast-route": "^1.0",
         "phly/phly-mustache": "^2.0",
         "yosymfony/toml": "^0.3.3",
-        "nesbot/carbon": "^1.21"
-    },
-    "require-dev": {
-        "codegyre/robo": "*"
+        "cakephp/chronos": "~1.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

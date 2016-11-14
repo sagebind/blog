@@ -1,9 +1,16 @@
 FROM php:7-alpine
 MAINTAINER Stephen Coakley <me@stephencoakley.com>
 
-RUN apk add --no-cache git ruby ruby-irb ruby-rdoc \
-    && docker-php-ext-install sockets \
-    && gem install sass
+RUN apk add --no-cache \
+        git \
+        make \
+        nodejs \
+        ruby \
+        ruby-irb \
+        ruby-rdoc && \
+    docker-php-ext-install sockets && \
+    gem install sass && \
+    npm install --global postcss-cli autoprefixer
 
 ADD articles        /app/articles
 ADD bin             /app/bin
@@ -13,12 +20,9 @@ ADD styles          /app/styles
 ADD templates       /app/templates
 ADD composer.json   /app/composer.json
 ADD composer.lock   /app/composer.lock
-ADD RoboFile.php    /app/RoboFile.php
+ADD Makefile        /app/Makefile
 
-WORKDIR /app
-RUN curl -sS https://getcomposer.org/installer | php && \
-    php composer.phar install && \
-    vendor/bin/robo build
+RUN make -C /app all
 
 EXPOSE 80
 
