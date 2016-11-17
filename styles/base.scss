@@ -43,22 +43,17 @@ body {
 // Set block-level vertical spacing.
 h1, h2, h3, h4, h5, h6, hgroup,
 ul, ol, dd,
-p, figure, blockquote,
+p, figure, blockquote, nav,
 pre, table, fieldset, hr {
-    margin: ($line-height * 1rem) 0;
-
-    @include respond-to(large) {
-        margin: ($line-height * 1.125rem) 0;
-    }
+    @include vertical-margin;
 }
 
 
+@import "partials/layout";
+@import "partials/typography";
 @import "partials/buttons";
 @import "partials/code";
 @import "partials/comments";
-@import "partials/content";
-@import "partials/highlight.js.github";
-@import "partials/icons";
-@import "partials/layout";
 @import "partials/logo";
-@import "partials/typography";
+@import "partials/icons";
+@import "partials/highlight.js.github";

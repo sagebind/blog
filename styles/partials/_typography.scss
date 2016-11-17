@@ -24,7 +24,6 @@ body {
     font-family: $font-body;
 }
 
-
 ul, ol {
     margin: 1.5em 0 1.5em 2em;
 
@@ -39,7 +38,6 @@ blockquote {
     padding-left: 1rem;
     border-left: 4px solid rgba(0, 0, 0, 0.1);
 }
-
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
@@ -82,24 +80,6 @@ h6 {
     font-size: 0.9125em;
 }
 
-
-/* * * * * * * * * * * *
- * inline elements
- */
-
-.big {
-    font-style: normal;
-    font-size: 1.5em; /* 24/16 */
-
-    &.really-big {
-        font-size: 4em; /* 96/16 */
-    }
-}
-
-small {
-    font-size: 0.8em;
-}
-
 /**
  * Give hyperlinks some class.
  */
@@ -125,23 +105,28 @@ mark {
     background: lighten($color-jade, 5%);
 }
 
-/* change colours to suit your needs */
 ins {
     background-color: #ff9;
     color: #000;
     text-decoration: none;
 }
-/* change colours to suit your needs */
+
 mark {
     background-color: #ff9;
     color: #000;
     font-style: italic;
     font-weight: bold;
 }
+
 del {
     text-decoration: line-through;
 }
+
 abbr[title], dfn[title] {
     border-bottom: 1px dotted;
     cursor: help;
+}
+
+.postmeta, .category {
+    margin: 0;
 }

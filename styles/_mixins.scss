@@ -1,3 +1,13 @@
+@mixin vertical-margin($factor: 1) {
+    margin-top: $line-height * 1rem * $factor;
+    margin-bottom: $line-height * 1rem * $factor;
+
+    @include respond-to(large) {
+        margin-top: $line-height * 1.125rem * $factor;
+        margin-bottom: $line-height * 1.125rem * $factor;
+    }
+}
+
 @mixin respond-to($media) {
     @if $media == tiny {
         @media only screen and (max-width: 36rem) {
@@ -10,7 +20,7 @@
         }
     }
     @else if $media == medium {
-        @media only screen and (min-width: 52rem) and (min-height: 32rem) {
+        @media only screen and (min-width: 52rem) {
             @content;
         }
     }

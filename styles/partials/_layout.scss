@@ -10,6 +10,7 @@
     $spacing: 1rem;
 
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
 
     & > * {
@@ -22,11 +23,10 @@
     }
 
     @include respond-to(large) {
-        display: block;
+        flex-direction: column;
 
-        & > * {
+        & > :not(:first-child) {
             margin-top: $spacing;
-            margin-bottom: $spacing;
             margin-left: 0 !important;
         }
     }
@@ -40,6 +40,10 @@
     padding-top: 0;
     padding-bottom: 0;
     font-size: 1.125em;
+
+    img {
+        max-width: 100%;
+    }
 }
 
 .layout-footer {
@@ -48,10 +52,6 @@
 
     background-color: $color-midnight;
     color: $color-white;
-
-    & > .icons {
-        line-height: normal;
-    }
 
     p {
         font-size: 0.9em;
