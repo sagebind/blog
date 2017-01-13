@@ -44,7 +44,7 @@ $asyncFS->fileGetContents('query.sql')
 Much cleaner, don't you think? This is why promises are so popular and projects like [ReactPHP](http://reactphp.org) use them as their callback mechanism of choice.
 
 ## We need promises... or do we?
-But are promises really the answer? With things like generators and [coroutines](https://nikic.github.io/2012/12/22/Cooperative-multitasking-using-coroutines-in-PHP.html), some have suggested that typical promises [aren't the best solution](https://github.com/amphp/amp/blob/master/guide.md#promises) for PHP. I haven't decided myself, so I decided to create this survey to see what you as the community thinks. You can click the link below to take the survey:
+But are promises really the answer? With things like generators and [coroutines](https://nikic.github.io/2012/12/22/Cooperative-multitasking-using-coroutines-in-PHP.html), some have suggested that typical promises [aren't the best solution](http://amphp.org/docs/amp/managing-concurrency.html#promises) for PHP. I haven't decided myself, so I decided to create this survey to see what you as the community thinks. You can click the link below to take the survey:
 
 **[Take the survey!](https://stephencoakley.typeform.com/to/FBa4ga)**
 
