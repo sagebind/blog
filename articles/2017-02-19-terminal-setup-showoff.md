@@ -1,3 +1,10 @@
++++
+title = "Terminal Setup Showoff"
+author = "Stephen Coakley"
+date = "2017-02-19 America/Chicago"
+category = "workflow"
++++
+
 There are three types of developers in the world:
 
 1. Those who occasionally use the terminal for compiling, version control, or for handy scripts.
