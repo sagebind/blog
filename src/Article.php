@@ -44,7 +44,7 @@ class Article
             return !$this->metadata['unpublished'];
         }
 
-        if ($this->date->isFuture()) {
+        if (!$this->date->isToday() && $this->date->isFuture()) {
             return false;
         }
 
@@ -59,6 +59,15 @@ class Article
     public function date(): Date
     {
         return $this->date;
+    }
+
+    public function dateText(): string
+    {
+        if ($this->date->isToday()) {
+            return "Today";
+        }
+
+        return $this->date->diffForHumans();
     }
 
     public function author()
