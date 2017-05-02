@@ -1,7 +1,7 @@
 <?php
 namespace sagebind\blog\actions;
 
-use Carbon\Carbon;
+use Cake\Chronos\Chronos;
 use Icicle\Http\Message\{BasicResponse, Request};
 use Icicle\Stream\MemorySink;
 
@@ -16,7 +16,7 @@ class AtomFeedAction extends Action
         }
 
         $html = $this->app->getRenderer()->render('feed.atom', [
-            'updated' => Carbon::now(),
+            'updated' => Chronos::now(),
             'articles' => $articles,
         ]);
 
