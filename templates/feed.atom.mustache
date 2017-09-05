@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>Stephen Coakley</title>
     <link href="http://stephencoakley.com"/>
-    <link href="http://stephencoakley.com/feed" rel="self"/>
+    <link href="{{id}}" rel="self"/>
     <subtitle>Software developer and web designer</subtitle>
     <updated>{{updated.toAtomString}}</updated>
-    <id>http://stephencoakley.com/feed</id>
+    <id>{{id}}</id>
     <author>
         <name>Stephen Coakley</name>
         <email>me@stephencoakley.com</email>
@@ -15,16 +15,19 @@
     <entry>
         <title>{{title}}</title>
         <link href="http://stephencoakley.com/{{slug}}"/>
+        <id>http://stephencoakley.com/{{slug}}</id>
         <author>
             <name>Stephen Coakley</name>
             <email>me@stephencoakley.com</email>
         </author>
-        <id>http://stephencoakley.com/{{slug}}</id>
-        <summary type="html">
-            {{text}}
-        </summary>
         <category term="{{category}}"/>
         <updated>{{date.toAtomString}}</updated>
+        <summary type="text">
+            {{summary}}
+        </summary>
+        <content type="html">
+            {{text}}
+        </content>
     </entry>
     {{/articles}}
 </feed>

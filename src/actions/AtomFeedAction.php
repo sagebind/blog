@@ -9,8 +9,11 @@ class AtomFeedAction extends Action
 {
     public function handle(Request $request, array $args): \Generator
     {
+        $id = 'http://stephencoakley.com/feed';
+
         if (isset($args['category'])) {
             $articles = $this->app->getArticleStore()->getByCategory($args['category']);
+            $id .= '/' . $args['category'];
         } else {
             $articles = $this->app->getArticleStore()->getIterator();
         }
