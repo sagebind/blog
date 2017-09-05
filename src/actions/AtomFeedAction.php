@@ -19,6 +19,7 @@ class AtomFeedAction extends Action
         }
 
         $html = $this->app->getRenderer()->render('feed.atom', [
+            'id' => $id,
             'updated' => Chronos::now(),
             'articles' => $articles,
         ]);
