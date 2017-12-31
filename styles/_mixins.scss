@@ -80,6 +80,6 @@
 }
 
 @mixin no-collapse {
-    border-top: 0.0001px solid transparent;
-    border-bottom: 0.0001px solid transparent;
+    border-top: 0.1px solid transparent;
+    border-bottom: 0.1px solid transparent;
 }
