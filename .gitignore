@@ -1,4 +1,3 @@
 /bin
 /obj
-/static/assets/css
-.sass-cache
+/out

@@ -1,28 +1,6 @@
-version: '2'
+version: '3'
 
 services:
-    app:
-        build: .
-        container_name: stephencoakley.local
-        networks:
-            - proxy
-        restart: on-failure
-    comments:
-        image: wonderfall/isso
-        container_name: comments.stephencoakley.local
-        networks:
-            - proxy
-        restart: on-failure
-        expose:
-            - "80"
-        environment:
-            - GID=0
-            - UID=0
-        volumes:
-            - /srv/www/stephencoakley/isso/config:/config
-            - /srv/www/stephencoakley/isso/db:/db
-
-networks:
-    proxy:
-        external:
-            name: proxy
+  app:
+    build: .
+    image: sagebind/blog

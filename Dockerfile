@@ -1,29 +1,19 @@
-FROM php:7-alpine
-MAINTAINER Stephen Coakley <me@stephencoakley.com>
+FROM microsoft/dotnet:2.1-sdk AS build
+WORKDIR /app
+COPY articles /app/articles/
+COPY src /app/src/
+COPY *.csproj /app/
+RUN dotnet restore && \
+    dotnet publish -c Release -o out
 
-RUN apk add --no-cache \
-        git \
-        make \
-        nodejs \
-        ruby \
-        ruby-irb \
-        ruby-rdoc && \
-    docker-php-ext-install sockets && \
-    gem install sass && \
-    npm install --global postcss-cli autoprefixer
+FROM alpine AS css
+COPY styles /styles
+RUN apk --no-cache add sassc && \
+    sassc --style compressed /styles/base.scss /style.min.css
 
-ADD articles        /app/articles
-ADD bin             /app/bin
-ADD src             /app/src
-ADD static          /app/static
-ADD styles          /app/styles
-ADD templates       /app/templates
-ADD composer.json   /app/composer.json
-ADD composer.lock   /app/composer.lock
-ADD Makefile        /app/Makefile
-
-RUN make -C /app all
-
-EXPOSE 80
-
-CMD ["/app/bin/server"]
+FROM microsoft/dotnet:2.1-aspnetcore-runtime
+WORKDIR /app
+COPY wwwroot /app/wwwroot/
+COPY --from=build /app/out /app/
+COPY --from=css /style.min.css /app/wwwroot/assets/css/style.css
+ENTRYPOINT ["dotnet", "blog.dll"]
