@@ -1,7 +1,7 @@
 +++
 title = "Embedded vs. External Web Servers"
 author = "Stephen Coakley"
-date = "2017-07-06 America/Chicago"
+date = "2017-07-06"
 category = "webdev"
 +++
 

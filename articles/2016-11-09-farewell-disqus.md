@@ -1,7 +1,7 @@
 +++
 title = "Farewell Disqus"
 author = "Stephen Coakley"
-date = "2016-11-09 America/Chicago"
+date = "2016-11-09"
 category = "web development"
 +++
 

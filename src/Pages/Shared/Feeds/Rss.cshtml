@@ -1,0 +1,22 @@
+@model IEnumerable<Blog.Article>
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+    <channel>
+        <title>Stephen Coakley</title>
+        <link>http://stephencoakley.com</link>
+        <description>Software developer and web designer</description>
+        <pubDate>@Model.Last().Date.ToString("r")</pubDate>
+
+        @foreach (var article in Model)
+        {
+            <item>
+                <title>@article.Title</title>
+                @Html.Raw($"<link>{article.CanonicalUri}</link>")
+                <author>me@stephencoakley.com</author>
+                <guid>@article.CanonicalUri</guid>
+                <description>@article.Html</description>
+                <pubDate>@article.Date.ToString("r")</pubDate>
+            </item>
+        }
+    </channel>
+</rss>

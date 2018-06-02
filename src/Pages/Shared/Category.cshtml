@@ -1,0 +1,12 @@
+@{
+    Layout = "Layout";
+    ViewData["Title"] = $"Articles in category &ldquo;{ViewData["category"]}&rdquo;";
+}
+@model IEnumerable<Blog.Article>
+
+<h1>@Html.Raw(ViewData["Title"])</h1>
+
+@foreach (var article in Model)
+{
+    @await Html.PartialAsync("ArticleSummary", article)
+}

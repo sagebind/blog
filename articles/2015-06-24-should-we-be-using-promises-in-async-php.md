@@ -1,7 +1,7 @@
 +++
 title = "Should We Be Using Promises in Async PHP?"
 author = "Stephen Coakley"
-date = "2015-06-24 America/Chicago"
+date = "2015-06-24"
 category = "php"
 +++
 

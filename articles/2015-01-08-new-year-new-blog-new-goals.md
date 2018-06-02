@@ -1,7 +1,7 @@
 +++
 title = "New Year, New Blog, New Goals"
 author = "Stephen Coakley"
-date = "2015-01-08 America/Chicago"
+date = "2015-01-08"
 category = "life"
 +++
 

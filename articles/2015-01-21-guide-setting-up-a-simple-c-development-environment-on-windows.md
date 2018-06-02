@@ -1,7 +1,7 @@
 +++
 title = "Guide: Setting Up A Simple C++ Development Environment On Windows"
 author = "Stephen Coakley"
-date = "2015-01-21 America/Chicago"
+date = "2015-01-21"
 category = "cplusplus"
 +++
 

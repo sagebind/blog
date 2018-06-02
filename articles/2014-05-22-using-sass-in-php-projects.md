@@ -1,21 +1,21 @@
 +++
 title = "Using Sass in PHP Projects"
 author = "Stephen Coakley"
-date = "2014-05-22 America/Chicago"
+date = "2014-05-22"
 category = "php"
 +++
 
-If you have been paying attention to developments in the web development community recently, you probably know what CSS preprocessors are. If not, I would encourage you to check them out and play around with them. I understand they aren’t for everyone (it does require a more complex workflow), but in general it can help you keep your CSS cleaner and more modular. Check out [this awesome post](http://www.vanseodesign.com/css/css-preprocessors) by [Steven Bradley](http://www.vanseodesign.com) for a gentle introduction to CSS preprocessing.
+If you have been paying attention to developments in the web development community recently, you probably know what CSS preprocessors are. If not, I would encourage you to check them out and play around with them. I understand they aren't for everyone (it does require a more complex workflow), but in general it can help you keep your CSS cleaner and more modular. Check out [this awesome post](http://www.vanseodesign.com/css/css-preprocessors) by [Steven Bradley](http://www.vanseodesign.com) for a gentle introduction to CSS preprocessing.
 
-There are several preprocessors in use out there, but I generally prefer [Sass](http://sass-lang.com) because of its extensive mixin and inheritance capabilities. I stick with the newer SCSS syntax as it’s compatible with existing CSS stylesheets and feels more familiar to me to write. I’ve been using Sass for only a few months, but I already can’t imagine writing styles without it.
+There are several preprocessors in use out there, but I generally prefer [Sass](http://sass-lang.com) because of its extensive mixin and inheritance capabilities. I stick with the newer SCSS syntax as it's compatible with existing CSS stylesheets and feels more familiar to me to write. I've been using Sass for only a few months, but I already can't imagine writing styles without it.
 
-The problem with using Sass is that it doesn’t integrate nicely with PHP-based projects. Sass is written in Ruby, so everyone on the team must have Ruby installed on their development machines and then the Sass gem installed. It isn’t a huge hassle, but it falls outside the project workflow. [LESS](http://lesscss.org) and [Stylus](http://learnboost.github.io/stylus/) don’t fare much better, as they both run on [Node.js](http://nodejs.org) (even though Node.js is awesome).
+The problem with using Sass is that it doesn't integrate nicely with PHP-based projects. Sass is written in Ruby, so everyone on the team must have Ruby installed on their development machines and then the Sass gem installed. It isn't a huge hassle, but it falls outside the project workflow. [LESS](http://lesscss.org) and [Stylus](http://learnboost.github.io/stylus/) don't fare much better, as they both run on [Node.js](http://nodejs.org) (even though Node.js is awesome).
 
 In order to improve the Sass workflow, I sought a better solution and I ran across [scssphp](http://leafo.net/scssphp/). scssphp is SCSS compiler written in PHP by [Leaf Forcoran](http://twitter.com/moonscript). This was exactly what I was looking for, so I downloaded it and tested it out. To test it, I used the command-line tool to try and compile my SCSS code for my website. I was pleased to see that the resulting CSS file was almost identical to the CSS file compiled by the official compiler; the only differences were minor whitespace/formatting issues that were slightly less compressed than the latter. After playing with scssphp for a few days, I decided to switch my website over to it. The change was actually painless; let me show you how to do it.
 
 ## Installing scssphp with Composer ##
 
-First we need to download the library into our project. You can download scssphp from its website, but we are interested in its package on [Packagist](http://packagist.org). It should be no secret that I’m a big advocate of [Composer](http://getcomposer.org). I believe that it is one of the biggest changes in the community that will serve to PHP's advance into the future as a language. But that's for another blog post.
+First we need to download the library into our project. You can download scssphp from its website, but we are interested in its package on [Packagist](http://packagist.org). It should be no secret that I'm a big advocate of [Composer](http://getcomposer.org). I believe that it is one of the biggest changes in the community that will serve to PHP's advance into the future as a language. But that's for another blog post.
 
 Anyway, let's get started with scssphp. First add `leafo/scssphp` as a dependency to your project's `composer.json` file:
 

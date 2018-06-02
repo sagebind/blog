@@ -1,0 +1,35 @@
+@model IEnumerable<Blog.Article>
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>Stephen Coakley</title>
+    <link href="http://stephencoakley.com"/>
+    <link href="http://stephencoakley.com@Context.Request.Path" rel="self"/>
+    <subtitle>Software developer and web designer</subtitle>
+    <updated>@Model.Last().Date.ToString("yyyy-MM-ddTHH:mm:ssZ")</updated>
+    <id>http://stephencoakley.com/feed.atom</id>
+    <author>
+        <name>Stephen Coakley</name>
+        <email>me@stephencoakley.com</email>
+    </author>
+
+    @foreach (var article in Model)
+    {
+        <entry>
+            <title>@article.Title</title>
+            <link href="@article.CanonicalUri"/>
+            <id>@article.CanonicalUri</id>
+            <author>
+                <name>Stephen Coakley</name>
+                <email>me@stephencoakley.com</email>
+            </author>
+            <category term="@article.Category"/>
+            <updated>@article.Date.ToString("yyyy-MM-ddTHH:mm:ssZ")</updated>
+            <summary type="text">
+                @Html.Raw(article.Summarize())
+            </summary>
+            <content type="html">
+                @Html.Raw(article.Html)
+            </content>
+        </entry>
+    }
+</feed>

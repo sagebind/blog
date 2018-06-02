@@ -1,7 +1,7 @@
 +++
 title = "A Big Shift"
 author = "Stephen Coakley"
-date = "2016-10-05 America/Chicago"
+date = "2016-10-05"
 category = "life"
 +++
 

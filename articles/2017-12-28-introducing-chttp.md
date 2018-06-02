@@ -1,7 +1,7 @@
 +++
 title = "Introducing cHTTP; or, Why Pure Rust Is Not A Worthy Goal"
 author = "Stephen Coakley"
-date = "2017-12-28 America/Chicago"
+date = "2017-12-28"
 category = "rust"
 +++
 

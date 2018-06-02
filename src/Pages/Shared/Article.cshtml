@@ -1,0 +1,25 @@
+@{
+    Layout = "Layout";
+    ViewData["Title"] = Model.Title;
+}
+@model Blog.Article
+
+<article>
+    <h1>@Model.Title</h1>
+
+    <p class="postmeta">
+        <small>
+            <span class="date">@Model.Date</span>
+            <span class="author-by"> by </span>
+            <span class="author">@Model.Author</span>
+        </small>
+    </p>
+    <p class="category">
+        <small>Posted under <a href="/category/@Model.Category">@Model.Category</a></small>
+    </p>
+
+    @Html.Raw(Model.Html)
+</article>
+
+<script data-isso="//comments.stephencoakley.com/" data-isso-require-author="true" data-isso-require-email="true" src="//comments.stephencoakley.com/js/embed.min.js"></script>
+<section id="isso-thread"></section>

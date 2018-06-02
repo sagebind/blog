@@ -1,0 +1,11 @@
+@model Blog.Article
+
+<article>
+    <h2><a href="/@Model.Slug">@Model.Title</a></h2>
+
+    <small>
+        <time datetime="@Model.Date.ToString("u")">@Model.Date.ToString("D")</time> under <a href="/category/@Model.Category">@Model.Category</a>
+    </small>
+
+    <p>@Model.Summarize()</p>
+</article>

@@ -1,4 +1,4 @@
+/bin
+/obj
 /static/assets/css
-/vendor
 .sass-cache
-composer.phar

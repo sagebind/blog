@@ -1,7 +1,7 @@
 +++
 title = "Terminal Setup Tour"
 author = "Stephen Coakley"
-date = "2017-02-19 America/Chicago"
+date = "2017-02-19"
 category = "workflow"
 +++
 
