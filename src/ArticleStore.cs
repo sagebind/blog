@@ -20,7 +20,8 @@ namespace Blog
             return assembly
                 .GetManifestResourceNames()
                 .Where(name => name.StartsWith("blog.articles."))
-                .Select(LoadArticleFromResource);
+                .Select(LoadArticleFromResource)
+                .Where(article => includeUnpublished || article.IsPublished);
         }
 
         public Article GetBySlug(string slug)
