@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=1024" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <title>Version-Aware Word Documents</title>
+
+        <meta name="description" content="Version-Aware Word Documents: A research project sponsored by the University of Wisconsin-Whitewater" />
+        <meta name="author" content="Stephen Coakley" />
+
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+
+        <style>
+            body {
+                font-family: 'PT Sans', sans-serif;
+                min-height: 740px;
+
+                background-image: url("geometry2.png");
+            }
+
+            /**
+             * Step styles
+             */
+
+            .step {
+                position: relative;
+                width: 1000px;
+                padding: 40px;
+                margin: 10px auto;
+
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing:    border-box;
+                -ms-box-sizing:     border-box;
+                -o-box-sizing:      border-box;
+                box-sizing:         border-box;
+
+                font-family: 'PT Serif', georgia, serif;
+                font-size: 40px;
+                line-height: 1.5;
+            }
+
+            .backface-hidden {
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+            }
+
+            .impress-enabled .step {
+                margin: 0;
+                opacity: 0.3;
+
+                -webkit-transition: opacity 1s, text-shadow 1s, color 1s;
+                -moz-transition:    opacity 1s, text-shadow 1s, color 1s;
+                -ms-transition:     opacity 1s, text-shadow 1s, color 1s;
+                -o-transition:      opacity 1s, text-shadow 1s, color 1s;
+                transition:         opacity 1s, text-shadow 1s, color 1s;
+
+                color: rgba(130, 130, 130, 0.1);
+                text-shadow: 0 0 10px black;
+            }
+
+            .impress-enabled .step.active {
+                opacity: 1;
+                color: black;
+                text-shadow: none;
+            }
+
+            .impress-on-overview .step {
+                cursor: pointer;
+            }
+
+
+            /**
+             * Content styles
+             */
+
+            a {
+                color: blue;
+                text-decoration: none;
+                padding: 0 0.1em;
+                background: rgba(255,255,255,0.5);
+                text-shadow: -1px -1px 2px rgba(100,100,100,0.9);
+                border-radius: 0.2em;
+
+                -webkit-transition: all 0.5s;
+                -moz-transition:    all 0.5s;
+                -ms-transition:     all 0.5s;
+                -o-transition:      all 0.5s;
+                transition:         all 0.5s;
+            }
+
+            a:hover,
+            a:focus {
+                background: rgba(255,255,255,1);
+                text-shadow: -1px -1px 2px rgba(100,100,100,0.5);
+            }
+
+            h1 {
+                font-size: 56px;
+                text-align: center;
+                margin-bottom: 40px;
+            }
+
+            h2 {
+                font-size: 48px;
+                margin-bottom: 40px;
+            }
+
+            li {
+                margin-left: 40px;
+            }
+
+            h1 > img {
+                width: 128px;
+            }
+
+            p {
+                margin: 30px 0;
+            }
+
+            img.right {
+                float: right;
+                margin-left: 20px;
+                width: 320px;
+            }
+
+            img.full {
+                width: inherit;
+                border: 1px solid gray;
+            }
+
+            small {
+                font-size: 80%;
+            }
+
+            code > pre {
+                display: block;
+                background-color: rgba(255, 255, 255, 0.5);
+                border-radius: 5px;
+                margin-top: 40px;
+                padding: 10px;
+                font-size: 20px
+            }
+        </style>
+    </head>
+
+    <body class="impress-not-supported">
+        <div class="fallback-message">
+            <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+            <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+        </div>
+
+
+        <div id="impress">
+
+            <div id="title" class="step">
+                <h1>Undergraduate Research Experiences</h1>
+                <p>University of Wisconsin-Whitewater</p>
+            </div>
+
+            <div class="step" data-y="500" data-z="1000">
+                <h2>Research Involvement</h2>
+                <ul>
+                    <li>First got invloved at the Internship/Undergraduate Research Workshop in 2013</li>
+                    <li>Cheng Thao had an interesing idea for a project</li>
+                </ul>
+            </div>
+
+            <div class="step" data-y="1000" data-z="2000">
+                <h2>Our Research Project: Version-Aware Word Documents</h2>
+                <ul>
+                    <li></li>
+                </ul>
+                <img class="full" src="ribbon.png">
+            </div>
+
+            <div class="step" data-y="1500" data-z="3000">
+                <p>Our solution plugs in to the commonality of Word and provides a more complete system:</p>
+                <ul>
+                    <li>Allows collaborators to work on documents concurrently</li>
+                    <li>Allows collaborators to create versions to keep track of changes</li>
+                    <li>Allows collaborators to combine their changes to create a new version</li>
+                    <li>Allows collaborators to view the history of the document</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="6000" data-y="1000" data-rotate-y="180">
+                <h2>Future possibilities</h2>
+                <ul>
+                    <li>Include merge tool within addon natively</li>
+                    <li>Create an installer that installs everything automatically</li>
+                    <li>Create a portable comment and review system attached to each revision</li>
+                    <li>Allow version-aware documents to be transferred around at the click of a button</li>
+                </ul>
+            </div>
+
+            <div id="overview" class="step" data-x="3000" data-y="-1000">
+                <p>This research made possible by the Undergraduate Research Program at the University of Wisconsin-Whitewater.</p>
+            </div>
+
+        </div>
+
+        <script src="https://unpkg.com/impress.js"></script>
+        <script>impress().init();</script>
+
+    </body>
+</html>

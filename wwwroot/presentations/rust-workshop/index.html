@@ -1,0 +1,847 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=1024" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <title>A Rust Adventure</title>
+
+        <meta name="author" content="Stephen Coakley" />
+
+        <link href="https://fonts.googleapis.com/css?family=Fira+Mono|Fira+Sans:400,400italic,700,700italic" rel="stylesheet">
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/color-brewer.min.css">
+
+        <style>
+            body {
+                font-family: "Fira Sans", sans-serif;
+                min-height: 740px;
+            }
+
+            pre, code {
+                font-family: "Fira Mono", monospace;
+            }
+
+            /**
+             * Super cool parallax background logo.
+             */
+            #background {
+                display: block;
+                position: absolute;
+                width: 512px;
+                height: 512px;
+                background-image: url("rust-logo-512x512-blk.png");
+                opacity: 0.05;
+                transform: translate3d(-15000px, -10000px, -40000px) scale(64);
+            }
+
+            /**
+             * Step styles
+             */
+
+            .step {
+                position: relative;
+                width: 72rem;
+                padding: 4rem;
+                margin: 2rem auto;
+                overflow: hidden;
+
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing:    border-box;
+                -ms-box-sizing:     border-box;
+                -o-box-sizing:      border-box;
+                box-sizing:         border-box;
+
+                font-size: 40px;
+                line-height: 1.5;
+            }
+
+            .impress-enabled .step {
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+                margin: 0;
+                opacity: 0.25;
+
+                -webkit-transition: opacity 1s;
+                -moz-transition:    opacity 1s;
+                -ms-transition:     opacity 1s;
+                -o-transition:      opacity 1s;
+                transition:         opacity 1s;
+            }
+
+            .impress-enabled .step.active {
+                opacity: 1;
+            }
+
+            .impress-on-overview .step {
+                cursor: pointer;
+            }
+
+
+            /**
+             * Content styles
+             */
+            a {
+                color: #428bca;
+                text-decoration: none;
+                padding: 0 0.1em;
+                border-radius: 0.2em;
+
+                -webkit-transition: all 0.5s;
+                -moz-transition:    all 0.5s;
+                -ms-transition:     all 0.5s;
+                -o-transition:      all 0.5s;
+                transition:         all 0.5s;
+            }
+
+            a:hover, a:focus {
+                color: #2a6496;
+                text-decoration: underline;
+                outline: 0;
+            }
+
+            big {
+                display: block;
+            }
+
+            h1, h2, big {
+                font-weight: bold;
+                margin-bottom: 40px;
+            }
+
+            h1, big {
+                font-size: 56px;
+                text-align: center;
+            }
+
+            h2 {
+                font-size: 48px;
+                border-bottom: 3px solid #ddd;
+            }
+
+            h3 {
+                margin-bottom: 20px;
+            }
+
+            li {
+                margin-left: 40px;
+            }
+
+            h1 > img {
+                width: 128px;
+            }
+
+            p {
+                margin: 40px 0;
+            }
+
+            blockquote {
+                display: block;
+                position: relative;
+                font-size: 90%;
+                margin: 40px;
+                padding: 0px 0px 24px 24px;
+                border-left: 4px solid #ddd;
+                font-style: italic;
+                quotes: "\201C""\201D""\2018""\2019";
+            }
+
+            blockquote:before {
+                color: #ccc;
+                content: open-quote;
+                font-size: 150%;
+                padding-right: 12px;
+                line-height: 0.1em;
+            }
+
+            blockquote:after {
+                color: #ccc;
+                content: close-quote;
+                font-size: 150%;
+                padding-left: 12px;
+                line-height: 0.1em;
+            }
+
+            blockquote > cite {
+                display: block;
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                font-size: 90%;
+                font-style: normal;
+            }
+
+            ul, ol {
+                text-align: left;
+            }
+
+            .left {
+                float: left;
+            }
+            .right {
+                float: right;
+            }
+            .column {
+                display: block;
+                width: 47%;
+            }
+
+            img.middle {
+                display: block;
+                width: auto;
+                margin: auto;
+            }
+
+            img.right {
+                margin-left: 20px;
+                width: 320px;
+            }
+
+            img.full {
+                width: inherit;
+                border: 1px solid gray;
+            }
+
+            small {
+                display: block;
+                font-size: 50%;
+                margin: auto;
+                margin-top: 48px;
+            }
+
+            code {
+                border-radius: 4px;
+                background-color: rgba(250, 250, 250, 0.6) !important;
+                border: 1px solid #ddd;
+                padding: 4px 8px 0px 8px;
+                font-size: 90%;
+            }
+
+            pre > code {
+                display: block;
+                margin: 30px 0;
+                padding: 10px 14px;
+                font-size: 20px
+            }
+
+            #title {
+                text-align: center;
+                width: 60vw;
+            }
+
+            #title h1 {
+                padding: 0 100px;
+            }
+
+            #sass-logo {
+                height: 256px;
+                margin-bottom: 40px;
+            }
+        </style>
+    </head>
+
+
+
+    <body>
+        <div id="impress">
+            <div id="background"></div>
+
+            <div id="title" class="step" data-scale="2" data-z="3000" data-rotate-y="180">
+                <a href="http://rust-lang.org" target="_blank"><img id="sass-logo" src="rust-logo-512x512.png"></a>
+                <h1>A Rust Adventure</h1>
+
+                <ul>
+                    <li><a href="#/part-1">Part 1: What is Rust?</a></li>
+                    <li><a href="#/part-2">Part 2: Essential Rust</a></li>
+                    <li><a href="#/part-3">Part 3: A simple Rust program</a></li>
+                </ul>
+
+                <small>"Rust" and "Cargo" are registered trademarks of <a href="http://mozilla.org">the Mozilla Foundation</a>. <a href="https://www.rust-lang.org/legal.html">Rust logo</a> by <a href="http://mozilla.org">the Mozilla Foundation</a> is licensed under <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</small>
+            </div>
+
+
+
+            <div id="part-1" class="step">
+                <h2>What is Rust?</h2>
+
+                <blockquote cite="http://rust-lang.org"><b>Rust</b> is a systems programming language that runs blazingly fast, prevents nearly all segfaults, and guarantees thread safety.<cite>-- Rust homepage</cite></blockquote>
+
+                <ul>
+                    <li>General programs</li>
+                    <li>Low level programming</li>
+                    <li>High performance and concurrency</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="2000">
+                <h2>Why Rust? What's wrong with language <i>X</i>?</h2>
+
+                <ul>
+                    <li>Cross-platform and complete standard API</li>
+                    <li>Simpler and more practical object model</li>
+                    <li>Native performance and minimal memory usage</li>
+                    <li>Complete memory safety</li>
+                    <li>Simple, lock-free concurrency</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="2000" data-y="-500" data-z="500" data-rotate-x="-90">
+                <h2>A little about Rust</h2>
+
+                <ul>
+                    <li>Rust began as a pet project by Mozilla employee Graydon Hoare</li>
+                    <li>Was born out of frustration over C/C++</li>
+                    <li>Mozilla took interest and began sponsoring the project in 2009</li>
+                    <li>The very first public version was released in 2012</li>
+                    <li>Rust 1.0 was released spring 2015</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="4000">
+                <h2>Ownership and borrowing</h2>
+
+                <ul>
+                    <li>Key concept in Rust is <i>ownership</i> of values
+                        <ul>
+                            <li>Only one owner at a time</li>
+                            <li>Values can change owners</li>
+                        </ul>
+                    </li>
+                    <li>Variables are said to "own" their values</li>
+                    <li>Other variables and functions can <i>borrow</i> a value from the owner</li>
+                    <li>Keep this in mind, but we'll talk about borrowing next week</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="4000" data-z="2000" data-rotate-z="-22.5">
+                <h1>Getting a taste</h1>
+
+                <p>Open up the Rust playground (<a href="https://play.rust-lang.org" target="_blank">https://play.rust-lang.org</a>) so we can try out some code.</p>
+            </div>
+
+            <div class="step" data-x="5500" data-z="2000">
+                <h2>Basic syntax</h2>
+
+                <p>Very familiar to C++ and Java developers:</p>
+
+                <pre><code>// Comments are written with two slashes.
+/* Comments can also
+   span multiple lines. */
+fn main() { // Program starts in a `main()` function.
+    // Variables can be assigned with `=`.
+    let x = 4;
+    // We can use all of the normal math operators.
+    let y = (x / 2 + 20) * 4 % 46;
+    // We can create booleans, strings, and floating point numbers.
+    let awesome = true;
+    let name = "Kuvira";
+    // We use `let` for all types. Rust can usually figure out what
+    // type it's supposed to be. If it can't, we have to tell it:
+    let byte: u8 = 255;
+    // Function calls use `()`. Namespaces are similar to C++.
+    let square = num::pow(y, 2);
+}</code></pre>
+            </div>
+
+            <div class="step" data-x="5500" data-z="3500">
+                <p><b>Available scalar data types:</b></p>
+
+                <ul>
+                    <li>Booleans: <code>bool</code>, either <code>true</code> or <code>false</code></li>
+                    <li>Signed integers: <code>i8</code>, <code>i16</code>, <code>i32</code>, <code>i64</code> and <code>isize</code> (pointer size)</li>
+                    <li>Unsigned integers: <code>u8</code>, <code>u16</code>, <code>u32</code>, <code>u64</code> and <code>usize</code> (pointer size)</li>
+                    <li>Floating point numbers: <code>f32</code>, <code>f64</code></li>
+                    <li>Unicode character: <code>char</code></li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="5500" data-y="1000" data-z="2000">
+                <h2>Arrays and slices</h2>
+
+                <pre><code>// Arrays are fixed, like in C++ or Java.
+// Their size is always known at compile time and is part of their type.
+let numbers = [0, 1, 1, 2, 3, 5, 8, 13];
+println!("array size: {}", numbers.len());
+
+// Slices let you borrow just a portion of an array.
+let slice = &amp;numbers[1 .. 4];
+println!("{:?}", slice);</code></pre>
+            </div>
+
+            <div class="step" data-x="5500" data-y="2000" data-z="2000">
+                <h2>Vectors</h2>
+
+                <p>Arrays aren't always useful by themselves. We can use vectors to make a list of values that can change in size.</p>
+
+                <pre><code>// Create a vector that stores floats.
+let mut prices = Vec&lt;f32&gt;::new();
+
+// Add some values to the vector.
+prices.push(10.99);
+prices.push(39.98);
+println!("{:?}", prices);</code></pre>
+            </div>
+
+            <div class="step" data-x="5500" data-y="3000" data-z="2000">
+                <h2>Strings and string slices</h2>
+
+                <pre><code>// Rust has two types of strings.
+// This is a String object. It is a modifiable vector of chars.
+let mut string = String::new();
+string.push_str("hello");
+
+// This is a &amp;str. It is a static slice of a String. It gives a view of a string.
+let slice = "dog";</code></pre>
+            </div>
+
+            <div class="step" data-x="5500" data-y="4000" data-z="2000">
+                <h2>Tuples</h2>
+
+                <pre><code>// Unlike vectors, tuples can store a mix of types, but
+// they also have a fixed length.
+let my_tuple = (42, "foo", 3.141);
+println!("{:?}", my_tuple);
+// We can access the positions as properties.
+println!("PI is close to {}.", my_tuple.2);
+
+// Tuples can also store other tuples.
+let inception = ("square1", (0, 1), (3, 2));
+println!("{}", (inception.1).0);
+
+// Tuples can also be empty. An empty tuple is called the "unit type", and is often
+// used to represent the concept of "nothing" (not directly related to null).
+let empty = ();
+</code></pre>
+            </div>
+
+            <div class="step" data-x="5500" data-y="5000" data-z="2000">
+                <h2>An excursion on mutability</h2>
+
+                <p>Notice <code>let</code> and <code>let mut</code>?</p>
+
+                <ul>
+                    <li>Values are <i>immutable</i> by default</li>
+                    <li>Variables can be made mutable with <code>mut</code>:
+                    <pre><code>// This variable is mutable.
+let mut mutable = 16;
+mutable += 12;
+// This variable is immutable.
+let immutable = 96;
+immutable = immutable / 2; // <- Error!</code></pre>
+                    <li>Mutability extends throughout entire objects</li>
+                    <li>Value objects and safety</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="5500" data-y="6000" data-z="2000">
+                <h2>Control structures</h2>
+
+                <p>Rust does away with a lot of the extra boilerplate in control structures that other languages tend to have.</p>
+
+                <pre><code>let mut n = 5;
+
+if n &lt; 0 {
+    println!("{} is negative", n);
+} else if n &gt; 0 {
+    println!("{} is positive", n);
+} else {
+    println!("{} is zero", n);
+}
+
+while n &lt; 21 {
+    if n % 5 == 0 {
+        println!("{} is divisible by 5.", n);
+    }
+    n += 1;
+}</code></pre>
+            </div>
+
+            <div class="step" data-x="5500" data-y="7000" data-z="2000">
+                <h2>For loops and iterators</h2>
+
+                <p><code>for in</code> loops are designed explicitly for looping over iterators (more on them later). We can create an iterator with range notation: <code>a..b</code>.</p>
+
+                <pre><code>for n in 1..101 {
+    if n % 15 == 0 {
+        println!("fizzbuzz");
+    } else if n % 3 == 0 {
+        println!("fizz");
+    } else if n % 5 == 0 {
+        println!("buzz");
+    } else {
+        println!("{}", n);
+    }
+}</code></pre>
+            </div>
+
+            <div class="step" data-x="5500" data-y="8000" data-z="2000">
+                <h2>Functions</h2>
+
+                <ul>
+                    <li>Encapsulate a set of code</li>
+                    <li>Take a list of arguments and optionally return a value</li>
+                    <li>Functions do not have to be part of a class</li>
+                </ul>
+
+                <pre><code>// Create a simple function that returns the absolute value of a number.
+// We must specify the types of the parameters and the type returned.
+fn absolute_value(number: i32) -&gt; i32 {
+    if number &lt; 0 {
+        // We can explicitly return a value any time with `return`...
+        return 0 - number;
+    }
+
+    // ... or let the return value be the last expression.
+    number
+}</code></pre>
+            </div>
+
+            <div class="step" data-x="2000" data-y="8000">
+                <p><b>Next session:</b></p>
+
+                <ul>
+                    <li>Installing the Rust compiler and compiling code</li>
+                    <li>Object-like programming with structs and traits</li>
+                    <li>More on borrowing and references</li>
+                </ul>
+
+                <p>Come back next week when the real fun begins!</p>
+            </div>
+
+
+
+            <div id="part-2" class="step" data-x="-4000">
+                <h2>Essential Rust</h2>
+
+                <p>What we will be doing today:</p>
+
+                <ul>
+                    <li>Installing <code>rustc</code></li>
+                    <li>Learning about structures and traits</li>
+                    <li>Understanding borrowing and references</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="-4000" data-y="-2000">
+                <h2>Your friendly neighborhood <code>rustc</code></h2>
+
+                <ul>
+                    <li>The standard Rust compiler</li>
+                    <li>Itself written in Rust</li>
+                    <li>Very helpful error messages and suggestions, and serves as a debug tool</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="-4000" data-y="-2000" data-z="-1500">
+                <big>Get out your laptops!</big>
+            </div>
+
+            <div class="step" data-x="-4000" data-y="-2000" data-z="-3000">
+                <h2>Installing Rust</h2>
+
+                <ol>
+                    <li>Go to <a href="http://www.rust-lang.org/downloads.html" target="_blank">http://www.rust-lang.org/downloads.html</a> and download the package for your platform.
+
+                    <p>Or on Linux or Mac:</p>
+
+                    <pre><code>$ curl -sSf https://static.rust-lang.org/rustup.sh | sh</code></pre></li>
+
+                    <li>Open a command window and type <code>rustc -V</code></li>
+                </ol>
+
+            </div>
+
+            <div class="step" data-x="-4000" data-y="-2000" data-z="-4500">
+                <h2>Hello, world!</h2>
+
+                <p>Put the following program into <code>hello.rs</code>:</p>
+
+                <pre><code>fn main() {
+    println!("Hello, world!");
+}</code></pre>
+
+                <p>Compile it with:</p>
+
+                <pre><code>$ rustc hello.rs</code></pre></li>
+            </div>
+
+            <div class="step" data-x="-2000" data-y="-2000">
+                <h2>Structures</h2>
+
+                <ul>
+                    <li>Pretty much just objects</li>
+                    <li>Fields can be public or private (private by default)</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="-2000" data-y="-2000" data-z="-1500">
+                <p>Structures example:</p>
+
+                <pre><code>// Intriguing structs, no?
+struct Point {
+    pub x: i32,
+    pub y: i32
+}
+struct Square {
+    top_left: Point,
+    bottom_right: Point
+}
+// Creating an instance of a struct (on the stack, BTW)
+let my_square = Square{
+    top_left: Point{x: 1, y: 1},
+    bottom_right: Point{x: 3, y: 4}
+};</code></pre>
+            </div>
+
+            <div class="step" data-x="-3000" data-y="-2000" data-z="-1000" data-rotate-y="120" data-rotate-z="-105">
+                <h1>But, but, but what about getters and setters?</h1>
+
+                <p>Remember mutability and immutability? If the struct should not be modified, make it immutable. Getters and setters make sense <i>sometimes</i>, but they are rare in Rust code.</p>
+            </div>
+
+            <div class="step" data-x="-2000" data-y="-2000" data-z="-3000">
+                <h2>Note: Modules and visibility</h2>
+
+                <ul>
+                    <li>At a higher level than structures, modules organize related code</li>
+                    <li>Similar to namespacing</li>
+                    <li>Module names are simply based on files and folders</li>
+                    <li>Method and field visibility applies to the current module, rather than the struct</li>
+                </ul>
+            </div>
+
+            <div class="step" data-y="-2000">
+                <h2>Enums</h2>
+
+                <ul>
+                    <li>A powerful, flexible addition to the type system</li>
+                    <li>Enums implement "algebraic" typing and allow you to specify variants</li>
+                    <li>Allow you to group and categorize possible sub-types</li>
+                </ul>
+            </div>
+
+            <div class="step" data-y="-2000" data-z="-1500">
+                <h2>Wait, what?</h2>
+
+                <p>Let's try an example. Here's how we could implement a singly-linked list using enums:</p>
+
+                <pre><code>// This declares a first-class type 'List'
+enum List&lt;T&gt; {
+    // A list can be either one of two variants: a node with a value...
+    Node {
+        value: T,
+        next: List&lt;T&gt; // A node has a 'next' property holding another list node
+    },
+    // ... or a tail.
+    Tail
+    // The tail of the list has no value or next node.
+}</code></pre>
+            </div>
+
+            <div class="step" data-y="-2000" data-z="-500" data-rotate-y="180">
+                <h2>You may have noticed generics...</h2>
+
+                <p>Yeah, Rust has 'em. They're pretty much the same as in C++, C#, or Java.</p>
+
+                <p>So, yeah, moving on...</p>
+            </div>
+
+            <div class="step" data-x="2000" data-y="-2000">
+                <big>Now to the really cool stuff: Traits</big>
+
+                <p>Traits are like using LEGO&reg; bricks for objects and types.</p>
+
+                <img src="lego-bricks.png" class="middle">
+            </div>
+
+            <div class="step" data-x="2000" data-y="-2000" data-z="-1500">
+                <h2>Programming to an interface with traits</h2>
+
+                <ul>
+                    <li>Traits are the "glue" that hold everything together and make Rust's type system work</li>
+                    <li>While structs only define properties, traits only define methods</li>
+                    <li>Function similarly to a mix of interfaces and abstract classes</li>
+                    <li>You can implement as many traits as it likes</li>
+                    <li>Traits can provide default implementations for methods and inherit other traits</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="2000" data-y="-2000" data-z="-1500" data-rotate-y="180">
+                <h2>SUPERFASTTRAITEXAMPLE!!</h2>
+
+                <pre><code>struct Circle {
+    x: f64,
+    y: f64,
+    radius: f64
+}
+// This is a trait for something that has area
+trait HasArea {
+    // Oh look, a reference to `self`, the current object (a.k.a. `this`)
+    fn area(&amp;self) -&gt; f64;
+}
+// Now let's define how circles compute their area
+impl HasArea for Circle {
+    fn area(&amp;self) -&gt; f64 {
+        std::f64::consts::PI * (self.radius * self.radius)
+    }
+}</code></pre>
+            </div>
+
+            <div class="step" data-x="2000" data-y="-2000" data-z="-3000">
+                <h2>You did want inheritance, right?</h2>
+
+                <pre><code>trait Animal {
+    pub fn speak();
+}
+trait Pet: Animal { // Pet trait extends Animal
+    pub fn pet();
+}
+
+struct Lion {}
+impl Animal for Lion { // Lion must implement speak()
+    pub fn speak() {
+        println!("Roar!");
+    }
+}
+
+struct Cat {}
+impl Pet for Cat { // Cat must implement speak() *and* pet()
+    pub fn speak() {
+        println!("Mew!");
+    }
+    pub fn pet() {
+        println!("Prrr...");
+    }
+}
+</code></pre>
+            </div>
+
+            <div class="step" data-x="4000" data-y="-2000">
+                <big>One more thing we should look at: borrowing</big>
+
+                <p>Instead of pointers and references, Rust uses borrowing to share values across code.</p>
+            </div>
+
+            <div class="step" data-x="4000" data-y="-2000" data-z="-1500">
+                <h2>Sharing is caring</h2>
+
+                <pre><code>fn point_opposite(point: &amp;Point) -> Point {
+    Point(0 - point.0, 0 - point.1)
+}
+
+let p = Point(9, 7);
+let opposite = point_opposite(&amp;p);
+println!("({}, {})", opposite.0, opposite.1);</code></pre>
+
+                <p>This plays into "ownership" like we discussed before quite a bit.</p>
+
+                <p>Passing <em>values</em> around transfers ownership, while <em>borrowing</em> just lends the value to someone else for a bit.</p>
+            </div>
+
+            <div class="step" data-y="-1000">
+                <p><b>Next session:</b></p>
+
+                <ul>
+                    <li>Heap allocation and managing objects by reference</li>
+                    <li>Rust patterns and concepts</li>
+                    <li>Error handling</li>
+                </ul>
+
+                <p>Come back next week for the last installment!</p>
+            </div>
+
+
+
+            <div id="part-3" class="step" data-x="-4000" data-y="2000">
+                <h2>A simple, complete Rust program</h2>
+
+                <p>What we will be doing today:</p>
+
+                <ul>
+                    <li>Heap allocation and managing objects by reference</li>
+                    <li>Getting a feel of Rust code</li>
+                    <li>Exploring common Rust patterns</li>
+                    <li>Exploring error handling</li>
+                    <li>Using <a href="http://crates.io" target="_blank">Cargo</a> for dependencies</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="-2000" data-y="2000">
+                <h2><code>Option&lt;T&gt;</code>: A world without <code>null</code></h2>
+
+                <ul>
+                    <li>Rust <i>does not have <code>null</code></i>!</li>
+                    <li>Objects are guaranteed to exist</li>
+                </ul>
+            </div>
+
+            <div class="step" data-y="2000">
+                <h2>Garbage collection</h2>
+
+                <ul>
+                    <li>High level languages: C#, Java, Python, Ruby, JavaScript, PHP, Go</li>
+                    <li>Programmer creates objects</li>
+                    <li>Runtime deals with freeing objects</li>
+                    <li>Refcounting and GC cycles
+                        <ul>
+                            <li>No predictability</li>
+                            <li>Performance overhead</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="2000" data-y="2000">
+                <h2>Destructuring with <code>Drop</code></h2>
+
+                <pre><code>struct Foo;
+
+impl Drop for Foo {
+    fn drop(&amp;mut self) {
+        println!("Dropping a Foo!");
+    }
+}</code></pre>
+            </div>
+
+            <div class="step" data-x="4000" data-y="2000">
+                <h2>Heap allocation with <code>Box</code></h2>
+
+                <pre><code>fn main() {
+    let cat = Box::new(Cat);
+}</code></pre>
+            </div>
+
+            <div class="step" data-x="6000" data-y="2000">
+                <h2>A simple example program</h2>
+
+                <p>Modelling the Fellowship of the Ring!</p>
+
+                <big><a href="http://is.gd/jOrIvz">http://is.gd/jOrIvz</a></big>
+            </div>
+
+            <div class="step" data-x="8000" data-y="2000">
+                <h2>Cargo: easy libraries</h2>
+
+                <p>Cargo is the easy way to handle libraries.</p>
+
+                <p>All the avaiable libraries are at <a href="http://crates.io">http://crates.io</a>.</p>
+            </div>
+
+            <div id="end" class="step" data-scale="2" data-z="6000">
+                <big>The end.</big>
+
+                <p>Thanks for coming!</p>
+
+                <p>This presentation is available online at <a href="http://stephencoakley.com/presentations/rust-workshop">stephencoakley.com/presentations/rust-workshop</a>.</p>
+            </div>
+
+        </div>
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script src="https://unpkg.com/impress.js"></script>
+        <script>
+            impress().init();
+            hljs.initHighlightingOnLoad();
+        </script>
+    </body>
+</html>

@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=1024" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <title>An Introduction to Sass</title>
+
+        <meta name="author" content="Stephen Coakley" />
+
+        <link href="http://fonts.googleapis.com/css?family=Oswald:700" rel="stylesheet" />
+
+        <style>
+            body {
+                font-family: "Calibri", sans-serif;
+                min-height: 740px;
+
+                background-image: url("grey-prism.png");
+            }
+
+            /**
+             * Step styles
+             */
+
+            .step {
+                position: relative;
+                width: 1000px;
+                padding: 40px;
+                margin: 10px auto;
+
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing:    border-box;
+                -ms-box-sizing:     border-box;
+                -o-box-sizing:      border-box;
+                box-sizing:         border-box;
+
+                font-size: 40px;
+                line-height: 1.5;
+            }
+
+            .backface-hidden {
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+            }
+
+            .impress-enabled .step {
+                margin: 0;
+                opacity: 0.5;
+
+                -webkit-transition: opacity 1s, text-shadow 1s, color 1s;
+                -moz-transition:    opacity 1s, text-shadow 1s, color 1s;
+                -ms-transition:     opacity 1s, text-shadow 1s, color 1s;
+                -o-transition:      opacity 1s, text-shadow 1s, color 1s;
+                transition:         opacity 1s, text-shadow 1s, color 1s;
+            }
+
+            .impress-enabled .step:before, .impress-enabled .step:after {
+                display: block;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                border: 40px solid #aaa;
+                opacity: 0.5;
+                height: 600px;
+                margin: auto;
+                width: 60px;
+            }
+            .impress-enabled .step:before {
+                left: -80px;
+                content: " ";
+                border-right: none;
+            }
+            .impress-enabled .step:after {
+                right: -80px;
+                content: " ";
+                border-left: none;
+            }
+
+            .impress-enabled .step.active {
+                opacity: 1;
+            }
+
+            .impress-on-overview .step {
+                cursor: pointer;
+            }
+
+
+            /**
+             * Content styles
+             */
+
+            a {
+                color: #c69;
+                text-decoration: none;
+                padding: 0 0.1em;
+                background: rgba(255,255,255,0.5);
+                text-shadow: -1px -1px 2px rgba(100,100,100,0.9);
+                border-radius: 0.2em;
+
+                -webkit-transition: all 0.5s;
+                -moz-transition:    all 0.5s;
+                -ms-transition:     all 0.5s;
+                -o-transition:      all 0.5s;
+                transition:         all 0.5s;
+            }
+
+            a:hover,
+            a:focus {
+                background: rgba(255,255,255,1);
+                text-shadow: -1px -1px 2px rgba(100,100,100,0.5);
+            }
+
+            h1, h2 {
+                font-family: "Oswald", "Impact", sans-serif;
+                text-transform: uppercase;
+                text-align: center;
+                margin-bottom: 40px;
+            }
+
+            h1 {
+                font-size: 56px;
+            }
+
+            h2 {
+                font-size: 48px;
+            }
+
+            h3 {
+                margin-bottom: 20px;
+            }
+
+            li {
+                margin-left: 40px;
+            }
+
+            h1 > img {
+                width: 128px;
+            }
+
+            p {
+                margin: 20px 0;
+            }
+
+            .left {
+                float: left;
+            }
+            .right {
+                float: right;
+            }
+            .column {
+                display: block;
+                width: 47%;
+            }
+
+            img.right {
+                margin-left: 20px;
+                width: 320px;
+            }
+
+            img.full {
+                width: inherit;
+                border: 1px solid gray;
+            }
+
+            small {
+                font-size: 80%;
+            }
+
+            code > pre {
+                display: block;
+                background-color: rgba(208, 208, 208, 0.5);
+                border-radius: 10px;
+                margin: 30px 0;
+                padding: 10px;
+                font-size: 20px
+            }
+
+            #title {
+                text-align: center;
+            }
+
+            #title h1 {
+                padding: 0 100px;
+            }
+
+            #sass-logo {
+                height: 256px;
+                margin-bottom: 40px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="impress">
+
+            <div id="title" class="step" data-x="0" data-y="-1000">
+                <img id="sass-logo" src="sass-logo.svg">
+                <h1>Sass: Syntactically Awesome Style Sheets</h1>
+                <a href="http://sass-lang.com">http://sass-lang.com</a>
+            </div>
+
+            <div class="step" data-x="0" data-y="0" data-scale="4">
+                <h2>What is Sass?</h2>
+
+                <ul>
+                    <li>Abstraction/extension over CSS</li>
+                    <li>CSS with superpowers</li>
+                    <li>Great for both developers and designers</li>
+                </ul>
+            </div>
+
+
+            <!--
+                about sass
+            -->
+            <div class="step" data-x="-4000" data-y="-800" data-rotate="-90">
+                <h2>Why Sass?</h2>
+
+                <ul>
+                    <li>Improves modularity</li>
+                    <li>Makes styling more efficient</li>
+                    <li>Makes organizing stylesheets better</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="-4000" data-y="-2100" data-rotate="-90">
+                <h2>CSS Pre-Processing</h2>
+
+                <ul>
+                    <li>Code is written in pre-processor language</li>
+                    <li>Compiled to CSS by pre-processor</li>
+                    <li>CSS file is generated for using</li>
+                    <li>Error reporting</li>
+                    <li>Popular CSS pre-processors include:
+                    <ul>
+                        <li>Sass</li>
+                        <li>LESS</li>
+                        <li>Stylus</li>
+                    </ul></li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="-4000" data-y="-3400" data-rotate="-90">
+                <h2>What's Wrong With Vanilla CSS?</h2>
+
+                <ul>
+                    <li>Nested selectors are repetitive</li>
+                    <li>No re-usable values for keeping consistent</li>
+                    <li>Value math and measurements are not fun</li>
+                </ul>
+            </div>
+
+
+            <!--
+                sass language features
+            -->
+            <div class="step" data-x="-4000" data-y="1000" data-rotate="-180">
+                <h2>Sass Features</h2>
+
+                <ul>
+                    <li>Indented (shorthand) syntax</li>
+                    <li>Variables</li>
+                    <li>Selector nesting</li>
+                    <li>Partials and importing</li>
+                    <li>Mixins</li>
+                    <li>Selector inheritance</li>
+                    <li>Math operations</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="-4800" data-y="1250" data-rotate="-180" data-scale="0.3">
+                <h2>Indent (shorthand) syntax</h2>
+                <p>Sass offers two syntaxes:</p>
+
+                <code><pre style="float:right;">
+#main {
+    color: blue;
+    font-size: 0.3em;
+}</pre></code>
+
+                <h3>SCSS</h3>
+                <ul>
+                    <li>Superset of regular CSS</li>
+                    <li>Low barrier of entry</li>
+                    <li>Became default synax in Sass 3</li>
+                </ul>
+
+                <code><pre style="float:right;">
+#main
+    color: blue
+    font-size: 0.3em</pre></code>
+
+                <h3>Indented</h3>
+                <ul>
+                    <li>Easier to read</li>
+                    <li>More concise with less typing</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="-4800" data-y="1000" data-rotate="-180" data-scale="0.3">
+                <h2>Variables</h2>
+
+                <ul>
+                    <li>Reusable values</li>
+                    <li>Uses the dollar sign ("$")</li>
+                </ul>
+
+                <code><pre>
+$font-stack: "Helvetica", sans-serif;
+$primary-color: #333;
+
+body {
+    font: 100% $font-stack;
+    color: $primary-color;
+}</pre></code>
+            </div>
+
+            <div class="step" data-x="-4800" data-y="750" data-rotate="-180" data-scale="0.3">
+                <h2>Selector Nesting</h2>
+
+                <div class="column left">
+                    <p>Instead of:</p>
+                    <code><pre>
+.stuff #content {
+    border-color: #beefed
+}
+
+.stuff #content button a,
+.stuff #content .menu a {
+    display: block;
+    padding: 6px 12px;
+    text-decoration: none;
+}</pre></code>
+                </div>
+
+                <div class="column right">
+                    <p>You can do this:</p>
+                    <code><pre>
+.stuff {
+   #content {
+      border-color: #c0ffee;
+      button, .menu {
+         a {
+            display: block;
+            padding: 6px 12px;
+            text-decoration: none;
+         }
+      }
+   }
+}</pre></code>
+                </div>
+            </div>
+
+            <div class="step" data-x="-5200" data-y="1250" data-rotate="-180" data-scale="0.3">
+                <h2>Partials and Importing</h2>
+
+                <ul>
+                    <li>Files not meant to be standalone begin with an underscore ("_") and are called partials</li>
+                    <li>Partials are not compiled independently</li>
+                    <li>@include is replaced with contents of included file if it is a Sass file</li>
+                    <li>@include works like CSS for CSS files</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="-5200" data-y="1000" data-rotate="-180" data-scale="0.3">
+                <h2>Mixins</h2>
+
+                <p>Mixins are reusable bits of programmable styles. Here is a simple example:</p>
+
+                <code><pre class="left">
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    border-radius: $radius;
+}
+.box {
+    @include border-radius(10px);
+}</pre></code>
+
+                <code><pre class="right">
+.box {
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    border-radius: 10px;
+}</pre></code>
+            </div>
+
+            <div class="step" data-x="-5200" data-y="750" data-rotate="-180" data-scale="0.3">
+                <h2>Selector Inheritance</h2>
+
+                <p>Use the @extend directive to use styles from another selector:</p>
+
+                <code><pre class="left">
+.message {
+    border: 1px solid #ccc;
+    padding: 10px;
+    color: #333;
+}
+.success {
+    @extend .message;
+    border-color: green;
+}
+.error {
+    @extend .message;
+    border-color: red;
+}</pre></code>
+
+                <code><pre class="right">
+.message, .success, .error, .warning {
+    border: 1px solid #cccccc;
+    padding: 10px;
+    color: #333;
+}
+.success {
+    border-color: green;
+}
+.error {
+    border-color: red;
+}</pre></code>
+            </div>
+
+            <div class="step" data-x="-5600" data-y="1250" data-rotate="-180" data-scale="0.3">
+                <h2>Inline Math Operations</h2>
+
+                <p>Sass offers operators +, -, *, /, and % for calculating values:</p>
+
+                <code><pre class="left">
+.container { width: 100%; }
+
+article[role="main"] {
+  float: left;
+  width: 600px / 960px * 100%;
+}
+
+aside[role="complimentary"] {
+  float: right;
+  width: 300px / 960px * 100%;
+}</pre></code>
+
+                <code><pre class="right">
+.container {
+  width: 100%;
+}
+article[role="main"] {
+  float: left;
+  width: 62.5%;
+}
+aside[role="complimentary"] {
+  float: right;
+  width: 31.25%;
+}</pre></code>
+            </div>
+
+
+            <!--
+                installing sass
+            -->
+            <div class="step" data-x="4000" data-y="-1000" data-transition-duration="2000">
+                <h2 style="margin-bottom:450px;">Installing Sass</h2>
+
+                <p>Or use a GUI like Koala: <a href="http://koala-app.com">http://koala-app.com</a></p>
+            </div>
+
+            <div class="step" data-x="3750" data-y="-1000" data-scale="0.4">
+                <h2>Install Ruby</h2>
+
+                <h3>Windows:</h3>
+                <p><a href="http://www.rubyinstaller.org">http://www.rubyinstaller.org</a></p>
+
+                <h3>OS X:</h3>
+                <p>Ruby is already installed!</p>
+
+                <img class="right" style="width:128px;" src="ruby.png"/>
+
+                <h3>Linux:</h3>
+                <code><pre>$ sudo apt-get install ruby</pre></code>
+            </div>
+
+            <div class="step" data-x="4250" data-y="-1000" data-scale="0.4">
+                <h2>Install Sass</h2>
+
+                <p>Install using Ruby Gems:</p>
+                <code><pre>$ gem install sass</pre></code>
+
+                <p>Verify installation:</p>
+                <code><pre>$ sass -v</pre></code>
+            </div>
+
+
+            <!--
+                sass with php
+            -->
+            <div class="step" data-x="4000" data-y="800" data-rotate="90">
+                <h2>Using Sass WIth PHP Projects</h2>
+
+                <ul>
+                    <li>Depending on Ruby or Node.js is kind of lame</li>
+                    <li>Sass can't be installed locally</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="4000" data-y="2100" data-rotate="90">
+                <h2>SCSSPHP</h2>
+
+                <p>SCSSPHP is a SCSS compiler written in PHP. More information at <a href="http://leafo.net/scssphp">http://leafo.net/scssphp</a>.</p>
+
+                <h3>Add to Composer</h3>
+                <code><pre>
+{
+    "require": {
+      "leafo/scssphp": "0.0.9"
+    }
+}</pre></code>
+            </div>
+
+            <div class="step" data-x="4000" data-y="3400" data-rotate="90">
+                <h2>Using SCSSPHP</h2>
+
+                <h3>Compiling CSS using the command line:</h3>
+                <code><pre>$ vendor/bin/pscss &lt; input.scss &gt; output.css</pre></code>
+
+                <h3>Setting up on-the fly interpreting in your code:</h3>
+                <code><pre>&lt;?php
+require "vendor/autoload.php";
+use scss_server;
+
+$directory = "stylesheets";
+scss_server::serveFrom($directory);</pre></code>
+            </div>
+
+        </div>
+
+        <script src="https://unpkg.com/impress.js"></script>
+        <script>impress().init();</script>
+    </body>
+</html>

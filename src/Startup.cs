@@ -42,6 +42,7 @@ namespace Blog
             }
 
             app.UseStatusCodePagesWithReExecute("/error/{0}");
+            app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseMvc();
         }

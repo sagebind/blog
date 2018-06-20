@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=1024" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <title>Version-Aware Word Documents</title>
+
+        <meta name="description" content="Version-Aware Word Documents: A research project sponsored by the University of Wisconsin-Whitewater" />
+        <meta name="author" content="Stephen Coakley" />
+
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+
+        <style>
+            body {
+                font-family: 'PT Sans', sans-serif;
+                min-height: 740px;
+
+                background-image: url("shattered.png");
+            }
+
+            /**
+             * Step styles
+             */
+
+            .step {
+                position: relative;
+                width: 1000px;
+                padding: 40px;
+                margin: 10px auto;
+
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing:    border-box;
+                -ms-box-sizing:     border-box;
+                -o-box-sizing:      border-box;
+                box-sizing:         border-box;
+
+                font-family: 'PT Serif', georgia, serif;
+                font-size: 40px;
+                line-height: 1.5;
+            }
+
+            .backface-hidden {
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+            }
+
+            .impress-enabled .step {
+                margin: 0;
+                opacity: 0.3;
+
+                -webkit-transition: opacity 1s, text-shadow 1s, color 1s;
+                -moz-transition:    opacity 1s, text-shadow 1s, color 1s;
+                -ms-transition:     opacity 1s, text-shadow 1s, color 1s;
+                -o-transition:      opacity 1s, text-shadow 1s, color 1s;
+                transition:         opacity 1s, text-shadow 1s, color 1s;
+
+                color: rgba(130, 130, 130, 0.1);
+                text-shadow: 0 0 10px black;
+            }
+
+            .impress-enabled .step.active {
+                opacity: 1;
+                color: black;
+                text-shadow: none;
+            }
+
+            .impress-on-overview .step {
+                cursor: pointer;
+            }
+
+
+            /**
+             * Content styles
+             */
+
+            a {
+                color: blue;
+                text-decoration: none;
+                padding: 0 0.1em;
+                background: rgba(255,255,255,0.5);
+                text-shadow: -1px -1px 2px rgba(100,100,100,0.9);
+                border-radius: 0.2em;
+
+                -webkit-transition: all 0.5s;
+                -moz-transition:    all 0.5s;
+                -ms-transition:     all 0.5s;
+                -o-transition:      all 0.5s;
+                transition:         all 0.5s;
+            }
+
+            a:hover,
+            a:focus {
+                background: rgba(255,255,255,1);
+                text-shadow: -1px -1px 2px rgba(100,100,100,0.5);
+            }
+
+            h1 {
+                font-size: 56px;
+                text-align: center;
+                margin-bottom: 40px;
+            }
+
+            h2 {
+                font-size: 48px;
+                margin-bottom: 40px;
+            }
+
+            li {
+                margin-left: 40px;
+            }
+
+            h1 > img {
+                width: 128px;
+            }
+
+            p {
+                margin: 30px 0;
+            }
+
+            img.right {
+                float: right;
+                margin-left: 20px;
+                width: 320px;
+            }
+
+            img.full {
+                width: inherit;
+                border: 1px solid gray;
+            }
+
+            small {
+                font-size: 80%;
+            }
+
+            code > pre {
+                display: block;
+                background-color: rgba(255, 255, 255, 0.5);
+                border-radius: 5px;
+                margin-top: 40px;
+                padding: 10px;
+                font-size: 20px
+            }
+        </style>
+    </head>
+
+    <body class="impress-not-supported">
+        <div class="fallback-message">
+            <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+            <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+        </div>
+
+
+        <div id="impress">
+
+            <div id="title" class="step" data-x="0" data-y="-500" data-rotate-x="45" data-scale="2">
+                <h1><img src="word.png"><br>Version-Aware Word Documents</h1>
+                <p>A research project sponsored by the University of Wisconsin-Whitewater</p>
+            </div>
+
+            <div class="step" data-x="-1000" data-y="1000">
+                <h2>What are Version-Aware Word Documents?</h2>
+                <p>The goal of version-aware Word documents is to facilitate:</p>
+                <ul>
+                    <li>Keeping track of multiple changes to a document</li>
+                    <li>Keeping track of authors of each change</li>
+                    <li>Merging changes from multiple authors to one document</li>
+                </ul>
+            </div>
+
+            <div class="step backface-hidden" data-x="0" data-y="1000">
+                <h2>Why yet another solution?</h2>
+                <ul>
+                    <li>Google Docs requires a central server or an Internet connection</li>
+                    <li>Version control systems are too complex for average users</li>
+                    <li>Microsoft Office's track changes feature is limited at best</li>
+                </ul>
+            </div>
+
+            <div class="step backface-hidden" data-x="0" data-y="1000" data-rotate-y="180">
+                <p>Our solution plugs in to the commonality of Word and provides a more complete system:</p>
+                <ul>
+                    <li>Allows collaborators to work on documents concurrently</li>
+                    <li>Allows collaborators to create versions to keep track of changes</li>
+                    <li>Allows collaborators to combine their changes to create a new version</li>
+                    <li>Allows collaborators to view the history of the document</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="1000" data-y="1000" data-rotate-y="90">
+                <h2>Revision history</h2>
+
+                <img class="right" src="graph.png" />
+
+                <ul>
+                    <li>Stored as a directional graph</li>
+                    <li>Contains a root and a current leaf
+                    <ul>
+                        <li>Root is the first revision</li>
+                        <li>Current is the most recent revision</li>
+                    </ul></li>
+                    <li>Each revision contains the document at that point</li>
+                    <li>Entire graph is only visible when all branches merge</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="1450" data-y="1150" data-z="-1" data-rotate-y="90" data-scale="0.3">
+                <h2>What a document revision contains</h2>
+                <ul>
+                    <li>A globally unique ID</li>
+                    <li>The author of the revision</li>
+                    <li>References to what revisions it descended from</li>
+                    <li>The document content as it existed when the revision was made</li>
+                    <li>Revision comments from the user</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="3000" data-y="1000">
+                <h2>Creating revisions</h2>
+                <ol>
+                    <li>An author makes some changes to the document</li>
+                    <li>The author commits the changes</li>
+                    <li>A snapshot of the current document data is saved to the revision history</li>
+                </ol>
+            </div>
+
+            <div class="step" data-x="3000" data-y="2000">
+                <h2>Merging two documents</h2>
+                <ul>
+                    <li>A new revision is created with two parents</li>
+                    <li>Content from both revisions is merged together based on changes from a common ancestor</li>
+                    <li>Three-way XML merge performed using 3DM <a href="http://www.cs.hut.fi/~ctl/3dm/">www.cs.hut.fi/~ctl/3dm/</a></li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="3000" data-y="3000" data-z="1000">
+                <h2>Visualizing document history</h2>
+                <ul>
+                    <li>Collaborators of a document can view the history of the document by viewing past revisions</li>
+                    <li>Ideal way is to visualize by a graph</li>
+                    <li>Early work on a graph has been done</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="3000" data-y="3000">
+                <img class="full" src="screenshot.png">
+            </div>
+
+            <div class="step" data-x="2000" data-y="3000">
+                <h2>Implementation</h2>
+                <ul>
+                    <li>Revision history is stored inside the Word document file</li>
+                    <li>A Microsoft Word add-in allows collaborators to work with a document’s history</li>
+                    <li>Merging is done with a Java module (<a href="https://github.com/Jacob-Mischka/Vvord">github.com/Jacob-Mischka/Vvord</a>)</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="2000" data-y="3400" data-z="-200" data-rotate-x="-90" data-scale="0.5">
+                <h2>About the add-in</h2>
+
+                <img src="ribbon.png">
+
+                <ul>
+                    <li>Adds an easy-to-use ribbon tab for actions</li>
+                    <li>Displays revisions in a visual graph or in a sidebar</li>
+                    <li>Provides a simple interface for commiting changes as a new revision</li>
+                </ul>
+            </div>
+
+            <div class="step" data-x="1000" data-y="3400" data-rotate-x="-90">
+                <p>Revision history is stored in XML and includes revision relations and the location where content changes are stored inside the file</p>
+
+                <code><pre>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+﻿&lt;revision-history xmlns="http://www.cs.uwm.edu/molhado/revision-history"
+    <strong>current="24f50581-38ba-46ae-839d-14d8b8f4e0f4"</strong>&gt;
+﻿    &lt;revision id="e37bbc3f-e056-4259-a081-5ae7f2c8153e"
+        author="john@domain"
+        timestamp="2013-11-23T09:36:49"
+        location="/history/e37bbc3f-e056-4259-a081-5ae7f2c8153e"&gt;
+﻿    &lt;/revision&gt;
+﻿    &lt;revision id="24f50581-38ba-46ae-839d-14d8b8f4e0f4"
+        author="john@domain"
+        timestamp="2013-11-23T09:38:46"
+        location="/history/24f50581-38ba-46ae-839d-14d8b8f4e0f4"&gt;
+﻿        <strong>&lt;parent id="e37bbc3f-e056-4259-a081-5ae7f2c8153e" /&gt;</strong>
+﻿    &lt;/revision&gt;
+&lt;/revision-history&gt;</pre></code>
+            </div>
+
+            <div class="step backface-hidden" data-x="6000" data-y="1000">
+                <h2>Current limitations</h2>
+                <ul>
+                    <li>Themes and styles not preserved over merge</li>
+                    <li>Doesn’t work with other office suites</li>
+                    <li>Merge requires common ancestor</li>
+                    <li>Merge requires Java Runtime</li>
+                    <li>Merge success reliant on 3DM</li>
+                    <li>Merge reliant on external libraries</li>
+                    <li>JARs must be manually downloaded</li>
+                </ul>
+            </div>
+
+            <div class="step backface-hidden" data-x="6000" data-y="1000" data-rotate-y="180">
+                <h2>Future possibilities</h2>
+                <ul>
+                    <li>Include merge tool within addon natively</li>
+                    <li>Create an installer that installs everything automatically</li>
+                    <li>Create a portable comment and review system attached to each revision</li>
+                    <li>Allow version-aware documents to be transferred around at the click of a button</li>
+                </ul>
+            </div>
+
+            <div id="overview" class="step" data-x="3000" data-y="-1000" data-z="5000" data-scale="5">
+                <p>This research made possible by the Undergraduate Research Program at the University of Wisconsin-Whitewater.</p>
+
+                <p><small>This presentation is available online at <a href="http://presentations.stephencoakley.com/version-aware-word-documents">presentations.stephencoakley.com/version-aware-word-documents</a>.</small></p>
+            </div>
+
+        </div>
+
+        <script src="https://unpkg.com/impress.js"></script>
+        <script>impress().init();</script>
+
+    </body>
+</html>
