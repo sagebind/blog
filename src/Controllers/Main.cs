@@ -17,7 +17,14 @@ namespace Blog.Controllers
         {
             return View("Index", articleStore
                 .GetAll()
-                .Reverse());
+                .Reverse()
+                .Take(7));
+        }
+
+        [Route("/about")]
+        public IActionResult GetAbout()
+        {
+            return View("About");
         }
 
         [Route("/stuff")]

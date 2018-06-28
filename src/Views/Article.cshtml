@@ -9,7 +9,7 @@
 
     <p class="postmeta">
         <small>
-            <span class="date">@Model.Date</span>
+            <time datetime="@Model.Date.ToString("o")" class="date">@Model.Date</time>
             <span class="author-by"> by </span>
             <span class="author">@Model.Author</span>
         </small>

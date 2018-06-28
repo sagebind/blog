@@ -30,14 +30,15 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
     </head>
 
-    <body id="top">
-        <header class="layout-header">
-            <p>
+    <body>
+        <header>
+            <p class="center">
                 <a class="logo no-underline" href="/" rel="home">
-                    <img src="/assets/images/logo-white.svg">
                     <span>Stephen Coakley</span>
                 </a>
             </p>
+
+            <p class="center"><img class="framed" src="https://s.gravatar.com/avatar/4c0d6bf3fb628cc4ccd1d1613f421290?s=192"/></p>
 
             <p class="bio-text">Disciple of Christ and software engineer, concurrency wizard subclass. Passionate about faith, life, systems and web software, gaming, and music.</p>
 
@@ -45,19 +46,16 @@
                 <a class="button" href="/">Index</a>
                 <a class="button" href="/articles">Articles</a>
                 <a class="button" href="/stuff">Stuff</a>
+                <a class="button" href="/about">About</a>
             </nav>
         </header>
 
         <main role="main">
-            <div class="content">
-                @RenderBody()
-            </div>
-
-            <a class="button top-link" href="#top">Top</a>
+            @RenderBody()
         </main>
 
-        <footer class="layout-footer">
-            <p>
+        <footer>
+            <p class="center">
                 <a class="icon" title="Email" href="mailto:me@stephencoakley.com">
                     <svg viewBox="0 0 32 32">
                         <path d="M29 4h-26c-1.65 0-3 1.35-3 3v20c0 1.65 1.35 3 3 3h26c1.65 0 3-1.35 3-3v-20c0-1.65-1.35-3-3-3zM12.461 17.199l-8.461 6.59v-15.676l8.461 9.086zM5.512 8h20.976l-10.488 7.875-10.488-7.875zM12.79 17.553l3.21 3.447 3.21-3.447 6.58 8.447h-19.579l6.58-8.447zM19.539 17.199l8.461-9.086v15.676l-8.461-6.59z"></path>
@@ -78,9 +76,9 @@
                         <path d="M29 0h-26c-1.65 0-3 1.35-3 3v26c0 1.65 1.35 3 3 3h26c1.65 0 3-1.35 3-3v-26c0-1.65-1.35-3-3-3zM8.719 25.975c-1.5 0-2.719-1.206-2.719-2.706 0-1.488 1.219-2.712 2.719-2.712 1.506 0 2.719 1.225 2.719 2.712 0 1.5-1.219 2.706-2.719 2.706zM15.544 26c0-2.556-0.994-4.962-2.794-6.762-1.806-1.806-4.2-2.8-6.75-2.8v-3.912c7.425 0 13.475 6.044 13.475 13.475h-3.931zM22.488 26c0-9.094-7.394-16.5-16.481-16.5v-3.912c11.25 0 20.406 9.162 20.406 20.413h-3.925z"></path>
                     </svg>
                 </a>
-                <br/>
-                &copy; Stephen Coakley. Code samples are under the <a href="http://opensource.org/licenses/MIT">MIT license</a>.
             </p>
+
+            <p class="center copyright">&copy; 2012-@DateTime.Now.Year Stephen Coakley</p>
         </footer>
 
         <script>
