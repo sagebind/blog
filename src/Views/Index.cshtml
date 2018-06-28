@@ -11,21 +11,9 @@
 <p>In my spare time, I enjoy working on personal and open source projects, playing video games, playing music, and reading. Occasionally I post articles here that range from short thoughts on life to results of some technical research or discovery I've done.</p>
 
 
-<h1>Recent Articles</h1>
+<h1>Articles</h1>
 
 @foreach (var article in Model)
 {
     @await Html.PartialAsync("ArticleSummary", article)
 }
-
-<p><a class="button" href="/articles">View All Articles</a></p>
-
-
-<h1>Get in touch</h1>
-<p>You can cotact me by any of these methods:</p>
-
-<ul>
-    <li>Email: <a href="mailto:me@stephencoakley.com">me@stephencoakley.com</a></li>
-    <li>Twitter: <a href="https://twitter.com/sagebind">@@sagebind</a></li>
-    <li>Freenode or Mozilla IRC: sagebind</li>
-</ul>

@@ -1,30 +1,16 @@
-@mixin icon($icon-name) {
-    $icon-sprite-size: 2.5rem;
+.icon {
+    text-decoration: none !important;
 
-    display: inline-block;
-    width: $icon-sprite-size;
-    height: $icon-sprite-size;
-    background: {
-        image: url("/assets/images/icon-#{$icon-name}.png");
-        size: $icon-sprite-size;
-        position: center center;
+    svg {
+        width: 2.5rem;
+        height: 2.5rem;
+        padding: 0.5rem;
+        fill: #ffffff;
     }
+
     opacity: 0.75;
 
     &:hover {
         opacity: 1;
     }
-}
-
-/**
- * Define some icons by specifying their position in the sprite sheet.
- */
-.icon-twitter {
-    @include icon(twitter);
-}
-.icon-github {
-    @include icon(github);
-}
-.icon-rss {
-    @include icon(rss);
 }

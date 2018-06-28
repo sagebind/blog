@@ -85,19 +85,22 @@ h6 {
  */
 a {
     color: $color-jade;
-    text-decoration: none;
     cursor: pointer;
     transition: background-color 0.2s ease,
-                color 0.2s ease,
-                opacity 0.2s ease,
-                text-shadow 0.2s ease;
+    color 0.2s ease,
+    opacity 0.2s ease,
+    text-shadow 0.2s ease;
 
     &:hover, &:focus {
         color: lighten($color-jade, 10%);
     }
 
-    &:not(.button) {
-        @include underline;
+    &.no-underline {
+        text-decoration: none;
+    }
+
+    &:not(.no-underline) {
+        text-decoration: underline;
     }
 }
 

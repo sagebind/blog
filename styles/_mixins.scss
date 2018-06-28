@@ -51,20 +51,6 @@
     background: $color-white-smoke !important;
 }
 
-/**
- * A more controlled, fancy underline.
- */
-@mixin underline($color: currentColor, $height: 0.0625em) {
-    &:not(.no-underline) {
-        background: {
-            image: linear-gradient($color, $color);
-            size: 1px $height;
-            position: 0% 85%;
-            repeat: repeat-x;
-        }
-    }
-}
-
 @mixin font-face($font-family, $file-path, $weight: normal, $style: normal) {
     @font-face {
         font-family: $font-family;
