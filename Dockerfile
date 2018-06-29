@@ -15,6 +15,6 @@ FROM microsoft/dotnet:2.1-runtime-deps-alpine
 WORKDIR /app
 COPY wwwroot /app/wwwroot/
 COPY --from=build /app/out /app/
-COPY --from=css /style.min.css /app/wwwroot/assets/css/style.css
+COPY --from=css /style.min.css /app/wwwroot/assets/css/style.min.css
 RUN chmod +x /app/blog
 CMD ["/app/blog"]

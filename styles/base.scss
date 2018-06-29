@@ -1,19 +1,18 @@
-$content-max-width: 56rem;
+@import "tomorrow-night";
+
+$content-max-width: 52rem;
 $sidebar-width: 20rem;
 $layout-breakpoint: $content-max-width + $sidebar-width;
-$line-height: 1.625;
 
-$color-white: hsl(0, 0%, 100%);
-$color-midnight: hsl(215, 29%, 16%);
-$color-jade: hsl(144, 35%, 53%);
-$color-white-smoke: hsl(0, 0%, 96%);
-$color-almost-black: hsl(0, 0%, 5%);
+$color-light-gray: hsl(0, 0%, 85%);
+$color-pink: hsl(325, 100%, 71%); //hsl(314, 60%, 60%);
+$color-purple: hsl(265, 40%, 50%);// hsl(274, 77%, 51%);
+$color-teal: hsl(180, 80%, 50%);
 
 $font-body: "Source Sans Pro", "Calibri", sans-serif;
-$font-heading: "Josefin Slab", serif;
+$font-heading: "NTR", sans-serif;
 $font-monospace: "Source Code Pro", "Consolas", monospace;
 
-@import "fonts";
 
 @viewport {
     zoom: 1.0;
@@ -22,11 +21,11 @@ $font-monospace: "Source Code Pro", "Consolas", monospace;
 
 html {
     box-sizing: border-box;
-    line-height: $line-height;
+    line-height: 1.625;
     font-size: 100%;
+    color: $color-light-gray;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
-    color: $color-almost-black;
 }
 
 *, *::before, *::after {
@@ -35,26 +34,33 @@ html {
 
 // Page layout
 body {
-    margin: 0;
-    font-size: 1.25rem;
     min-height: 100vh;
+    margin: 0;
     display: grid;
-    grid-gap: 1rem;
+    // grid-gap: 2rem;
     align-content: stretch;
-    justify-items: center;
-    background-color: $color-midnight;
-    color: $color-white;
+    // justify-items: center;
+    background: url('/assets/images/stardust.png');
     font-family: $font-body;
 
     & > main {
-        padding: 0 2rem;
-        color: $color-almost-black;
-        background-color: $color-white;
+        font-size: 1.25rem;
+        background-color: hsla(0, 0%, 10%, 0.5);
     }
 
     & > * {
         max-width: $content-max-width;
         margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    nav {
+        display: flex;
+        align-items: center;
+
+        & > a {
+            margin: 0.5rem;
+        }
     }
 
     // Wide two-column layout
@@ -74,8 +80,8 @@ body {
         }
 
         & > header, & > footer {
-            grid-column: 2 / 3;
             width: $sidebar-width;
+            grid-column: 2 / 3;
             justify-self: left;
         }
 
@@ -86,63 +92,59 @@ body {
         & > footer {
             grid-row: 2 / 3;
         }
+
+        nav {
+            flex-direction: column;
+        }
     }
 }
 
-blockquote {
-    color: #555;
-    padding-left: 1rem;
-    border-left: 4px solid rgba(0, 0, 0, 0.1);
+blockquote, .copyright {
+    font-style: italic;
 }
 
 h1 {
+    font-size: 3rem;
     font-family: $font-heading;
-    font-size: 3em;
-    line-height: $line-height * 0.75;
+    font-weight: bold;
+    line-height: 1.25;
+    color: $color-pink;
+    text-shadow: -0.075em 0.075em 0em $color-purple;
 }
-h2 {
-    font-size: 1.5em;
+
+blockquote {
+    color: darken($color-light-gray, 20%);
+    padding-left: 1rem;
+    border-left: 4px solid black;
 }
-h3 {
-    font-size: 1.25em;
-}
-h4 {
-    font-size: 1.125em;
-}
-h5 {
-    font-size: 1em;
-}
-h6 {
-    font-size: 0.9125em;
+
+hr {
+    border: 2px solid black;
 }
 
 a {
-    color: $color-jade;
     cursor: pointer;
+    color: $color-teal;
+    text-decoration: none;
     transition: all 0.2s ease;
 
     &:hover, &:focus {
-        color: lighten($color-jade, 10%);
-    }
-
-    &.no-underline {
-        text-decoration: none;
+        color: lighten($color-teal, 10%);
+        text-decoration: underline;
     }
 }
 
 mark {
-    background: lighten($color-jade, 5%);
+    background: lighten($color-teal, 5%);
 }
 
 ins {
     background-color: #ff9;
-    color: #000;
     text-decoration: none;
 }
 
 mark {
     background-color: #ff9;
-    color: #000;
     font-style: italic;
     font-weight: bold;
 }
@@ -164,10 +166,6 @@ abbr[title], dfn[title] {
     text-align: center;
 }
 
-.copyright {
-    font-style: italic;
-}
-
 pre, code {
     font-family: $font-monospace;
 }
@@ -181,8 +179,35 @@ pre > code {
     white-space: pre-wrap;
 }
 
-img.framed {
-    border: 0.5rem solid #ffffff;
+.framed {
+    display: inline-block;
+    border: 0.25rem solid $color-teal;
+    border-radius: 1rem;
+    box-shadow: 0 0 0.25rem 0 $color-teal;
+    transition: box-shadow 0.2s ease;
+
+    &:hover, &:focus {
+        box-shadow: 0 0 0.75rem 0 $color-teal;
+    }
+}
+
+.button {
+    padding: 0.5em 1em;
+    text-align: center;
+    line-height: normal;
+    font-weight: normal;
+    font-size: 1rem;
+    color: black;
+    text-decoration: none !important;
+    text-transform: uppercase;
+    background-color: $color-pink;
+    border-radius: 1rem;
+
+    &:hover, &:focus {
+        color: black;
+        background-color: lighten($color-pink, 10%);
+        box-shadow: 0 0 0.75rem 0 $color-purple;
+    }
 }
 
 .icon {
