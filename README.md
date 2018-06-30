@@ -1,4 +1,7 @@
 # Blog
+
+[![Build Status](https://semaphoreci.com/api/v1/sagebind/blog/branches/master/badge.svg)](https://semaphoreci.com/sagebind/blog)
+
 This is the source code for my personal website and blog.
 
 My blog doesn't use any databases, message queues, or any external services. Articles are plain [CommonMark] Markdown files located in the `articles` directory. At the top of the file, each article also has a small [TOML] header for storing metadata. The URL for each article is determined by the file name.
