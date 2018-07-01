@@ -1,0 +1,31 @@
+input[type="text"], input[type="email"], textarea, [contenteditable] {
+    padding: 0.5em 1em;
+    max-width: 100%;
+    border-radius: 0.25rem;
+    background-color: $color-darken;
+    line-height: 1.4em;
+    border: 1px solid $color-darken;
+}
+
+input[type="button"], input[type="submit"], .button {
+    cursor: pointer;
+    padding: 0.5em 1em;
+    text-align: center;
+    line-height: normal;
+    font-weight: normal;
+    font-size: 1rem;
+    color: black;
+    text-decoration: none;
+    text-transform: uppercase;
+    background-color: $color-pink;
+    border: none;
+    border-radius: 1rem;
+    transition: all 0.2s ease;
+
+    &:hover, &:focus {
+        color: black;
+        text-decoration: none;
+        background-color: lighten($color-pink, 10%);
+        box-shadow: 0 0 0.5rem 0 $color-pink;
+    }
+}

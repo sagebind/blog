@@ -1,0 +1,124 @@
+@viewport {
+    zoom: 1.0;
+    width: extend-to-zoom;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+// Page layout
+body {
+    min-height: 100vh;
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 0fr 0fr 0fr 0fr;
+    align-content: stretch;
+    background: url('/assets/images/stardust.png');
+    font-family: $font-body;
+
+    & > * {
+        padding: 0 1rem;
+    }
+
+    header, #bio, footer, #content {
+        max-width: $content-max-width;
+        margin: 0 auto;
+    }
+
+    main {
+        background-color: $color-darken;
+        border-color: $color-darken;
+        border-style: solid;
+        border-width: 2px 0;
+    }
+
+    // Push bio to the end if a certain class is present.
+    &.deferred-bio #bio {
+        grid-row: 3;
+    }
+
+    // Wide two-column layout
+    @media (min-width: $layout-breakpoint) {
+        grid-template-columns: auto minmax($sidebar-width, auto);
+        grid-template-rows: 0fr 0fr 1fr;
+
+        & > * {
+            padding: 0 2rem;
+        }
+
+        main {
+            grid-column: 1;
+            grid-row: 1 / 4;
+            border-width: 0 2px 0 0;
+        }
+
+        #content {
+            margin-right: 0;
+        }
+
+        header, #bio, footer {
+            grid-column: 2 / 3;
+            justify-self: left;
+            width: $sidebar-width;
+            margin: 0;
+        }
+
+        header {
+            grid-row: 1;
+        }
+
+        #bio {
+            grid-row: 2 !important;
+        }
+
+        footer {
+            grid-row: 3;
+        }
+    }
+}
+
+nav {
+    display: flex;
+    margin: 1rem auto;
+    align-items: center;
+    flex-flow: wrap;
+
+    & > a {
+        margin: 0.5rem;
+    }
+
+    @media (min-width: $layout-breakpoint) {
+        // flex-direction: column;
+    }
+}
+
+#bio {
+    display: flex;
+    flex-direction: column;
+
+    .logo {
+        align-self: center;
+
+        img {
+            min-width: 6rem;
+        }
+    }
+
+    a {
+        border: none;
+    }
+
+    @media (min-width: 400px) and (max-width: $layout-breakpoint) {
+        flex-direction: row;
+
+        .logo {
+            margin-right: 2rem;
+        }
+    }
+}

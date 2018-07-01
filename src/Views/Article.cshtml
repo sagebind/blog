@@ -1,6 +1,7 @@
 @{
     Layout = "Layout";
     ViewData["Title"] = Model.Title;
+    ViewData["Classes"] = "deferred-bio";
 }
 @model Blog.Article
 
@@ -21,5 +22,7 @@
     @Html.Raw(Model.Html)
 </article>
 
-<script data-isso="//comments.stephencoakley.com/" data-isso-require-author="true" data-isso-require-email="true" src="//comments.stephencoakley.com/js/embed.min.js"></script>
+<h2>Comments</h2>
+<script data-isso="//comments.stephencoakley.com/" data-isso-css="false" data-isso-require-author="true" data-isso-require-email="true" src="//comments.stephencoakley.com/js/embed.min.js"></script>
 <section id="isso-thread"></section>
+<br/>
