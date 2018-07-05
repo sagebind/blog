@@ -1,0 +1,44 @@
+version: '3.6'
+
+services:
+  app:
+    image: sagebind/blog
+    networks:
+      - traefik
+    deploy:
+      labels:
+        traefik.port: 80
+        traefik.docker.network: traefik
+        traefik.frontend.rule: "Host: stephencoakley.com,www.stephencoakley.com"
+
+  comments:
+    image: wonderfall/isso
+    configs:
+      - source: isso
+        target: /config/isso.conf
+    environment:
+      GID: 0
+      UID: 0
+    volumes:
+      - comments-db:/db
+    networks:
+      - traefik
+    deploy:
+      labels:
+        traefik.port: 80
+        traefik.docker.network: traefik
+        traefik.frontend.rule: "Host: comments.stephencoakley.com"
+
+configs:
+  isso:
+    file: ./isso.conf
+
+volumes:
+  comments-db:
+    external: true
+    name: stephencoakley-comments
+
+networks:
+  traefik:
+    external: true
+    name: traefik
