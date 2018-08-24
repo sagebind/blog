@@ -1,31 +1,43 @@
-input[type="text"], input[type="email"], textarea, [contenteditable] {
+%control {
     padding: 0.5em 1em;
-    max-width: 100%;
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: normal;
+    text-decoration: none;
+    color: $color-light-gray;
+    border: 2px solid $color-amber;
     border-radius: 0.25rem;
+    transition: all 0.2s ease;
+
+    &::placeholder, &.placeholder {
+        opacity: 1;
+        color: fade-out($color-light-gray, 0.5);
+    }
+
+    &:hover, &:focus {
+        text-decoration: none;
+        color: $color-light-gray;
+        border-color: lighten($color-amber, 10%);
+        text-shadow: 0 0 1rem fade-out($color-amber, 0.75);
+        box-shadow:
+            0 0 1rem 0 fade-out($color-amber, 0.75),
+            inset 0 0 1rem 0 fade-out($color-amber, 0.75);
+    }
+}
+
+input[type="text"], input[type="email"], textarea, [contenteditable] {
+    @extend %control;
+
+    max-width: 100%;
     background-color: $color-darken;
-    line-height: 1.4em;
-    border: 1px solid $color-darken;
 }
 
 input[type="button"], input[type="submit"], .button {
-    cursor: pointer;
-    padding: 0.5em 1em;
-    text-align: center;
-    line-height: normal;
-    font-weight: normal;
-    font-size: 1rem;
-    color: black;
-    text-decoration: none;
-    text-transform: uppercase;
-    background-color: $color-pink;
-    border: none;
-    border-radius: 1rem;
-    transition: all 0.2s ease;
+    @extend %control;
 
-    &:hover, &:focus {
-        color: black;
-        text-decoration: none;
-        background-color: lighten($color-pink, 10%);
-        box-shadow: 0 0 0.5rem 0 $color-pink;
-    }
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: transparent;
 }

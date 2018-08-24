@@ -25,12 +25,11 @@ blockquote, .copyright {
 h1 {
     margin: 1.5rem 0;
     font-size: 3rem;
-    font-family: $font-heading;
     font-weight: bold;
     line-height: 1.25;
     text-align: center;
-    color: $color-pink;
-    text-shadow: -1px 1px 0em $color-purple, -2px 2px 0em $color-purple, -3px 3px 0em $color-purple;
+    color: $color-purple;
+    text-shadow: -1px 1px 0em $color-teal, -2px 2px 0em $color-teal, -3px 3px 0em $color-teal;
 
     @media (max-width: 480px) {
         font-size: 2rem;
@@ -59,6 +58,7 @@ a {
 
     &:hover, &:focus {
         color: lighten($color-teal, 10%);
+        text-shadow: 0 0 1rem fade-out($color-teal, 0.5);
         outline: none;
         border-bottom-color: currentColor;
     }
@@ -96,10 +96,6 @@ abbr[title], dfn[title] {
     text-align: center;
 }
 
-pre, code {
-    font-family: $font-monospace;
-}
-
 code {
     padding: 0.125em 0.3175em;
     border-radius: 0.125em;
@@ -118,13 +114,12 @@ img {
 
 .framed {
     display: inline-block;
-    border: 0.25rem solid $color-teal;
-    border-radius: 1rem;
-    // box-shadow: 0 0 0.25rem 0 $color-teal;
+    border: 2px solid $color-amber;
+    border-radius: 0.5rem;
     transition: box-shadow 0.2s ease;
 
     &:hover, &:focus {
-        box-shadow: 0 0 0.5rem 0 $color-teal;
+        box-shadow: 0 0 0.5rem 0 $color-amber;
     }
 }
 

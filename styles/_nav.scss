@@ -1,0 +1,29 @@
+nav {
+    display: flex;
+    margin: 3rem auto;
+    align-items: center;
+    flex-flow: wrap;
+
+    & > *:not(:first-child) {
+        margin-left: 1rem;
+    }
+}
+
+#logo {
+    margin-right: auto;
+    border: none;
+
+    svg {
+        display: block;
+        height: 32px;
+        fill: $color-amber;
+        transition: all 0.2s ease;
+    }
+
+    &:hover, &:active {
+        svg {
+            fill: lighten($color-amber, 10%);
+            filter: drop-shadow(0 0 1rem fade-out($color-amber, 0.75));
+        }
+    }
+}

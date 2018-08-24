@@ -30,10 +30,17 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js" async defer></script>
     </head>
 
-    <body class="@(ViewData.ContainsKey("Classes") ? ViewData["Classes"] : "")">
+    <body>
         <header>
             <nav>
-                <a class="button" href="/">Index</a>
+                <a id="logo" href="/">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.953 6.085">
+                        <g>
+                            <path d="M.234 4.763l.212-1.059H3.62l.053-.264H.499L1.08.53C1.187 0 1.187 0 1.716 0H5.42c.529 0 .529 0 .423.53l-.211 1.057H2.457l-.053.265h3.175l-.582 2.91c-.106.53-.106.53-.635.53H.657c-.529 0-.529 0-.423-.53zM6.61 5.292h-.926c-.529 0-.529 0-.423-.53L6.108.53C6.214 0 6.214 0 6.743 0h3.704c.53 0 .53 0 .423.53l-.846 4.233c-.106.529-.106.529-.635.529h-.926l.74-3.704H8.94l-.741 3.704H6.875l.74-3.704h-.264zM15.897.53l-.211 1.057H12.51l-.424 2.117h3.175l-.211 1.059c-.106.529-.106.529-.635.529h-3.704c-.53 0-.53 0-.424-.53L11.135.53C11.24 0 11.24 0 11.77 0h3.704c.53 0 .53 0 .423.53z"/>
+                            <path d="M.022 5.82c-.053.265-.053.265.477.265h13.758c.53 0 .53 0 .582-.264.053-.265.053-.265-.476-.265H.604c-.529 0-.529 0-.582.265z"/>
+                        </g>
+                    </svg>
+                </a>
                 <a class="button" href="/articles">Articles</a>
                 <a class="button" href="/stuff">Stuff</a>
                 <a class="button" href="/about">About</a>
