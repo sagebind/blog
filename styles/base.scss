@@ -1,20 +1,9 @@
-$content-max-width: 52rem;
-$sidebar-width: 20rem;
-$layout-breakpoint: $content-max-width + $sidebar-width;
-
-$color-lighten: hsla(0, 100%, 100%, 0.3);
-$color-darken: hsla(0, 0%, 0%, 0.3);
-$color-light-gray: hsl(0, 0%, 85%);
-$color-teal: hsl(180, 90%, 40%);
-$color-pink: hsl(337, 70%, 55%);
-$color-purple: hsl(278, 70%, 40%);
-
-$font-body: "Source Sans Pro", "Calibri", sans-serif;
-$font-heading: "NTR", sans-serif;
-$font-monospace: "Source Code Pro", "Consolas", monospace;
-
-@import "layout";
+@import "colors";
+@import "fonts";
 @import "text";
+@import "layout";
+@import "nav";
+@import "theme";
+@import "comments";
 @import "forms";
-@import "tomorrow-night";
-@import "isso";
+@import "highlightjs/tomorrow-night";

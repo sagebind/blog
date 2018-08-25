@@ -7,5 +7,5 @@
         <time datetime="@Model.Date.ToString("o")">@Model.Date.ToString("D")</time> under <a href="/category/@Model.Category">@Model.Category</a>
     </small>
 
-    <p>@Model.Summarize()</p>
+    <p>@Html.Raw(Model.Summarize())</p>
 </article>

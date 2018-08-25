@@ -5,15 +5,15 @@ html {
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
 
-    // @media (max-width: 480px) {
-    //     font-size: 90%;
-    // }
+    @media (max-width: 480px) {
+        font-size: 90%;
+}
 }
 
 main {
     font-size: 1.25rem;
 
-    @media (max-width: 480px) {
+    @media (max-width: 640px) {
         font-size: 1rem;
     }
 }
@@ -25,12 +25,14 @@ blockquote, .copyright {
 h1 {
     margin: 1.5rem 0;
     font-size: 3rem;
-    font-family: $font-heading;
     font-weight: bold;
     line-height: 1.25;
     text-align: center;
-    color: $color-pink;
-    text-shadow: -1px 1px 0em $color-purple, -2px 2px 0em $color-purple, -3px 3px 0em $color-purple;
+    color: $color-amber;
+    text-shadow:
+        -1px 1px 0em darken($color-amber, 25%),
+        -2px 2px 0em darken($color-amber, 25%),
+        -3px 3px 0em darken($color-amber, 25%);
 
     @media (max-width: 480px) {
         font-size: 2rem;
@@ -54,11 +56,11 @@ a {
     color: $color-teal;
     text-decoration: none;
     outline: none;
-    border-bottom: 0.1em solid transparent;
+    border-bottom: 2px solid transparent;
     transition: all 0.2s ease;
 
     &:hover, &:focus {
-        color: lighten($color-teal, 10%);
+        text-shadow: 0 0 1rem fade-out($color-teal, 0.75);
         outline: none;
         border-bottom-color: currentColor;
     }
@@ -96,10 +98,6 @@ abbr[title], dfn[title] {
     text-align: center;
 }
 
-pre, code {
-    font-family: $font-monospace;
-}
-
 code {
     padding: 0.125em 0.3175em;
     border-radius: 0.125em;
@@ -118,14 +116,14 @@ img {
 
 .framed {
     display: inline-block;
-    border: 0.25rem solid $color-teal;
-    border-radius: 1rem;
-    // box-shadow: 0 0 0.25rem 0 $color-teal;
+    border: 2px solid $color-amber;
+    border-radius: 0.5rem;
     transition: box-shadow 0.2s ease;
+}
 
-    &:hover, &:focus {
-        box-shadow: 0 0 0.5rem 0 $color-teal;
-    }
+svg {
+    fill: currentColor;
+    transition: all 0.2s ease;
 }
 
 .icon {
@@ -137,7 +135,6 @@ img {
         width: 2.5rem;
         height: 2.5rem;
         padding: 0.25rem 0.5rem;
-        fill: currentColor;
     }
 
     opacity: 0.5;

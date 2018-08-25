@@ -1,5 +1,9 @@
-using System;
+﻿using System;
 using System.Reflection;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Markdig;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -9,15 +13,33 @@ using Microsoft.Extensions.FileProviders;
 
 namespace Blog
 {
-    public class Startup
+    public class Application : Autofac.Module
     {
-        public Startup(IConfiguration configuration)
+        public static void Main(string[] args)
         {
-            Configuration = configuration;
+            WebHost.CreateDefaultBuilder(args)
+                .ConfigureServices(services => services.AddAutofac())
+                .UseStartup<Startup>()
+                .Build()
+                .Run();
         }
 
-        public IConfiguration Configuration { get; }
+        protected override void Load(ContainerBuilder builder)
+        {
+            builder.RegisterType<ArticleStore>().AsSelf();
+            builder.RegisterInstance(new MarkdownPipelineBuilder()
+                .UseAutoIdentifiers()
+                .UseAutoLinks()
+                .UseFootnotes()
+                .UsePipeTables()
+                .UseSmartyPants()
+                .Build())
+                .As<MarkdownPipeline>();
+        }
+    }
 
+    public class Startup
+    {
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc()
@@ -26,8 +48,11 @@ namespace Blog
                 {
                     options.ViewLocationFormats.Add("/src/Views/{0}.cshtml");
                 });
+        }
 
-            services.AddSingleton<ArticleStore>();
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule<Application>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
