@@ -5,15 +5,15 @@ html {
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
 
-    // @media (max-width: 480px) {
-    //     font-size: 90%;
-    // }
+    @media (max-width: 480px) {
+        font-size: 90%;
+}
 }
 
 main {
     font-size: 1.25rem;
 
-    @media (max-width: 480px) {
+    @media (max-width: 640px) {
         font-size: 1rem;
     }
 }
@@ -28,8 +28,11 @@ h1 {
     font-weight: bold;
     line-height: 1.25;
     text-align: center;
-    color: $color-purple;
-    text-shadow: -1px 1px 0em $color-teal, -2px 2px 0em $color-teal, -3px 3px 0em $color-teal;
+    color: $color-amber;
+    text-shadow:
+        -1px 1px 0em darken($color-amber, 25%),
+        -2px 2px 0em darken($color-amber, 25%),
+        -3px 3px 0em darken($color-amber, 25%);
 
     @media (max-width: 480px) {
         font-size: 2rem;
@@ -53,12 +56,11 @@ a {
     color: $color-teal;
     text-decoration: none;
     outline: none;
-    border-bottom: 0.1em solid transparent;
+    border-bottom: 2px solid transparent;
     transition: all 0.2s ease;
 
     &:hover, &:focus {
-        color: lighten($color-teal, 10%);
-        text-shadow: 0 0 1rem fade-out($color-teal, 0.5);
+        text-shadow: 0 0 1rem fade-out($color-teal, 0.75);
         outline: none;
         border-bottom-color: currentColor;
     }
@@ -117,10 +119,11 @@ img {
     border: 2px solid $color-amber;
     border-radius: 0.5rem;
     transition: box-shadow 0.2s ease;
+}
 
-    &:hover, &:focus {
-        box-shadow: 0 0 0.5rem 0 $color-amber;
-    }
+svg {
+    fill: currentColor;
+    transition: all 0.2s ease;
 }
 
 .icon {
@@ -132,7 +135,6 @@ img {
         width: 2.5rem;
         height: 2.5rem;
         padding: 0.25rem 0.5rem;
-        fill: currentColor;
     }
 
     opacity: 0.5;

@@ -13,7 +13,7 @@ using Microsoft.Extensions.FileProviders;
 
 namespace Blog
 {
-    public class Application
+    public class Application : Autofac.Module
     {
         public static void Main(string[] args)
         {
@@ -23,17 +23,23 @@ namespace Blog
                 .Build()
                 .Run();
         }
+
+        protected override void Load(ContainerBuilder builder)
+        {
+            builder.RegisterType<ArticleStore>().AsSelf();
+            builder.RegisterInstance(new MarkdownPipelineBuilder()
+                .UseAutoIdentifiers()
+                .UseAutoLinks()
+                .UseFootnotes()
+                .UsePipeTables()
+                .UseSmartyPants()
+                .Build())
+                .As<MarkdownPipeline>();
+        }
     }
 
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
-
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc()
@@ -46,15 +52,7 @@ namespace Blog
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.RegisterType<ArticleStore>().AsSelf();
-            builder.RegisterInstance(new MarkdownPipelineBuilder()
-                .UseAutoIdentifiers()
-                .UseAutoLinks()
-                .UseFootnotes()
-                .UsePipeTables()
-                .UseSmartyPants()
-                .Build())
-                .As<MarkdownPipeline>();
+            builder.RegisterModule<Application>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

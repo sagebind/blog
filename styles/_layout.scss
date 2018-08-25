@@ -46,9 +46,18 @@ body {
         ".  sidebar ."
         ".  footer  .";
 
+    // Shrink margins on small screens.
+    @media (max-width: 480px) {
+        grid-gap: 1rem;
+    }
+
     // Wide two-column layout
     @media (min-width: $layout-breakpoint) {
-        grid-template-columns: auto minmax(min-content, $content-max-width) minmax(min-content, $sidebar-width) auto;
+        grid-template-columns:
+            auto
+            minmax(min-content, $content-max-width)
+            minmax(min-content, $sidebar-width)
+            auto;
         grid-template-rows: auto auto 1fr;
         grid-template-areas:
             ".  header  header  ."
