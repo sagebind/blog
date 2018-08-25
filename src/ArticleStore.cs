@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using Markdig;
 
 namespace Blog
 {
@@ -13,7 +14,14 @@ namespace Blog
     {
         private static readonly Assembly assembly = Assembly.GetEntryAssembly();
         private static readonly Regex slugRegex = new Regex(@"^(\d{4})-(\d{2})-(\d{2})-");
+
         private Dictionary<string, Article> cache = new Dictionary<string, Article>();
+        private MarkdownPipeline markdownPipeline;
+
+        public ArticleStore(MarkdownPipeline markdownPipeline)
+        {
+            this.markdownPipeline = markdownPipeline;
+        }
 
         public IEnumerable<Article> GetAll(bool includeUnpublished = false)
         {
@@ -38,7 +46,8 @@ namespace Blog
 
         private Article LoadArticleFromResource(string name)
         {
-            if (cache.ContainsKey(name)) {
+            if (cache.ContainsKey(name))
+            {
                 return cache[name];
             }
 
@@ -49,7 +58,8 @@ namespace Blog
                 TomlTable metadata = null;
 
                 // If a TOML front matter block is given, parse the contained metadata.
-                if (source.StartsWith("+++")) {
+                if (source.StartsWith("+++"))
+                {
                     source = source.Substring(3);
                     int endPos = source.IndexOf("+++");
                     string frontMatter = source.Substring(0, endPos).Trim();
@@ -60,7 +70,13 @@ namespace Blog
 
                 string slug = slugRegex.Replace(name.Split(".").TakeLast(2).First(), "$1/$2/$3/");
 
-                var article = new Article(slug, source, metadata);
+                var article = new Article
+                {
+                    Slug = slug,
+                    Metadata = metadata,
+                    Html = Markdown.ToHtml(source, markdownPipeline),
+                    Text = Markdown.ToPlainText(source, markdownPipeline),
+                };
                 cache[name] = article;
 
                 return article;

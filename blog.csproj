@@ -4,12 +4,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Markdig" Version="0.15.0"/>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.1"/>
+    <PackageReference Include="Autofac" Version="4.8.1" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.3.0" />
+    <PackageReference Include="Markdig" Version="0.15.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.1" />
     <PackageReference Include="Nett" Version="0.9.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="articles/*.md"/>
+    <EmbeddedResource Include="articles/*.md" />
   </ItemGroup>
 </Project>
