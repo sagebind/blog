@@ -20,7 +20,7 @@ nav {
     & > * {
         background: $color-amber;
         border: none;
-        box-shadow: 0 0 2rem fade-out($color-amber, 0.75);
+        box-shadow: 0 0 2rem fade-out($color-amber-shadow, 0.75);
     }
 
     & > a {
@@ -31,7 +31,7 @@ nav {
 
         &:hover, &:active {
             background: lighten($color-amber, 5%);
-            box-shadow: 0 0 2rem fade-out($color-amber, 0.25);
+            box-shadow: 0 0 2rem fade-out($color-amber-shadow, 0.025);
             text-shadow: none;
         }
 

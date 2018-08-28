@@ -1,24 +1,5 @@
 body {
     background:
-        radial-gradient(circle at 65% -16rem, fade-out(gray, 0.5), transparent 160rem) no-repeat,
+        radial-gradient(circle at 65% -16rem, fade-out(gray, 0.75), transparent 160rem) no-repeat,
         url("/assets/images/space.jpg") top center repeat;
 }
-
-// body::before {
-//     display: block;
-//     grid-row: 1 / 4;
-//     grid-column: 3 / -1;
-//     background-color: $color-darken;
-//     content: "";
-//     border-color: $color-darken;
-//     border-style: solid;
-//     border-width: 2px 2px 0 0;
-// }
-
-// main {
-//     max-width: $content-max-width;
-//     background-color: $color-darken;
-//     border-color: $color-darken;
-//     border-style: solid;
-//     border-width: 2px 0;
-// }

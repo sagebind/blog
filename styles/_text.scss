@@ -30,9 +30,9 @@ h1 {
     text-align: center;
     color: $color-amber;
     text-shadow:
-        -1px 1px 0em darken($color-amber, 25%),
-        -2px 2px 0em darken($color-amber, 25%),
-        -3px 3px 0em darken($color-amber, 25%);
+        -1px 1px 0 $color-amber-shadow,
+        -2px 2px 0 $color-amber-shadow,
+        -3px 3px 0 $color-amber-shadow;
 
     @media (max-width: 480px) {
         font-size: 2rem;
