@@ -9,7 +9,7 @@ workflow "Main" {
 }
 
 action "Build" {
-  uses = "docker://docker/compose"
+  uses = "docker://docker/compose:1.23.2"
   args = "build"
 }
 
@@ -26,7 +26,7 @@ action "Registry login" {
 }
 
 action "Push" {
-  uses = "docker://docker/compose"
+  uses = "docker://docker/compose:1.23.2"
   needs = ["Registry login"]
   args = "push"
 }
