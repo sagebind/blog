@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.1-sdk-alpine AS build
+FROM microsoft/dotnet:2.2-sdk-alpine AS build
 WORKDIR /app
 COPY articles /app/articles/
 COPY src /app/src/
@@ -11,7 +11,7 @@ COPY styles /styles
 RUN apk --no-cache add sassc && \
     sassc --style compressed /styles/base.scss /style.min.css
 
-FROM microsoft/dotnet:2.1-runtime-deps-alpine
+FROM microsoft/dotnet:2.2-runtime-deps-alpine
 WORKDIR /app
 COPY wwwroot /app/wwwroot/
 COPY --from=build /app/out /app/
