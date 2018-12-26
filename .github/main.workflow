@@ -9,8 +9,8 @@ workflow "Main" {
 }
 
 action "Build" {
-  uses = "docker://docker/compose:1.23.2"
-  args = "build"
+  uses = "actions/docker/cli@76ff57a"
+  args = "build -t sagebind/blog ."
 }
 
 action "Master" {
@@ -26,7 +26,7 @@ action "Registry login" {
 }
 
 action "Push" {
-  uses = "docker://docker/compose:1.23.2"
+  uses = "actions/docker/cli@76ff57a"
   needs = ["Registry login"]
-  args = "push"
+  args = "push sagebind/blog"
 }
