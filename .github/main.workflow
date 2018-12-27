@@ -2,7 +2,7 @@ workflow "Main" {
   on = "push"
   resolves = [
     "Build",
-    "Master",
+#     "Master",
     "Registry login",
     "Push",
   ]
