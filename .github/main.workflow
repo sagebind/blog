@@ -13,15 +13,15 @@ action "Build" {
   args = "build -t sagebind/blog ."
 }
 
-action "Master" {
-  uses = "actions/bin/filter@b2bea07"
-  needs = ["Build"]
-  args = "branch master"
-}
+# action "Master" {
+#   uses = "actions/bin/filter@b2bea07"
+#   needs = ["Build"]
+#   args = "branch master"
+# }
 
 action "Registry login" {
   uses = "actions/docker/login@76ff57a"
-  needs = ["Master"]
+  needs = ["Build"]
   secrets = ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
 }
 
