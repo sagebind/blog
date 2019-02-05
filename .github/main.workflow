@@ -27,11 +27,11 @@ action "Push image" {
 }
 
 action "Deploy to swarm" {
-  uses = "sagebind/actions/swarm-deploy@master"
+  uses = "sagebind/actions/remote-docker@master"
   needs = ["Push image"]
-  secrets = ["DOCKER_SSH_KEY"]
   env = {
-    DOCKER_HOST = "ssh://root@45.55.121.98"
+    DOCKER_REMOTE_HOST = "ssh://root@45.55.121.98"
   }
-  args = "--prune --compose-file deploy/default.yml stephencoakley"
+  secrets = ["DOCKER_SSH_PRIVATE_KEY", "DOCKER_SSH_PUBLIC_KEY"]
+  args = "stack deploy --with-registry-auth --prune --compose-file deploy/prod.yaml stephencoakley"
 }
