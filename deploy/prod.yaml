@@ -24,6 +24,10 @@ services:
     networks:
       - traefik
     deploy:
+      resources:
+        reservations:
+          cpus: "0.125"
+          memory: 128M
       labels:
         traefik.port: 80
         traefik.docker.network: traefik
