@@ -14,7 +14,7 @@ services:
   comments:
     image: wonderfall/isso
     configs:
-      - source: isso
+      - source: isso_v3
         target: /config/isso.conf
     environment:
       GID: 0
@@ -34,7 +34,7 @@ services:
         traefik.frontend.rule: "Host: comments.stephencoakley.com"
 
 configs:
-  isso:
+  isso_v3:
     file: ./isso.conf
 
 volumes:
