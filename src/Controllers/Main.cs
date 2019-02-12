@@ -41,12 +41,20 @@ namespace Blog.Controllers
                 .Reverse());
         }
 
+        // I got rid of categories, but redirect to the equivalent tag to be helpful.
         [Route("/category/{category}")]
         public IActionResult ListArticlesInCategory(string category)
         {
-            ViewData["Category"] = category;
-            return View("Category", articleStore
-                .GetByCategory(category)
+            return RedirectPermanent($"/tag/{Tags.Normalize(category)}");
+        }
+
+        [Route("/tag/{tag}")]
+        public IActionResult ListArticlesTagged(string tag)
+        {
+            tag = Tags.Normalize(tag);
+            ViewData["Tag"] = tag;
+            return View("Tag", articleStore
+                .GetByTag(tag)
                 .Reverse());
         }
 

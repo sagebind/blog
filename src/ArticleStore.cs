@@ -39,9 +39,9 @@ namespace Blog
                 .FirstOrDefault(x => true);
         }
 
-        public IEnumerable<Article> GetByCategory(string category)
+        public IEnumerable<Article> GetByTag(string tag)
         {
-            return GetAll().Where(article => article.Category == category);
+            return GetAll().Where(article => article.Tags.Contains(tag));
         }
 
         private Article LoadArticleFromResource(string name)

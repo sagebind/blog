@@ -2,7 +2,7 @@
 title = "A Big Shift"
 author = "Stephen Coakley"
 date = "2016-10-05"
-category = "life"
+tags = ["life"]
 +++
 
 No, I haven't forgotten about this blog. In fact, I plan on experimenting a bit more with it than in the past -- perhaps you might find it useful or interesting, for some strange reason. A number of interesting things have happened during the last several months, so this is a catch-all dump of most of those things. Since I suck at introductory paragraphs, let's just get on with it already.

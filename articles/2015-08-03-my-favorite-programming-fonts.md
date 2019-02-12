@@ -2,7 +2,7 @@
 title = "My Favorite Programming Fonts"
 author = "Stephen Coakley"
 date = "2015-08-03"
-category = "workflow"
+tags = ["workflow"]
 +++
 
 As a programmer, I spend a lot of time working on the computer. Most of my time spent developing involves using an IDE, text editor, or the terminal. Even when I'm not writing code, I work with text a lot, like writing this article, for example.

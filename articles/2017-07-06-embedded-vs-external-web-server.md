@@ -2,7 +2,7 @@
 title = "Embedded vs. External Web Servers"
 author = "Stephen Coakley"
 date = "2017-07-06"
-category = "webdev"
+tags = ["webdev"]
 +++
 
 *Firstly, Twitter's 140 character limit is too short for sharing thoughts longer than one or two sentences. I regularly question my development practices and sharing my internal debates is a good way for me to analyze the arguments, but I tend to sound incoherent when I use Twitter for that purpose. What better place to do so than on this blog? Expect to see more frequent, albeit shorter, posts like this one from now on. Now on to the post.*

@@ -2,7 +2,7 @@
 title = "Iterators Are Awesome"
 author = "Stephen Coakley"
 date = "2016-03-22"
-category = "architecture"
+tags = ["architecture"]
 +++
 
 Iterators are awesome. Maybe you've heard this before and already are an iterator master, but for a surprisingly large number of programmers, the term "iterator" is a scary term that reminds you of your confusing Software Engineering class in college. I'm here to illuminate on what iterators are,  why they matter, and how they are used. When wielded properly, they can help you write code that is cleaner, simpler to read, and sometimes even more performant.

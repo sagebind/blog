@@ -29,12 +29,13 @@ namespace Blog.Controllers
             return View("Feeds/Atom", articleStore.GetAll());
         }
 
-        [Route("/feed/{category}")]
-        [Route("/feed/{category}.atom")]
-        public IActionResult GetAtomFeed(string category)
+        [Route("/feed/{tag}")]
+        [Route("/feed/{tag}.atom")]
+        public IActionResult GetAtomFeed(string tag)
         {
+            tag = Tags.Normalize(tag);
             Response.ContentType = "application/atom+xml";
-            return View("Feeds/Atom", articleStore.GetByCategory(category));
+            return View("Feeds/Atom", articleStore.GetByTag(tag));
         }
 
         [Route("/feed.rss")]
@@ -44,11 +45,12 @@ namespace Blog.Controllers
             return View("Feeds/Rss", articleStore.GetAll());
         }
 
-        [Route("/feed/{category}.rss")]
-        public IActionResult GetRssFeed(string category)
+        [Route("/feed/{tag}.rss")]
+        public IActionResult GetRssFeed(string tag)
         {
+            tag = Tags.Normalize(tag);
             Response.ContentType = "application/rss+xml";
-            return View("Feeds/Rss", articleStore.GetByCategory(category));
+            return View("Feeds/Rss", articleStore.GetByTag(tag));
         }
     }
 }

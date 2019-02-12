@@ -2,7 +2,7 @@
 title = "Terminal Setup Tour"
 author = "Stephen Coakley"
 date = "2017-02-19"
-category = "workflow"
+tags = ["workflow"]
 +++
 
 There are three types of developers in the world:

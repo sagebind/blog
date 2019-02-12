@@ -17,7 +17,7 @@ namespace Blog
 
         public string Author => Metadata.Get<string>("author");
 
-        public string Category => Metadata.Get<string>("category");
+        public string[] Tags => Metadata.TryGetValue("tags")?.Get<string[]>() ?? new string[] {};
 
         public Uri CanonicalUri => new Uri("http://stephencoakley.com/" + Slug);
 
@@ -34,7 +34,7 @@ namespace Blog
         {
             get
             {
-                if (Metadata.ContainsKey("unpublished") && Metadata.Get<bool>("unpublished"))
+                if (Metadata == null || Metadata.ContainsKey("unpublished") && Metadata.Get<bool>("unpublished"))
                 {
                     return false;
                 }

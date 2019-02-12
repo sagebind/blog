@@ -90,19 +90,28 @@ abbr[title], dfn[title] {
     cursor: help;
 }
 
-.postmeta, .category {
+.postmeta {
     margin: 0;
+    font-size: 0.75em;
 }
 
 .center {
     text-align: center;
 }
 
-code {
-    padding: 0.125em 0.3175em;
+.tag {
+    display: inline-block;
+    margin-left: 0.25em;
+}
+
+code, .tag {
+    padding: 0.125em 0.5em;
     border-radius: 0.125em;
-    font-size: 0.75em;
     background-color: $color-darken;
+}
+
+code {
+    font-size: 0.75em;
 }
 
 pre > code {

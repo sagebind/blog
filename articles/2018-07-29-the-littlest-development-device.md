@@ -2,7 +2,7 @@
 title = "The Littlest Development Device?"
 author = "Stephen Coakley"
 date = "2018-07-29"
-category = "life"
+tags = ["life", "hardware"]
 +++
 
 Do you remember back in the day when "netbooks" were all the rage? Those mini-laptops from the late 2000s that compromised computing power for a small form factor and a competitive price tag?

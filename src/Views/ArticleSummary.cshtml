@@ -4,7 +4,13 @@
     <h2><a href="/@Model.Slug">@Model.Title</a></h2>
 
     <small>
-        <time datetime="@Model.Date.ToString("o")">@Model.Date.ToString("D")</time> under <a href="/category/@Model.Category">@Model.Category</a>
+        <time datetime="@Model.Date.ToString("o")">@Model.Date.ToString("D")</time>
+        <span class="tags">
+            @foreach (var tag in Model.Tags)
+            {
+                <a class="tag" href="/tag/@tag">@tag</a>
+            }
+        </span>
     </small>
 
     <p>@Html.Raw(Model.Summarize())</p>

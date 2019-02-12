@@ -2,7 +2,7 @@
 title = "The Littlest Development Device: Follow Up"
 author = "Stephen Coakley"
 date = "2018-08-25"
-category = "life"
+tags = ["life", "hardware"]
 +++
 
 As promised, I have returned to post a follow up to [my article last month](/2018/07/29/the-littlest-development-device). In it, I ask if the GPD Pocket computer can be used as a development machine and, if so, what the experience is like.
