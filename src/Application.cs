@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -38,8 +39,33 @@ namespace Blog
         }
     }
 
+    public class ProdModule : Autofac.Module
+    {
+        protected override void Load(ContainerBuilder builder)
+        {
+            builder.RegisterInstance(new MemoryCache(new MemoryCacheOptions()))
+                .As<IMemoryCache>();
+        }
+    }
+
+    public class DevelopmentModule : Autofac.Module
+    {
+        protected override void Load(ContainerBuilder builder)
+        {
+            builder.RegisterInstance(new NoOpCache())
+                .As<IMemoryCache>();
+        }
+    }
+
     public class Startup
     {
+        private readonly IHostingEnvironment hostingEnvironment;
+
+        public Startup(IHostingEnvironment env)
+        {
+            this.hostingEnvironment = env;
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc()
@@ -53,6 +79,15 @@ namespace Blog
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterModule<Application>();
+
+            if (hostingEnvironment.IsDevelopment())
+            {
+                builder.RegisterModule<DevelopmentModule>();
+            }
+            else
+            {
+                builder.RegisterModule<ProdModule>();
+            }
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

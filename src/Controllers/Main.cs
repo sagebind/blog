@@ -61,7 +61,14 @@ namespace Blog.Controllers
         [Route("/{year}/{month}/{day}/{name}")]
         public IActionResult GetArticle(int year, int month, int day, string name)
         {
-            return View("Article", articleStore.GetBySlug(Request.Path.Value.Substring(1)));
+            var article = articleStore.GetBySlug(Request.Path.Value.Substring(1));
+
+            if (article != null)
+            {
+                return View("Article", article);
+            }
+
+            return NotFound();
         }
     }
 }

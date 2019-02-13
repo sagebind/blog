@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using Markdig;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Blog
 {
@@ -15,11 +16,12 @@ namespace Blog
         private static readonly Assembly assembly = Assembly.GetEntryAssembly();
         private static readonly Regex slugRegex = new Regex(@"^(\d{4})-(\d{2})-(\d{2})-");
 
-        private Dictionary<string, Article> cache = new Dictionary<string, Article>();
+        private IMemoryCache articleCache;
         private MarkdownPipeline markdownPipeline;
 
-        public ArticleStore(MarkdownPipeline markdownPipeline)
+        public ArticleStore(IMemoryCache articleCache, MarkdownPipeline markdownPipeline)
         {
+            this.articleCache = articleCache;
             this.markdownPipeline = markdownPipeline;
         }
 
@@ -34,7 +36,7 @@ namespace Blog
 
         public Article GetBySlug(string slug)
         {
-            return GetAll()
+            return GetAll(true)
                 .Where(article => article.Slug == slug)
                 .FirstOrDefault(x => true);
         }
@@ -46,9 +48,11 @@ namespace Blog
 
         private Article LoadArticleFromResource(string name)
         {
-            if (cache.ContainsKey(name))
+            var article = articleCache.Get<Article>(name);
+
+            if (article != null)
             {
-                return cache[name];
+                return article;
             }
 
             using (StreamReader reader = new StreamReader(assembly.GetManifestResourceStream(name), Encoding.UTF8))
@@ -70,14 +74,15 @@ namespace Blog
 
                 string slug = slugRegex.Replace(name.Split(".").TakeLast(2).First(), "$1/$2/$3/");
 
-                var article = new Article
+                article = new Article
                 {
                     Slug = slug,
                     Metadata = metadata,
                     Html = Markdown.ToHtml(source, markdownPipeline),
                     Text = Markdown.ToPlainText(source, markdownPipeline),
                 };
-                cache[name] = article;
+
+                articleCache.CreateEntry(name).Value = article;
 
                 return article;
             }
