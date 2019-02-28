@@ -27,7 +27,7 @@ action "Push image" {
 }
 
 action "Deploy to swarm" {
-  uses = "sagebind/actions/remote-docker@master"
+  uses = "sagebind/docker-swarm-deploy-action@master"
   needs = ["Push image"]
   env = {
     DOCKER_REMOTE_HOST = "ssh://root@45.55.121.98"
