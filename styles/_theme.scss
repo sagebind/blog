@@ -1,5 +1,53 @@
 body {
+    // We have quite the complicated background going on here. Many elements, like the header gradient and footer
+    // gradient, are defined as part of the body background. This allows the backgrounds to blend together and overflow
+    // their would-be containers.
     background:
-        radial-gradient(circle at 65% -16rem, fade-out(gray, 0.75), transparent 160rem) no-repeat,
-        url("/assets/images/space.jpg") top center repeat;
+        // First on top of everything is a subtle "scan-lines" like filter. This helps to soften the gradients and also
+        // give that true 80s feel, but is subtle enough to not be distracting.
+        $image-scan-lines,
+
+        // Next, we have the header gradient.
+        linear-gradient(179deg, $color-amber 0, $color-amber-dark 3rem, $color-purple 8rem, transparent 8.1rem),
+
+        // This is the footer gradient.
+        linear-gradient(
+            2deg,
+            fade-out($color-pink, 0.5) 0,
+            fade-out($color-purple, 0.75) 20rem,
+            transparent 40rem
+        ),
+
+        // Our nice space background image.
+        url("/assets/images/space.jpg") top center repeat,
+
+        // The average solid color of the background image to show while it is loading.
+        rgb(36, 36, 38);
+}
+
+figure {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.25rem;
+    background: fade-out($color-purple, 0.25);
+    box-shadow: 0 0 0.5rem $color-purple;
+
+    figcaption {
+        margin: 0.5rem;
+    }
+
+    & > img {
+        opacity: 0.8;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: $image-scan-lines;
+    }
 }

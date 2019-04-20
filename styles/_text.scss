@@ -1,13 +1,16 @@
 html {
     font-size: 100%;
     line-height: 1.625;
-    color: $color-light-gray;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
 
     @media (max-width: 480px) {
         font-size: 90%;
+    }
 }
+
+body {
+    color: $color-light-gray;
 }
 
 main {
@@ -27,12 +30,16 @@ h1 {
     font-size: 3rem;
     font-weight: bold;
     line-height: 1.25;
-    text-align: center;
-    color: $color-amber;
+    // color: $color-amber;
+    // text-shadow:
+    //     -1px 1px 0 $color-amber-dark,
+    //     -2px 2px 0 $color-amber-dark,
+    //     -3px 3px 0 $color-amber-dark;
+    color: $color-pink;
     text-shadow:
-        -1px 1px 0 $color-amber-shadow,
-        -2px 2px 0 $color-amber-shadow,
-        -3px 3px 0 $color-amber-shadow;
+        1px 1px 0 $color-purple,
+        2px 2px 0 $color-purple,
+        3px 3px 0 $color-purple;
 
     @media (max-width: 480px) {
         font-size: 2rem;
@@ -52,22 +59,22 @@ hr {
 }
 
 a {
+    @include transition;
+
     cursor: pointer;
-    color: $color-teal;
+    color: $color-amber;
     text-decoration: none;
     outline: none;
     border-bottom: 2px solid transparent;
-    transition: all 0.2s ease;
 
-    &:hover, &:focus {
-        text-shadow: 0 0 1rem fade-out($color-teal, 0.75);
-        outline: none;
+    &:hover {
+        text-shadow: 0 0 1rem fade-out($color-amber, 0.75);
         border-bottom-color: currentColor;
     }
 }
 
 mark {
-    background: lighten($color-teal, 5%);
+    background: lighten($color-blue, 5%);
 }
 
 ins {
@@ -121,13 +128,6 @@ pre > code {
 
 img {
     max-width: 100%;
-}
-
-.framed {
-    display: inline-block;
-    border: 2px solid $color-amber;
-    border-radius: 0.5rem;
-    transition: box-shadow 0.2s ease;
 }
 
 svg {

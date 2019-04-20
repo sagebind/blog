@@ -27,6 +27,12 @@ namespace Blog.Controllers
             return View("About");
         }
 
+        [Route("/selftest")]
+        public IActionResult GetSelftest()
+        {
+            return View("Selftest");
+        }
+
         [Route("/stuff")]
         public IActionResult GetStuff()
         {

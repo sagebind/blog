@@ -10,7 +10,7 @@
     <p class="postmeta">
         <time datetime="@Model.Date.ToString("o")" class="date">@Model.Date</time>
         <span class="author-by"> by </span>
-        <span class="author">@Model.Author</span>
+        <span class="author"><a href="/about">@Model.Author</a></span>
 
         @foreach (var tag in Model.Tags)
         {
@@ -20,6 +20,17 @@
 
     @Html.Raw(Model.Html)
 </article>
+
+<aside id="bio">
+    <div class="logo">
+        <img class="framed" src="https://s.gravatar.com/avatar/4c0d6bf3fb628cc4ccd1d1613f421290?s=48"/>
+    </div>
+
+    <div class="bio-text">
+        <p>Hi! I'm <strong>Stephen Coakley</strong>, a software engineer and committed Christian. I am passionate about faith, life, systems and web software, gaming, and music.</p>
+        <p>Occasionally I write articles here about those things, mostly focused on web development or low-level programming.</p>
+    </div>
+</aside>
 
 <h2>Comments</h2>
 <script data-isso="//comments.stephencoakley.com/" data-isso-css="false" data-isso-require-author="true" data-isso-require-email="true" src="//comments.stephencoakley.com/js/embed.min.js"></script>
