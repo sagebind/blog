@@ -3,6 +3,7 @@ nav {
     font-weight: bold;
     text-transform: uppercase;
     flex-wrap: wrap;
+    justify-content: flex-end;
 
     & > a {
         border: none;
@@ -15,6 +16,7 @@ nav {
         font-weight: bold;
 
         &:hover {
+            text-decoration: none;
             opacity: 1;
             text-shadow: none;
         }

@@ -1,7 +1,7 @@
 %control {
     @include transition;
 
-    padding: 0.25em 1em;
+    padding: 0.125em 1em;
     border-radius: 1em;
     border-style: solid;
 }
@@ -26,7 +26,7 @@ button, input[type="button"], input[type="submit"], input[type="reset"], .button
     box-shadow: 0 0 2rem fade-out($color-purple, 0.75);
 
     &:hover {
-        box-shadow: 0 0 2rem fade-out($color-pink, 0.025);
+        box-shadow: 0 0 2rem fade-out($color-pink, 0.25);
         z-index: 2;
     }
 }

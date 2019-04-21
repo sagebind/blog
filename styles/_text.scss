@@ -1,15 +1,5 @@
-html {
-    font-size: 100%;
-    line-height: 1.625;
-    -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
-
-    @media (max-width: 480px) {
-        font-size: 90%;
-    }
-}
-
 body {
+    line-height: 1.625;
     color: $color-light-gray;
 }
 
@@ -64,12 +54,12 @@ a {
     cursor: pointer;
     color: $color-amber;
     text-decoration: none;
-    outline: none;
-    border-bottom: 2px solid transparent;
+    // border-bottom: 2px solid transparent;
 
     &:hover {
         text-shadow: 0 0 1rem fade-out($color-amber, 0.75);
-        border-bottom-color: currentColor;
+        // border-bottom-color: currentColor;
+        text-decoration: underline;
     }
 }
 
