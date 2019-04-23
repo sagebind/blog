@@ -142,7 +142,7 @@ Now that we see the big picture, this actually seems pretty intuitive and solves
 - Any static variables or global state will be duplicated for each instance of a library, and they can't communicate without some hackery.
 - Our binary size increases necessarily for every instance of a library we have included in our app.
 
-These seem like worthwhile tradeoffs for Rust in order to solve the general use case, but for other languages, adopting something like this could be significantly more difficult. Taking Java as an example, Java _heavily_ relies on static fields and global state, so simply adopting Rust's approach wholesale would certainly produce broken code more times than not, whereas Rust is heavy-handed about limiting global state to a bare minimum. This design also says nothing about loading arbitrary libraries at runtime or reflection, both of which are popular features offered by many other languages.
+These seem like worthwhile tradeoffs for Rust in order to solve the general use case, but for other languages, adopting something like this could be significantly more difficult. Taking Java as an example, Java _heavily_ relies on static fields and global state, so simply adopting Rust's approach wholesale would certainly produce broken code more times than not, whereas Rust is a bit more heavy-handed about limiting global state to a bare minimum. This design also says nothing about loading arbitrary libraries at runtime or reflection, both of which are popular features offered by many other languages.
 
 ## Conclusion
 
