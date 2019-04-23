@@ -26,7 +26,7 @@ namespace Blog.Controllers
         public IActionResult GetAtomFeed()
         {
             Response.ContentType = "application/atom+xml";
-            return View("Feeds/Atom", articleStore.GetAll());
+            return View("Feeds/Atom", articleStore.GetAll().Reverse());
         }
 
         [Route("/feed/{tag}")]
@@ -35,14 +35,14 @@ namespace Blog.Controllers
         {
             tag = Tags.Normalize(tag);
             Response.ContentType = "application/atom+xml";
-            return View("Feeds/Atom", articleStore.GetByTag(tag));
+            return View("Feeds/Atom", articleStore.GetByTag(tag).Reverse());
         }
 
         [Route("/feed.rss")]
         public IActionResult GetRssFeed()
         {
             Response.ContentType = "application/rss+xml";
-            return View("Feeds/Rss", articleStore.GetAll());
+            return View("Feeds/Rss", articleStore.GetAll().Reverse());
         }
 
         [Route("/feed/{tag}.rss")]
@@ -50,7 +50,7 @@ namespace Blog.Controllers
         {
             tag = Tags.Normalize(tag);
             Response.ContentType = "application/rss+xml";
-            return View("Feeds/Rss", articleStore.GetByTag(tag));
+            return View("Feeds/Rss", articleStore.GetByTag(tag).Reverse());
         }
     }
 }
