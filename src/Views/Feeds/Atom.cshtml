@@ -2,11 +2,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>Stephen Coakley</title>
-    <link href="http://stephencoakley.com"/>
-    <link href="http://stephencoakley.com@Context.Request.Path" rel="self"/>
+    <link href="https://stephencoakley.com"/>
+    <link href="https://stephencoakley.com@(Context.Request.Path)" rel="self"/>
     <subtitle>Software developer and web designer</subtitle>
     <updated>@Model.Last().Date.ToString("yyyy-MM-ddTHH:mm:ssZ")</updated>
-    <id>http://stephencoakley.com/feed.atom</id>
+    <id>https://stephencoakley.com/feed.atom</id>
     <author>
         <name>Stephen Coakley</name>
         <email>me@stephencoakley.com</email>
@@ -27,12 +27,8 @@
                 <category term="@tag"/>
             }
             <updated>@article.Date.ToString("yyyy-MM-ddTHH:mm:ssZ")</updated>
-            <summary type="text">
-                @Html.Raw(article.Summarize())
-            </summary>
-            <content type="html">
-                @Html.Raw(article.Html)
-            </content>
+            <summary type="html">@article.Summarize()</summary>
+            <content type="html">@article.Html</content>
         </entry>
     }
 </feed>

@@ -19,7 +19,7 @@ namespace Blog
 
         public string[] Tags => Metadata.TryGetValue("tags")?.Get<string[]>() ?? new string[] {};
 
-        public Uri CanonicalUri => new Uri("http://stephencoakley.com/" + Slug);
+        public Uri CanonicalUri => new Uri("https://stephencoakley.com/" + Slug);
 
         public DateTime Date
         {

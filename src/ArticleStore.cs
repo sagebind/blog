@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using Markdig;
 using Microsoft.Extensions.Caching.Memory;
+using Markdig.Renderers;
 
 namespace Blog
 {
@@ -79,13 +80,28 @@ namespace Blog
                     Slug = slug,
                     Metadata = metadata,
                     Html = Markdown.ToHtml(source, markdownPipeline),
-                    Text = Markdown.ToPlainText(source, markdownPipeline),
+                    Text = RenderPlainText(source),
                 };
 
                 articleCache.CreateEntry(name).Value = article;
 
                 return article;
             }
+        }
+
+        private string RenderPlainText(string markdown)
+        {
+            var writer = new StringWriter();
+            var renderer = new HtmlRenderer(writer)
+            {
+                EnableHtmlForBlock = false,
+                EnableHtmlForInline = false,
+                EnableHtmlEscape = false
+            };
+
+            Markdown.Convert(markdown, renderer, markdownPipeline);
+
+            return writer.ToString();
         }
     }
 }
