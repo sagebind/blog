@@ -8,5 +8,10 @@
     & > svg {
         display: block;
         margin: 0 auto;
+
+        .node > rect {
+            fill: lighten($color-pink, 25%) !important;
+            stroke: $color-purple !important;
+        }
     }
 }
