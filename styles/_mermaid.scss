@@ -1,0 +1,12 @@
+.mermaid-chart {
+    padding: 1rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    background: $color-darken;
+    border: 1px solid black;
+
+    & > svg {
+        display: block;
+        margin: 0 auto;
+    }
+}
