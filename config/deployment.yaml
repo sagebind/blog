@@ -77,8 +77,10 @@ data:
   isso.conf: |
     [general]
     dbpath = /db/comments.db
-    host = https://stephencoakley.com/
+    host = http://stephencoakley.com/
+           https://stephencoakley.com/
            http://localhost:5000/
+    gravatar = true
 
     [guard]
     enabled = true
