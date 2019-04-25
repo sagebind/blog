@@ -1,37 +1,40 @@
-workflow "Main" {
+workflow "main" {
   on = "push"
-  resolves = ["Deploy to swarm"]
+  resolves = ["deploy"]
 }
 
-action "Build image" {
+action "build" {
   uses = "actions/docker/cli@76ff57a"
   args = "build -t sagebind/blog ."
 }
 
-action "Master" {
-  needs = ["Build image"]
+action "master" {
   uses = "actions/bin/filter@b2bea07"
   args = "branch master"
 }
 
-action "Registry login" {
-  needs = ["Master"]
+action "registry-login" {
+  needs = ["build", "master"]
   uses = "actions/docker/login@76ff57a"
   secrets = ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
 }
 
-action "Push image" {
-  needs = ["Registry login"]
+action "push-image" {
+  needs = ["build", "registry-login"]
   uses = "actions/docker/cli@76ff57a"
   args = "push sagebind/blog"
 }
 
-action "Deploy to swarm" {
-  uses = "sagebind/docker-swarm-deploy-action@master"
-  needs = ["Push image"]
-  env = {
-    DOCKER_REMOTE_HOST = "ssh://root@45.55.121.98"
-  }
-  secrets = ["DOCKER_SSH_PRIVATE_KEY", "DOCKER_SSH_PUBLIC_KEY"]
-  args = "stack deploy --with-registry-auth --prune --compose-file deploy/prod.yaml stephencoakley"
+action "kubeconfig" {
+  needs = ["master"]
+  uses = "digitalocean/action-doctl@master"
+  secrets = ["DIGITALOCEAN_ACCESS_TOKEN"]
+  args = ["kubernetes cluster kubeconfig show nyc1 > $HOME/.kubeconfig"]
+}
+
+action "deploy" {
+  needs = ["kubeconfig", "push-image"]
+  uses = "docker://lachlanevenson/k8s-kubectl"
+  runs = "sh -l -c"
+  args = ["kubectl --kubeconfig=$HOME/.kubeconfig apply -f $GITHUB_WORKSPACE/config/deployment.yml"]
 }

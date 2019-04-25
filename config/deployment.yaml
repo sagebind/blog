@@ -1,0 +1,184 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: stephencoakley-blog
+  labels:
+    k8s-app: stephencoakley-blog
+spec:
+  selector:
+    matchLabels:
+      k8s-app: stephencoakley-blog
+  template:
+    metadata:
+      labels:
+        k8s-app: stephencoakley-blog
+    spec:
+      containers:
+        - name: blog
+          image: sagebind/blog
+          imagePullPolicy: "Always"
+          ports:
+            - name: http
+              containerPort: 80
+          resources:
+            limits:
+              memory: 256M
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: stephencoakley-blog
+  labels:
+    k8s-app: stephencoakley-blog
+spec:
+  selector:
+    k8s-app: stephencoakley-blog
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+
+---
+
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: stephencoakley-blog
+  labels:
+    k8s-app: stephencoakley-blog
+spec:
+  rules:
+    - host: stephencoakley.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: stephencoakley-blog
+              servicePort: http
+    - host: www.stephencoakley.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: stephencoakley-blog
+              servicePort: http
+
+---
+
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: stephencoakley-comments
+  labels:
+    k8s-app: stephencoakley-comments
+data:
+  isso.conf: |
+    [general]
+    dbpath = /db/comments.db
+    host = https://stephencoakley.com/
+           http://localhost:5000/
+
+    [guard]
+    enabled = true
+    ratelimit = 2
+    direct-reply = 3
+    reply-to-self = false
+    require-author = true
+
+    [server]
+    listen = http://0.0.0.0:80/
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: stephencoakley-comments
+spec:
+  storageClassName: do-block-storage-retain
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: stephencoakley-comments
+  labels:
+    k8s-app: stephencoakley-comments
+spec:
+  selector:
+    matchLabels:
+      k8s-app: stephencoakley-comments
+  template:
+    metadata:
+      labels:
+        k8s-app: stephencoakley-comments
+    spec:
+      containers:
+        - name: isso
+          image: wonderfall/isso
+          env:
+            - name: UID
+              value: "0"
+            - name: GID
+              value: "0"
+          ports:
+            - name: http
+              containerPort: 80
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: data
+              mountPath: /db
+          resources:
+            limits:
+              memory: 256M
+
+      volumes:
+        - name: config
+          configMap:
+            name: stephencoakley-comments
+        - name: data
+          persistentVolumeClaim:
+            claimName: stephencoakley-comments
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: stephencoakley-comments
+  labels:
+    k8s-app: stephencoakley-comments
+spec:
+  selector:
+    k8s-app: stephencoakley-comments
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+
+---
+
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: stephencoakley-comments
+  labels:
+    k8s-app: stephencoakley-comments
+spec:
+  rules:
+    - host: comments.stephencoakley.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: stephencoakley-comments
+              servicePort: http
