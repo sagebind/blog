@@ -36,5 +36,5 @@ action "deploy" {
   needs = ["kubeconfig", "push-image"]
   uses = "docker://lachlanevenson/k8s-kubectl"
   runs = "sh -l -c"
-  args = ["kubectl --kubeconfig=$HOME/.kubeconfig apply -f $GITHUB_WORKSPACE/config/deployment.yml"]
+  args = ["kubectl --kubeconfig=$HOME/.kubeconfig apply -f $GITHUB_WORKSPACE/config/deployment.yaml"]
 }
