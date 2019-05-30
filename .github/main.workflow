@@ -9,18 +9,19 @@ action "build" {
 }
 
 action "master" {
+  needs = ["build"]
   uses = "actions/bin/filter@b2bea07"
   args = "branch master"
 }
 
 action "registry-login" {
-  needs = ["build", "master"]
+  needs = ["master"]
   uses = "actions/docker/login@76ff57a"
   secrets = ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
 }
 
 action "push-image" {
-  needs = ["build", "registry-login"]
+  needs = ["registry-login"]
   uses = "actions/docker/cli@76ff57a"
   args = "push sagebind/blog"
 }
