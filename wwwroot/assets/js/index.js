@@ -12,7 +12,9 @@ document.querySelectorAll("pre > code.language-mermaid").forEach(function (code)
 
     mermaid.render(container.id, code.textContent, function (svg) {
         container.innerHTML = svg;
-        code.parentElement.parentElement.replaceChild(container, code.parentElement);
+        if (code.parentElement.parentElement) {
+            code.parentElement.parentElement.replaceChild(container, code.parentElement);
+        }
     });
 });
 
