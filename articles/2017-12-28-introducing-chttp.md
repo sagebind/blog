@@ -2,7 +2,7 @@
 title = "Introducing cHTTP; or, Why Pure Rust Is Not A Worthy Goal"
 author = "Stephen Coakley"
 date = "2017-12-28"
-tags = ["rust"]
+tags = ["rust", "chttp"]
 +++
 
 Friends, today I have two messages to share with you. The first is to introduce to you a new library for the Rust language that I have poured some of my tea-powered energy into, so that you may be informed of its purpose and design. The second is much more significant; that is, to discuss an attitude I have observed _in general_ amongst the Rust community.

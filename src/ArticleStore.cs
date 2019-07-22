@@ -15,7 +15,7 @@ namespace Blog
     public class ArticleStore
     {
         private static readonly Assembly assembly = Assembly.GetEntryAssembly();
-        private static readonly Regex slugRegex = new Regex(@"^(\d{4})-(\d{2})-(\d{2})-");
+        private static readonly Regex slugRegex = new Regex(@"^blog\.articles\.(\d{4})-(\d{2})-(\d{2})-(.+)\.md$");
 
         private IMemoryCache articleCache;
         private MarkdownPipeline markdownPipeline;
@@ -73,7 +73,7 @@ namespace Blog
                     metadata = Toml.ReadString(frontMatter);
                 }
 
-                string slug = slugRegex.Replace(name.Split(".").TakeLast(2).First(), "$1/$2/$3/");
+                string slug = slugRegex.Replace(name, "$1/$2/$3/$4");
 
                 article = new Article
                 {
