@@ -1,11 +1,11 @@
 workflow "main" {
   on = "push"
-  resolves = ["deploy"]
+  resolves = ["build", "deploy"]
 }
 
 action "build" {
-  uses = "actions/docker/cli@76ff57a"
-  args = "build -t sagebind/blog ."
+  uses = "actions/docker/cli@master"
+  args = "build -t docker.pkg.github.com/sagebind/blog/app:$GITHUB_SHA ."
 }
 
 action "master" {
@@ -15,15 +15,22 @@ action "master" {
 }
 
 action "registry-login" {
-  needs = ["master"]
   uses = "actions/docker/login@76ff57a"
+  env = {
+    DOCKER_REGISTRY_URL = "docker.pkg.github.com"
+  }
   secrets = ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
 }
 
 action "push-image" {
-  needs = ["registry-login"]
-  uses = "actions/docker/cli@76ff57a"
-  args = "push sagebind/blog"
+  needs = ["build", "registry-login"]
+  uses = "actions/docker/cli@master"
+  args = "push docker.pkg.github.com/sagebind/blog/app:$GITHUB_SHA"
+}
+
+action "deployment-config" {
+  uses = "actions/bin/sh@master"
+  args = ["sed -i s/:latest/:$GITHUB_SHA/ $GITHUB_WORKSPACE/config/deployment.yaml"]
 }
 
 action "kubeconfig" {
@@ -34,7 +41,7 @@ action "kubeconfig" {
 }
 
 action "deploy" {
-  needs = ["kubeconfig", "push-image"]
+  needs = ["kubeconfig", "push-image", "deployment-config"]
   uses = "docker://lachlanevenson/k8s-kubectl"
   runs = "sh -l -c"
   args = ["kubectl --kubeconfig=$HOME/.kubeconfig apply -f $GITHUB_WORKSPACE/config/deployment.yaml"]

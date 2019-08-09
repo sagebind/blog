@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: blog
-          image: sagebind/blog
+          image: docker.pkg.github.com/sagebind/blog/app:latest
           imagePullPolicy: "Always"
           ports:
             - name: http
