@@ -7,22 +7,21 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - run: docker-compose build
-        env:
-          TAG: ${{ github.sha }}
+      - run: |
+          export TAG=${GITHUB_SHA:0:8}
+          docker-compose build
 
-      - run: echo "$DOCKER_PASSWORD" | docker login docker.pkg.github.com -u "$DOCKER_USERNAME" --password-stdin
+      - run: |
+          export TAG=${GITHUB_SHA:0:8}
+
+          echo "$DOCKER_PASSWORD" | docker login docker.pkg.github.com -u "$DOCKER_USERNAME" --password-stdin
+          docker-compose push
         if: github.ref == 'refs/heads/master'
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
-      - run: docker-compose push
-        if: github.ref == 'refs/heads/master'
-        env:
-          TAG: ${{ github.sha }}
-
-      - run: sed -i s/:latest/:$GITHUB_SHA/ $GITHUB_WORKSPACE/config/deployment.yaml
+      - run: sed -i s/:latest/:${GITHUB_SHA:0:8}/ $GITHUB_WORKSPACE/config/deployment.yaml
         if: github.ref == 'refs/heads/master'
 
       - uses: digitalocean/action-doctl@master
