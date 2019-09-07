@@ -31,6 +31,8 @@ jobs:
         with:
           args: kubernetes cluster kubeconfig save nyc1 -c $HOME/.kube/config
 
+      - run: chmod a+r $HOME/.kube/config
+
       - uses: docker://bitnami/kubectl
         if: github.ref == 'refs/heads/master'
         with:
