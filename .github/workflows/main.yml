@@ -29,11 +29,12 @@ jobs:
         env:
           DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
         with:
-          args: kubernetes cluster kubeconfig save nyc1 -c $HOME/.kube/config
+          args: kubernetes cluster kubeconfig save nyc1 -c $GITHUB_WORKSPACE/.kubeconfig
 
-      - run: chmod a+r $HOME/.kube/config
+      - run: chmod a+r $GITHUB_WORKSPACE/.kubeconfig
+        if: github.ref == 'refs/heads/master'
 
       - uses: docker://bitnami/kubectl
         if: github.ref == 'refs/heads/master'
         with:
-          args: apply -f $GITHUB_WORKSPACE/config/deployment.yaml
+          args: --kubeconfig $GITHUB_WORKSPACE/.kubeconfig apply -f $GITHUB_WORKSPACE/config/deployment.yaml
