@@ -34,7 +34,7 @@ jobs:
       - uses: actions/bin/sh@master
         if: github.ref == 'refs/heads/master'
         with:
-          args: "chmod a+r $GITHUB_WORKSPACE/.kubeconfig"
+          args: '"chmod a+r $GITHUB_WORKSPACE/.kubeconfig"'
 
       - uses: docker://bitnami/kubectl
         if: github.ref == 'refs/heads/master'
