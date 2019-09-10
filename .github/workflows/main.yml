@@ -31,8 +31,10 @@ jobs:
         with:
           args: kubernetes cluster kubeconfig show nyc1 > $GITHUB_WORKSPACE/.kubeconfig
 
-      - run: chmod a+r $GITHUB_WORKSPACE/.kubeconfig
+      - uses: actions/bin/sh@master
         if: github.ref == 'refs/heads/master'
+        with:
+          args: chmod a+r $GITHUB_WORKSPACE/.kubeconfig
 
       - uses: docker://bitnami/kubectl
         if: github.ref == 'refs/heads/master'
