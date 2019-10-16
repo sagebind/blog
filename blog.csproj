@@ -4,7 +4,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="4.9.2" />
+    <PackageReference Include="Autofac" Version="4.9.4" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.4.0" />
     <PackageReference Include="LibSassHost" Version="1.2.7" />
     <PackageReference Include="LibSassHost.Native.linux-x64" Version="1.2.7" Condition="$([MSBuild]::IsOsPlatform('linux'))" />
