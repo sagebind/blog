@@ -1,0 +1,149 @@
+body {
+    line-height: 1.625;
+    color: $color-light-gray;
+}
+
+main {
+    font-size: 1.25rem;
+
+    @media (max-width: 640px) {
+        font-size: 1rem;
+    }
+}
+
+blockquote, .copyright {
+    font-style: italic;
+}
+
+h1 {
+    margin: 1.5rem 0;
+    font-size: 2rem;
+    font-weight: bold;
+    line-height: 1.25;
+    // color: $color-amber;
+    // text-shadow:
+    //     -1px 1px 0 $color-amber-dark,
+    //     -2px 2px 0 $color-amber-dark,
+    //     -3px 3px 0 $color-amber-dark;
+    color: $color-pink;
+    text-shadow:
+        1px 1px 0 $color-purple,
+        2px 2px 0 $color-purple,
+        3px 3px 0 $color-purple;
+    // text-shadow: 0 0 0.25rem currentColor;
+
+    @media (max-width: 480px) {
+        font-size: 2rem;
+    }
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+blockquote {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 1rem;
+    border-left: 4px solid black;
+    color: darken($color-light-gray, 20%);
+}
+
+hr {
+    border: 2px solid black;
+}
+
+a {
+    @include transition;
+
+    cursor: pointer;
+    color: $color-amber;
+    text-decoration: none;
+    // border-bottom: 2px solid transparent;
+
+    &:hover {
+        text-shadow: 0 0 1rem fade-out($color-amber, 0.75);
+        // border-bottom-color: currentColor;
+        text-decoration: underline;
+    }
+}
+
+mark {
+    background: lighten($color-blue, 5%);
+}
+
+ins {
+    background-color: #ff9;
+    text-decoration: none;
+}
+
+mark {
+    background-color: #ff9;
+    font-style: italic;
+    font-weight: bold;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+    border-bottom: 1px dotted;
+    cursor: help;
+}
+
+.postmeta {
+    margin: 0;
+    font-size: 0.75em;
+}
+
+.center {
+    text-align: center;
+}
+
+.tag {
+    display: inline-block;
+    margin-left: 0.25em;
+}
+
+code, .tag {
+    padding: 0.125em 0.5em;
+    border-radius: 0.125em;
+    background-color: $color-darken;
+}
+
+code {
+    font-size: 0.75em;
+}
+
+pre > code {
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+img {
+    max-width: 100%;
+}
+
+svg {
+    fill: currentColor;
+    transition: all 0.2s ease;
+}
+
+.icon {
+    color: inherit;
+    text-decoration: none;
+    border: none;
+
+    svg {
+        width: 2.5rem;
+        height: 2.5rem;
+        padding: 0.25rem 0.5rem;
+    }
+
+    opacity: 0.5;
+
+    &:hover {
+        opacity: 1;
+    }
+}

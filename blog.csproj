@@ -6,6 +6,9 @@
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.2" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.4.0" />
+    <PackageReference Include="LibSassHost" Version="1.2.7" />
+    <PackageReference Include="LibSassHost.Native.linux-x64" Version="1.2.7" Condition="$([MSBuild]::IsOsPlatform('linux'))" />
+    <PackageReference Include="LibSassHost.Native.osx-x64" Version="1.2.7" Condition="$([MSBuild]::IsOsPlatform('osx'))" />
     <PackageReference Include="Markdig" Version="0.17.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" />
     <PackageReference Include="Nett" Version="0.13.0" />

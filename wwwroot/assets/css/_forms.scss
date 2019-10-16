@@ -1,0 +1,48 @@
+%control {
+    @include transition;
+
+    padding: 0.125em 1em;
+    border-radius: 1em;
+    border-style: solid;
+    font-family: inherit;
+}
+
+button, input[type="button"], input[type="submit"], input[type="reset"], .button {
+    @extend %control;
+
+    background: $color-purple;
+    background: linear-gradient(
+        150deg,
+        $color-pink,
+        $color-purple
+    );
+
+    border-width: 0;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    color: $color-black;
+
+    box-shadow: 0 0 2rem fade-out($color-purple, 0.75);
+
+    &:hover {
+        box-shadow: 0 0 2rem fade-out($color-pink, 0.25);
+        z-index: 2;
+    }
+}
+
+input[type="text"], input[type="email"], input[type="search"], textarea, [contenteditable] {
+    @extend %control;
+
+    max-width: 100%;
+    color: inherit;
+    background-color: $color-darken;
+    border-width: 0.1em;
+    border-color: black;
+
+    &::placeholder, &.placeholder {
+        opacity: 1;
+        color: fade-out($color-light-gray, 0.5);
+    }
+}
