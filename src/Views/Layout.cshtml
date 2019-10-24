@@ -1,3 +1,4 @@
+@using System.Reflection
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -13,6 +14,7 @@
         <meta name="description" content="I'm a software developer based in Wisconsin">
         <meta name="keywords" content="Stephen Coakley, programming, web development, apps, php">
         <meta name="author" content="Stephen Coakley">
+        <meta property="version" content="@(Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion)">
         <link href="/feed" type="application/atom+xml" rel="alternate" title="Blog Feed">
 
         <link rel="icon" type="image/png" href="/assets/images/favicon.128.png" sizes="128x128">
