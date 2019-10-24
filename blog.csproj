@@ -21,7 +21,7 @@
 
     <Target Name="Version" DependsOnTargets="GitVersion" BeforeTargets="CoreCompile">
         <PropertyGroup>
-            <InformationalVersion>$(GitSha)</InformationalVersion>
+            <InformationalVersion>$(GitTag)</InformationalVersion>
         </PropertyGroup>
         <Message Text="Project version: $(InformationalVersion)" Importance="high" />
     </Target>
