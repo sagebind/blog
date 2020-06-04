@@ -8,6 +8,7 @@ spec:
   selector:
     matchLabels:
       k8s-app: stephencoakley-blog
+  revisionHistoryLimit: 1
   template:
     metadata:
       labels:
