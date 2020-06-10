@@ -54,7 +54,9 @@ Both of these methods improved performance by removing wasteful steps, like spaw
 
 Now surprisingly, this doesn't really matter at all most of the time, because believe it or not, PHP is fast. Much faster than it has any business being, considering the nature of the language being interpreted. One of the big parts of PHP 7 was a huge refactoring of the internal Zend engine that delivered a significant performance increase of the core language. It [usually outperforms](https://benchmarksgame-team.pages.debian.net/benchmarksgame/fastest/php-python3.html) languages like Python and Ruby. When PHP 7 was first released, it even outperformed Node.js in some benchmarks, though since then Node.js passed PHP with all the constant optimizations Google does on the V8 engine.
 
-To further improve overall performance, PHP offers persistent database connections that live across requests, which connecting to a database is 99% of the time the slow part of a script. There's also interesting projects like [Amp] which take advantage of PHP's core interpreter performance by eliminating the middleman and running a web server directly in your PHP application, similar to the Node.js model, which performs surprisingly well.
+To further improve overall performance, PHP offers persistent database connections that live across requests, which connecting to a database is 99% of the time the slow part of a script. And to avoid parsing scripts repeatedly, PHP ships with an opcache that caches the "compiled" opcode of each script so it can be run directly on subsequent requests.
+
+There's also interesting projects like [Amp] which take advantage of PHP's core interpreter performance by eliminating the middleman and running a web server directly in your PHP application, similar to the Node.js model, which performs surprisingly well.
 
 Python and Ruby aren't exactly the fastest kids on the block by any means, but they're not usually disdained because of it, so if Python's performance doesn't bother you, then PHP's certainly shouldn't.
 
