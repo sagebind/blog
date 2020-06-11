@@ -5,7 +5,7 @@ date = "2020-06-10"
 tags = ["php"]
 +++
 
-PHP just recently celebrated its 25th anniversary since it was first introduced, which is quite the achievement, considering it still powers a large slice of the Internet today. I don't write much PHP anymore myself as I've more or less moved on to new and different things, but I am incredibly grateful to PHP. It was one of the first "real" programming languages I really invested in to learn programming, and learn I did. I built real things, real websites with it, and also was involved in the community for a while. I saw the rise of [Composer](https://getcomposer.org/) and [Packagist](https://packagist.org/) replace the aging PEAR. I saw the release of PHP 7 and all the work that went into it the years prior leading up to it.
+[PHP] just recently celebrated its 25th anniversary since it was first introduced, which is quite the achievement, considering it still powers a large slice of the Internet today. I don't write much PHP anymore myself as I've more or less moved on to new and different things, but I am incredibly grateful to PHP. It was one of the first "real" programming languages I really invested in to learn programming, and learn I did. I built real things, real websites with it, and also was involved in the community for a while. I saw the rise of [Composer](https://getcomposer.org/) and [Packagist](https://packagist.org/) replace the aging PEAR. I saw the release of PHP 7 and all the work that went into it the years prior leading up to it.
 
 Now as expected whenever talking about PHP on the Internet, people are quick to grab their pitchforks and rehash the same classic criticisms of PHP over and over like a mantra. Is it to feel superior? Do they think they're doing a public service? I don't know. What I _do_ know is that they're right to some extent; PHP isn't the best-designed language by any means, largely because it changed organically and incrementally over time. It certainly hasn't stopped PHP from becoming as popular as it has.
 
@@ -25,18 +25,18 @@ This complaint doesn't really make much sense to me. PHP's syntax is very heavil
 
 Granted, sigils probably remind you of Perl, but don't worry, they don't have crazy effects on data types like in Perl. Just think of it as part of the variable name and you'll be fine.
 
-There are a few PHP-specific oddities in its syntax, like `@` and using `\` as a namespace separator, but these seem like really petty nitpicks to me.
+There are a few PHP-specific oddities in its syntax, like the `@` operator and using `\` as a namespace separator, but these seem like really petty nitpicks to me.
 
 ## It isn't modular!
 
-This sort of complaint is really nebulous, and could stand to have some clarifying questions asked. Usually one means one of two things:
+This sort of complaint is really nebulous, and could stand to have some clarifying questions asked. Usually people mean one of two things:
 
-- Everything is in a global namespace with no modular separation.
-- There is no modular way of packaging code.
+1. Everything is in a global namespace with no modular separation.
+2. There is no modular way of packaging code.
 
 Now both of these are just blatantly false. The first one is easy: PHP has [namespaces], like Java, C#, or what-have-you. And they were added to the language in version 5.3, which was released in 2009! Now to be fair, there still exists a lot of codebases that were initially designed before then (like WordPress) that don't leverage namespaces everywhere because of this, and this includes the standard library itself. But generally namespaces have been adopted for some time, and any modern PHP codebase uses them well.
 
-The second complaint is also false, but has a seed of truth in it. Today, PHP has the aforementioned [Packagist], with tons of reusable, modular packages. Its pretty easy to publish your own too! But before Packagist and Composer was [PEAR], which admittedly was frustrating to use probably _did_ steer people clear of making or using third-party components. So this complaint probably would nail home in 2012, but today its just really misinformed.
+The second complaint is also false, but has a seed of truth in it. Today, PHP has the aforementioned [Packagist], with tons of reusable, modular packages. Its pretty easy to publish your own too! But before Packagist and Composer was [PEAR], which admittedly was frustrating to use and probably _did_ steer people clear of making or using third-party components. So this complaint probably would have nailed home in 2012, but today its just really misinformed.
 
 As an aside, I want to mention that Composer not only exists, but is simply a well-designed package manager that is pleasant to use. It makes way more sense than the defacto package managers for most languages I've used; the only one I've used that I think I like better is [Cargo].
 
@@ -46,11 +46,11 @@ This is a deep-rooted one that is probably based on a kernel of truth. Originall
 
 Now CGI _is_ pretty darn slow, because it spawns a whole new process for every single request! It wasn't much of a problem though when it was first introduced, and honestly I kinda miss the simplicity and portability of CGI. I think the modern IPC equivalent might be using JSON-RPC over standard pipes, which is a pretty cool technique. Anyway, back to the subject of performance.
 
-To fix the slowness of CGI, one approach that was taken and became immensely popular was to integrate PHP into the web server being used in such a way that allowed you to keep one or more PHP interpreter instances initialized at all times for running scripts, which means you don't need to spawn a new process or initialize an interpreter for each request. Apache HTTP Server is very popular for its `mod_php` module that does this.
+To fix the slowness of CGI, one approach that was taken and became immensely popular was to integrate PHP into the web server in such a way that allowed you to keep one or more PHP interpreter instances initialized at all times for running scripts, which means you don't need to spawn a new process or initialize an interpreter for each request. [Apache HTTP Server] is very popular for the `mod_php` module that does this.
 
-Another approach is to use something called [FastCGI], a fast binary protocol that allows a web server to communicate with a daemonized application to serve requests. This approach is almost on-par with the common modern solution of making the application _be_ the web server (which is also possible with PHP by the way) and is also a popular way of deploying PHP.
+Another approach is to use something called [FastCGI], whose only relation to CGI is its purpose of integrating applications and web servers. Instead of subprocesses, FastCGI is a fast binary protocol that allows a web server to communicate with a daemonized application to serve requests. This approach is almost on-par with the common modern solution of making the application _be_ the web server (which is also possible with PHP by the way) and is also a popular way of deploying PHP via [php-fpm].
 
-Both of these methods improved performance by removing wasteful steps, like spawning new processes and initializing PHP every request. Needless to say, plain CGI has been mostly abandoned for these alternatives. But not is fixed by this, because in both these models, PHP _scripts_ are still short-lived. Any variables you create or resources you open during a request are cleaned up at the end of the request, which for non-trivial code means a lot of duplicated work each request. This again is a cause of slowness, especially for large frameworks.
+Both of these methods improved performance by removing wasteful steps, like spawning new processes and initializing PHP every request. Needless to say, plain CGI has been mostly abandoned for these alternatives. But not everything is fixed by this, because in both these models, PHP _scripts_ are still short-lived. Any variables you create or resources you open during a request are cleaned up at the end of the request, which for non-trivial code means a lot of duplicated work each request. This again is a cause of slowness, especially for large frameworks.
 
 Now surprisingly, this doesn't really matter at all most of the time, because believe it or not, PHP is fast. Much faster than it has any business being, considering the nature of the language being interpreted. One of the big parts of PHP 7 was a huge refactoring of the internal Zend engine that delivered a significant performance increase of the core language. It [usually outperforms](https://benchmarksgame-team.pages.debian.net/benchmarksgame/fastest/php-python3.html) languages like Python and Ruby. When PHP 7 was first released, it even outperformed Node.js in some benchmarks, though since then Node.js passed PHP with all the constant optimizations Google does on the V8 engine.
 
@@ -68,6 +68,7 @@ If you'd like to shout at me about how wrong I am though, go ahead in the commen
 
 
 [Amp]: https://amphp.org/
+[Apache HTTP Server]: https://httpd.apache.org/
 [Cargo]: https://doc.rust-lang.org/cargo/
 [Common Gateway Interface]: https://en.wikipedia.org/wiki/Common_Gateway_Interface
 [Composer]: https://getcomposer.org/
@@ -75,3 +76,5 @@ If you'd like to shout at me about how wrong I am though, go ahead in the commen
 [namespaces]: https://www.php.net/manual/en/language.namespaces.php
 [Packagist]: https://packagist.org/
 [PEAR]: https://pear.php.net/
+[PHP]: https://www.php.net/
+[php-fpm]: https://www.php.net/manual/en/install.fpm.php
