@@ -1,0 +1,4 @@
+@using Humanizer
+@model System.DateTime
+
+<time datetime="@Model.ToString("o")" class="date">@Model.Humanize()</time>

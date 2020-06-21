@@ -4,7 +4,7 @@
     <h2><a href="/@Model.Slug">@Model.Title</a></h2>
 
     <small>
-        <time datetime="@Model.Date.ToString("o")">@Model.Date.ToString("D")</time>
+        @await Html.PartialAsync("DateTimeLabel", Model.Date)
         <span class="tags">
             @foreach (var tag in Model.Tags)
             {

@@ -8,7 +8,7 @@
     <h1>@Model.Title</h1>
 
     <p class="postmeta">
-        <time datetime="@Model.Date.ToString("o")" class="date">@Model.Date</time>
+        @await Html.PartialAsync("DateTimeLabel", Model.Date)
         <span class="author-by"> by </span>
         <span class="author"><a href="/about">@Model.Author</a></span>
 
