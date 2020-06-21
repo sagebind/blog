@@ -20,7 +20,7 @@
 
     <Target Name="Version" DependsOnTargets="GitVersion" BeforeTargets="CoreCompile">
         <PropertyGroup>
-            <InformationalVersion>$(GitTag)</InformationalVersion>
+            <InformationalVersion>g$(GitCommit)</InformationalVersion>
         </PropertyGroup>
         <Message Text="Project version: $(InformationalVersion)" Importance="high" />
     </Target>
