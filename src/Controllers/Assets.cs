@@ -10,12 +10,12 @@ namespace Blog.Controllers
     [Route("/assets")]
     public class Assets : Controller
     {
-        private readonly IHostingEnvironment hostingEnvironment;
+        private readonly IWebHostEnvironment webHostEnvironment;
         private readonly IMemoryCache cache;
 
-        public Assets(IHostingEnvironment hostingEnvironment, IMemoryCache cache)
+        public Assets(IWebHostEnvironment webHostEnvironment, IMemoryCache cache)
         {
-            this.hostingEnvironment = hostingEnvironment;
+            this.webHostEnvironment = webHostEnvironment;
             this.cache = cache;
         }
 
@@ -29,7 +29,7 @@ namespace Blog.Controllers
 
         private Task<CompilationResult> CompileSass()
         {
-            string stylesDir = Path.Combine(hostingEnvironment.WebRootPath, "assets/css");
+            string stylesDir = Path.Combine(webHostEnvironment.WebRootPath, "assets/css");
             string fullPath = Path.Combine(stylesDir, "style.scss");
 
             return cache.GetOrCreateAsync<CompilationResult>(fullPath, async entry =>

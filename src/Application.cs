@@ -1,16 +1,12 @@
-﻿using System;
-using System.Reflection;
-using Autofac;
+﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Markdig;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Hosting;
 
 namespace Blog
 {
@@ -59,17 +55,16 @@ namespace Blog
 
     public class Startup
     {
-        private readonly IHostingEnvironment hostingEnvironment;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IWebHostEnvironment webHostEnvironment)
         {
-            this.hostingEnvironment = env;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddRazorOptions(options =>
                 {
                     options.ViewLocationFormats.Add("/src/Views/{0}.cshtml");
@@ -80,7 +75,7 @@ namespace Blog
         {
             builder.RegisterModule<Application>();
 
-            if (hostingEnvironment.IsDevelopment())
+            if (webHostEnvironment.IsDevelopment())
             {
                 builder.RegisterModule<DevelopmentModule>();
             }
@@ -90,9 +85,9 @@ namespace Blog
             }
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
+            if (webHostEnvironment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -104,7 +99,11 @@ namespace Blog
             app.UseStatusCodePagesWithReExecute("/error/{0}");
             app.UseDefaultFiles();
             app.UseStaticFiles();
-            app.UseMvc();
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints => {
+                endpoints.MapControllers();
+            });
         }
     }
 }
