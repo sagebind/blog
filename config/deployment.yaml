@@ -1,5 +1,5 @@
+apiVersion: apps/v1
 kind: Deployment
-apiVersion: extensions/v1beta1
 metadata:
   name: stephencoakley-blog
   labels:
@@ -27,8 +27,8 @@ spec:
 
 ---
 
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
   name: stephencoakley-blog
   labels:
@@ -43,8 +43,8 @@ spec:
 
 ---
 
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
-apiVersion: extensions/v1beta1
 metadata:
   name: stephencoakley-blog
   labels:
@@ -65,11 +65,13 @@ spec:
             backend:
               serviceName: stephencoakley-blog
               servicePort: http
+  tls:
+    - secretName: stephencoakley-tls
 
 ---
 
-kind: ConfigMap
 apiVersion: v1
+kind: ConfigMap
 metadata:
   name: stephencoakley-comments
   labels:
@@ -95,8 +97,8 @@ data:
 
 ---
 
-kind: PersistentVolumeClaim
 apiVersion: v1
+kind: PersistentVolumeClaim
 metadata:
   name: stephencoakley-comments
 spec:
@@ -109,8 +111,8 @@ spec:
 
 ---
 
+apiVersion: apps/v1
 kind: Deployment
-apiVersion: extensions/v1beta1
 metadata:
   name: stephencoakley-comments
   labels:
@@ -154,8 +156,8 @@ spec:
 
 ---
 
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
   name: stephencoakley-comments
   labels:
@@ -170,8 +172,8 @@ spec:
 
 ---
 
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
-apiVersion: extensions/v1beta1
 metadata:
   name: stephencoakley-comments
   labels:
@@ -185,3 +187,5 @@ spec:
             backend:
               serviceName: stephencoakley-comments
               servicePort: http
+  tls:
+    - secretName: stephencoakley-tls
