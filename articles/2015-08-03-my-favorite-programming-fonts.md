@@ -46,7 +46,7 @@ A modern remake of Courier, Courier Prime is a set of fonts that re-imagine the 
 Supports a wide Unicode range and has an italic variant. The Courier Prime fonts are completely free under the [SIL Open Font License (OFL)](http://scripts.sil.org/OFL).
 
 ## [Monoid](http://larsenwork.com/monoid/)
-If you like really sharp fonts that work well under 9pt, then Monoid is an excellent choice. It is [open source](https://github.com/larsenwork/monoid), supports ligatures, Powerline symbols, and has several styles and settings that [can be tweaked when when downloading](http://larsenwork.com/monoid/#settings).
+If you like really sharp fonts that work well under 9pt, then Monoid is an excellent choice. It is [open source](https://github.com/larsenwork/monoid), supports ligatures, Powerline symbols, and has several styles and settings that [can be tweaked when downloading](http://larsenwork.com/monoid/#settings).
 
 ![Monoid](/content/images/2015-08-03-monoid.png)
 
