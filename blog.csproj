@@ -19,6 +19,15 @@
         <EmbeddedResource Include="articles/*.md" />
     </ItemGroup>
 
+    <Target Name="CompileSass" BeforeTargets="Build">
+        <MakeDir Directories="$(ProjectDir)/wwwroot/css" />
+        <Exec WorkingDirectory="$(ProjectDir)" Command="sassc --style compressed scss/main.scss wwwroot/css/main.css" />
+    </Target>
+
+    <ItemGroup>
+        <Watch Include="scss/**/*.scss" />
+    </ItemGroup>
+
     <Target Name="Version" DependsOnTargets="GitVersion" BeforeTargets="CoreCompile">
         <PropertyGroup>
             <InformationalVersion>g$(GitCommit)</InformationalVersion>

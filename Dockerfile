@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine AS build
 WORKDIR /app
 COPY . /app/
-RUN apk --no-cache add git && \
+RUN apk --no-cache add git sassc && \
     dotnet restore && \
     dotnet publish -c Release -o out -r linux-musl-x64
 

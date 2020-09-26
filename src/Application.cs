@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System.Reflection;
+using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Markdig;
 using Microsoft.AspNetCore;
@@ -55,6 +56,8 @@ namespace Blog
 
     public class Startup
     {
+        public static string GitCommit => ThisAssembly.Git.Commit;
+
         private readonly IWebHostEnvironment webHostEnvironment;
 
         public Startup(IWebHostEnvironment webHostEnvironment)
