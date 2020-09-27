@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Autofac;
+﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Markdig;
 using Microsoft.AspNetCore;
@@ -25,6 +24,7 @@ namespace Blog
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<ArticleStore>().AsSelf();
+            builder.RegisterType<CommentStore>().AsSelf();
             builder.RegisterInstance(new MarkdownPipelineBuilder()
                 .UseAutoIdentifiers()
                 .UseAutoLinks()

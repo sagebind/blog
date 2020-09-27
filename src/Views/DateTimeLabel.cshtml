@@ -1,4 +1,4 @@
 @using Humanizer
 @model System.DateTime
 
-<time datetime="@Model.ToString("o")" class="date">@Model.Humanize()</time>
+<time datetime="@Model.ToString("o")" class="date" title="@Model.ToString("F")">@Model.Humanize()</time>

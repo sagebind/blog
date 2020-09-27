@@ -1,0 +1,43 @@
+@using Markdig
+
+@model Blog.Comment
+@inject Blog.CommentStore commentStore
+@inject MarkdownPipeline markdownPipeline
+
+<article class="comment" id="comment-@Model.Id">
+    <div class="avatar">
+        <img src="@Model.GravatarUri">
+    </div>
+
+    <div class="text-wrapper">
+        <span>
+            @if (string.IsNullOrWhiteSpace(Model.Website))
+            {
+                <span class="author">@Model.Author</span>
+            }
+            else
+            {
+                <a class="author" href="@Model.Website" rel="nofollow">@Model.Author</a>
+            }
+
+            &mdash;
+
+            <a class="comment-date" href="#comment-@Model.Id">
+                @await Html.PartialAsync("DateTimeLabel", Model.Published.UtcDateTime)
+            </a>
+        </span>
+
+        @Html.Raw(Markdown.ToHtml(Model.Text, markdownPipeline))
+
+        <div class="actions">
+            <a>Upvote</a>
+            <a>Downvote</a>
+            <a>Reply</a>
+        </div>
+
+        @await foreach (var childComment in commentStore.GetChildrenById(Model.Id))
+        {
+            @await Html.PartialAsync("Comment", childComment)
+        }
+    </div>
+</article>

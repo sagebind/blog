@@ -102,3 +102,43 @@
         display: none;
     }
 }
+
+#comments {
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+
+    .comment {
+        display: flex;
+        margin-top: 1rem;
+        clear: both;
+
+        .avatar {
+            flex-shrink: 0;
+            margin-right: 1rem;
+
+            img, svg {
+                width: 2em;
+                height: 2rem;
+                border-radius: 0.25em;
+
+                @media (min-width: $content-max-width) {
+                    width: 3em;
+                    height: 3rem;
+                }
+            }
+        }
+
+        .text-wrapper {
+            flex-grow: 1;
+
+            .author {
+                color: $color-amber;
+            }
+
+            .comment-date {
+                color: gray;
+            }
+        }
+    }
+}
