@@ -8,7 +8,7 @@
         <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
         <PackageReference Include="GitInfo" Version="2.1.2" />
         <PackageReference Include="Humanizer.Core" Version="2.8.26" />
-        <PackageReference Include="LibSassHost" Version="1.3.1" />
+        <PackageReference Include="LibSassHost" Version="1.3.2" />
         <PackageReference Include="LibSassHost.Native.linux-x64" Version="1.3.1" Condition="$([MSBuild]::IsOsPlatform('linux'))" />
         <PackageReference Include="LibSassHost.Native.osx-x64" Version="1.3.1" Condition="$([MSBuild]::IsOsPlatform('osx'))" />
         <PackageReference Include="Markdig" Version="0.22.0" />
