@@ -107,10 +107,39 @@
     margin: 0;
     padding: 0;
     font-size: 1rem;
+    line-height: 1.5;
+
+    .comment-form {
+        margin-top: 2rem;
+
+        & > div {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            margin-top: 1rem;
+
+            @media (min-width: $content-max-width) {
+                flex-direction: row;
+
+                & > :not(:first-child) {
+                    margin-left: 0.5rem;
+                }
+            }
+        }
+
+        .author-details input {
+            flex-grow: 1;
+        }
+
+        textarea {
+            display: block;
+            flex-grow: 1;
+        }
+    }
 
     .comment {
         display: flex;
-        margin-top: 1rem;
+        margin: 2rem 0 0 0;
         clear: both;
 
         .avatar {
@@ -123,8 +152,8 @@
                 border-radius: 0.25em;
 
                 @media (min-width: $content-max-width) {
-                    width: 3em;
-                    height: 3rem;
+                    width: 2.5em;
+                    height: 2.5rem;
                 }
             }
         }
@@ -134,10 +163,24 @@
 
             .author {
                 color: $color-amber;
+                font-weight: bold;
             }
 
             .comment-date {
                 color: gray;
+            }
+        }
+
+        .comment-actions {
+            display: flex;
+            color: gray;
+
+            & > * {
+                margin-right: 1rem;
+            }
+
+            a {
+                color: inherit;
             }
         }
     }

@@ -1,0 +1,24 @@
+@model CommentForm
+@inject CommentAuthorService commentAuthorService
+
+@{
+    var author = commentAuthorService.Get();
+}
+
+<form class="comment-form" method="POST" action="/@Model.ArticleSlug/comments" hx-post="/@Model.ArticleSlug/comments" hx-target="#comments" hx-swap="outerHTML">
+    @using (Html.BeginForm())
+    {
+        <div>
+            <textarea placeholder="Comment text (supports Markdown)"></textarea>
+        </div>
+        <div class="author-details">
+            <input type="text" name="author" placeholder="Name" value="@author?.Name">
+            <input type="email" name="email" placeholder="Email" value="@author?.Email">
+            <input type="text" name="website" placeholder="Website (optional)" value="@author?.Website">
+            <input type="hidden" name="parentCommentId" value="@Model.ParentCommentId">
+        </div>
+        <div>
+            <input type="submit" value="Submit">
+        </div>
+    }
+</form>

@@ -24,6 +24,7 @@ namespace Blog
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<ArticleStore>().AsSelf();
+            builder.RegisterType<CommentAuthorService>().AsSelf();
             builder.RegisterType<CommentStore>().AsSelf();
             builder.RegisterInstance(new MarkdownPipelineBuilder()
                 .UseAutoIdentifiers()
@@ -67,6 +68,7 @@ namespace Blog
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
             services.AddMvc()
                 .AddRazorOptions(options =>
                 {

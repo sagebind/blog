@@ -1,25 +1,21 @@
-@model Blog.Article
-@inject Blog.CommentStore commentStore
+@model Article
+@inject CommentStore commentStore
 
 <aside id="comments">
     <h2>Comments</h2>
 
     <p>Let me know what you think in the comments below. Remember to keep it civil!</p>
 
-    <form method="POST" action="/@Model.Slug/comments" hx-post="/@Model.Slug/comments" hx-target="#comments" hx-swap="outerHTML">
-        @using (Html.BeginForm())
-        {
-            <textarea placeholder="Comment text (supports Markdown)"></textarea>
-            <input type="text" name="author" placeholder="Name" value="">
-            <input type="email" name="email" placeholder="Email" value="">
-            <input type="text" name="website" placeholder="Website (optional)" value="">
-
-            <input type="submit" value="Submit">
-        }
-    </form>
+    @await Html.PartialAsync("CommentForm", new CommentForm
+    {
+        ArticleSlug = Model.Slug,
+    })
 
     @await foreach (var comment in commentStore.ForSlug(Model.Slug))
     {
-        @await Html.PartialAsync("Comment", comment)
+        @await Html.PartialAsync("Comment", new CommentView
+        {
+            Comment = comment,
+        })
     }
 </aside>

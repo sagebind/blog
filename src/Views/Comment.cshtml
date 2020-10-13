@@ -1,43 +1,87 @@
 @using Markdig
 
-@model Blog.Comment
-@inject Blog.CommentStore commentStore
+@model CommentView
+@inject CommentStore commentStore
 @inject MarkdownPipeline markdownPipeline
 
-<article class="comment" id="comment-@Model.Id">
+<article class="comment" id="comment-@Model.Comment.Id">
     <div class="avatar">
-        <img src="@Model.GravatarUri">
+        <img src="@Gravatar.ImageForEmail(Model.Comment.Author.Email)">
     </div>
 
     <div class="text-wrapper">
         <span>
-            @if (string.IsNullOrWhiteSpace(Model.Website))
+            @if (string.IsNullOrWhiteSpace(Model.Comment.Author.Website))
             {
-                <span class="author">@Model.Author</span>
+                <span class="author">@Model.Comment.Author.Name</span>
             }
             else
             {
-                <a class="author" href="@Model.Website" rel="nofollow">@Model.Author</a>
+                <a class="author" href="@Model.Comment.Author.Website" rel="nofollow">@Model.Comment.Author.Name</a>
             }
 
             &mdash;
 
-            <a class="comment-date" href="#comment-@Model.Id">
-                @await Html.PartialAsync("DateTimeLabel", Model.Published.UtcDateTime)
+            <a class="comment-date" href="#comment-@Model.Comment.Id">
+                @await Html.PartialAsync("DateTimeLabel", Model.Comment.Published.UtcDateTime)
             </a>
         </span>
 
-        @Html.Raw(Markdown.ToHtml(Model.Text, markdownPipeline))
+        @Html.Raw(Markdown.ToHtml(Model.Comment.Text, markdownPipeline))
 
-        <div class="actions">
-            <a>Upvote</a>
-            <a>Downvote</a>
-            <a>Reply</a>
+        <div class="comment-actions">
+            <span class="comment-votes">
+                <a title="Upvote"
+                    href="/@Model.Comment.ArticleSlug/comments/@Model.Comment.Id/upvote"
+                    hx-post="/@Model.Comment.ArticleSlug/comments/@Model.Comment.Id/upvote"
+                    hx-target="#comment-@Model.Comment.Id"
+                    hx-swap="outerHTML"
+                >@await Html.PartialAsync("FeatherIcon", "thumbs-up")</a>
+
+                @if (@Model.Comment.Score > 0)
+                {
+                    <span class="score">@Model.Comment.Score</span>
+                }
+
+                <a title="Downvote"
+                    href="/@Model.Comment.ArticleSlug/comments/@Model.Comment.Id/downvote"
+                    hx-post="/@Model.Comment.ArticleSlug/comments/@Model.Comment.Id/downvote"
+                    hx-target="#comment-@Model.Comment.Id"
+                    hx-swap="outerHTML"
+                >@await Html.PartialAsync("FeatherIcon", "thumbs-down")</a>
+            </span>
+
+            @if (Model.ShowReply)
+            {
+                <a hx-get="/@Model.Comment.ArticleSlug/comments/@Model.Comment.Id"
+                    hx-target="#comment-@Model.Comment.Id"
+                    hx-swap="outerHTML"
+                >Close</a>
+            }
+            else
+            {
+                <a hx-get="/@Model.Comment.ArticleSlug/comments/@Model.Comment.Id?showReply=true"
+                    hx-target="#comment-@Model.Comment.Id"
+                    hx-swap="outerHTML"
+                >Reply</a>
+            }
         </div>
 
-        @await foreach (var childComment in commentStore.GetChildrenById(Model.Id))
+        @if (Model.ShowReply)
         {
-            @await Html.PartialAsync("Comment", childComment)
+            @await Html.PartialAsync("CommentForm", new CommentForm
+            {
+                ArticleSlug = Model.Comment.ArticleSlug,
+                ParentCommentId = Model.Comment.Id,
+            })
+        }
+
+        @await foreach (var childComment in commentStore.GetChildrenById(Model.Comment.Id))
+        {
+            @await Html.PartialAsync("Comment", new CommentView
+            {
+                Comment = childComment,
+            })
         }
     </div>
 </article>

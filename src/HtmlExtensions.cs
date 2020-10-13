@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Blog
 {
-    public static class HtmxExtensions
+    public static class HtmlExtensions
     {
         public static bool IsHtmx(this HttpRequest request)
         {
