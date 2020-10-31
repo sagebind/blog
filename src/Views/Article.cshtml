@@ -3,6 +3,7 @@
     ViewData["Title"] = Model.Title;
 }
 @model Blog.Article
+@inject Blog.CommentStore commentStore
 
 <article>
     <h1>@Model.Title</h1>
@@ -34,14 +35,4 @@
     </div>
 </aside>
 
-<h2>Comments</h2>
-
-<script
-    data-isso="https://comments.stephencoakley.com/"
-    data-isso-css="false"
-    data-isso-require-author="true"
-    data-isso-require-email="true"
-    data-isso-avatar="false"
-    data-isso-gravatar="true"
-    src="https://comments.stephencoakley.com/js/embed.min.js"></script>
-<section id="isso-thread"></section>
+@await Html.PartialAsync("ArticleComments", Model)

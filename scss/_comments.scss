@@ -1,65 +1,40 @@
-// Adapted from https://github.com/posativ/isso/blob/master/isso/css/isso.css
-// with modifications.
-#isso-thread {
+#comments {
     margin: 0;
     padding: 0;
     font-size: 1rem;
+    line-height: 1.5;
 
-    #isso-root {
-        padding-top: 1rem;
-        clear: both;
-        // padding: 1rem;
-        // border-radius: 1rem;
+    .comment-form {
+        margin-top: 2rem;
 
-        // background: $color-darken;
-        // border: 0.1rem solid black;
-    }
-
-    & > h4 {
-        opacity: 0.5;
-    }
-
-    .isso-postbox {
-        margin-top: 1rem;
-
-        .textarea {
-            min-height: 4em;
-        }
-
-        .auth-section {
-            .input-wrapper > input {
-                display: block;
-                width: 100%;
-            }
-
-            .post-action {
-                float: right;
-                margin: 0 0 1rem 0.5rem;
-            }
+        & > div {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            margin-top: 1rem;
 
             @media (min-width: $content-max-width) {
-                .input-wrapper {
-                    display: inline-block;
-                    max-width: 11rem;
-                    margin-right: 0.5rem;
-                }
+                flex-direction: row;
 
-                .post-action {
-                    margin: 1rem 0 1rem 0.5rem;
+                & > :not(:first-child) {
+                    margin-left: 0.5rem;
                 }
             }
         }
 
-        &:not(.preview-mode) {
-            .preview, .auth-section p:last-child {
-                display: none;
-            }
+        .author-details input {
+            flex-grow: 1;
+        }
+
+        textarea {
+            display: block;
+            flex-grow: 1;
         }
     }
 
-    .isso-comment {
+    .comment {
         display: flex;
-        margin-top: 1rem;
+        margin: 2rem 0 0 0;
         clear: both;
 
         .avatar {
@@ -72,33 +47,36 @@
                 border-radius: 0.25em;
 
                 @media (min-width: $content-max-width) {
-                    width: 3em;
-                    height: 3rem;
+                    width: 2.5em;
+                    height: 2.5rem;
                 }
             }
         }
 
         .text-wrapper {
             flex-grow: 1;
-        }
-    }
 
-    .isso-comment-header, .isso-comment-footer {
-        a {
+            .author {
+                color: $color-amber;
+                font-weight: bold;
+            }
+
+            .comment-date {
+                color: gray;
+            }
+        }
+
+        .comment-actions {
+            display: flex;
             color: gray;
-        }
 
-        & > * {
-            display: inline-block;
-            margin-right: 0.5rem;
-        }
+            & > * {
+                margin-right: 1rem;
+            }
 
-        .author {
-            color: $color-amber;
+            a {
+                color: inherit;
+            }
         }
-    }
-
-    .isso-comment.isso-no-votes .votes {
-        display: none;
     }
 }

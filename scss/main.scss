@@ -35,7 +35,11 @@ $image-scan-lines: repeating-linear-gradient(
 }
 
 @mixin transition {
-    transition: all 0.2s ease;
+    transition: {
+        property: border-color, background-color, color, box-shadow, opacity;
+        duration: 0.2s;
+        timing-function: ease;
+    }
 }
 
 @import "fonts";
