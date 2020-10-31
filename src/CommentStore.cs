@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
-using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using HashidsNet;
-using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 
 namespace Blog
@@ -13,32 +11,18 @@ namespace Blog
     /// <summary>
     /// Manages storage for article comments.
     /// </summary>
-    public class CommentStore : IDisposable
+    public class CommentStore
     {
         // To prevent excessive spam we limit the total number of votes any one comment can receive.
         private const int maxVotes = 500;
 
         private readonly Hashids hashids;
-        private readonly SqliteConnection connection;
+        private readonly ConnectionProvider connectionProvider;
 
-        public CommentStore(IConfiguration configuration)
+        public CommentStore(IConfiguration configuration, ConnectionProvider connectionProvider)
         {
             hashids = new Hashids(configuration["IdSalt"]);
-
-            string path = configuration["CommentsPath"];
-            string dir = Path.GetDirectoryName(path);
-
-            if (!String.IsNullOrEmpty(dir))
-            {
-                Directory.CreateDirectory(dir);
-            }
-
-            connection = new SqliteConnection(new SqliteConnectionStringBuilder
-            {
-                DataSource = path
-            }.ToString());
-
-            connection.Open();
+            this.connectionProvider = connectionProvider;
         }
 
         /// <summary>
@@ -46,19 +30,22 @@ namespace Blog
         /// </summary>
         public async IAsyncEnumerable<Comment> ForSlug(string slug)
         {
-            using (var command = connection.CreateCommand(@"
-                SELECT * FROM CommentWithScore
-                WHERE slug = @slug
-                    AND parentId IS NULL
-            "))
+            using (var connection = await connectionProvider.Connect())
             {
-                command.AddParameter("@slug", slug);
-
-                using (var reader = await command.ExecuteReaderAsync())
+                using (var command = connection.CreateCommand(@"
+                    SELECT * FROM CommentWithScore
+                    WHERE slug = @slug
+                        AND parentId IS NULL
+                "))
                 {
-                    while (await reader.ReadAsync())
+                    command.AddParameter("@slug", slug);
+
+                    using (var reader = await command.ExecuteReaderAsync())
                     {
-                        yield return GetComment(reader);
+                        while (await reader.ReadAsync())
+                        {
+                            yield return GetComment(reader);
+                        }
                     }
                 }
             }
@@ -66,22 +53,25 @@ namespace Blog
 
         public async Task<Comment> GetById(string id)
         {
-            using (var command = connection.CreateCommand(@"
-                SELECT * FROM CommentWithScore
-                WHERE id = @id
-            "))
+            using (var connection = await connectionProvider.Connect())
             {
-                command.AddParameter("@id", DecodeId(id));
-
-                using (var reader = await command.ExecuteReaderAsync())
+                using (var command = connection.CreateCommand(@"
+                    SELECT * FROM CommentWithScore
+                    WHERE id = @id
+                "))
                 {
-                    if (await reader.ReadAsync())
+                    command.AddParameter("@id", DecodeId(id));
+
+                    using (var reader = await command.ExecuteReaderAsync())
                     {
-                        return GetComment(reader);
-                    }
-                    else
-                    {
-                        return null;
+                        if (await reader.ReadAsync())
+                        {
+                            return GetComment(reader);
+                        }
+                        else
+                        {
+                            return null;
+                        }
                     }
                 }
             }
@@ -89,18 +79,21 @@ namespace Blog
 
         public async IAsyncEnumerable<Comment> GetChildrenById(string id)
         {
-            using (var command = connection.CreateCommand(@"
-                SELECT * FROM CommentWithScore
-                WHERE parentId = @id
-            "))
+            using (var connection = await connectionProvider.Connect())
             {
-                command.AddParameter("@id", DecodeId(id));
-
-                using (var reader = await command.ExecuteReaderAsync())
+                using (var command = connection.CreateCommand(@"
+                    SELECT * FROM CommentWithScore
+                    WHERE parentId = @id
+                "))
                 {
-                    while (await reader.ReadAsync())
+                    command.AddParameter("@id", DecodeId(id));
+
+                    using (var reader = await command.ExecuteReaderAsync())
                     {
-                        yield return GetComment(reader);
+                        while (await reader.ReadAsync())
+                        {
+                            yield return GetComment(reader);
+                        }
                     }
                 }
             }
@@ -108,35 +101,38 @@ namespace Blog
 
         public async Task Submit(string slug, SubmitCommentRequest request)
         {
-            using (var command = connection.CreateCommand(@"
-                INSERT INTO Comment (
-                    parentId,
-                    slug,
-                    datePublished,
-                    authorName,
-                    authorEmail,
-                    authorWebsite,
-                    text
-                ) VALUES (
-                    @parentId,
-                    @slug,
-                    @now,
-                    @authorName,
-                    @authorEmail,
-                    @authorWebsite,
-                    @text
-                )
-            "))
+            using (var connection = await connectionProvider.Connect())
             {
-                command.AddParameter("@parentId", DecodeId(request.ParentCommentId));
-                command.AddParameter("@slug", slug);
-                command.AddParameter("@now", (DateTime.UtcNow - DateTime.UnixEpoch).TotalSeconds);
-                command.AddParameter("@authorName", request.Author);
-                command.AddParameter("@authorEmail", request.Email);
-                command.AddParameter("@authorWebsite", request.Website);
-                command.AddParameter("@text", request.Text);
+                using (var command = connection.CreateCommand(@"
+                    INSERT INTO Comment (
+                        parentId,
+                        slug,
+                        datePublished,
+                        authorName,
+                        authorEmail,
+                        authorWebsite,
+                        text
+                    ) VALUES (
+                        @parentId,
+                        @slug,
+                        @now,
+                        @authorName,
+                        @authorEmail,
+                        @authorWebsite,
+                        @text
+                    )
+                "))
+                {
+                    command.AddParameter("@parentId", DecodeId(request.ParentCommentId));
+                    command.AddParameter("@slug", slug);
+                    command.AddParameter("@now", (DateTime.UtcNow - DateTime.UnixEpoch).TotalSeconds);
+                    command.AddParameter("@authorName", request.Author);
+                    command.AddParameter("@authorEmail", request.Email);
+                    command.AddParameter("@authorWebsite", request.Website);
+                    command.AddParameter("@text", request.Text);
 
-                await command.ExecuteNonQueryAsync();
+                    await command.ExecuteNonQueryAsync();
+                }
             }
         }
 
@@ -152,23 +148,21 @@ namespace Blog
 
         private async Task<bool> Vote(string id, IPAddress address, int vote)
         {
-            using (var command = connection.CreateCommand(@"
-                INSERT OR REPLACE INTO Vote (commentId, voterIp, vote) VALUES (@id, @address, @vote)
-            "))
+            using (var connection = await connectionProvider.Connect())
             {
-                command.AddParameter("@id", DecodeId(id));
-                command.AddParameter("@address", address.ToString());
-                command.AddParameter("@vote", vote);
+                using (var command = connection.CreateCommand(@"
+                    INSERT OR REPLACE INTO Vote (commentId, voterIp, vote) VALUES (@id, @address, @vote)
+                "))
+                {
+                    command.AddParameter("@id", DecodeId(id));
+                    command.AddParameter("@address", address.ToString());
+                    command.AddParameter("@vote", vote);
 
-                await command.ExecuteNonQueryAsync();
+                    await command.ExecuteNonQueryAsync();
+                }
             }
 
             return true;
-        }
-
-        public void Dispose()
-        {
-            connection?.Dispose();
         }
 
         private Comment GetComment(DbDataReader reader)
@@ -185,7 +179,7 @@ namespace Blog
                     Email = reader.Get<string>("authorEmail"),
                     Website = reader.Get<string>("authorWebsite"),
                 },
-                Score = reader.Get<int>("score"),
+                Score = (int)reader.Get<Decimal>("score"),
                 Text = reader.Get<string>("text"),
             };
         }

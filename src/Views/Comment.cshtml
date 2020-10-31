@@ -38,7 +38,7 @@
                     hx-swap="outerHTML"
                 >@await Html.PartialAsync("FeatherIcon", "thumbs-up")</a>
 
-                @if (@Model.Comment.Score > 0)
+                @if (@Model.Comment.Score != 0)
                 {
                     <span class="score">@Model.Comment.Score</span>
                 }

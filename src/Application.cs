@@ -1,5 +1,4 @@
-﻿using Autofac;
-using Autofac.Extensions.DependencyInjection;
+﻿using System.Data.Common;
 using Markdig;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -10,48 +9,14 @@ using Microsoft.Extensions.Hosting;
 
 namespace Blog
 {
-    public class Application : Autofac.Module
+    public class Application
     {
         public static void Main(string[] args)
         {
             WebHost.CreateDefaultBuilder(args)
-                .ConfigureServices(services => services.AddAutofac())
                 .UseStartup<Startup>()
                 .Build()
                 .Run();
-        }
-
-        protected override void Load(ContainerBuilder builder)
-        {
-            builder.RegisterType<ArticleStore>().AsSelf();
-            builder.RegisterType<CommentAuthorService>().AsSelf();
-            builder.RegisterType<CommentStore>().AsSelf();
-            builder.RegisterInstance(new MarkdownPipelineBuilder()
-                .UseAutoIdentifiers()
-                .UseAutoLinks()
-                .UseFootnotes()
-                .UsePipeTables()
-                .UseSmartyPants()
-                .Build())
-                .As<MarkdownPipeline>();
-        }
-    }
-
-    public class ProdModule : Autofac.Module
-    {
-        protected override void Load(ContainerBuilder builder)
-        {
-            builder.RegisterInstance(new MemoryCache(new MemoryCacheOptions()))
-                .As<IMemoryCache>();
-        }
-    }
-
-    public class DevelopmentModule : Autofac.Module
-    {
-        protected override void Load(ContainerBuilder builder)
-        {
-            builder.RegisterInstance(new NoOpCache())
-                .As<IMemoryCache>();
         }
     }
 
@@ -59,14 +24,7 @@ namespace Blog
     {
         public static string GitCommit => ThisAssembly.Git.Commit;
 
-        private readonly IWebHostEnvironment webHostEnvironment;
-
-        public Startup(IWebHostEnvironment webHostEnvironment)
-        {
-            this.webHostEnvironment = webHostEnvironment;
-        }
-
-        public void ConfigureServices(IServiceCollection services)
+        public virtual void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpContextAccessor();
             services.AddMvc()
@@ -74,33 +32,22 @@ namespace Blog
                 {
                     options.ViewLocationFormats.Add("/src/Views/{0}.cshtml");
                 });
+
+            services.AddSingleton<ArticleStore>();
+            services.AddSingleton<CommentAuthorService>();
+            services.AddScoped<CommentStore>();
+            services.AddScoped<ConnectionProvider>();
+            services.AddSingleton<MarkdownPipeline>(new MarkdownPipelineBuilder()
+                .UseAutoIdentifiers()
+                .UseAutoLinks()
+                .UseFootnotes()
+                .UsePipeTables()
+                .UseSmartyPants()
+                .Build());
         }
 
-        public void ConfigureContainer(ContainerBuilder builder)
+        public virtual void Configure(IApplicationBuilder app)
         {
-            builder.RegisterModule<Application>();
-
-            if (webHostEnvironment.IsDevelopment())
-            {
-                builder.RegisterModule<DevelopmentModule>();
-            }
-            else
-            {
-                builder.RegisterModule<ProdModule>();
-            }
-        }
-
-        public void Configure(IApplicationBuilder app)
-        {
-            if (webHostEnvironment.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseHsts();
-            }
-
             app.UseStatusCodePagesWithReExecute("/error/{0}");
             app.UseDefaultFiles();
             app.UseStaticFiles();
@@ -109,6 +56,40 @@ namespace Blog
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
             });
+        }
+    }
+
+    public class ProdStartup : Startup
+    {
+        public override void ConfigureServices(IServiceCollection services)
+        {
+            base.ConfigureServices(services);
+
+            services.AddSingleton<IMemoryCache>(new MemoryCache(new MemoryCacheOptions()));
+        }
+
+        public override void Configure(IApplicationBuilder app)
+        {
+            app.UseHsts();
+
+            base.Configure(app);
+        }
+    }
+
+    public class DevelopmentStartup : Startup
+    {
+        public override void ConfigureServices(IServiceCollection services)
+        {
+            base.ConfigureServices(services);
+
+            services.AddSingleton<IMemoryCache, NoOpCache>();
+        }
+
+        public override void Configure(IApplicationBuilder app)
+        {
+            app.UseDeveloperExceptionPage();
+
+            base.Configure(app);
         }
     }
 }

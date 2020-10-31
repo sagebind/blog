@@ -1,6 +1,6 @@
 CREATE TABLE "Comment" (
-    "id" INTEGER NOT NULL UNIQUE,
-    "parentId" INTEGER,
+    "id" BIGINT NOT NULL UNIQUE,
+    "parentId" BIGINT,
     "slug" TEXT NOT NULL,
     "datePublished" NUMERIC NOT NULL,
     "authorName" TEXT NOT NULL,
@@ -11,11 +11,10 @@ CREATE TABLE "Comment" (
 );
 
 CREATE TABLE "Vote" (
-    "commentId" INTEGER NOT NULL,
-    "voterIp" TEXT NOT NULL,
+    "commentId" BIGINT NOT NULL,
+    "voterIp" VARCHAR(15) NOT NULL,
     "vote" INTEGER NOT NULL,
-    PRIMARY KEY("commentId","voterIp"),
-    FOREIGN KEY("commentId") REFERENCES Comment("id")
+    PRIMARY KEY("commentId","voterIp")
 );
 
 CREATE VIEW "CommentWithScore" AS
