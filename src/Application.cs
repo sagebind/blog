@@ -1,5 +1,4 @@
-﻿using System.Data.Common;
-using Markdig;
+﻿using Markdig;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

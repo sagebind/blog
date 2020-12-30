@@ -56,7 +56,6 @@ namespace Blog.Controllers
         [HttpPost]
         [Route("/{year}/{month}/{day}/{name}/comments")]
         [Consumes("application/x-www-form-urlencoded")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> SubmitComment(
             int year,
             int month,
@@ -65,11 +64,6 @@ namespace Blog.Controllers
             [FromForm] SubmitCommentRequest request
         )
         {
-            // if (!ModelState.IsValid)
-            // {
-            //     return BadRequest();
-            // }
-
             var article = articleStore.GetBySlug($"{year:D2}/{month:D2}/{day:D2}/{name}");
 
             if (article == null)
