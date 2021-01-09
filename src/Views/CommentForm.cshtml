@@ -9,7 +9,7 @@
     @using (Html.BeginForm())
     {
         <div>
-            <textarea placeholder="Comment text (supports Markdown)"></textarea>
+            <textarea name="text" placeholder="Comment text (supports Markdown)"></textarea>
         </div>
         <div class="author-details">
             <input type="text" name="author" placeholder="Name" value="@author?.Name">

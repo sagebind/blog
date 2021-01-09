@@ -8,15 +8,18 @@ namespace Blog.Controllers
     {
         private readonly ArticleStore articleStore;
         private readonly CommentStore commentStore;
+        private readonly CommentAuthorService commentAuthorService;
         private readonly HtmlSanitizer htmlSanitizer = new HtmlSanitizer();
 
         public ArticleController(
             ArticleStore articleStore,
-            CommentStore commentStore
+            CommentStore commentStore,
+            CommentAuthorService commentAuthorService
         )
         {
             this.articleStore = articleStore;
             this.commentStore = commentStore;
+            this.commentAuthorService = commentAuthorService;
 
             htmlSanitizer.AllowedAttributes.Remove("contenteditable");
             htmlSanitizer.AllowedAttributes.Remove("draggable");
@@ -74,6 +77,13 @@ namespace Blog.Controllers
             request.Text = htmlSanitizer.Sanitize(request.Text);
 
             await commentStore.Submit(article.Slug, request);
+
+            commentAuthorService.Set(new CommentAuthor
+            {
+                Name = request.Author,
+                Email = request.Email,
+                Website = request.Website,
+            });
 
             if (Request.IsHtmx())
             {
