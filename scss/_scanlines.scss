@@ -1,0 +1,27 @@
+body.scanlines:after {
+    content: "";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: transparent;
+    pointer-events: none;
+    background: {
+        image: $image-scan-lines;
+        // size: 4px 4px;
+        position: 0 0;
+        // repeat: no-repeat;
+    }
+    animation: 200ms scan linear infinite;
+}
+
+@keyframes scan {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 0 -4px;
+    }
+}

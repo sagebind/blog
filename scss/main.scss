@@ -6,15 +6,22 @@
 $content-max-width: 52rem;
 $sidebar-width: 16rem;
 
-$color-light-gray: hsl(0, 0%, 90%);
-$color-amber: hsl(40, 100%, 60%);
+// Define our colors
+$color-white: hsl(32, 40%, 80%);
+// $color-white: hsl(105, 15%, 80%);
+$color-amber: hsl(32, 100%, 63%);
 $color-amber-dark: hsl(20, 100%, 50%);
-$color-teal: hsl(175, 100%, 50%);
+$color-teal: hsl(170, 90%, 50%); // hsl(170, 60%, 50%)
 $color-pink: hsl(335, 85%, 50%);
 $color-purple: hsl(300, 80%, 30%);
 $color-purple-dark: hsl(300, 80%, 20%);
-$color-black: hsl(0, 0%, 20%);
+$color-black: hsl(230, 8%, 12%);
 $color-blue: hsl(207, 80%, 65%);
+
+// Define our palette
+$color-primary: $color-teal;
+$color-secondary: $color-pink;
+$color-tertiary: $color-purple;
 
 $color-lighten: hsla(0, 100%, 100%, 0.3);
 $color-darken: hsla(0, 0%, 0%, 0.3);
@@ -22,9 +29,19 @@ $color-darken: hsla(0, 0%, 0%, 0.3);
 $image-scan-lines: repeating-linear-gradient(
     transparent 0px,
     transparent 1px,
-    hsla(0, 0%, 20%, 0.05) 2px,
-    hsla(0, 0%, 20%, 0.05) 3px
+    hsla(0, 0%, 20%, 0.2) 2px,
+    hsla(0, 0%, 20%, 0.2) 3px
 );
+
+@mixin border($color: $color-primary) {
+    border: {
+        width: 2px;
+        radius: 2px;
+        style: solid;
+        color: $color;
+    }
+    box-shadow: 0 0 0.5rem -0.25rem $color, inset 0 0 0.5rem -0.25rem $color;
+}
 
 @mixin container($width: $content-max-width) {
     max-width: $width;
@@ -36,8 +53,8 @@ $image-scan-lines: repeating-linear-gradient(
 
 @mixin transition {
     transition: {
-        property: border-color, background-color, color, box-shadow, opacity;
-        duration: 0.2s;
+        property: border-color, background-color, background-position, background-size, color, box-shadow, opacity;
+        duration: 200ms;
         timing-function: ease;
     }
 }
@@ -50,3 +67,4 @@ $image-scan-lines: repeating-linear-gradient(
 @import "forms";
 @import "mermaid";
 @import "comments";
+@import "scanlines";

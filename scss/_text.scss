@@ -1,10 +1,11 @@
 body {
     line-height: 1.625;
-    color: $color-light-gray;
+    color: $color-white;
+    font-family: $font-text;
 }
 
 main {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
 
     @media (max-width: 640px) {
         font-size: 1rem;
@@ -15,30 +16,45 @@ blockquote, .copyright {
     font-style: italic;
 }
 
+h1, h2 {
+    font: {
+        family: $font-display;
+        weight: bold;
+    }
+    text-transform: uppercase;
+}
+
 h1 {
     margin: 1.5rem 0;
-    font-size: 2rem;
-    font-weight: bold;
+    font-size: 1.5rem;
     line-height: 1.25;
-    // color: $color-amber;
-    // text-shadow:
-    //     -1px 1px 0 $color-amber-dark,
-    //     -2px 2px 0 $color-amber-dark,
-    //     -3px 3px 0 $color-amber-dark;
-    color: $color-pink;
-    text-shadow:
-        1px 1px 0 $color-purple,
-        2px 2px 0 $color-purple,
-        3px 3px 0 $color-purple;
-    // text-shadow: 0 0 0.25rem currentColor;
+    color: $color-secondary;
+    text-shadow: 0 0 1px $color-secondary, 0 0 1em fade-out($color-secondary, 0.5);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
     @media (max-width: 480px) {
         font-size: 2rem;
     }
+
+    &:after {
+        content: "_";
+        animation: 1s blink linear infinite;
+    }
+
+    @keyframes blink {
+        from, 20%, 90%, to {
+            opacity: 0;
+        }
+        30%, 60% {
+            opacity: 1;
+        }
+    }
 }
 
 h2 {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+    text-shadow: 0 0 1px currentColor;
 }
 
 blockquote {
@@ -46,25 +62,34 @@ blockquote {
     margin-right: 0;
     padding-left: 1rem;
     border-left: 4px solid black;
-    color: darken($color-light-gray, 20%);
+    color: darken($color-white, 20%);
 }
 
 hr {
-    border: 2px solid black;
+    margin: 2rem 0;
+    height: 8px;
+    border: {
+        style: solid;
+        width: 2px 0;
+        color: $color-primary;
+    }
+    filter: blur(1px);
 }
 
 a {
     @include transition;
 
     cursor: pointer;
-    color: $color-amber;
+    background: {
+        image: linear-gradient(to top, currentColor 2px, transparent 2px);
+        repeat: no-repeat;
+        size: 0px 100%;
+    }
+    color: $color-primary;
     text-decoration: none;
-    // border-bottom: 2px solid transparent;
 
     &:hover {
-        text-shadow: 0 0 1rem fade-out($color-amber, 0.75);
-        // border-bottom-color: currentColor;
-        text-decoration: underline;
+        background-size: 100% 100%;
     }
 }
 
@@ -106,10 +131,14 @@ abbr[title], dfn[title] {
     margin-left: 0.25em;
 }
 
+pre, code {
+    font-family: $font-mono;
+}
+
 code, .tag {
     padding: 0.125em 0.5em;
-    border-radius: 0.125em;
-    background-color: $color-darken;
+    border-radius: 0.25em;
+    background-color: $color-darken !important;
 }
 
 code {

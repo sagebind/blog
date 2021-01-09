@@ -1,28 +1,41 @@
 body {
-    // We have quite the complicated background going on here. Many elements, like the header gradient and footer
-    // gradient, are defined as part of the body background. This allows the backgrounds to blend together and overflow
-    // their would-be containers.
-    background:
-        // First on top of everything is a subtle "scan-lines" like filter. This helps to soften the gradients and also
-        // give that true 80s feel, but is subtle enough to not be distracting.
-        $image-scan-lines,
+    background: {
+        image:
+            url("/assets/images/noise.png"),
+            radial-gradient(
+                circle at 50% 50vh,
+                fade-out($color-white, 0.95),
+                transparent
+            ),
+            linear-gradient(to bottom, fade-out($color-tertiary, 0.8), transparent 32rem);
+        color: $color-black;
+        position: 0 0, top center, top center;
+        repeat: repeat, no-repeat;
+    }
 
-        // Next, we have the header gradient.
-        linear-gradient(179deg, $color-amber 0, $color-amber-dark 3rem, $color-purple 8rem, transparent 8.1rem),
+    animation: grain 500ms steps(1) infinite;
 
-        // This is the footer gradient.
-        linear-gradient(
-            2deg,
-            fade-out($color-pink, 0.5) 0,
-            fade-out($color-purple, 0.75) 20rem,
-            transparent 40rem
-        ),
+    ::-moz-selection, ::selection {
+        background: fade-out($color-white, 0.5);
+    }
 
-        // Our nice space background image.
-        url("/assets/images/space.jpg") top center repeat,
-
-        // The average solid color of the background image to show while it is loading.
-        rgb(36, 36, 38);
+    @keyframes grain {
+        0% {
+            background-position: 0px 0px, top center, top center;
+        }
+        25% {
+            background-position: -20px 0px, top center, top center;
+        }
+        50% {
+            background-position: 20px 20px, top center, top center;
+        }
+        75% {
+            background-position: 0px -20px, top center, top center;
+        }
+        100% {
+            background-position: -20px 20px, top center, top center;
+        }
+    }
 }
 
 figure {
@@ -30,15 +43,15 @@ figure {
     position: relative;
     overflow: hidden;
     border-radius: 0.25rem;
-    background: fade-out($color-purple, 0.25);
-    box-shadow: 0 0 0.5rem $color-purple;
+    background: $color-secondary;
+    box-shadow: 0 0 0.5rem $color-secondary;
 
     figcaption {
         margin: 0.5rem;
     }
 
     & > img {
-        opacity: 0.8;
+        opacity: 0.7;
     }
 
     &::after {
