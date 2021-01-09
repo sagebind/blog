@@ -7,7 +7,7 @@ body {
                 fade-out($color-white, 0.95),
                 transparent
             ),
-            linear-gradient(to bottom, fade-out($color-tertiary, 0.8), transparent 32rem);
+            linear-gradient(to bottom, fade-out($color-tertiary, 0.9), transparent 32rem);
         color: $color-black;
         position: 0 0, top center, top center;
         repeat: repeat, no-repeat;
@@ -16,7 +16,7 @@ body {
     animation: grain 500ms steps(1) infinite;
 
     ::-moz-selection, ::selection {
-        background: fade-out($color-white, 0.5);
+        background: fade-out($color-primary, 0.5);
     }
 
     @keyframes grain {
@@ -42,16 +42,19 @@ figure {
     display: block;
     position: relative;
     overflow: hidden;
-    border-radius: 0.25rem;
-    background: $color-secondary;
-    box-shadow: 0 0 0.5rem $color-secondary;
+    border-radius: 2px;
+    background: $color-primary;
+    border: 2px solid fade-out($color-primary, 0.5);
+    box-shadow: 0 0 1rem fade-out($color-primary, 0.5);
+    opacity: 0.9;
 
     figcaption {
         margin: 0.5rem;
     }
 
     & > img {
-        opacity: 0.7;
+        filter: contrast(40%);
+        mix-blend-mode: hard-light;
     }
 
     &::after {

@@ -7,21 +7,21 @@ $content-max-width: 52rem;
 $sidebar-width: 16rem;
 
 // Define our colors
-$color-white: hsl(32, 40%, 80%);
-// $color-white: hsl(105, 15%, 80%);
-$color-amber: hsl(32, 100%, 63%);
+// $color-white: hsl(36, 32%, 80%);
+$color-white: hsl(160, 16%, 80%);
+$color-amber: hsl(36, 100%, 62%);
 $color-amber-dark: hsl(20, 100%, 50%);
-$color-teal: hsl(170, 90%, 50%); // hsl(170, 60%, 50%)
-$color-pink: hsl(335, 85%, 50%);
-$color-purple: hsl(300, 80%, 30%);
+$color-teal: hsl(160, 90%, 50%); // hsl(170, 60%, 50%)
+$color-pink: hsl(340, 90%, 60%);
+$color-purple: hsl(260, 80%, 40%);
 $color-purple-dark: hsl(300, 80%, 20%);
 $color-black: hsl(230, 8%, 12%);
-$color-blue: hsl(207, 80%, 65%);
+$color-blue: hsl(207, 100%, 65%);
 
 // Define our palette
-$color-primary: $color-teal;
-$color-secondary: $color-pink;
-$color-tertiary: $color-purple;
+$color-primary: $color-pink;
+$color-secondary: $color-teal;
+$color-tertiary: $color-white;
 
 $color-lighten: hsla(0, 100%, 100%, 0.3);
 $color-darken: hsla(0, 0%, 0%, 0.3);

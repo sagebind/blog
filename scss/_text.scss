@@ -17,19 +17,23 @@ blockquote, .copyright {
 }
 
 h1, h2 {
-    font: {
-        family: $font-display;
-        weight: bold;
-    }
-    text-transform: uppercase;
+    @include display-font;
 }
 
 h1 {
-    margin: 1.5rem 0;
-    font-size: 1.5rem;
+    margin: 2rem 0;
+    font-size: 1.75rem;
     line-height: 1.25;
-    color: $color-secondary;
-    text-shadow: 0 0 1px $color-secondary, 0 0 1em fade-out($color-secondary, 0.5);
+
+    // color: $color-secondary;
+    // text-shadow: 0 0 2px $color-secondary, 0 0 1em fade-out($color-secondary, 0.5);
+
+    padding: 0.25rem 1rem;
+    color: $color-black;
+    background-color: $color-white;
+    box-shadow: 0 0 1px $color-white, 0 0 1rem fade-out($color-white, 0.5);
+    border-radius: 2px;
+
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
@@ -53,8 +57,19 @@ h1 {
 }
 
 h2 {
+    margin: 2rem 0;
     font-size: 1.25rem;
     text-shadow: 0 0 1px currentColor;
+
+    // padding: 0 0.5em;
+    // color: $color-black;
+    // background-color: $color-white;
+    // box-shadow: 0 0 1px $color-white, 0 0 1rem fade-out($color-white, 0.5);
+    // border-radius: 2px;
+
+    a {
+        // color: inherit;
+    }
 }
 
 blockquote {
@@ -66,14 +81,25 @@ blockquote {
 }
 
 hr {
-    margin: 2rem 0;
-    height: 8px;
-    border: {
-        style: solid;
-        width: 2px 0;
-        color: $color-primary;
+    position: relative;
+    margin: 3rem 0;
+    padding: 1px 0;
+    overflow: visible;
+    border: none;
+    background-color: $color-white;
+    box-shadow: 0 0 1px $color-white, 0 0 1rem $color-white;
+
+    &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: inherit;
+        filter: blur(1rem);
     }
-    filter: blur(1px);
 }
 
 a {
@@ -81,7 +107,7 @@ a {
 
     cursor: pointer;
     background: {
-        image: linear-gradient(to top, currentColor 2px, transparent 2px);
+        image: linear-gradient(to top, currentColor 0.125em, transparent 0.125em);
         repeat: no-repeat;
         size: 0px 100%;
     }
@@ -115,6 +141,10 @@ del {
 abbr[title], dfn[title] {
     border-bottom: 1px dotted;
     cursor: help;
+}
+
+ul {
+    list-style-type: square;
 }
 
 .postmeta {

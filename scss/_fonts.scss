@@ -29,3 +29,14 @@
 $font-text: "Chakra Petch", "Calibri", sans-serif;
 $font-mono: "Hermit", "Consolas", monospace;
 $font-display: "Furore", "Chakra Petch", sans-serif;
+
+@mixin display-font {
+    font: {
+        family: $font-display;
+        weight: bold;
+    }
+    text-transform: uppercase;
+    // Default spacing looks fine except in Blink browsers where it looks like
+    // crap.
+    letter-spacing: 1.5px;
+}

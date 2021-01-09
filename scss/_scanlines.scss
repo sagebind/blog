@@ -10,11 +10,9 @@ body.scanlines:after {
     pointer-events: none;
     background: {
         image: $image-scan-lines;
-        // size: 4px 4px;
         position: 0 0;
-        // repeat: no-repeat;
     }
-    animation: 200ms scan linear infinite;
+    animation: 500ms scan linear infinite;
 }
 
 @keyframes scan {

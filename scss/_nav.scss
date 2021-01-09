@@ -23,10 +23,9 @@ nav {
 
     #logo {
         display: block;
-        font-family: $font-display;
+        @include display-font;
         font-size: 1.75rem;
-        font-weight: 900;
-        text-shadow: 0 0 1px currentColor, 0 0 1em fade-out($color-primary, 0.5);
+        text-shadow: 0 0 2px currentColor, 0 0 1em fade-out($color-primary, 0.5);
         line-height: 1.25;
 
         svg {
