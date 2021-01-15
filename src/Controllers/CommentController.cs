@@ -4,14 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Controllers
 {
-    public class ArticleController : Controller
+    public class CommentController : Controller
     {
         private readonly ArticleStore articleStore;
         private readonly CommentStore commentStore;
         private readonly CommentAuthorService commentAuthorService;
         private readonly HtmlSanitizer htmlSanitizer = new HtmlSanitizer();
 
-        public ArticleController(
+        public CommentController(
             ArticleStore articleStore,
             CommentStore commentStore,
             CommentAuthorService commentAuthorService
@@ -40,20 +40,6 @@ namespace Blog.Controllers
             htmlSanitizer.AllowedTags.Remove("progress");
             htmlSanitizer.AllowedTags.Remove("select");
             htmlSanitizer.AllowedTags.Remove("textarea");
-        }
-
-        [HttpGet]
-        [Route("/{year}/{month}/{day}/{name}")]
-        public IActionResult Get(int year, int month, int day, string name)
-        {
-            var article = articleStore.GetBySlug($"{year:D2}/{month:D2}/{day:D2}/{name}");
-
-            if (article == null)
-            {
-                return NotFound();
-            }
-
-            return View("Article", article);
         }
 
         [HttpPost]

@@ -19,12 +19,14 @@ $color-black: hsl(230, 8%, 12%);
 $color-blue: hsl(207, 100%, 65%);
 
 // Define our palette
-$color-primary: $color-pink;
-$color-secondary: $color-teal;
+$color-primary: $color-amber;
+$color-secondary: $color-pink;
 $color-tertiary: $color-white;
 
 $color-lighten: hsla(0, 100%, 100%, 0.3);
 $color-darken: hsla(0, 0%, 0%, 0.3);
+
+$default-transition-duration: 200ms;
 
 $image-scan-lines: repeating-linear-gradient(
     transparent 0px,
@@ -54,7 +56,7 @@ $image-scan-lines: repeating-linear-gradient(
 @mixin transition {
     transition: {
         property: border-color, background-color, background-position, background-size, color, box-shadow, opacity;
-        duration: 200ms;
+        duration: $default-transition-duration;
         timing-function: ease;
     }
 }
@@ -67,4 +69,3 @@ $image-scan-lines: repeating-linear-gradient(
 @import "forms";
 @import "mermaid";
 @import "comments";
-@import "scanlines";

@@ -57,14 +57,4 @@ function animateTyping(element) {
     }
 }
 
-function setScanLineVisibility(enable) {
-    if (enable) {
-        document.body.classList.add("scanlines");
-    } else {
-        document.body.classList.remove("scanlines");
-    }
-}
-
-setScanLineVisibility(false);
-
 document.querySelectorAll("h1").forEach(animateTyping);

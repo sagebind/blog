@@ -64,7 +64,7 @@ button, input[type="button"], input[type="submit"], input[type="reset"], .button
 
     color: var(--button-color);
     font: {
-        size: 0.875rem;
+        size: 0.875em;
         family: $font-display;
         weight: bold;
     }
@@ -92,13 +92,13 @@ input[type="text"], input[type="email"], input[type="search"], textarea, [conten
         size: inherit;
         family: inherit;
     }
+    transition: background-color $default-transition-duration ease;
 
     &::placeholder, &.placeholder {
         opacity: 0.5;
     }
 
     &:focus {
-        // background-color: $color-white;
-        // color: black;
+        background-color: fade-out($color-white, 0.9);
     }
 }

@@ -52,11 +52,6 @@ figure {
         margin: 0.5rem;
     }
 
-    & > img {
-        filter: contrast(40%);
-        mix-blend-mode: hard-light;
-    }
-
     &::after {
         content: "";
         position: absolute;
