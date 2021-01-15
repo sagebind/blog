@@ -35,6 +35,7 @@ namespace Blog
                 using (var command = connection.CreateCommand(@"
                     SELECT * FROM CommentWithScore
                     WHERE slug = @slug
+                        AND dateDeleted IS NULL
                         AND parentId IS NULL
                 "))
                 {
@@ -58,6 +59,7 @@ namespace Blog
                 using (var command = connection.CreateCommand(@"
                     SELECT * FROM CommentWithScore
                     WHERE id = @id
+                        AND dateDeleted IS NULL
                 "))
                 {
                     command.AddParameter("@id", DecodeId(id));
@@ -84,6 +86,7 @@ namespace Blog
                 using (var command = connection.CreateCommand(@"
                     SELECT * FROM CommentWithScore
                     WHERE parentId = @id
+                        AND dateDeleted IS NULL
                 "))
                 {
                     command.AddParameter("@id", DecodeId(id));
@@ -123,7 +126,7 @@ namespace Blog
                     )
                 "))
                 {
-                    command.AddParameter("@parentId", DecodeId(request.ParentCommentId));
+                    command.AddParameter("@parentId", request.ParentCommentId != null ? DecodeId(request.ParentCommentId) : null);
                     command.AddParameter("@slug", slug);
                     command.AddParameter("@now", (DateTime.UtcNow - DateTime.UnixEpoch).TotalSeconds);
                     command.AddParameter("@authorName", request.Author);
@@ -189,7 +192,7 @@ namespace Blog
             return hashids.EncodeLong(id);
         }
 
-        private long DecodeId(string id)
+        private long? DecodeId(string id)
         {
             return hashids.DecodeLong(id)[0];
         }
