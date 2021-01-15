@@ -1,7 +1,7 @@
 .mermaid-chart {
     padding: 1rem;
     font-size: 1rem;
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     background: $color-darken;
     border: 1px solid black;
 
@@ -12,6 +12,10 @@
         .node > rect {
             fill: lighten($color-pink, 25%) !important;
             stroke: $color-purple !important;
+        }
+
+        .label {
+            color: black !important;
         }
     }
 }

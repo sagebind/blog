@@ -12,24 +12,21 @@ body {
     margin: 0;
 
     header {
-        @include container(64rem);
-        margin-top: 2rem;
-        margin-bottom: 6rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
     }
 
     main, footer {
         @include container;
         margin-top: 4rem;
-        margin-bottom: 4rem;
+        margin-bottom: 2rem;
     }
 }
 
 #bio {
     margin-top: 2rem;
-    padding-top: 2rem;
     display: flex;
     font-size: 1rem;
-    border-top: 2px solid black;
 
     .bio-image {
         flex-shrink: 0;

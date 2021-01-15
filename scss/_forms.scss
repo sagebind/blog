@@ -42,51 +42,63 @@ form {
     }
 }
 
-%control {
-    @include transition;
-
-    padding: 0.125em 1em;
-    border-radius: 1em;
-    border-style: solid;
-    font-family: inherit;
-}
-
 button, input[type="button"], input[type="submit"], input[type="reset"], .button {
-    @extend %control;
+    --button-color: #{$color-white};
 
-    background: $color-purple;
-    background: linear-gradient(
-        150deg,
-        $color-pink,
-        $color-purple
-    );
+    @include transition;
+    @include border(var(--button-color));
 
-    border-width: 0;
-    text-transform: uppercase;
-    text-align: center;
-    font-weight: bold;
+    display: inline-block;
+    position: relative;
     cursor: pointer;
-    color: $color-black;
+    appearance: none;
+    padding: 0 1em;
+    line-height: 2;
+    background: {
+        color: transparent;
+        image: linear-gradient(to right, var(--button-color), var(--button-color));
+        repeat: no-repeat;
+        size: 0px 100%;
+        position: 0 0;
+    }
 
-    box-shadow: 0 0 2rem fade-out($color-purple, 0.75);
+    color: var(--button-color);
+    font: {
+        size: 0.875em;
+        family: $font-display;
+        weight: bold;
+    }
+    text-align: center;
+    text-transform: uppercase;
 
     &:hover {
-        box-shadow: 0 0 2rem fade-out($color-pink, 0.25);
-        z-index: 2;
+        background-size: 100% 100%;
+        color: $color-black;
     }
 }
 
+input[type="submit"] {
+    --button-color: #{$color-secondary};
+}
+
 input[type="text"], input[type="email"], input[type="search"], textarea, [contenteditable] {
-    @extend %control;
+    @include border($color-white);
 
     max-width: 100%;
+    padding: 0.5em 1em;
+    background-color: transparent;
     color: inherit;
-    background-color: $color-darken;
-    border-width: 0.1em;
-    border-color: black;
+    font: {
+        size: inherit;
+        family: inherit;
+    }
+    transition: background-color $default-transition-duration ease;
 
     &::placeholder, &.placeholder {
-        opacity: 1;
-        color: fade-out($color-light-gray, 0.5);
+        opacity: 0.5;
+    }
+
+    &:focus {
+        background-color: fade-out($color-white, 0.9);
     }
 }

@@ -1,13 +1,42 @@
-@import "https://fonts.googleapis.com/css?family=Audiowide|Source+Code+Pro|Source+Sans+Pro&display=swap";
-
-body {
-    font-family: "Source Sans Pro", "Calibri", sans-serif;
+@mixin define-font($family, $prefix, $weight: normal, $style: normal, $local: false) {
+    @font-face {
+        font: {
+            family: $family;
+            weight: $weight;
+            style: $style;
+            display: swap;
+        }
+        @if $local {
+            src: local($local), url("/assets/fonts/#{$prefix}.woff") format("woff");
+        } @else {
+            src: url("/assets/fonts/#{$prefix}.woff") format("woff");
+        }
+    }
 }
 
-h1, h2 {
-    font-family: "Audiowide", sans-serif;
-}
+@include define-font("Chakra Petch", "chakrapetch-medium");
+@include define-font("Chakra Petch", "chakrapetch-medium-italic", normal, italic);
+@include define-font("Chakra Petch", "chakrapetch-bold", bold);
+@include define-font("Chakra Petch", "chakrapetch-bold-italic", bold, italic);
 
-pre, code {
-    font-family: "Source Code Pro", "Consolas", monospace;
+@include define-font("Hermit", "hermit-regular");
+@include define-font("Hermit", "hermit-italic", normal, italic);
+@include define-font("Hermit", "hermit-bold", bold);
+@include define-font("Hermit", "hermit-bold-italic", bold, italic);
+
+@include define-font("Furore", "furore-regular");
+
+$font-text: "Chakra Petch", "Calibri", sans-serif;
+$font-mono: "Hermit", "Consolas", monospace;
+$font-display: "Furore", "Chakra Petch", sans-serif;
+
+@mixin display-font {
+    font: {
+        family: $font-display;
+        weight: bold;
+    }
+    text-transform: uppercase;
+    // Default spacing looks fine except in Blink browsers where it looks like
+    // crap.
+    letter-spacing: 1.5px;
 }

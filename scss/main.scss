@@ -6,25 +6,44 @@
 $content-max-width: 52rem;
 $sidebar-width: 16rem;
 
-$color-light-gray: hsl(0, 0%, 90%);
-$color-amber: hsl(40, 100%, 60%);
+// Define our colors
+// $color-white: hsl(36, 32%, 80%);
+$color-white: hsl(160, 16%, 80%);
+$color-amber: hsl(36, 100%, 62%);
 $color-amber-dark: hsl(20, 100%, 50%);
-$color-teal: hsl(175, 100%, 50%);
-$color-pink: hsl(335, 85%, 50%);
-$color-purple: hsl(300, 80%, 30%);
+$color-teal: hsl(160, 90%, 50%); // hsl(170, 60%, 50%)
+$color-pink: hsl(340, 90%, 60%);
+$color-purple: hsl(260, 80%, 40%);
 $color-purple-dark: hsl(300, 80%, 20%);
-$color-black: hsl(0, 0%, 20%);
-$color-blue: hsl(207, 80%, 65%);
+$color-black: hsl(230, 8%, 12%);
+$color-blue: hsl(207, 100%, 65%);
+
+// Define our palette
+$color-primary: $color-amber;
+$color-secondary: $color-pink;
+$color-tertiary: $color-white;
 
 $color-lighten: hsla(0, 100%, 100%, 0.3);
 $color-darken: hsla(0, 0%, 0%, 0.3);
 
+$default-transition-duration: 200ms;
+
 $image-scan-lines: repeating-linear-gradient(
     transparent 0px,
     transparent 1px,
-    hsla(0, 0%, 20%, 0.05) 2px,
-    hsla(0, 0%, 20%, 0.05) 3px
+    hsla(0, 0%, 20%, 0.2) 2px,
+    hsla(0, 0%, 20%, 0.2) 3px
 );
+
+@mixin border($color: $color-primary) {
+    border: {
+        width: 2px;
+        radius: 2px;
+        style: solid;
+        color: $color;
+    }
+    box-shadow: 0 0 0.5rem -0.25rem $color, inset 0 0 0.5rem -0.25rem $color;
+}
 
 @mixin container($width: $content-max-width) {
     max-width: $width;
@@ -36,8 +55,8 @@ $image-scan-lines: repeating-linear-gradient(
 
 @mixin transition {
     transition: {
-        property: border-color, background-color, color, box-shadow, opacity;
-        duration: 0.2s;
+        property: border-color, background-color, background-position, background-size, color, box-shadow, opacity;
+        duration: $default-transition-duration;
         timing-function: ease;
     }
 }

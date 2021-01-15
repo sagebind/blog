@@ -11,7 +11,10 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            margin-top: 1rem;
+
+            & > * {
+                margin-top: 1rem;
+            }
 
             @media (min-width: $content-max-width) {
                 flex-direction: row;
@@ -57,7 +60,7 @@
             flex-grow: 1;
 
             .author {
-                color: $color-amber;
+                color: $color-primary;
                 font-weight: bold;
             }
 
