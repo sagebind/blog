@@ -16,6 +16,8 @@ namespace Blog
         // To prevent excessive spam we limit the total number of votes any one comment can receive.
         private const int maxVotes = 500;
 
+        private const bool commentingAllowed = false;
+
         private readonly Hashids hashids;
         private readonly ConnectionProvider connectionProvider;
 
@@ -104,6 +106,11 @@ namespace Blog
 
         public async Task Submit(string slug, SubmitCommentRequest request)
         {
+            if (!commentingAllowed)
+            {
+                return;
+            }
+
             using (var connection = await connectionProvider.Connect())
             {
                 using (var command = connection.CreateCommand(@"
