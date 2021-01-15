@@ -35,6 +35,7 @@ namespace Blog
                 using (var command = connection.CreateCommand(@"
                     SELECT * FROM CommentWithScore
                     WHERE slug = @slug
+                        AND dateDeleted IS NULL
                         AND parentId IS NULL
                 "))
                 {
@@ -58,6 +59,7 @@ namespace Blog
                 using (var command = connection.CreateCommand(@"
                     SELECT * FROM CommentWithScore
                     WHERE id = @id
+                        AND dateDeleted IS NULL
                 "))
                 {
                     command.AddParameter("@id", DecodeId(id));
@@ -84,6 +86,7 @@ namespace Blog
                 using (var command = connection.CreateCommand(@"
                     SELECT * FROM CommentWithScore
                     WHERE parentId = @id
+                        AND dateDeleted IS NULL
                 "))
                 {
                     command.AddParameter("@id", DecodeId(id));
