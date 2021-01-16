@@ -6,7 +6,9 @@
 
     <p>Let me know what you think in the comments below. Remember to keep it civil!</p>
 
-    @await Html.PartialAsync("CommentForm", new CommentForm
+    <div class="comments-section"></div>
+
+    @* @await Html.PartialAsync("CommentForm", new CommentForm
     {
         ArticleSlug = Model.Slug,
     })
@@ -17,5 +19,5 @@
         {
             Comment = comment,
         })
-    }
+    } *@
 </aside>

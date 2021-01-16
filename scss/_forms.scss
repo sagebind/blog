@@ -1,35 +1,39 @@
-form {
+.loading {
+    min-height: 10rem;
     position: relative;
 
-    &.htmx-request {
-        & > div {
-            filter: saturate(0) blur(1px);
-        }
+    & > * {
+        filter: saturate(0) blur(1px);
+    }
 
-        &::before {
-            content: "";
-            display: block;
-            position: absolute;
-            z-index: 2;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
+    &::before {
+        content: "Loading...";
+        display: block;
+        position: absolute;
+        z-index: 2;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
 
-        &::after {
-            content: "";
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            background-image: radial-gradient(4rem at center, transparent 39%, white 40%, white 49%, transparent 50%);
-            animation: breathe 3s ease infinite;
-            transform: scale(1);
-        }
+        font-size: 2rem;
+        @include display-font;
+
+        animation: loading 3s linear infinite;
+    }
+
+    &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        background-image: radial-gradient(4rem at center, transparent 39%, white 40%, white 49%, transparent 50%);
+        animation: breathe 3s ease infinite;
+        transform: scale(1);
     }
 
     @keyframes breathe {
@@ -40,6 +44,25 @@ form {
             transform: scale(1.5);
         }
     }
+
+    @keyframes loading {
+        from, to {
+            content: "Loading";
+        }
+        25% {
+            content: "Loading.";
+        }
+        50% {
+            content: "Loading..";
+        }
+        75% {
+            content: "Loading...";
+        }
+    }
+}
+
+form {
+    position: relative;
 }
 
 button, input[type="button"], input[type="submit"], input[type="reset"], .button {
@@ -71,7 +94,7 @@ button, input[type="button"], input[type="submit"], input[type="reset"], .button
     text-align: center;
     text-transform: uppercase;
 
-    &:hover {
+    &:hover, &:focus {
         background-size: 100% 100%;
         color: $color-black;
     }

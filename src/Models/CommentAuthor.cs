@@ -1,3 +1,5 @@
+using System;
+
 namespace Blog
 {
     public class CommentAuthor
@@ -16,5 +18,7 @@ namespace Blog
         /// The website the comment author supplied.
         /// </summary>
         public string Website { get; set; }
+
+        public Uri Avatar => Gravatar.ImageForEmail(Email);
     }
 }
