@@ -29,7 +29,7 @@ namespace Blog
             MarkdownPipeline markdownPipeline
         )
         {
-            hashids = new Hashids(configuration["IdSalt"]);
+            hashids = new Hashids(configuration["IdSalt"], 5);
             this.connectionProvider = connectionProvider;
             this.markdownPipeline = markdownPipeline;
         }

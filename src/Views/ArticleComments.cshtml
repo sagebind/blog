@@ -1,23 +1,9 @@
 @model Article
-@inject CommentStore commentStore
 
-<aside id="comments">
+<aside id="comments" data-article-slug="@Model.Slug">
     <h2>Comments</h2>
 
-    <p>Let me know what you think in the comments below. Remember to keep it civil!</p>
-
-    <div class="comments-section"></div>
-
-    @* @await Html.PartialAsync("CommentForm", new CommentForm
-    {
-        ArticleSlug = Model.Slug,
-    })
-
-    @await foreach (var comment in commentStore.ForSlug(Model.Slug))
-    {
-        @await Html.PartialAsync("Comment", new CommentView
-        {
-            Comment = comment,
-        })
-    } *@
+    <noscript>
+        <p>JavaScript must be enabled to comment.</p>
+    </noscript>
 </aside>

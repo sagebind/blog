@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Ganss.XSS;
 using Microsoft.AspNetCore.Mvc;
@@ -79,6 +80,16 @@ namespace Blog.Controllers
                 return NotFound();
             }
 
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new
+                {
+                    error = string.Join("; ", ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage))
+                });
+            }
+
             request.Text = htmlSanitizer.Sanitize(request.Text);
 
             await commentStore.Submit(article.Slug, request);
@@ -95,7 +106,7 @@ namespace Blog.Controllers
                 return View("ArticleComments", article);
             }
 
-            return Redirect($"/{article.Slug}");
+            return NoContent();
         }
 
         [HttpPost]
@@ -138,24 +149,6 @@ namespace Blog.Controllers
             {
                 return BadRequest();
             }
-        }
-
-        private IActionResult CommentView(Comment comment)
-        {
-            return CommentView(new CommentView
-            {
-                Comment = comment,
-            });
-        }
-
-        private IActionResult CommentView(CommentView commentView)
-        {
-            if (Request.IsHtmx())
-            {
-                return View("Comment", commentView);
-            }
-
-            return Redirect($"/{commentView.Comment.ArticleSlug}#comment-{commentView.Comment.Id}");
         }
     }
 }

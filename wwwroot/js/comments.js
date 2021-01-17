@@ -4,8 +4,6 @@ import * as api from "./api.js";
 
 let html = htm.bind(m);
 
-let articleSlug = window.location.pathname.substring(1);
-
 function getAuthorFromLocalStorage() {
     let commentAuthor = localStorage.getItem("commentAuthor");
 
@@ -49,28 +47,63 @@ class FeatherIcon {
     }
 }
 
-let comments = [];
-
-async function refreshComments() {
-    comments = await api.getComments(articleSlug);
-}
-
 class CommentsSection {
-    async oninit() {
+    constructor() {
+        this.comments = [];
         this.loading = true;
+    }
+
+    async refreshComments() {
+        this.comments = await api.getComments(this.articleSlug);
+    }
+
+    async oninit(vnode) {
+        this.articleSlug = vnode.attrs.articleSlug;
 
         try {
-            await refreshComments();
+            await this.refreshComments();
         } finally {
             this.loading = false;
         }
     }
 
+    onupdate() {
+        // Permalinks won't work on initial page load since the element ID isn't
+        // in the initial DOM. Fix this by scrolling to the comment dynamically
+        // if a permalink hash is found.
+        if (!this.loading && !this.checkedPermalink) {
+            this.checkedPermalink = true;
+
+            if (/^#comment-\w+$/.test(window.location.hash)) {
+                let element = document.querySelector(window.location.hash);
+
+                if (element) {
+                    element.scrollIntoView();
+                }
+            }
+        }
+    }
+
     view() {
+        let commentsCount = this.comments.reduce(function reducer(count, comment) {
+            return count + 1 + comment.children.reduce(reducer, 0);
+        }, 0);
+
         return html`
-            <${CommentForm} />
+            <h2>${commentsCount} comments</h2>
+
+            <p>Let me know what you think in the comments below. Remember to keep it civil!</p>
+
+            <${CommentForm} articleSlug="${this.articleSlug}" />
+
             <div class="${this.loading ? "loading" : ""}">
-                ${comments.map(comment => m(Comment, { comment }))}
+                ${this.comments.map(comment => m(Comment, {
+                    articleSlug: this.articleSlug,
+                    comment,
+                    onchange: async () => {
+                        await this.refreshComments();
+                    }
+                }))}
             </div>
         `;
     }
@@ -79,13 +112,13 @@ class CommentsSection {
 class Comment {
     async upvote(vnode) {
         if (await api.upvoteComment(vnode.attrs.comment.id)) {
-            await refreshComments();
+            await vnode.attrs.onchange();
         }
     }
 
     async downvote(vnode) {
         if (await api.downvoteComment(vnode.attrs.comment.id)) {
-            await refreshComments();
+            await vnode.attrs.onchange();
         }
     }
 
@@ -99,49 +132,63 @@ class Comment {
                 </div>
 
                 <div class="text-wrapper">
-                    <span>
-                        ${vnode.attrs.comment.author.website ? html`
-                            <a class="author" href="${vnode.attrs.comment.author.website}" rel="nofollow">${vnode.attrs.comment.author.name}</a>
-                        ` : html`
-                            <span class="author">${vnode.attrs.comment.author.name}</span>
-                        `}
+                    <div class="comment-toolbar">
+                        <span class="author">
+                            ${vnode.attrs.comment.author.website ? html`
+                                <a href="${vnode.attrs.comment.author.website}" rel="nofollow">${vnode.attrs.comment.author.name}</a>
+                            ` : html`
+                                ${vnode.attrs.comment.author.name}
+                            `}
+                        </span>
 
-                        —
+                        <${ScoreLabel} score="${vnode.attrs.comment.score}" />
 
-                        <a class="comment-date" href="#comment-${id}">
-                            <time datetime="${vnode.attrs.comment.published}">${vnode.attrs.comment.publishedLabel}</time>
-                        </a>
-                    </span>
+                        <time datetime="${vnode.attrs.comment.published}" title="${new Date(vnode.attrs.comment.published).toLocaleString()}">${vnode.attrs.comment.publishedLabel}</time>
+                    </div>
 
                     ${m.trust(vnode.attrs.comment.html)}
 
-                    <div class="comment-actions">
-                            <a title="Upvote" onclick="${() => this.upvote(vnode)}">+1</a>
+                    <div class="comment-toolbar">
+                        <a title="Upvote" onclick="${() => this.upvote(vnode)}" tabindex="0">▲ upvote</a>
 
-                            ${vnode.attrs.comment.score != 0 && html`
-                                <span class="score">${vnode.attrs.comment.score}</span>
-                            `}
+                        <a title="Downvote" onclick="${() => this.downvote(vnode)}" tabindex="0">▼ downvote</a>
 
-                            <a title="Downvote" onclick="${() => this.downvote(vnode)}">-1</a>
+                        <a href="#comment-${id}">permalink</a>
 
                         ${this.showReply ?
-                            html`<a onclick="${() => this.showReply = false}">Close</a>` :
-                            html`<a onclick="${() => this.showReply = true}">Reply</a>`}
+                            html`<a onclick="${() => this.showReply = false}" tabindex="0">close</a>` :
+                            html`<a onclick="${() => this.showReply = true}" tabindex="0">reply</a>`}
                     </div>
 
                     ${this.showReply && m(CommentForm, {
+                        articleSlug: vnode.attrs.articleSlug,
                         parentCommentId: vnode.attrs.comment.id,
                         autofocus: true,
                         onsubmit: async () => {
-                            await refreshComments();
+                            await vnode.attrs.onchange();
                             this.showReply = false;
                         }
                     })}
 
-                    ${vnode.attrs.comment.children.map(comment => m(Comment, { comment }))}
+                    ${vnode.attrs.comment.children.map(comment => m(Comment, {
+                        ...vnode.attrs,
+                        comment
+                    }))}
                 </div>
             </article>
         `;
+    }
+}
+
+class ScoreLabel {
+    view({ attrs }) {
+        if (attrs.score > 1) {
+            return m("span", `${attrs.score} points`);
+        }
+
+        if (attrs.score === 1) {
+            return m("span", "1 point");
+        }
     }
 }
 
@@ -169,7 +216,7 @@ class CommentForm {
 
         try {
             await api.submitComment({
-                articleSlug,
+                articleSlug: vnode.attrs.articleSlug,
                 name: this.name,
                 email: this.email,
                 website: this.website,
@@ -182,6 +229,10 @@ class CommentForm {
             if (vnode.attrs.onsubmit) {
                 await vnode.attrs.onsubmit();
             }
+        } catch (e) {
+            let textarea = vnode.dom.querySelector("textarea");
+            textarea.setCustomValidity(e.response.error);
+            textarea.reportValidity();
         } finally {
             this.submitting = false;
         }
@@ -195,7 +246,10 @@ class CommentForm {
                         name="text"
                         placeholder="Comment text (supports Markdown)"
                         required
-                        oninput="${e => this.text = e.target.value}"
+                        oninput="${e => {
+                            this.text = e.target.value;
+                            e.target.setCustomValidity("");
+                        }}"
                     >${this.text}</textarea>
                 </div>
                 <div class="author-details">
@@ -234,6 +288,10 @@ class CommentForm {
     }
 }
 
-document.querySelectorAll(".comments-section").forEach(element => {
-    m.mount(element, CommentsSection);
+document.querySelectorAll("#comments").forEach(element => {
+    m.mount(element, {
+        view() {
+            return m(CommentsSection, element.dataset);
+        }
+    });
 });

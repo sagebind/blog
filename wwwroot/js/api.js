@@ -1,8 +1,6 @@
 import m from "https://cdn.skypack.dev/mithril@2";
 
 export async function getComments(articleSlug) {
-    await delay(10000);
-
     return await m.request({
         method: "GET",
         url: "/api/comments",

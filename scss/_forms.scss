@@ -1,3 +1,14 @@
+a, button, input, textarea {
+    &:focus {
+        outline: 2px dashed $color-white;
+        outline-offset: 2px;
+    }
+
+    &:active {
+        filter: brightness(1.25);
+    }
+}
+
 .loading {
     min-height: 10rem;
     position: relative;
@@ -108,7 +119,7 @@ input[type="text"], input[type="email"], input[type="search"], textarea, [conten
     @include border($color-white);
 
     max-width: 100%;
-    padding: 0.5em 1em;
+    padding: 0.5em;
     background-color: transparent;
     color: inherit;
     font: {

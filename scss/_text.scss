@@ -100,6 +100,7 @@ a {
     @include transition;
 
     cursor: pointer;
+    padding-bottom: 0.125em; // underline clear descenders
     background: {
         image: linear-gradient(to top, currentColor 0.125em, transparent 0.125em);
         repeat: no-repeat;
@@ -160,13 +161,13 @@ pre, code {
 }
 
 code, .tag {
-    padding: 0.125em 0.5em;
-    border-radius: 0.25em;
+    padding: 0.125em 0.25em;
+    border-radius: 2px;
     background-color: $color-darken !important;
 }
 
 code {
-    font-size: 0.75em;
+    font-size: 0.7em;
 }
 
 pre > code {
