@@ -1,5 +1,8 @@
+import { hljs, m } from "./deps.js";
+import { CommentsSection } from "./comments.js";
+
 mermaid.initialize({
-    startOnLoad: false,
+    startOnLoad: true,
     theme: "dark"
 });
 
@@ -18,9 +21,9 @@ document.querySelectorAll("pre > code.language-mermaid").forEach(function (code)
     });
 });
 
-addEventListener('load', function () {
-    hljs.initHighlighting();
-}, false);
+// addEventListener("load", function () {
+hljs.initHighlighting();
+// }, false);
 
 function animateTyping(element) {
     let fastSpeed = 40;
@@ -58,3 +61,11 @@ function animateTyping(element) {
 }
 
 document.querySelectorAll("h1").forEach(animateTyping);
+
+document.querySelectorAll("#comments").forEach(element => {
+    m.mount(element, {
+        view() {
+            return m(CommentsSection, element.dataset);
+        }
+    });
+});

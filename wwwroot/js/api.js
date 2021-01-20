@@ -1,4 +1,4 @@
-import m from "https://cdn.skypack.dev/mithril@2";
+import { m } from "./deps.js";
 
 export async function getComments(articleSlug) {
     return await m.request({
@@ -25,8 +25,6 @@ export async function submitComment({
     text,
     parentCommentId,
 }) {
-    await delay(500);
-
     await m.request({
         method: "POST",
         url: "/api/comments",
@@ -57,8 +55,4 @@ export async function downvoteComment(id) {
         url: `/api/comments/${id}/downvote`,
         extract: xhr => xhr.status === 204
     });
-}
-
-function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
 }

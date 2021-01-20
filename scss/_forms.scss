@@ -9,69 +9,6 @@ a, button, input, textarea {
     }
 }
 
-.loading {
-    min-height: 10rem;
-    position: relative;
-
-    & > * {
-        filter: saturate(0) blur(1px);
-    }
-
-    &::before {
-        content: "Loading...";
-        display: block;
-        position: absolute;
-        z-index: 2;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-
-        font-size: 2rem;
-        @include display-font;
-
-        animation: loading 3s linear infinite;
-    }
-
-    &::after {
-        content: "";
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 2;
-        background-image: radial-gradient(4rem at center, transparent 39%, white 40%, white 49%, transparent 50%);
-        animation: breathe 3s ease infinite;
-        transform: scale(1);
-    }
-
-    @keyframes breathe {
-        from, to {
-            transform: scale(1);
-        }
-        50% {
-            transform: scale(1.5);
-        }
-    }
-
-    @keyframes loading {
-        from, to {
-            content: "Loading";
-        }
-        25% {
-            content: "Loading.";
-        }
-        50% {
-            content: "Loading..";
-        }
-        75% {
-            content: "Loading...";
-        }
-    }
-}
-
 form {
     position: relative;
 }
@@ -134,5 +71,80 @@ input[type="text"], input[type="email"], input[type="search"], textarea, [conten
 
     &:focus {
         background-color: fade-out($color-white, 0.9);
+    }
+}
+
+.progress {
+    display: block;
+    height: 1.5rem;
+
+    @include border($color-white);
+
+    background: {
+        image: linear-gradient(to right, $color-white, $color-white);
+        size: 3rem 100%;
+        repeat: no-repeat;
+    }
+
+    animation: progress 3s ease infinite;
+
+    @keyframes progress {
+        from, to {
+            background-position: left top;
+        }
+        50% {
+            background-position: right top;
+        }
+    }
+}
+
+.loading-modal {
+    display: block;
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    right: 2rem;
+    margin: 0 auto;
+    max-width: 32rem;
+    padding: 2rem;
+
+    @include border($color-white);
+    background-color: rgba(0, 0, 0, 0.6);
+
+    &::before {
+        content: "Loading...";
+
+        font-size: 2rem;
+        @include display-font;
+
+        animation: loading 3s linear infinite;
+    }
+
+    @keyframes loading {
+        from, to {
+            content: "Loading";
+        }
+        25% {
+            content: "Loading.";
+        }
+        50% {
+            content: "Loading..";
+        }
+        75% {
+            content: "Loading...";
+        }
+    }
+}
+
+.loadable {
+    position: relative;
+    min-height: 10rem;
+
+    &.loading {
+        pointer-events: none;
+
+        & > .loadable-inner {
+            filter: saturate(0) blur(1px);
+        }
     }
 }

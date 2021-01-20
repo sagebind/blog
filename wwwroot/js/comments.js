@@ -1,53 +1,39 @@
-import m from "https://cdn.skypack.dev/mithril@2";
-import htm from "https://cdn.skypack.dev/htm@3";
+import { m, html } from "./deps.js";
 import * as api from "./api.js";
+import Loadable from "./loadable.js";
 
-let html = htm.bind(m);
+const AuthorLocalStorage = {
+    get author() {
+        let commentAuthor = localStorage.getItem("commentAuthor");
 
-function getAuthorFromLocalStorage() {
-    let commentAuthor = localStorage.getItem("commentAuthor");
+        if (commentAuthor) {
+            return JSON.parse(commentAuthor);
+        }
 
-    if (commentAuthor) {
-        return JSON.parse(commentAuthor);
+        // Migrate Isso storage.
+        let author = localStorage.getItem("author");
+
+        if (author) {
+            commentAuthor = {
+                name: JSON.parse(author),
+                email: JSON.parse(localStorage.getItem("email")),
+                website: JSON.parse(localStorage.getItem("website")),
+            };
+
+            this.author = commentAuthor;
+
+            return commentAuthor;
+        }
+
+        return {};
+    },
+
+    set author(author) {
+        localStorage.setItem("commentAuthor", JSON.stringify(author));
     }
+};
 
-    // Migrate Isso storage.
-    let author = localStorage.getItem("author");
-
-    if (author) {
-        commentAuthor = {
-            name: JSON.parse(author),
-            email: JSON.parse(localStorage.getItem("email")),
-            website: JSON.parse(localStorage.getItem("website")),
-        };
-
-        localStorage.setItem("commentAuthor", JSON.stringify(commentAuthor));
-
-        return commentAuthor;
-    }
-
-    return {};
-}
-
-class FeatherIcon {
-    view(vnode) {
-        return html`
-            <svg
-                width="20"
-                height="20"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            >
-                <use xlink:href="/assets/images/feather-sprite.svg#${vnode.attrs.name}"/>
-            </svg>
-        `;
-    }
-}
-
-class CommentsSection {
+export class CommentsSection {
     constructor() {
         this.comments = [];
         this.loading = true;
@@ -96,7 +82,7 @@ class CommentsSection {
 
             <${CommentForm} articleSlug="${this.articleSlug}" />
 
-            <div class="${this.loading ? "loading" : ""}">
+            <${Loadable} loading="${this.loading}">
                 ${this.comments.map(comment => m(Comment, {
                     articleSlug: this.articleSlug,
                     comment,
@@ -104,7 +90,7 @@ class CommentsSection {
                         await this.refreshComments();
                     }
                 }))}
-            </div>
+            </>
         `;
     }
 }
@@ -158,17 +144,17 @@ class Comment {
                         ${this.showReply ?
                             html`<a onclick="${() => this.showReply = false}" tabindex="0">close</a>` :
                             html`<a onclick="${() => this.showReply = true}" tabindex="0">reply</a>`}
-                    </div>
+                                </div>
 
-                    ${this.showReply && m(CommentForm, {
-                        articleSlug: vnode.attrs.articleSlug,
-                        parentCommentId: vnode.attrs.comment.id,
-                        autofocus: true,
-                        onsubmit: async () => {
-                            await vnode.attrs.onchange();
-                            this.showReply = false;
-                        }
-                    })}
+                        ${this.showReply && m(CommentForm, {
+                            articleSlug: vnode.attrs.articleSlug,
+                            parentCommentId: vnode.attrs.comment.id,
+                            autofocus: true,
+                            onsubmit: async () => {
+                                await vnode.attrs.onchange();
+                                this.showReply = false;
+                            }
+                        })}
 
                     ${vnode.attrs.comment.children.map(comment => m(Comment, {
                         ...vnode.attrs,
@@ -194,7 +180,7 @@ class ScoreLabel {
 
 class CommentForm {
     oninit() {
-        let commentAuthor = getAuthorFromLocalStorage();
+        let commentAuthor = AuthorLocalStorage.author;
 
         if (commentAuthor) {
             this.name = commentAuthor.name;
@@ -226,6 +212,12 @@ class CommentForm {
 
             this.text = "";
 
+            AuthorLocalStorage.author = {
+                name: this.name,
+                email: this.email,
+                website: this.website
+            };
+
             if (vnode.attrs.onsubmit) {
                 await vnode.attrs.onsubmit();
             }
@@ -240,58 +232,52 @@ class CommentForm {
 
     view(vnode) {
         return html`
-            <form class="comment-form ${this.submitting && "loading"}" onsubmit=${e => this.onsubmit(vnode, e)}>
-                <div>
-                    <textarea
-                        name="text"
-                        placeholder="Comment text (supports Markdown)"
-                        required
-                        oninput="${e => {
-                            this.text = e.target.value;
-                            e.target.setCustomValidity("");
-                        }}"
-                    >${this.text}</textarea>
-                </div>
-                <div class="author-details">
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder="Name"
-                        required
-                        maxlength="255"
-                        value="${this.name}"
-                        oninput="${e => this.name = e.target.value}"
-                    />
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        required
-                        maxlength="255"
-                        value="${this.email}"
-                        oninput="${e => this.email = e.target.value}"
-                    />
-                    <input
-                        type="text"
-                        name="website"
-                        placeholder="Website (optional)"
-                        maxlength="255"
-                        value="${this.website}"
-                        oninput="${e => this.website = e.target.value}"
-                    />
-                </div>
-                <div>
-                    <input type="submit" value="Submit" />
-                </div>
-            </form>
+            <${Loadable} loading="${this.submitting}">
+                <form class="comment-form" onsubmit=${e => this.onsubmit(vnode, e)}>
+                    <div>
+                        <textarea
+                            name="text"
+                            placeholder="Comment text (supports Markdown)"
+                            required
+                            oninput="${e => {
+                                this.text = e.target.value;
+                                e.target.setCustomValidity("");
+                            }}"
+                        >${this.text}</textarea>
+                    </div>
+                    <div class="author-details">
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Name"
+                            required
+                            maxlength="255"
+                            value="${this.name}"
+                            oninput="${e => this.name = e.target.value}"
+                        />
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Email"
+                            required
+                            maxlength="255"
+                            value="${this.email}"
+                            oninput="${e => this.email = e.target.value}"
+                        />
+                        <input
+                            type="text"
+                            name="website"
+                            placeholder="Website (optional)"
+                            maxlength="255"
+                            value="${this.website}"
+                            oninput="${e => this.website = e.target.value}"
+                        />
+                    </div>
+                    <div>
+                        <input type="submit" value="Submit" />
+                    </div>
+                </form>
+            </>
         `;
     }
 }
-
-document.querySelectorAll("#comments").forEach(element => {
-    m.mount(element, {
-        view() {
-            return m(CommentsSection, element.dataset);
-        }
-    });
-});
