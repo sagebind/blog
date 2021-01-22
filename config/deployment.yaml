@@ -25,6 +25,11 @@ spec:
                 secretKeyRef:
                   name: blog
                   key: ConnectionString
+            - name: ApiTokenSecretKey
+              valueFrom:
+                secretKeyRef:
+                  name: blog
+                  key: ApiTokenSecretKey
             - name: IdSalt
               valueFrom:
                 secretKeyRef:
