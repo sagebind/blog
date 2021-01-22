@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using HashidsNet;
 using Markdig;
 using Microsoft.Extensions.Configuration;
+using MySql.Data.MySqlClient;
 
 namespace Blog
 {
@@ -182,7 +183,7 @@ namespace Blog
             }
         }
 
-        public async Task Submit(string slug, SubmitCommentRequest request)
+        public async Task<string> Submit(string slug, SubmitCommentRequest request)
         {
             using (var connection = await connectionProvider.Connect())
             {
@@ -215,6 +216,8 @@ namespace Blog
                     command.AddParameter("@text", request.Text);
 
                     await command.ExecuteNonQueryAsync();
+
+                    return EncodeId(((MySqlCommand)command).LastInsertedId);
                 }
             }
         }

@@ -1,6 +1,7 @@
 @model Article
+@inject ApiTokenService apiTokenService
 
-<aside id="comments" data-article-slug="@Model.Slug">
+<aside id="comments" data-article-slug="@Model.Slug" data-api-token="@Html.Raw(apiTokenService.Generate())">
     <h2>Comments</h2>
 
     <noscript>

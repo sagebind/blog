@@ -1,27 +1,36 @@
+using System;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Ganss.XSS;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Logging;
+using Microsoft.Net.Http.Headers;
 
 namespace Blog.Controllers
 {
     [Route("/api/comments")]
     public class Comments : Controller
     {
+        private readonly ApiTokenService apiTokenService;
         private readonly ArticleStore articleStore;
         private readonly CommentStore commentStore;
-        private readonly CommentAuthorService commentAuthorService;
+        private readonly ILogger logger;
         private readonly HtmlSanitizer htmlSanitizer = new HtmlSanitizer();
 
         public Comments(
+            ApiTokenService apiTokenService,
             ArticleStore articleStore,
             CommentStore commentStore,
-            CommentAuthorService commentAuthorService
+            ILogger<Comments> logger
         )
         {
+            this.apiTokenService = apiTokenService;
             this.articleStore = articleStore;
             this.commentStore = commentStore;
-            this.commentAuthorService = commentAuthorService;
+            this.logger = logger;
 
             htmlSanitizer.AllowedAttributes.Remove("contenteditable");
             htmlSanitizer.AllowedAttributes.Remove("draggable");
@@ -92,21 +101,12 @@ namespace Blog.Controllers
 
             request.Text = htmlSanitizer.Sanitize(request.Text);
 
-            await commentStore.Submit(article.Slug, request);
+            string commentId = await commentStore.Submit(article.Slug, request);
 
-            commentAuthorService.Set(new CommentAuthor
+            return Json(new SubmitCommentResponse
             {
-                Name = request.Author,
-                Email = request.Email,
-                Website = request.Website,
+                CommentId = commentId
             });
-
-            if (Request.IsHtmx())
-            {
-                return View("ArticleComments", article);
-            }
-
-            return NoContent();
         }
 
         [HttpPost]
@@ -149,6 +149,43 @@ namespace Blog.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        {
+            if (ValidateAuth(context.HttpContext))
+            {
+                await next();
+            }
+            else
+            {
+                context.Result = StatusCode(403, "Forbidden");
+            }
+        }
+
+        private bool ValidateAuth(HttpContext context)
+        {
+            try
+            {
+                if (context.Request.Headers.ContainsKey(HeaderNames.Authorization))
+                {
+                    var auth = AuthenticationHeaderValue.Parse(context.Request.Headers[HeaderNames.Authorization]);
+
+                    if (auth.Scheme.Equals("Bearer", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (apiTokenService.Validate(auth.Parameter))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                logger.LogWarning(e, "Exception when validating auth.");
+            }
+
+            return false;
         }
     }
 }

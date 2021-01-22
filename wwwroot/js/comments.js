@@ -1,5 +1,5 @@
 import { m, html } from "./deps.js";
-import * as api from "./api.js";
+import { Client } from "./api.js";
 import Loadable from "./loadable.js";
 
 const AuthorLocalStorage = {
@@ -40,11 +40,12 @@ export class CommentsSection {
     }
 
     async refreshComments() {
-        this.comments = await api.getComments(this.articleSlug);
+        this.comments = await this.apiClient.getComments(this.articleSlug);
     }
 
     async oninit(vnode) {
         this.articleSlug = vnode.attrs.articleSlug;
+        this.apiClient = new Client(vnode.attrs.apiToken);
 
         try {
             await this.refreshComments();
@@ -64,10 +65,32 @@ export class CommentsSection {
                 let element = document.querySelector(window.location.hash);
 
                 if (element) {
-                    element.scrollIntoView();
+                    scrollIntoViewIfNeeded(element);
                 }
             }
         }
+    }
+
+    async comment(form, parentCommentId) {
+        let { commentId } = await this.apiClient.submitComment({
+            articleSlug: this.articleSlug,
+            name: form.name,
+            email: form.email,
+            website: form.website,
+            text: form.text,
+            parentCommentId
+        });
+
+        await this.refreshComments();
+
+        // Scroll to new comment if found.
+        setTimeout(() => {
+            let element = document.querySelector("#comment-" + commentId);
+
+            if (element) {
+                scrollIntoViewIfNeeded(element);
+            }
+        }, 1);
     }
 
     view() {
@@ -80,14 +103,23 @@ export class CommentsSection {
 
             <p>Let me know what you think in the comments below. Remember to keep it civil!</p>
 
-            <${CommentForm} articleSlug="${this.articleSlug}" />
+            <${CommentForm} onsubmit="${form => this.comment(form)}" />
 
             <${Loadable} loading="${this.loading}">
                 ${this.comments.map(comment => m(Comment, {
-                    articleSlug: this.articleSlug,
                     comment,
-                    onchange: async () => {
-                        await this.refreshComments();
+                    onupvote: async comment => {
+                        if (await this.apiClient.upvoteComment(comment.id)) {
+                            await this.refreshComments();
+                        }
+                    },
+                    ondownvote: async comment => {
+                        if (await this.apiClient.downvoteComment(comment.id)) {
+                            await this.refreshComments();
+                        }
+                    },
+                    onreply: async (comment, form) => {
+                        await this.comment(form, comment.id);
                     }
                 }))}
             </>
@@ -96,18 +128,6 @@ export class CommentsSection {
 }
 
 class Comment {
-    async upvote(vnode) {
-        if (await api.upvoteComment(vnode.attrs.comment.id)) {
-            await vnode.attrs.onchange();
-        }
-    }
-
-    async downvote(vnode) {
-        if (await api.downvoteComment(vnode.attrs.comment.id)) {
-            await vnode.attrs.onchange();
-        }
-    }
-
     view(vnode) {
         let id = vnode.attrs.comment.id;
 
@@ -135,26 +155,24 @@ class Comment {
                     ${m.trust(vnode.attrs.comment.html)}
 
                     <div class="comment-toolbar">
-                        <a title="Upvote" onclick="${() => this.upvote(vnode)}" tabindex="0">▲ upvote</a>
+                        <a title="Upvote" onclick="${() => vnode.attrs.onupvote(vnode.attrs.comment)}" tabindex="0">▲ upvote</a>
 
-                        <a title="Downvote" onclick="${() => this.downvote(vnode)}" tabindex="0">▼ downvote</a>
+                        <a title="Downvote" onclick="${() => vnode.attrs.ondownvote(vnode.attrs.comment)}" tabindex="0">▼ downvote</a>
 
                         <a href="#comment-${id}">permalink</a>
 
                         ${this.showReply ?
                             html`<a onclick="${() => this.showReply = false}" tabindex="0">close</a>` :
                             html`<a onclick="${() => this.showReply = true}" tabindex="0">reply</a>`}
-                                </div>
+                    </div>
 
-                        ${this.showReply && m(CommentForm, {
-                            articleSlug: vnode.attrs.articleSlug,
-                            parentCommentId: vnode.attrs.comment.id,
-                            autofocus: true,
-                            onsubmit: async () => {
-                                await vnode.attrs.onchange();
-                                this.showReply = false;
-                            }
-                        })}
+                    ${this.showReply && m(CommentForm, {
+                        autofocus: true,
+                        onsubmit: async form => {
+                            await vnode.attrs.onreply(vnode.attrs.comment, form);
+                            this.showReply = false;
+                        }
+                    })}
 
                     ${vnode.attrs.comment.children.map(comment => m(Comment, {
                         ...vnode.attrs,
@@ -201,17 +219,6 @@ class CommentForm {
         this.submitting = true;
 
         try {
-            await api.submitComment({
-                articleSlug: vnode.attrs.articleSlug,
-                name: this.name,
-                email: this.email,
-                website: this.website,
-                text: this.text,
-                parentCommentId: vnode.attrs.parentCommentId,
-            });
-
-            this.text = "";
-
             AuthorLocalStorage.author = {
                 name: this.name,
                 email: this.email,
@@ -219,8 +226,15 @@ class CommentForm {
             };
 
             if (vnode.attrs.onsubmit) {
-                await vnode.attrs.onsubmit();
+                await vnode.attrs.onsubmit({
+                    name: this.name,
+                    email: this.email,
+                    website: this.website,
+                    text: this.text
+                });
             }
+
+            this.text = "";
         } catch (e) {
             let textarea = vnode.dom.querySelector("textarea");
             textarea.setCustomValidity(e.response.error);
@@ -279,5 +293,13 @@ class CommentForm {
                 </form>
             </>
         `;
+    }
+}
+
+function scrollIntoViewIfNeeded(element) {
+    let { top, bottom } = element.getBoundingClientRect();
+
+    if (top > window.innerHeight || bottom < 0) {
+        element.scrollIntoView();
     }
 }

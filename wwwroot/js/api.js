@@ -1,58 +1,79 @@
 import { m } from "./deps.js";
 
-export async function getComments(articleSlug) {
-    return await m.request({
-        method: "GET",
-        url: "/api/comments",
-        params: {
-            slug: articleSlug
-        }
-    });
-}
+export class Client {
+    constructor(token) {
+        this.authHeader = "Bearer " + token;
+    }
 
-export async function getComment(id) {
-    return await m.request({
-        method: "GET",
-        url: `/api/comments/${id}`
-    });
-}
+    async getComments(articleSlug) {
+        return await m.request({
+            method: "GET",
+            url: "/api/comments",
+            params: {
+                slug: articleSlug
+            },
+            headers: {
+                Authorization: this.authHeader
+            }
+        });
+    }
 
-export async function submitComment({
-    articleSlug,
-    name,
-    email,
-    website,
-    text,
-    parentCommentId,
-}) {
-    await m.request({
-        method: "POST",
-        url: "/api/comments",
-        params: {
-            slug: articleSlug
-        },
-        body: {
-            author: name,
-            email,
-            website,
-            text,
-            parentCommentId,
-        }
-    });
-}
+    async getComment(id) {
+        return await m.request({
+            method: "GET",
+            url: `/api/comments/${id}`,
+            headers: {
+                Authorization: this.authHeader
+            }
+        });
+    }
 
-export async function upvoteComment(id) {
-    return await m.request({
-        method: "POST",
-        url: `/api/comments/${id}/upvote`,
-        extract: xhr => xhr.status === 204
-    });
-}
+    async submitComment({
+        articleSlug,
+        name,
+        email,
+        website,
+        text,
+        parentCommentId,
+    }) {
+        return await m.request({
+            method: "POST",
+            url: "/api/comments",
+            params: {
+                slug: articleSlug
+            },
+            headers: {
+                Authorization: this.authHeader
+            },
+            body: {
+                author: name,
+                email,
+                website,
+                text,
+                parentCommentId,
+            }
+        });
+    }
 
-export async function downvoteComment(id) {
-    return await m.request({
-        method: "POST",
-        url: `/api/comments/${id}/downvote`,
-        extract: xhr => xhr.status === 204
-    });
+    async upvoteComment(id) {
+        return await m.request({
+            method: "POST",
+            url: `/api/comments/${id}/upvote`,
+            headers: {
+                Authorization: this.authHeader
+            },
+            extract: xhr => xhr.status === 204
+        });
+    }
+
+    async downvoteComment(id) {
+        return await m.request({
+            method: "POST",
+            url: `/api/comments/${id}/downvote`,
+            headers: {
+                Authorization: this.authHeader
+            },
+            extract: xhr => xhr.status === 204
+        });
+    }
 }
