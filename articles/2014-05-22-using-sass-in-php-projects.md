@@ -19,7 +19,7 @@ First we need to download the library into our project. You can download scssphp
 
 Anyway, let's get started with scssphp. First add `leafo/scssphp` as a dependency to your project's `composer.json` file:
 
-``` json
+```json
 {
     "require": {
         "leafo/scssphp": "0.0.*"
@@ -37,7 +37,7 @@ scssphp offers multiple ways to use the compiler; the author suggests one way of
 
 My typical workflow for PHP-based projects uses [Phing](http://www.phing.info) as my central build tool. I won't go over Phing in this post; if you aren't familiar with it, its based on [Apache Ant](http://ant.apache.org) (if that helps). Here's part of what my `build.xml` file looked like originally:
 
-``` xml
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="stephencoakley.com" default="build" basedir=".">
     <!-- . . . -->
@@ -60,7 +60,7 @@ My typical workflow for PHP-based projects uses [Phing](http://www.phing.info) a
 
 Here is the newly updated build file using scssphp as my SCSS compiler:
 
-``` xml
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="stephencoakley.com" default="build" basedir=".">
     <!-- . . . -->

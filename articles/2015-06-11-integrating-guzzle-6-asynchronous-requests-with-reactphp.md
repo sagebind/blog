@@ -10,6 +10,7 @@ One of my current "toy" side-projects at the moment is [a better PHP API client 
 One of the interesting problems I ran into while writing this library was how to make API calls and connect to WebSockets simultaneously. To be as snappy as possible, I wanted the entire library to be asynchronous, so I decided to use [ReactPHP](http://reactphp.org) at the core since it is reasonably mature project for asynchronous processing. This would allow you to both connect to Slack and do other things at once, such as you might need in a chat bot. PHPWS also uses React, so instant profit! Guzzle, however, has its own take on async operations, so I set out to make Guzzle and React become friends.
 
 ## Promising a response
+
 One of the core features of Guzzle 6 is an implementation of promises. For those of you that are unfamiliar with the concept of promises, here is [an excellent article](http://www.sitepoint.com/overview-javascript-promises/) that gives you a gentle introduction (though it is targeted toward JavaScript). To summarize, a promise is an object that represents some value that will be determined in the future. Callbacks can be attached to the promise using a `then()` method which will be triggered when the promise's value becomes available. Here is a quick example on how to make an asynchronous Guzzle request:
 
 ```php
@@ -31,6 +32,7 @@ $client->getAsync('http://loripsum.net/api')->then(
 In this example, `$client->getAsync()` returns a `GuzzleHttp\Promise\Promise` instance, promising to give us a response object when the request is complete. We call `then()` to register interest in the result, passing two functions: (1) a callback that accepts the promised value if the promise resolves, and (2) a callback that accepts an error value if the promise is rejected.
 
 ### Using React's promise interface
+
 React has [its own promises implementation](https://github.com/reactphp/promise), which React-based libraries (such as my Slack client) usually use to return values asynchronously. This can create some problems when using Guzzle's promises *and* React promises, because they are not compatible with each other. While they both have the all-important `then()` method, they don't play nicely together because they don't implement each other's interfaces. The best way to fix this is to convert Guzzle's promises into React promises, which are a bit more library-agnostic and more common. In addition, using React promises everywhere allows you to easily chain other React promises from the growing number of React-powered libraries.
 
 My first attempt at solving this problem looked something like this:
@@ -108,6 +110,7 @@ function getLoremIpsum()
 It makes our `getLoremIpsum()` function much clearer to write and more concise. With something like this function, you can make sure all your promises are React-compatible, which still being able to use the excellent capabilities of Guzzle to send web requests.
 
 ## Waiting on requests
+
 The tricky thing about asynchronous operations is that they have to be executed *sometime* during the program, or you will never get a result. Guzzle uses an internal `TaskQueue` object to keep track of unfulfilled promises and tasks that are yet to be completed. By default, Guzzle deals with creating and running this queue automatically as needed. Consider the following asynchronous example:
 
 ```php
@@ -129,6 +132,7 @@ In this example, Guzzle waits until you absolutely need a result before blocking
 Now, this is a really nifty way of making asynchronous HTTP calls easy, and Guzzle is extremely robust. The issue arises when you have a list of HTTP requests you are waiting for, but suddenly need to address something else -- user keystrokes, a callback timer, incoming nuclear warheads, etc. React can be configured to be interrupted by some of these types of events, but not Guzzle, which only deals with HTTP requests. To be friendly to *all* kinds of notable events, we need to shift the responsibility of waiting for Guzzle requests to a React event loop.
 
 ### Using a React event loop -- the naïve approach
+
 A React event loop, like Guzzle's `TaskQueue`, is like a big list of things to do, streams to watch, and things to wait for, which automatically cycles through and handles things in the order they come. Check [this article](http://blog.wyrihaximus.net/2015/02/reactphp-event-loop/) for a brief introduction of the event loop.
 
 Now a functional, but ultimately naïve, way is to simply schedule the `wait`ing on of requests in the event loop. This can be done fairly simply when you make the request:
@@ -151,6 +155,7 @@ $promise->then(function (ResponseInterface $response) {
 On the surface, this looks great! In fact, at the time of this writing, this is how my Slack client is [working around the problem](https://github.com/sagebind/slack-client/blob/v0.1.1/src/ApiClient.php#L147). Requests actually get handled, React's event loop isn't overtly locked, and other scheduled tasks still run. All isn't dragons and unicorns, however. The event loop is still being halted synchronously to wait for each request when the time comes for `wait()` to be called. Even worse, requests are waited for in the order they are made and not in the order that the responses are received. So, we need a better solution.
 
 ### Using a React event loop -- a better way
+
 The most reliable way is to take advantage of Guzzle's use of cURL multi handles to integrate cURL into React. Now, this requires that you use the `CurlMultiHandler` [handler](http://guzzle.readthedocs.org/en/latest/handlers-and-middleware.html). Since we need direct access to the handler instance, we need to create Guzzle's handler manually:
 
 ```php
@@ -188,6 +193,7 @@ Here we create a periodic timer that calls `tick()` on the cURL handler. Using s
 Now that the actual request handler and the event loop are connected, any Guzzle client using the connected handler will have its requests managed by the event loop. Now when we start the event loop, Guzzle's internal loop will be periodically polled and requests will be handled in parallel, truly asynchronously.
 
 ## Putting it all together
+
 Now let's put it all together into a complete example. Below is a simple program that sends a request asynchronously and displays the response body, using React as the event loop:
 
 ```php

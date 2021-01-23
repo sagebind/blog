@@ -39,7 +39,7 @@ $image-scan-lines: repeating-linear-gradient(
 @mixin border($color: $color-primary) {
     border: {
         width: 2px;
-        radius: 2px;
+        radius: 1px;
         style: solid;
         color: $color;
     }

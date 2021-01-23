@@ -9,10 +9,6 @@ a, button, input, textarea {
     }
 }
 
-form {
-    position: relative;
-}
-
 button, input[type="button"], input[type="submit"], input[type="reset"], .button {
     --button-color: #{$color-white};
 

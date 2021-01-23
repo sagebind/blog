@@ -25,14 +25,11 @@ h1 {
     font-size: 1.5rem;
     line-height: 1.25;
 
-    // color: $color-secondary;
-    // text-shadow: 0 0 2px $color-secondary, 0 0 1em fade-out($color-secondary, 0.5);
-
     padding: 0.25rem 1rem;
     color: $color-black;
     background-color: $color-white;
     box-shadow: 0 0 1px $color-white, 0 0 1rem fade-out($color-white, 0.5);
-    border-radius: 2px;
+    border-radius: 1px;
 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -162,7 +159,7 @@ pre, code {
 
 code, .tag {
     padding: 0.125em 0.25em;
-    border-radius: 2px;
+    border-radius: 1px;
     background-color: $color-darken !important;
 }
 

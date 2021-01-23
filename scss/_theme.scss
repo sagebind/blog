@@ -42,7 +42,7 @@ figure {
     display: block;
     position: relative;
     overflow: hidden;
-    border-radius: 2px;
+    border-radius: 1px;
     background: $color-primary;
     border: 2px solid fade-out($color-primary, 0.5);
     box-shadow: 0 0 1rem fade-out($color-primary, 0.5);

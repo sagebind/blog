@@ -21,9 +21,7 @@ document.querySelectorAll("pre > code.language-mermaid").forEach(function (code)
     });
 });
 
-// addEventListener("load", function () {
 hljs.initHighlighting();
-// }, false);
 
 function animateTyping(element) {
     let fastSpeed = 40;
