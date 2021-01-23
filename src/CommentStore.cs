@@ -4,7 +4,9 @@ using System.Data.Common;
 using System.Net;
 using System.Threading.Tasks;
 using HashidsNet;
+using Markdig;
 using Microsoft.Extensions.Configuration;
+using MySql.Data.MySqlClient;
 
 namespace Blog
 {
@@ -16,15 +18,66 @@ namespace Blog
         // To prevent excessive spam we limit the total number of votes any one comment can receive.
         private const int maxVotes = 500;
 
-        private const bool commentingAllowed = false;
-
         private readonly Hashids hashids;
         private readonly ConnectionProvider connectionProvider;
+        private readonly MarkdownPipeline markdownPipeline;
 
-        public CommentStore(IConfiguration configuration, ConnectionProvider connectionProvider)
+        public CommentStore(
+            IConfiguration configuration,
+            ConnectionProvider connectionProvider,
+            MarkdownPipeline markdownPipeline
+        )
         {
-            hashids = new Hashids(configuration["IdSalt"]);
+            hashids = new Hashids(configuration["IdSalt"], 5);
             this.connectionProvider = connectionProvider;
+            this.markdownPipeline = markdownPipeline;
+        }
+
+        /// <summary>
+        /// Gets all comments for the given article slug as a tree.
+        /// </summary>
+        public async Task<IEnumerable<Comment>> TreeForSlug(string slug)
+        {
+            var comments = new Dictionary<string, Comment>();
+            var rootComments = new List<Comment>();
+
+            // Load all comments for this article from the database first.
+            using (var connection = await connectionProvider.Connect())
+            {
+                using (var command = connection.CreateCommand(@"
+                    SELECT * FROM CommentWithScore
+                    WHERE slug = @slug
+                        AND dateDeleted IS NULL
+                "))
+                {
+                    command.AddParameter("@slug", slug);
+
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            var comment = GetComment(reader);
+                            comments[comment.Id] = comment;
+
+                            if (comment.ParentId == null)
+                            {
+                                rootComments.Add(comment);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Build the tree.
+            foreach (var comment in comments.Values)
+            {
+                if (comment.ParentId != null)
+                {
+                    comments[comment.ParentId].Children.Add(comment);
+                }
+            }
+
+            return rootComments;
         }
 
         /// <summary>
@@ -54,10 +107,12 @@ namespace Blog
             }
         }
 
-        public async Task<Comment> GetById(string id)
+        public async Task<Comment> GetById(string id, bool getChildren = false)
         {
             using (var connection = await connectionProvider.Connect())
             {
+                Comment comment = null;
+
                 using (var command = connection.CreateCommand(@"
                     SELECT * FROM CommentWithScore
                     WHERE id = @id
@@ -70,14 +125,20 @@ namespace Blog
                     {
                         if (await reader.ReadAsync())
                         {
-                            return GetComment(reader);
-                        }
-                        else
-                        {
-                            return null;
+                            comment = GetComment(reader);
                         }
                     }
                 }
+
+                if (getChildren)
+                {
+                    await foreach (var child in GetChildrenById(connection, id))
+                    {
+                        comment.Children.Add(child);
+                    }
+                }
+
+                return comment;
             }
         }
 
@@ -85,32 +146,45 @@ namespace Blog
         {
             using (var connection = await connectionProvider.Connect())
             {
-                using (var command = connection.CreateCommand(@"
-                    SELECT * FROM CommentWithScore
-                    WHERE parentId = @id
-                        AND dateDeleted IS NULL
-                "))
+                await foreach (var item in GetChildrenById(connection, id))
                 {
-                    command.AddParameter("@id", DecodeId(id));
+                    yield return item;
+                }
+            }
+        }
 
-                    using (var reader = await command.ExecuteReaderAsync())
+        private async IAsyncEnumerable<Comment> GetChildrenById(DbConnection connection, string id, bool getChildren = false)
+        {
+            using (var command = connection.CreateCommand(@"
+                SELECT * FROM CommentWithScore
+                WHERE parentId = @id
+                    AND dateDeleted IS NULL
+            "))
+            {
+                command.AddParameter("@id", DecodeId(id));
+
+                using (var reader = await command.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
                     {
-                        while (await reader.ReadAsync())
+                        var comment = GetComment(reader);
+
+                        if (getChildren)
                         {
-                            yield return GetComment(reader);
+                            await foreach (var child in GetChildrenById(connection, comment.Id))
+                            {
+                                comment.Children.Add(child);
+                            }
                         }
+
+                        yield return comment;
                     }
                 }
             }
         }
 
-        public async Task Submit(string slug, SubmitCommentRequest request)
+        public async Task<string> Submit(string slug, SubmitCommentRequest request)
         {
-            if (!commentingAllowed)
-            {
-                return;
-            }
-
             using (var connection = await connectionProvider.Connect())
             {
                 using (var command = connection.CreateCommand(@"
@@ -142,6 +216,8 @@ namespace Blog
                     command.AddParameter("@text", request.Text);
 
                     await command.ExecuteNonQueryAsync();
+
+                    return EncodeId(((MySqlCommand)command).LastInsertedId);
                 }
             }
         }
@@ -161,7 +237,7 @@ namespace Blog
             using (var connection = await connectionProvider.Connect())
             {
                 using (var command = connection.CreateCommand(@"
-                    INSERT OR REPLACE INTO Vote (commentId, voterIp, vote) VALUES (@id, @address, @vote)
+                    REPLACE INTO Vote (commentId, voterIp, vote) VALUES (@id, @address, @vote)
                 "))
                 {
                     command.AddParameter("@id", DecodeId(id));
@@ -191,6 +267,7 @@ namespace Blog
                 },
                 Score = (int)reader.Get<Decimal>("score"),
                 Text = reader.Get<string>("text"),
+                Html = Markdown.ToHtml(reader.Get<string>("text"), markdownPipeline),
             };
         }
 

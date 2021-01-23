@@ -63,5 +63,19 @@ namespace Blog.Controllers
                 .GetByTag(tag)
                 .Reverse());
         }
+
+        [HttpGet]
+        [Route("/{year}/{month}/{day}/{name}")]
+        public IActionResult GetArticle(int year, int month, int day, string name)
+        {
+            var article = articleStore.GetBySlug($"{year:D2}/{month:D2}/{day:D2}/{name}");
+
+            if (article == null)
+            {
+                return NotFound();
+            }
+
+            return View("Article", article);
+        }
     }
 }

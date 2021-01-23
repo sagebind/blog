@@ -1,6 +1,6 @@
 // Third-party
-@import "https://unpkg.com/sanitize.css";
-@import "https://unpkg.com/highlightjs/styles/tomorrow-night.css";
+@import "https://cdn.skypack.dev/-/sanitize.css@v12.0.1-4VhVy9a6SmO3z6S1XzgE/dist=es2020,mode=raw/sanitize.css";
+@import "https://cdn.skypack.dev/-/highlight.js@v10.5.0-kKTJ0zlR1haHew9l5lm1/dist=es2020,mode=raw/styles/tomorrow-night.css";
 
 // Layout config
 $content-max-width: 52rem;
@@ -17,6 +17,7 @@ $color-purple: hsl(260, 80%, 40%);
 $color-purple-dark: hsl(300, 80%, 20%);
 $color-black: hsl(230, 8%, 12%);
 $color-blue: hsl(207, 100%, 65%);
+$color-gray: hsla(0, 0%, 50%, 0.25);
 
 // Define our palette
 $color-primary: $color-amber;
@@ -38,7 +39,7 @@ $image-scan-lines: repeating-linear-gradient(
 @mixin border($color: $color-primary) {
     border: {
         width: 2px;
-        radius: 2px;
+        radius: 1px;
         style: solid;
         color: $color;
     }

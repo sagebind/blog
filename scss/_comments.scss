@@ -5,7 +5,7 @@
     line-height: 1.5;
 
     .comment-form {
-        margin-top: 2rem;
+        margin-top: 1rem;
 
         & > div {
             display: flex;
@@ -40,6 +40,18 @@
         margin: 2rem 0 0 0;
         clear: both;
 
+        .comment-toolbar {
+            color: gray;
+
+            & > :not(:first-child) {
+                margin-left: 1em;
+            }
+
+            a {
+                color: inherit;
+            }
+        }
+
         .avatar {
             flex-shrink: 0;
             margin-right: 1rem;
@@ -62,23 +74,6 @@
             .author {
                 color: $color-primary;
                 font-weight: bold;
-            }
-
-            .comment-date {
-                color: gray;
-            }
-        }
-
-        .comment-actions {
-            display: flex;
-            color: gray;
-
-            & > * {
-                margin-right: 1rem;
-            }
-
-            a {
-                color: inherit;
             }
         }
     }

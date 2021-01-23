@@ -32,8 +32,8 @@ namespace Blog
                     options.ViewLocationFormats.Add("/src/Views/{0}.cshtml");
                 });
 
+            services.AddSingleton<ApiTokenService>();
             services.AddSingleton<ArticleStore>();
-            services.AddSingleton<CommentAuthorService>();
             services.AddScoped<CommentStore>();
             services.AddScoped<ConnectionProvider>();
             services.AddSingleton<MarkdownPipeline>(new MarkdownPipelineBuilder()

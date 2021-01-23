@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using Humanizer;
 
 namespace Blog
 {
@@ -28,6 +29,11 @@ namespace Blog
         public DateTimeOffset Published { get; set; }
 
         /// <summary>
+        /// Human-readable description of the publish date.
+        /// </summary>
+        public string PublishedLabel => Published.Humanize();
+
+        /// <summary>
         /// The author of the comment.
         /// </summary>
         public CommentAuthor Author { get; set; }
@@ -38,9 +44,13 @@ namespace Blog
 
         public IReadOnlyCollection<IPAddress> Voters { get; set; }
 
+        public List<Comment> Children { get; set; } = new List<Comment>();
+
         /// <summary>
         /// The text of the comment in Markdown format.
         /// </summary>
         public string Text { get; set; }
+
+        public string Html { get; set; }
     }
 }

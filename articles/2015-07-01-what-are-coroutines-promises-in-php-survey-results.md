@@ -12,6 +12,7 @@ First off, I'd like to thank everyone who took the survey! (You know who you are
 Secondly, I've decided to not close the survey. I had announced that the survey would be closed after this post is published, but I decided that since the results are public and real-time, more people might wish to take the survey and we would be able to see how opinions change (or don't). So if you haven't taken it already, [you still can](https://stephencoakley.typeform.com/to/FBa4ga).
 
 ## Current results
+
 Now let's discuss the results. The first question was pretty straightforward and helped establish context for the rest of the survey:
 
 ![Have you ever heard of Promises?](/content/images/2015-07-01-survey-01.png)
@@ -25,6 +26,7 @@ This was kind of an open-ended, opinion-based question. Those who took the surve
 A few of you pointed out in this answer that promises should only be used if implemented properly in an asynchronous environment, which is an excellent point. Even if promises (or async in general) become more common in PHP, I would be appalled if everyone started using promises even in synchronous code, just to jump on the bandwagon.
 
 ### Coroutines
+
 And now the question I'd like to address the most in this post: coroutines.
 
 ![What do you think of coroutines implemented using generators?](/content/images/2015-07-01-survey-03.png)
@@ -95,6 +97,7 @@ Now the last question I got a few comments on:
 One person commented that promises should be "implemented properly", and I'd like to determine exactly what that is. Should PHP promises follow the [Promises/A+](https://promisesaplus.com) specification, which is targeted toward JavaScript? Should there be a [PSR](http://www.php-fig.org) package for a `PromiseInterface`? Some did not like that idea, but it would solve incompatibility issues between implementations, like the gap between ReactPHP and Guzzle promises. Issues like these have yet to be decided on.
 
 ## Conclusion
+
 While the results of the survey can be concluded, I think the search for the best way to design asynchronous PHP code will not conclude for some time yet. Whether we use promises, coroutines, or some other kind of future API, we should definitely be investing in asynchronous PHP. I think that event-based code that is easily adapted to run on multiple threads, processes, or even computers is part of the future of computing as a whole, and each time we invent ways to enable our code to run more concurrently, we contribute to the effort to move toward that future.
 
 If you'd like to save the results of the survey for your own records, you can download a PDF version [here](/content/2015-07-01-promises-in-php-survey-results.pdf).

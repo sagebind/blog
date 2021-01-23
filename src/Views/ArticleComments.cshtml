@@ -1,21 +1,10 @@
 @model Article
-@inject CommentStore commentStore
+@inject ApiTokenService apiTokenService
 
-<aside id="comments">
+<aside id="comments" data-article-slug="@Model.Slug" data-api-token="@Html.Raw(apiTokenService.Generate())">
     <h2>Comments</h2>
 
-    <p>Let me know what you think in the comments below. Remember to keep it civil!</p>
-
-    @await Html.PartialAsync("CommentForm", new CommentForm
-    {
-        ArticleSlug = Model.Slug,
-    })
-
-    @await foreach (var comment in commentStore.ForSlug(Model.Slug))
-    {
-        @await Html.PartialAsync("Comment", new CommentView
-        {
-            Comment = comment,
-        })
-    }
+    <noscript>
+        <p>JavaScript must be enabled to comment.</p>
+    </noscript>
 </aside>

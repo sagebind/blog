@@ -9,8 +9,8 @@ Iterators are awesome. Maybe you've heard this before and already are an iterato
 
 First, lets start with the basics of demystifying what iterators are, and then we'll explore their uses and benefits. We will also look at some practical code samples and how to use iterators in different programming languages. Most of the initial code samples will be in PHP because the way PHP defines iterators makes them easier to read, but I will transition to C++ and then other languages as we progress.
 
-
 ## What are iterators?
+
 Iterators are an extension on a simple concept that you're already familiar with. If you've ever done any substantial amount of programming before, chances are that you've looped over an array before. You may have written code like this:
 
 ```php
@@ -27,8 +27,8 @@ Guess what? This is a form of iteration! _Iteration_ simply means to _traverse_ 
 
 So now we know what _iteration_ is, but what about _iterators_? An iterator is a specialized object whose sole purpose is to perform iteration on some sequence of data. It is important to note that an iterator is not the data itself; it is a separate object from the data being iterated over. Regardless over what is being iterated, an iterator's job is to keep track of where you are in the list of values, and let you move to the next one, if there is one.
 
-
 ## Why should I care?
+
 If you've been using regular `for` loops for ages and they work fine, why should you care about iterators? I'll give you three reasons:
 
 1. You are bound to encounter them in real code, and then you'll have to understand them.
@@ -37,8 +37,8 @@ If you've been using regular `for` loops for ages and they work fine, why should
 
 The first is self-explanatory, the second you will find out in a bit, but the third will need some explanation. Normally when looping over collection, you need to know the range of indexes that you will be looping over, usually from 0 to the end of the collection. You don't always know how many items there will be; in a database query, for example, you have to simply read all the resulting rows until the end to determine how many there are, and by that time, the entire result set is now stored in memory. Linked lists are another example; determining the size can be a costly operation, but iterators inherently don't need to know the size of the collection. Iterators don't offer as much control as manual loops, but they let you save memory by reading a single row at a time, as they arrive from the database.
 
-
 ## Using iterators
+
 How might you use an iterator to loop over an array? Most programming languages worth their salt support iterators, but how they are used usually have slight syntax differences from languages to language. Let's look at another PHP example to parallel the previous code sample:
 
 ```php
@@ -87,8 +87,8 @@ for (vector<int>::iterator iter = numbers.begin(); iter != numbers.end(); iter++
 
 Admittedly, this is a bit more cryptic, but we have all the same parts as the previous code. In this case, `numbers.begin()` returns a new iterator object of type `vector<int>::iterator` that you use to iterate the `numbers` vector. `iter != numbers.end()` does the same thing as `valid()`, and `iter++` is just an operator overload to move to the next item. Yet another operator overload (the dereference `*` operator) gives us the current element with `*iter`. You don't have to understand operator overloading to use iterators, but it may help since a _lot_ of C++ standard library stuff uses them (probably a little _too_ much).
 
-
 ### "For each" syntax
+
 Using an iterator definitely requires more code than a simple `for` loop. Since iterators are so common and the syntax for using them is almost always the same every time, most languages provide an alternate type of loop, usually called a "for each" loop, that handles calling the proper iterator methods for you. In PHP, this loop is aptly called a `foreach` loop, and greatly reduces the amount of code:
 
 ```php
@@ -109,12 +109,12 @@ for (int current : numbers) {
 }
 ```
 
-
 ### Comparing iterators across languages
+
 Now that we understand how iterators work and are used, let's compare the syntax for some common programming languages other than C++ and PHP. You will see that most languages have at least two interfaces involving iterators: an interface for array-like types that you can get an iterator _for_, and an interface for the iterator itself. In PHP's case, these interfaces are the aptly-named [`Iterator`](http://php.net/manual/en/class.iterator.php) and [`IteratorAggregate`](http://php.net/manual/en/class.iteratoraggregate.php).
 
-
 #### Java
+
 Java's iterators aren't as cryptic as C++'s iterators, but are a pain to write your own. Using them isn't so bad at least:
 
 ```java
@@ -139,8 +139,8 @@ for (Iterator<Integer> iter = numbers.iterator(); iter.hasNext(); )
 }
 ```
 
-
 #### C#
+
 C# does iteration very well. It is _slightly_ confusing since iterators are called "Enumerators", but the interface is very simple to implement and use:
 
 ```csharp
@@ -161,8 +161,8 @@ for (IEnumerator<int> enumerator = numbers.GetEnumerator(); enumerator.MoveNext(
 }
 ```
 
-
 #### Python
+
 Python is pretty simple, as usual:
 
 ```python
@@ -174,8 +174,8 @@ for current in numbers:
 
 Python doesn't have interfaces, but uses "magic" [`__iter__`](https://docs.python.org/3/reference/datamodel.html#object.__iter__) and [`__next__`](https://docs.python.org/3/reference/datamodel.html#object.__next__) methods, which frankly are really strange and and you should never, ever use them by hand.
 
-
 #### Rust
+
 Rust is slowly becoming one of my favorite languages, so of course I'll include it here. Rust doesn't even have traditional C-style `for` loops; the `for` loop is designed exclusively for iterators:
 
 ```rust
@@ -202,8 +202,8 @@ loop {
 
 Here we are getting an iterator for `numbers` and putting it into a mutable `iter` variable (`mut` means the object can be modified). Then we run a loop where we call `iter.next()` which returns an `Option<T>`, which is Rust's way of saying that there may or may not be some value returned. If `Some` value was returned, we add it to the `sum`; otherwise the iterator reached the end and we just `break` out of the loop.
 
-
 ## And so what we have learned...
+
 So what did we learn from this and how can we apply it in practice? Iterators are, admittedly, not practical in _every_ situation. Conversely, in many cases where you're working with some sort of collection or data set, iterators are a powerful abstraction that can not only make the code easier to read, but also offer a level of flexibility that allows your code to work against many different types of collections.
 
 To bring them even further, I will challenge you to begin thinking about problems in a more iterative fashion. What other kinds of problems or algorithms can you simplify using iterators? You can write your own iterators that generate the Fibonacci sequence, alternate between multiple other iterators, or even an iterator that never stops and turns a finite sequence of items into a cycle.

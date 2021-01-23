@@ -8,6 +8,7 @@ tags = ["cplusplus"]
 This is a guide for people just starting out with C++ and need an easy way to write and run C++ programs on their Windows machine. If that sounds like you, then hopefully this guide will be of some help to you.
 
 ## Step 1: Choose an editor
+
 The first thing you will need to make your first C++ program is a text editor. There are a *ton* of great editors out there and there isn't a particular one that is the best, but I will point you in the right direction with ones that I recommend after years of trying different editors.
 
 Some of the editors I would recommend are:
@@ -58,6 +59,7 @@ After the installation is complete, you should have a Windows-compatible GCC C++
 It is fairly easy to configure Sublime Text and Notepad++ to use the MinGW-w64 compiler for your C++ files:
 
 ### Sublime Text
+
 Sublime Text has a build system already built-in, but the C/C++ builder doesn't work properly with MinGW out of the box. Instead, we will create a new build file that will use the MinGW-w64 compiler we installed. I took the liberty of making such a file:
 
 <script src="https://gist.github.com/sagebind/9039773048a3900fa49a.js"></script>
@@ -73,6 +75,7 @@ Note that this doesn't work for programs that take input (`std::cin` and the lik
 Also note that this compiles other `.cpp` files in the same folder as the main file as well, so organizing your programs into separate folders is a great plan. This script does not work with files in subfolders, a result of Windows' poor support of wildcards in the shell. If you need to organize files into subfolders, you will need to use the compiler by hand and manually specify the files to compile.
 
 ### Notepad++
+
 Notepad++ doesn't have a way of running build commands built-in, but you can use the standard NppExec plugin to run arbitrary commands. We can use this to run the compiler for us. First, open the plugin manager (Plugins > Plugin Manager > Show Plugin Manager). Find "NppExec" in the "Available" tab, check the checkbox, and click "Install".
 
 <a class="sb" href="/content/images/2015-01-21-notepadplusplus-plugin-manager.png"><img src="/content/images/2015-01-21-notepadplusplus-plugin-manager.png"></a>
@@ -100,6 +103,7 @@ Ultimately it's up to you how you want to write your code. Just keep learning pr
 ---
 
 ## Why I wrote this guide
+
 One of my regular jobs since last fall is peer tutoring at my university, [University of Wisconsin-Whitewater](http://uww.edu). I provide walk-in tutoring for Computer Science students each week, with my primary subject of expertise as C++. I first started tutoring near the beginning of the fall semester of 2014 and by the last month of the semester I had so many students asking for help I couldn't get to all of them.
 
 Something I noticed whilst providing assistance was how bad the development workflow was for these students. The school provides a Linux server that students can SSH into to write and compile their C++ code, which isn't accessible offline or off-campus without a VPN key. Which is awesome, but most budding programmers don't find [Vim](http://www.vim.org) or the command line too intuitive. Don't get me wrong, Vim is pretty powerful, but it takes a lot of work to learn and they are already trying to wrangle C++ for the first time. Hopefully after completing this guide, coders just starting out with C++ will find the learning process easier and faster.
