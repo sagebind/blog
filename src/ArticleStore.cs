@@ -32,7 +32,8 @@ namespace Blog
                 .GetManifestResourceNames()
                 .Where(name => name.StartsWith("blog.articles."))
                 .Select(LoadArticleFromResource)
-                .Where(article => includeUnpublished || article.IsPublished);
+                .Where(article => includeUnpublished || article.IsPublished)
+                .OrderByDescending(article => article.Date);
         }
 
         public Article GetBySlug(string slug)

@@ -24,13 +24,38 @@ namespace Blog
 
         public CommentStore(
             IConfiguration configuration,
-            ConnectionProvider connectionProvider,
-            MarkdownPipeline markdownPipeline
+            ConnectionProvider connectionProvider
         )
         {
             hashids = new Hashids(configuration["IdSalt"], 5);
             this.connectionProvider = connectionProvider;
-            this.markdownPipeline = markdownPipeline;
+            this.markdownPipeline = new MarkdownPipelineBuilder()
+                .UseAutoLinks()
+                .Build();
+        }
+
+        public async IAsyncEnumerable<Comment> GetNewest(int limit = 50)
+        {
+            using (var connection = await connectionProvider.Connect())
+            {
+                using (var command = connection.CreateCommand(@"
+                    SELECT * FROM CommentWithScore
+                    WHERE dateDeleted IS NULL
+                    ORDER BY datePublished DESC
+                    LIMIT @limit
+                "))
+                {
+                    command.AddParameter("@limit", limit);
+
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            yield return GetComment(reader);
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>

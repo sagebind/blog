@@ -52,5 +52,10 @@ namespace Blog
         public string Text { get; set; }
 
         public string Html { get; set; }
+
+        public Uri GetCanonicalUri()
+        {
+            return new Uri($"https://stephencoakley.com/{ArticleSlug}#comment-{Id}");
+        }
     }
 }

@@ -1,22 +1,28 @@
-@model IEnumerable<Blog.Article>
+@model Feed
+@{
+    Context.Response.ContentType = "application/rss+xml; charset=utf-8";
+}
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Stephen Coakley</title>
+        <title>@Model.Title</title>
         <link>https://stephencoakley.com</link>
-        <atom:link href="https://stephencoakley.com@(Context.Request.Path)" rel="self" type="application/rss+xml"/>
-        <description>Software developer and web designer</description>
-        <pubDate>@Model.Last().Date.ToString("r")</pubDate>
+        <atom:link href="@Model.SelfLink" rel="self" type="application/rss+xml"/>
+        <description>@Model.Description</description>
+        @if (Model.LastUpdated is DateTimeOffset date)
+        {
+            <pubDate>@date.ToString("r")</pubDate>
+        }
 
-        @foreach (var article in Model)
+        @foreach (var item in Model.Items)
         {
             <item>
-                <title>@article.Title</title>
-                @Html.Raw($"<link>{article.CanonicalUri}</link>")
-                <author>me@stephencoakley.com (Stephen Coakley)</author>
-                <guid>@article.CanonicalUri</guid>
-                <description>@article.Html</description>
-                <pubDate>@article.Date.ToString("r")</pubDate>
+                <title>@item.Title</title>
+                @Html.Raw($"<link>{item.Uri}</link>")
+                <author>@(item.Authors?.First()?.Name ?? "Stephen Coakley")</author>
+                <guid>@item.Uri</guid>
+                <description>@item.Html</description>
+                <pubDate>@item.DatePublished.ToString("r")</pubDate>
             </item>
         }
     </channel>

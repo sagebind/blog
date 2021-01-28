@@ -15,10 +15,7 @@ namespace Blog.Controllers
         [Route("/")]
         public IActionResult GetIndex()
         {
-            return View("Index", articleStore
-                .GetAll()
-                .Reverse()
-                .Take(7));
+            return View("Index", articleStore.GetAll().Take(7));
         }
 
         [Route("/about")]
@@ -42,9 +39,7 @@ namespace Blog.Controllers
         [Route("/articles")]
         public IActionResult ListArticles()
         {
-            return View("Articles", articleStore
-                .GetAll()
-                .Reverse());
+            return View("Articles", articleStore.GetAll());
         }
 
         // I got rid of categories, but redirect to the equivalent tag to be helpful.
@@ -59,9 +54,7 @@ namespace Blog.Controllers
         {
             tag = Tags.Normalize(tag);
             ViewData["Tag"] = tag;
-            return View("Tag", articleStore
-                .GetByTag(tag)
-                .Reverse());
+            return View("Tag", articleStore.GetByTag(tag));
         }
 
         [HttpGet]

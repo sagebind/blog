@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>net5.0</TargetFramework>
         <UserSecretsId>d681ac42-3577-452a-82a2-3b2ceea60e97</UserSecretsId>
     </PropertyGroup>
 
@@ -15,8 +15,9 @@
         <PackageReference Include="Nett" Version="0.15.0" />
         <PackageReference Include="System.Diagnostics.Debug" Version="4.3.0" />
         <PackageReference Include="System.IO.FileSystem" Version="4.3.0" />
-        <PackageReference Include="System.Net.Primitives" Version="4.3.0" />
-        <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
+        <PackageReference Include="System.Linq.Async" Version="5.0.0" />
+        <PackageReference Include="System.Net.Primitives" Version="4.3.1" />
+        <PackageReference Include="System.Runtime.Extensions" Version="4.3.1" />
         <PackageReference Include="System.Threading" Version="4.3.0" />
     </ItemGroup>
 

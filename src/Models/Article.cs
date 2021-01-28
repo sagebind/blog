@@ -17,16 +17,16 @@ namespace Blog
 
         public string Author => Metadata.Get<string>("author");
 
-        public string[] Tags => Metadata.TryGetValue("tags")?.Get<string[]>() ?? new string[] {};
+        public string[] Tags => Metadata.TryGetValue("tags")?.Get<string[]>() ?? new string[] { };
 
         public Uri CanonicalUri => new Uri("https://stephencoakley.com/" + Slug);
 
-        public DateTime Date
+        public DateTimeOffset Date
         {
             get
             {
                 DateTime local = DateTime.Parse(Metadata.Get<string>("date"));
-                return TimeZoneInfo.ConvertTimeToUtc(local, TimeZoneInfo.FindSystemTimeZoneById("America/Chicago"));
+                return new DateTimeOffset(local, TimeZoneInfo.FindSystemTimeZoneById("America/Chicago").GetUtcOffset(local));
             }
         }
 

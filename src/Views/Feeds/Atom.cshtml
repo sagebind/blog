@@ -1,34 +1,52 @@
-@model IEnumerable<Blog.Article>
+@model Feed
+@{
+    Context.Response.ContentType = "application/atom+xml; charset=utf-8";
+}
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <title>Stephen Coakley</title>
+    <title>@Model.Title</title>
     <link href="https://stephencoakley.com"/>
-    <link href="https://stephencoakley.com@(Context.Request.Path)" rel="self"/>
-    <subtitle>Software developer and web designer</subtitle>
-    <updated>@Model.Last().Date.ToString("yyyy-MM-ddTHH:mm:ssZ")</updated>
-    <id>https://stephencoakley.com/feed.atom</id>
+    <link href="@Model.SelfLink" rel="self"/>
+    <subtitle>@Model.Description</subtitle>
+    @if (Model.LastUpdated is DateTimeOffset date)
+    {
+        <updated>@date</updated>
+    }
+    <id>@Model.SelfLink</id>
     <author>
         <name>Stephen Coakley</name>
         <email>me@stephencoakley.com</email>
     </author>
 
-    @foreach (var article in Model)
+    @foreach (var item in Model.Items)
     {
         <entry>
-            <title>@article.Title</title>
-            <link href="@article.CanonicalUri"/>
-            <id>@article.CanonicalUri</id>
-            <author>
-                <name>Stephen Coakley</name>
-                <email>me@stephencoakley.com</email>
-            </author>
-            @foreach (var tag in article.Tags)
+            <title>@item.Title</title>
+            <link href="@item.Uri"/>
+            <id>@item.Uri</id>
+            @if (item.Authors != null)
             {
-                <category term="@tag"/>
+                @foreach (var author in item.Authors)
+                {
+                    <author>
+                        <name>@author.Name</name>
+                        @if (author.Uri != null)
+                        {
+                            <uri>@author.Uri</uri>
+                        }
+                    </author>
+                }
             }
-            <updated>@article.Date.ToString("yyyy-MM-ddTHH:mm:ssZ")</updated>
-            <summary type="html">@article.Summarize()</summary>
-            <content type="html">@article.Html</content>
+            @if (item.Tags != null)
+            {
+                @foreach (var tag in item.Tags)
+                {
+                    <category term="@tag"/>
+                }
+            }
+            <updated>@item.DatePublished</updated>
+            @* <summary type="html">@article.Summarize()</summary> *@
+            <content type="html">@item.Html</content>
         </entry>
     }
 </feed>
