@@ -31,7 +31,7 @@ namespace Blog.Controllers
             return FeedResult(format, new Feed
             {
                 Title = "Stephen Coakley",
-                Description = "Software developer and web designer",
+                Description = "Latest articles from a Disciple of Christ and software engineer. I post infrequently and usually on technical topics.",
                 SelfLink = $"https://stephencoakley.com/feed.{format}",
                 Items = articleStore.GetAll().Select(article => (Feed.Item)article)
             });
@@ -43,7 +43,7 @@ namespace Blog.Controllers
         {
             return FeedResult(format, new Feed
             {
-                Title = "Stephen Coakley",
+                Title = $"Stephen Coakley - {tag}",
                 Description = $"Articles tagged \"{tag}\"",
                 SelfLink = $"https://stephencoakley.com/feed/{tag}.{format}",
                 Items = articleStore.GetByTag(Tags.Normalize(tag)).Select(article => (Feed.Item)article)
