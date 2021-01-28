@@ -58,7 +58,7 @@ namespace Blog.Controllers
             {
                 Title = "Stephen Coakley - Comments",
                 Description = "Comments on all articles",
-                SelfLink = $"https://stephencoakley.com/feed/comments/all.{format}",
+                SelfLink = $"https://stephencoakley.com/comments/feed.{format}",
                 Items = await commentStore.GetNewest().Select(comment => (Feed.Item)comment).ToListAsync()
             });
         }
