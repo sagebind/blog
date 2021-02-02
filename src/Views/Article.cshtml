@@ -17,6 +17,9 @@
         {
             <a class="tag" href="/category/@tag">@tag</a>
         }
+
+        <br>
+        <span>@Model.EstimatedReadingTime.Minutes min read</span>
     </p>
 
     @Html.Raw(Model.Html)

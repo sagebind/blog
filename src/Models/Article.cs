@@ -1,10 +1,13 @@
 using System;
+using System.Text.RegularExpressions;
 using Nett;
 
 namespace Blog
 {
     public class Article
     {
+        private static readonly Regex wordRegex = new Regex(@"\b[\w']+\b");
+
         public string Slug { get; set; }
 
         public TomlTable Metadata { get; set; } = Toml.Create();
@@ -47,5 +50,9 @@ namespace Blog
         {
             return Text.Substring(0, Text.IndexOf(" ", length)) + "...";
         }
+
+        public TimeSpan EstimatedReadingTime => TimeSpan.FromMinutes(WordCount / 200);
+
+        public int WordCount => wordRegex.Matches(Text).Count;
     }
 }
