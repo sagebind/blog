@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -64,7 +63,30 @@ namespace Blog.Controllers
                 Title = "Stephen Coakley - Comments",
                 Description = "Comments on all articles",
                 SelfLink = $"https://stephencoakley.com/comments/feed.{format}",
-                Items = await commentStore.GetNewest().Select(comment => (Feed.Item)comment).ToListAsync()
+                Items = await commentStore.GetNewest()
+                    .Select(comment => (Feed.Item)comment)
+                    .ToListAsync()
+            });
+        }
+
+        [Route("/{year}/{month}/{day}/{name}/comments.{format}")]
+        public async Task<IActionResult> GetArticleCommentsFeed(int year, int month, int day, string name, string format)
+        {
+            var article = articleStore.GetBySlug($"{year:D2}/{month:D2}/{day:D2}/{name}");
+
+            if (article == null)
+            {
+                return NotFound();
+            }
+
+            return FeedResult(format, new Feed
+            {
+                Title = $"{article.Title} - Comments",
+                Description = $"Comments on \"{article.Title}\"",
+                SelfLink = $"https://stephencoakley.com/{article.Slug}/comments.{format}",
+                Items = await commentStore.ForSlug(article.Slug, includeChildComments: true)
+                    .Select(comment => (Feed.Item)comment)
+                    .ToListAsync()
             });
         }
 

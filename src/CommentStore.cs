@@ -108,15 +108,15 @@ namespace Blog
         /// <summary>
         /// Gets all top-level comments for the given article slug.
         /// </summary>
-        public async IAsyncEnumerable<Comment> ForSlug(string slug)
+        public async IAsyncEnumerable<Comment> ForSlug(string slug, bool includeChildComments = false)
         {
             using (var connection = await connectionProvider.Connect())
             {
-                using (var command = connection.CreateCommand(@"
+                using (var command = connection.CreateCommand($@"
                     SELECT * FROM CommentWithScore
                     WHERE slug = @slug
                         AND dateDeleted IS NULL
-                        AND parentId IS NULL
+                        {(includeChildComments ? "" : "parentId IS NULL")}
                 "))
                 {
                     command.AddParameter("@slug", slug);

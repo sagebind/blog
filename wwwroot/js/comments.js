@@ -103,6 +103,8 @@ export class CommentsSection {
 
             <p>Let me know what you think in the comments below. Remember to keep it civil!</p>
 
+            <p><a href="/${this.articleSlug}/comments.atom">Subscribe to this thread</a></p>
+
             <${CommentForm} onsubmit="${form => this.comment(form)}" />
 
             <${Loadable} loading="${this.loading}">
