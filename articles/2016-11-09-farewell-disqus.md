@@ -2,7 +2,7 @@
 title = "Farewell Disqus"
 author = "Stephen Coakley"
 date = "2016-11-09"
-tags = ["webdev"]
+tags = ["programming", "webdev"]
 +++
 
 You might notice a fresh look down below in the comments. That's because I am no longer using [Disqus] to host comments on.

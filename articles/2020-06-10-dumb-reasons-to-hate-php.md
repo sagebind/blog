@@ -2,7 +2,7 @@
 title = "Dumb Reasons to Hate PHP"
 author = "Stephen Coakley"
 date = "2020-06-10"
-tags = ["php"]
+tags = ["programming", "php"]
 +++
 
 [PHP] just recently celebrated its 25th anniversary since it was first introduced, which is quite the achievement, considering it still powers a large slice of the Internet today. I don't write much PHP anymore myself as I've more or less moved on to new and different things, but I am incredibly grateful to PHP. It was one of the first "real" programming languages I really invested in to learn programming, and learn I did. I built real things, real websites with it, and also was involved in the community for a while. I saw the rise of [Composer](https://getcomposer.org/) and [Packagist](https://packagist.org/) replace the aging PEAR. I saw the release of PHP 7 and all the work that went into it the years prior leading up to it.

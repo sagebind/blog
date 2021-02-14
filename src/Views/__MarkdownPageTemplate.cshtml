@@ -1,0 +1,7 @@
+@model Westwind.AspNetCore.Markdown.MarkdownModel
+@{
+    Layout = "Layout";
+    ViewData["Title"] = Model.Title;
+}
+
+@Model.RenderedMarkdown

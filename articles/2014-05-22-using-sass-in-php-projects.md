@@ -2,7 +2,7 @@
 title = "Using Sass in PHP Projects"
 author = "Stephen Coakley"
 date = "2014-05-22"
-tags = ["php", "webdev"]
+tags = ["programming", "php", "webdev"]
 +++
 
 If you have been paying attention to developments in the web development community recently, you probably know what CSS preprocessors are. If not, I would encourage you to check them out and play around with them. I understand they aren't for everyone (it does require a more complex workflow), but in general it can help you keep your CSS cleaner and more modular. Check out [this awesome post](http://www.vanseodesign.com/css/css-preprocessors) by [Steven Bradley](http://www.vanseodesign.com) for a gentle introduction to CSS preprocessing.

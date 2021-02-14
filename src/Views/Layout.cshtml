@@ -6,7 +6,7 @@
         <meta charset="utf-8">
         @if (ViewData.ContainsKey("Title"))
         {
-            <title>@Html.Raw(ViewData["Title"]) - Stephen Coakley</title>
+            <title>@Html.Raw(ViewData["Title"]) — Stephen Coakley</title>
         }
         else
         {
@@ -43,6 +43,7 @@
                 <div class="links">
                     <a class="button" href="/articles">Articles</a>
                     <a class="button" href="/stuff">Stuff</a>
+                    <a class="button" href="/feeds">Feeds</a>
                     <a class="button" href="/about">About</a>
                 </div>
             </nav>
@@ -55,7 +56,7 @@
         <footer>
             <hr>
             <p class="center">
-                <a title="Email" href="mailto:me@stephencoakley.com">Email</a> | <a title="GitHub" href="https://github.com/sagebind">GitHub</a> | <a title="Feed" href="/feed">Feed</a>
+                <a title="Email" href="mailto:me@stephencoakley.com">Email</a> | <a title="GitHub" href="https://github.com/sagebind">GitHub</a> | <a href="/feeds">Feeds</a>
             </p>
 
             <p class="center copyright">&copy; @DateTime.Now.Year Stephen Coakley</p>

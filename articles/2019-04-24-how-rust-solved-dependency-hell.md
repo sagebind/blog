@@ -2,7 +2,7 @@
 title = "How Rust Solved Dependency Hell"
 author = "Stephen Coakley"
 date = "2019-04-24"
-tags = ["rust"]
+tags = ["programming", "rust"]
 +++
 
 Every once in a while I'll be involved in a conversation about dependency management and versions, often at work, in which the subject of "dependency hell" will come up. If you're not familiar with the term, then I encourage you to look it up. A brief summary might be: "The frustration that comes from dealing with application dependency versions and dependency conflicts". With that in mind, let's get a little technical about dependency resolution.

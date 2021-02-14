@@ -2,7 +2,7 @@
 title = "Should We Be Using Promises in Async PHP?"
 author = "Stephen Coakley"
 date = "2015-06-24"
-tags = ["php"]
+tags = ["programming", "php"]
 +++
 
 I'd like to talk briefly about a new survey that I'm trying to distribute. It's nothing amazing, just a really short poll to try and help me gage people's opinions using Promises for handling asynchronous code. Let me explain why this survey is important.

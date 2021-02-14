@@ -15,25 +15,7 @@ namespace Blog.Controllers
         [Route("/")]
         public IActionResult GetIndex()
         {
-            return View("Index", articleStore.GetAll().Take(7));
-        }
-
-        [Route("/about")]
-        public IActionResult GetAbout()
-        {
-            return View("About");
-        }
-
-        [Route("/selftest")]
-        public IActionResult GetSelftest()
-        {
-            return View("Selftest");
-        }
-
-        [Route("/stuff")]
-        public IActionResult GetStuff()
-        {
-            return View("Stuff");
+            return View("Index", articleStore.GetAll().Take(4));
         }
 
         [Route("/articles")]

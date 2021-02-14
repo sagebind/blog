@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Westwind.AspNetCore.Markdown;
 
 namespace Blog
 {
@@ -26,6 +27,12 @@ namespace Blog
         public virtual void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpContextAccessor();
+            services.AddMarkdown(config =>
+            {
+                var folderConfig = config.AddMarkdownProcessingFolder("/", "src/Views/__MarkdownPageTemplate.cshtml");
+                folderConfig.ProcessExtensionlessUrls = true;
+            });
+            services.AddRazorPages();
             services.AddMvc()
                 .AddRazorOptions(options =>
                 {
@@ -49,11 +56,14 @@ namespace Blog
         {
             app.UseStatusCodePagesWithReExecute("/error/{0}");
             app.UseDefaultFiles();
+            app.UseMarkdown();
             app.UseStaticFiles();
             app.UseRouting();
 
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
+                endpoints.MapRazorPages();
+                endpoints.MapDefaultControllerRoute();
             });
         }
     }

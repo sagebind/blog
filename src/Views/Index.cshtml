@@ -3,9 +3,13 @@
 }
 @model IEnumerable<Blog.Article>
 
+<p><big>Hello there!</big> I'm a full-time software engineer that is passionate about web and system software, efficiency, and open-source. Occasionally I post articles here that range from short thoughts on life to results of some technical research or discovery I've done.</p>
+
 <h1>Latest Articles</h1>
 
 @foreach (var article in Model)
 {
     @await Html.PartialAsync("ArticleSummary", article)
 }
+
+<a class="button" href="/articles">See more articles</a>

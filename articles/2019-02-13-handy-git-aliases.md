@@ -2,7 +2,7 @@
 title = "Handy Git Aliases"
 author = "Stephen Coakley"
 date = "2019-02-13"
-tags = ["git", "workflow"]
+tags = ["programming", "workflow"]
 +++
 
 I am a heavy [Git] user. I use it every day at work, I use it almost every other evening for personal projects, notes, and anything else I can find a use case for Git. I've also been using it for a little while, since at least 2012 (approximately), and one of my favorite Git features is [aliases](https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases). Aliases let you add your own short little subcommands to the Git command by adding one-liners to your user configuration. It's great for renaming commands to make them easier to remember and for composing a common sequence of commands into one.

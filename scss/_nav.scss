@@ -1,10 +1,14 @@
+header {
+    background-color: $color-black;
+}
+
 nav {
     opacity: 0.9;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-end;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0;
 
     color: $color-primary;
     text-transform: uppercase;
@@ -17,7 +21,8 @@ nav {
 
         a {
             --button-color: #{$color-primary} !important;
-            margin: 0 1em;
+            margin: 0 0.5em;
+            white-space: nowrap;
         }
     }
 
@@ -28,11 +33,7 @@ nav {
         font-size: 1.75em;
         text-shadow: 0 0 2px currentColor, 0 0 1em fade-out($color-primary, 0.5);
         line-height: 1.25;
-
-        svg {
-            display: block;
-            height: 100%;
-        }
+        color: $color-white;
     }
 
     @media (max-width: 700px) {

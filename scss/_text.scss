@@ -25,31 +25,21 @@ h1 {
     font-size: 1.5rem;
     line-height: 1.25;
 
-    padding: 0.25rem 1rem;
-    color: $color-black;
-    background-color: $color-white;
-    box-shadow: 0 0 1px $color-white, 0 0 1rem fade-out($color-white, 0.5);
-    border-radius: 1px;
+    padding: 4rem 1rem 1rem 1rem;
+    color: white;
+    border-radius: 2px;
+
+    background: {
+        color: $color-primary;
+        image: url("/assets/images/nebula-amber.jpg");
+        size: cover;
+    }
 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
     @media (max-width: 480px) {
         font-size: 2rem;
-    }
-
-    &:after {
-        content: "_";
-        animation: 1s blink linear infinite;
-    }
-
-    @keyframes blink {
-        from, 20%, 90%, to {
-            opacity: 0;
-        }
-        30%, 60% {
-            opacity: 1;
-        }
     }
 
     @media (min-width: 700px) {
@@ -72,24 +62,16 @@ blockquote {
 }
 
 hr {
-    position: relative;
-    margin: 3rem 0;
-    padding: 1px 0;
-    overflow: visible;
+    display: block;
+    height: unset;
     border: none;
-    background-color: $color-white;
-    box-shadow: 0 0 1px $color-white, 0 0 1rem $color-white;
+    text-align: center;
 
-    &::after {
-        content: "";
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: inherit;
-        filter: blur(1rem);
+    &::before {
+        content: "//\\\\\\\\// /\\\\/\\/// /\\\\\\//\\/ //\\\\\\\\//";
+        font-size: 1rem;
+        font-family: $font-display;
+        color: $color-primary;
     }
 }
 
@@ -109,6 +91,14 @@ a {
     &:hover {
         background-size: 100% 100%;
     }
+}
+
+big {
+    padding-right: 0.25rem;
+    line-height: 1rem;
+    font-size: 2em;
+    font-weight: bold;
+    color: $color-primary;
 }
 
 mark {
@@ -158,9 +148,9 @@ pre, code {
 }
 
 code, .tag {
-    padding: 0.125em 0.25em;
-    border-radius: 1px;
-    background-color: $color-darken !important;
+    padding: 0.125em 0.375em;
+    border-radius: 2px;
+    background-color: $color-black !important;
 }
 
 code {

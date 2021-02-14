@@ -26,8 +26,19 @@ namespace Blog.Controllers
 
         [Route("/feed")]
         [Route("/feed.{format}")]
-        public IActionResult GetFeed(string format = "atom")
+        public IActionResult GetFeed(string format = "atom", [FromQuery] string tag = null)
         {
+            if (!string.IsNullOrWhiteSpace(tag))
+            {
+                return FeedResult(format, new Feed
+                {
+                    Title = $"Stephen Coakley - {tag}",
+                    Description = $"Articles tagged \"{tag}\"",
+                    SelfLink = $"https://stephencoakley.com/feed.{format}?tag={tag}",
+                    Items = articleStore.GetByTag(Tags.Normalize(tag)).Select(article => (Feed.Item)article)
+                });
+            }
+
             return FeedResult(format, new Feed
             {
                 Title = "Stephen Coakley",
@@ -41,13 +52,7 @@ namespace Blog.Controllers
         [Route("/feed/{tag}.{format}")]
         public IActionResult GetTagFeed(string tag, string format = "atom")
         {
-            return FeedResult(format, new Feed
-            {
-                Title = $"Stephen Coakley - {tag}",
-                Description = $"Articles tagged \"{tag}\"",
-                SelfLink = $"https://stephencoakley.com/feed/{tag}.{format}",
-                Items = articleStore.GetByTag(Tags.Normalize(tag)).Select(article => (Feed.Item)article)
-            });
+            return RedirectPermanent($"/feed.{format}?tag={tag}");
         }
 
         [Route("/comments/feed")]

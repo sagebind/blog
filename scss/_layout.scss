@@ -6,14 +6,16 @@
 html {
     // Make sure our background can extend at least to the edge of the viewport.
     min-height: 100%;
+    background-color: $color-black;
 }
 
 body {
     margin: 0;
+    border: 1rem solid $color-black;
 
     header {
-        margin-top: 1rem;
-        margin-bottom: 1rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
     }
 
     main, footer {

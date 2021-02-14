@@ -1,40 +1,10 @@
 body {
-    background: {
-        image:
-            url("/assets/images/noise.png"),
-            radial-gradient(
-                circle at 50% 50vh,
-                fade-out($color-white, 0.95),
-                transparent
-            ),
-            linear-gradient(to bottom, fade-out($color-tertiary, 0.9), transparent 32rem);
-        color: $color-black;
-        position: 0 0, top center, top center;
-        repeat: repeat, no-repeat;
-    }
-
-    animation: grain 500ms steps(1) infinite;
+    background-color: $color-dark-gray;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAARklEQVR42u3U0QkAIAhAQe2//QdtAFsiKvBuAeGJRgAAAAAAAABcUFXz5fzRfQECdA+QP958Zi5P0AkIIAAAAAAAAABwzAbVywoigh1x+wAAAABJRU5ErkJggg==");
+    background-position: center 48px;
 
     ::-moz-selection, ::selection {
         background: fade-out($color-primary, 0.5);
-    }
-
-    @keyframes grain {
-        0% {
-            background-position: 0px 0px, top center, top center;
-        }
-        25% {
-            background-position: -20px 0px, top center, top center;
-        }
-        50% {
-            background-position: 20px 20px, top center, top center;
-        }
-        75% {
-            background-position: 0px -20px, top center, top center;
-        }
-        100% {
-            background-position: -20px 20px, top center, top center;
-        }
     }
 }
 
