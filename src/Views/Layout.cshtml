@@ -1,4 +1,7 @@
 @using System.Reflection
+@using Microsoft.AspNetCore.Hosting
+@using Microsoft.Extensions.Hosting
+@inject IWebHostEnvironment env
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +34,9 @@
         <meta name="viewport" content="initial-scale=1">
         <link rel="stylesheet" href="/css/main.css?v=@Blog.Startup.GitCommit">
 
-        <script defer src="https://unpkg.com/mermaid@8.8.4/dist/mermaid.min.js"></script>
+        <script defer src="/js/vendor/mithril-2.0.4.js"></script>
+        <script defer src="/js/vendor/highlightjs-10.5.0.js"></script>
+        <script defer src="/js/vendor/mermaid-8.8.4.js"></script>
         <script type="module" src="/js/index.js"></script>
     </head>
 
@@ -62,18 +67,21 @@
             <p class="center copyright">&copy; @DateTime.Now.Year Stephen Coakley</p>
         </footer>
 
-        <script type="text/javascript">
-            var _paq = window._paq || [];
-            _paq.push(['trackPageView']);
-            _paq.push(['enableLinkTracking']);
-            (function() {
-                var u="//analytics.cloud.stephencoakley.dev/";
-                _paq.push(['setTrackerUrl', u+'matomo.php']);
-                _paq.push(['setSiteId', '1']);
-                var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-                g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-            })();
-        </script>
-        <noscript><p><img src="//analytics.cloud.stephencoakley.dev/matomo.php?idsite=1&amp;rec=1" style="border:0;" alt="" /></p></noscript>
+        @if (env.IsProduction())
+        {
+            <script type="text/javascript">
+                var _paq = window._paq || [];
+                _paq.push(['trackPageView']);
+                _paq.push(['enableLinkTracking']);
+                (function() {
+                    var u="//analytics.cloud.stephencoakley.dev/";
+                    _paq.push(['setTrackerUrl', u+'matomo.php']);
+                    _paq.push(['setSiteId', '1']);
+                    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+                    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+                })();
+            </script>
+            <noscript><p><img src="//analytics.cloud.stephencoakley.dev/matomo.php?idsite=1&amp;rec=1" style="border:0;" alt="" /></p></noscript>
+        }
     </body>
 </html>

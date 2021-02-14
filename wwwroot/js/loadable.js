@@ -1,4 +1,4 @@
-import { m, html } from "./deps.js";
+import { html } from "./deps.js";
 
 export default class Loadable {
     view({ attrs, children }) {

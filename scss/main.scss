@@ -1,7 +1,3 @@
-// Third-party
-@import "https://cdn.skypack.dev/-/sanitize.css@v12.0.1-4VhVy9a6SmO3z6S1XzgE/dist=es2020,mode=raw/sanitize.css";
-@import "https://cdn.skypack.dev/-/highlight.js@v10.5.0-kKTJ0zlR1haHew9l5lm1/dist=es2020,mode=raw/styles/tomorrow-night.css";
-
 // Layout config
 $content-max-width: 52rem;
 $sidebar-width: 16rem;
@@ -61,11 +57,13 @@ $image-scan-lines: repeating-linear-gradient(
     }
 }
 
+@import "vendor/sanitize";
 @import "fonts";
 @import "text";
 @import "layout";
 @import "nav";
 @import "theme";
 @import "forms";
+@import "vendor/highlightjs/tomorrow-night-eighties";
 @import "mermaid";
 @import "comments";

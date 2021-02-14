@@ -1,6 +1,5 @@
-import m from "https://cdn.skypack.dev/pin/mithril@v2.0.4-e2Z23g0XpzLzrW68CBcO/min/mithril.js";
-import htm from "https://cdn.skypack.dev/pin/htm@v3.0.4-eKPIliCVcHknqhs5clvp/min/htm.js";
-import hljs from "https://cdn.skypack.dev/pin/highlight.js@v10.5.0-kKTJ0zlR1haHew9l5lm1/min/highlightjs.js";
+import htm from "./vendor/htm-3.0.4.js";
 
-export { hljs, m };
+export const hljs = window.hljs;
+export const m = window.m;
 export const html = htm.bind(m);
