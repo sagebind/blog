@@ -30,9 +30,11 @@ h1 {
     border-radius: 2px;
 
     background: {
-        color: $color-primary;
+        color: fade-out($color-primary, 0.25);
         image: url("/assets/images/nebula-amber.jpg");
         size: cover;
+        position: center;
+        repeat: no-repeat;
     }
 
     -webkit-font-smoothing: antialiased;
@@ -148,13 +150,13 @@ pre, code {
 }
 
 code, .tag {
-    padding: 0.125em 0.375em;
+    padding: 0.125em 0.5em;
     border-radius: 2px;
     background-color: $color-black !important;
 }
 
 code {
-    font-size: 0.7em;
+    font-size: 0.75em;
 }
 
 pre > code {
