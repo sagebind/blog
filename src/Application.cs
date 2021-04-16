@@ -62,7 +62,7 @@ namespace Blog
                     "default-src 'none'; " +
                     "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://analytics.cloud.stephencoakley.dev; " +
                     "connect-src 'self' https://analytics.cloud.stephencoakley.dev; " +
-                    "img-src 'self' data: https://s.gravatar.com https://analytics.cloud.stephencoakley.dev; " +
+                    "img-src 'self' data: https://s.gravatar.com https://www.gravatar.com https://analytics.cloud.stephencoakley.dev; " +
                     "style-src 'self' 'unsafe-inline'; " +
                     "font-src 'self'; " +
                     "form-action 'self'; " +
