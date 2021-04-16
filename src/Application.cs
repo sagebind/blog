@@ -55,6 +55,22 @@ namespace Blog
 
         public virtual void Configure(IApplicationBuilder app)
         {
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers.Add(
+                    "Content-Security-Policy",
+                    "default-src 'none'; " +
+                    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://analytics.cloud.stephencoakley.dev; " +
+                    "connect-src 'self' https://analytics.cloud.stephencoakley.dev; " +
+                    "img-src 'self' data: https://s.gravatar.com https://analytics.cloud.stephencoakley.dev; " +
+                    "style-src 'self' 'unsafe-inline'; " +
+                    "font-src 'self'; " +
+                    "form-action 'self'; " +
+                    "object-src 'none'"
+                );
+                await next();
+            });
+
             app.UseStatusCodePagesWithReExecute("/error/{0}");
             app.UseDefaultFiles();
             app.UseMarkdown();
@@ -66,21 +82,6 @@ namespace Blog
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
                 endpoints.MapDefaultControllerRoute();
-            });
-
-            app.Use(async (context, next) =>
-            {
-                context.Response.Headers.Add(
-                    "Content-Security-Policy",
-                    "default-src 'none'; " +
-                    "img-src 'self' https://analytics.cloud.stephencoakley.dev; " +
-                    "script-src 'self' https://analytics.cloud.stephencoakley.dev; " +
-                    "connect-src 'self' https://analytics.cloud.stephencoakley.dev; " +
-                    "style-src 'self'; " +
-                    "font-src 'self'; " +
-                    "object-src 'none'"
-                );
-                await next();
             });
         }
     }
