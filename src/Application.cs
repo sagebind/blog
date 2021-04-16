@@ -14,6 +14,7 @@ namespace Blog
         public static void Main(string[] args)
         {
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureKestrel(options => options.AddServerHeader = false)
                 .UseStartup<Startup>()
                 .Build()
                 .Run();
@@ -60,10 +61,26 @@ namespace Blog
             app.UseStaticFiles();
             app.UseRouting();
 
-            app.UseEndpoints(endpoints => {
+            app.UseEndpoints(endpoints =>
+            {
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
                 endpoints.MapDefaultControllerRoute();
+            });
+
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers.Add(
+                    "Content-Security-Policy",
+                    "default-src 'none'; " +
+                    "img-src 'self' https://analytics.cloud.stephencoakley.dev; " +
+                    "script-src 'self' https://analytics.cloud.stephencoakley.dev; " +
+                    "connect-src 'self' https://analytics.cloud.stephencoakley.dev; " +
+                    "style-src 'self'; " +
+                    "font-src 'self'; " +
+                    "object-src 'none'"
+                );
+                await next();
             });
         }
     }
