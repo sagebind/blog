@@ -22,6 +22,8 @@ namespace Blog
 
         public string[] Tags => Metadata.TryGetValue("tags")?.Get<string[]>() ?? new string[] { };
 
+        public bool IsOutdated => Metadata.TryGetValue("outdated")?.Get<bool>() ?? false;
+
         public Uri CanonicalUri => new Uri("https://stephencoakley.com/" + Slug);
 
         public DateTimeOffset Date

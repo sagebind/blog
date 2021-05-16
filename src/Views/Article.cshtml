@@ -21,6 +21,11 @@
         <span>@Model.EstimatedReadingTime.Minutes min read</span>
     </p>
 
+    @if (Model.IsOutdated)
+    {
+        <p class="outdated-message"><strong>Heads up!</strong> Tech moves fast, and seeing as this article is pretty old it is likely outdated. I'd avoid relying too heavily on it.</p>
+    }
+
     @Html.Raw(Model.Html)
 </article>
 

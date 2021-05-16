@@ -187,3 +187,11 @@ img {
         opacity: 1;
     }
 }
+
+.outdated-message {
+    padding: 1rem;
+    border-radius: 2px;
+    background-color: $color-white;
+    color: $color-black;
+    font-size: 1.2rem;
+}

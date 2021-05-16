@@ -33,6 +33,7 @@
 
     <ItemGroup>
         <Watch Include="scss/**/*.scss" />
+        <Content Update="wwwroot/css/main.css" Watch="false" />
     </ItemGroup>
 
     <Target Name="Version" DependsOnTargets="GitVersion" BeforeTargets="CoreCompile">
