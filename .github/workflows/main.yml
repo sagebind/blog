@@ -16,12 +16,9 @@ jobs:
         run: |
           export TAG=${GITHUB_SHA:0:8}
 
-          echo "$DOCKER_PASSWORD" | docker login ghcr.io -u "$DOCKER_USERNAME" --password-stdin
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
           docker-compose push
         if: github.ref == 'refs/heads/master'
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Update deployment config
         run: sed -i s/:latest/:${GITHUB_SHA:0:8}/ config/deployment.yaml
