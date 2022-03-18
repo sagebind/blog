@@ -1,0 +1,22 @@
+[package]
+name = "stephencoakley-blog"
+version = "3.0.0"
+edition = "2021"
+
+[dependencies]
+comrak = "0.12"
+harsh = "0.2"
+html-escape = "0.2"
+include_dir = "0.7"
+itertools = "0.10"
+maud = "0.23"
+once_cell = "1"
+pulldown-cmark = "0.9"
+regex = "1"
+time = "0.3"
+toml = "0.5"
+vial = "0.1"
+
+[dependencies.serde]
+version = "1"
+features = ["derive"]
