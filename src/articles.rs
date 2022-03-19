@@ -44,7 +44,7 @@ impl Article {
         }
 
         Self {
-            slug: format!("{}/{}/{}/{}", year, month, day, slug),
+            slug: format!("{:04}/{:02}/{:02}/{}", year, month, day, slug),
             title: frontmatter.title,
             author: frontmatter.author,
             date: Date::from_calendar_date(year, date_month, day).unwrap(),

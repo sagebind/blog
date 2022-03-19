@@ -1,8 +1,10 @@
-use maud::{html, Markup, PreEscaped, DOCTYPE};
-use pulldown_cmark::{html, Options, Parser};
+use maud::{html, Markup, DOCTYPE};
 use time::OffsetDateTime;
 
-use crate::articles::{self, Article};
+use crate::{
+    articles::{self, Article},
+    components::{date, markdown, comments::comments_section}, comments::Comment,
+};
 
 pub fn home() -> Markup {
     layout(
@@ -38,7 +40,7 @@ pub fn articles() -> Markup {
     )
 }
 
-pub fn article(article: &Article) -> Markup {
+pub fn article(article: &Article, comments: &[Comment]) -> Markup {
     layout(
         "Articles - Stephen Coakley",
         html! {
@@ -46,7 +48,7 @@ pub fn article(article: &Article) -> Markup {
                 h1 { (&article.title) }
 
                 p class="postmeta" {
-                    (&article.date)
+                    (date(article.date))
 
                     span class="author-by" { " by " }
                     span class="author" {
@@ -80,13 +82,17 @@ pub fn article(article: &Article) -> Markup {
                         a href="/about" {
                             strong { "Stephen Coakley" }
                         }
-                        ", a software engineer and committed Christian. I am passionate about faith, life, systems and web software, gaming, and music."
+                        ", a software engineer and committed Christian. I am passionate about faith, life, systems and "
+                        "web software, gaming, and music."
                     }
                     p {
-                        "Occasionally I write articles here about those things, mostly focused on web development or low-level programming."
+                        "Occasionally I write articles here about those things, mostly focused on web development or "
+                        "low-level programming."
                     }
                 }
             }
+
+            (comments_section(comments))
         },
     )
 }
@@ -159,7 +165,7 @@ fn layout(title: &str, body: Markup) -> Markup {
 
             meta name="viewport" content="initial-scale=1";
 
-            link rel="stylesheet" href="/css/main.css?v=@Blog.Startup.GitCommit";
+            link rel="stylesheet" href="/css/main.css";
             script defer src="https://unpkg.com/htmx.org@1.7.0" {}
         }
         body {
@@ -206,7 +212,7 @@ fn article_summary(article: &Article) -> Markup {
             }
 
             small {
-                (&article.date)
+                (date(article.date))
 
                 span class="tags" {
                     @for tag in &article.tags {
@@ -222,20 +228,4 @@ fn article_summary(article: &Article) -> Markup {
             p { (article.summary(250)) }
         }
     }
-}
-
-fn markdown(markdown: &str) -> Markup {
-    html! {
-        (PreEscaped(render_markdown(markdown)))
-    }
-}
-
-fn render_markdown(markdown: &str) -> String {
-    let options = Options::all();
-    let parser = Parser::new_ext(markdown, options);
-
-    let mut html_output = String::new();
-    html::push_html(&mut html_output, parser);
-
-    html_output
 }

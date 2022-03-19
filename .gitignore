@@ -4,3 +4,4 @@
 /wwwroot/**/*.css
 /target/
 *.db
+.env

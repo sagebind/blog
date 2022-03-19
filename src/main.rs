@@ -1,4 +1,8 @@
+use crate::comments::CommentStore;
+
 mod articles;
+mod comments;
+mod components;
 mod pages;
 
 vial::routes! {
@@ -17,8 +21,10 @@ vial::routes! {
             request.arg("name").unwrap()
         );
 
+        let comments = CommentStore::new().tree_for_slug(&slug);
+
         if let Some(article) = articles::get_by_slug(&slug) {
-            Response::from(pages::article(&article).into_string())
+            Response::from(pages::article(&article, &comments).into_string())
         } else {
             Response::from(404).with_body("<h1>404 Not Found</h1>")
         }
@@ -26,6 +32,8 @@ vial::routes! {
 }
 
 fn main() {
+    dotenv::dotenv().unwrap();
+
     vial::asset_dir!("wwwroot");
     vial::run!().unwrap();
 }
