@@ -4,6 +4,7 @@ use time::{Date, OffsetDateTime};
 
 pub mod comments;
 pub mod gravatar;
+pub mod markdown;
 
 pub fn date(date: Date) -> Markup {
     let today = OffsetDateTime::now_utc().date();

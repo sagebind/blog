@@ -3,15 +3,18 @@ use maud::{html, Markup};
 use crate::{
     comments::Comment,
     components::{date, gravatar::gravatar, markdown},
+    csrf::generate_token,
 };
 
 pub fn comments_section(comments: &[Comment]) -> Markup {
+    let comments_count = comments.iter().map(|c| c.len()).sum::<usize>();
+
     html! {
         div id="comments" {
             h2 {
-                (comments.len())
+                (comments_count)
                 " comment"
-                @if comments.len() != 1 {
+                @if comments_count != 1 {
                     "s"
                 }
             }
@@ -34,8 +37,6 @@ pub fn comments_section(comments: &[Comment]) -> Markup {
 }
 
 pub fn comment(comment: &Comment) -> Markup {
-    let show_reply = false;
-
     html! {
         article class="comment" id={ "comment-" (comment.id) } {
             div class="avatar" {
@@ -78,16 +79,12 @@ pub fn comment(comment: &Comment) -> Markup {
 
                     a href={ "#comment-" (comment.id) } { "permalink" }
 
-                    @if show_reply {
-                        a onclick="${() => this.showReply = false}" tabindex="0" { "close" }
-                    } @else {
-                        a onclick="${() => this.showReply = true}" tabindex="0" { "reply" }
+                    a hx-get={ "/reply?id=" (comment.id) } hx-target={ "#comment-" (comment.id) "-reply" } {
+                        "reply"
                     }
                 }
 
-                @if show_reply {
-                    (comment_form(Some(&comment.id)))
-                }
+                div id={ "comment-" (comment.id) "-reply" };
 
                 @for child in &comment.children {
                     (self::comment(child))
@@ -97,9 +94,11 @@ pub fn comment(comment: &Comment) -> Markup {
     }
 }
 
-fn comment_form(parent_comment_id: Option<&str>) -> Markup {
+pub fn comment_form(parent_comment_id: Option<&str>) -> Markup {
     html! {
         form class="comment-form" hx-post="/comments" hx-target="#comments" {
+            input type="hidden" name="parent_comment_id" value=(generate_token());
+
             @if let Some(id) = parent_comment_id {
                 input type="hidden" name="parent_comment_id" value=(id);
             }
@@ -108,7 +107,8 @@ fn comment_form(parent_comment_id: Option<&str>) -> Markup {
                 textarea
                     name="text"
                     placeholder="Comment text (supports Markdown)"
-                    required {}
+                    required
+                    maxlength="8192" {}
             }
             div class="author-details" {
                 input
@@ -130,6 +130,10 @@ fn comment_form(parent_comment_id: Option<&str>) -> Markup {
                     maxlength="255";
             }
             div {
+                @if parent_comment_id.is_some() {
+                    input type="button" value="Cancel" onclick="this.form.parentNode.removeChild(this.form)";
+                }
+
                 input type="submit" value="Submit";
             }
         }

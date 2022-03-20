@@ -3,7 +3,7 @@ use time::OffsetDateTime;
 
 use crate::{
     articles::{self, Article},
-    components::{date, markdown, comments::comments_section}, comments::Comment,
+    components::{date, markdown::markdown, comments::comments_section}, comments::Comment,
 };
 
 pub fn home() -> Markup {
@@ -165,7 +165,7 @@ fn layout(title: &str, body: Markup) -> Markup {
 
             meta name="viewport" content="initial-scale=1";
 
-            link rel="stylesheet" href="/css/main.css";
+            link rel="stylesheet" href="/css/style.css";
             script defer src="https://unpkg.com/htmx.org@1.7.0" {}
         }
         body {
