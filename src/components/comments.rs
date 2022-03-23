@@ -6,7 +6,7 @@ use crate::{
     csrf::generate_token,
 };
 
-pub fn comments_section(comments: &[Comment]) -> Markup {
+pub fn comments_section(article_slug: &str, comments: &[Comment]) -> Markup {
     let comments_count = comments.iter().map(|c| c.len()).sum::<usize>();
 
     html! {
@@ -24,10 +24,10 @@ pub fn comments_section(comments: &[Comment]) -> Markup {
             }
 
             p {
-                a href="/${this.articleSlug}/comments.atom" { "Subscribe to this thread" }
+                a href={ "/" (article_slug) "/comments.atom" } { "Subscribe to this thread" }
             }
 
-            (comment_form(None))
+            (comment_form(article_slug, None))
 
             @for comment in comments {
                 (self::comment(comment))
@@ -38,7 +38,7 @@ pub fn comments_section(comments: &[Comment]) -> Markup {
 
 pub fn comment(comment: &Comment) -> Markup {
     html! {
-        article class="comment" id={ "comment-" (comment.id) } {
+        article class="comment" id={ "comment-" (comment.id) } x-data="{ reply: false }" {
             div class="avatar" {
                 (gravatar(comment.author.email.as_deref()))
             }
@@ -79,12 +79,14 @@ pub fn comment(comment: &Comment) -> Markup {
 
                     a href={ "#comment-" (comment.id) } { "permalink" }
 
-                    a hx-get={ "/reply?id=" (comment.id) } hx-target={ "#comment-" (comment.id) "-reply" } {
+                    a x-on:click="reply = !reply" x-text="reply ? 'close' : 'reply'" {
                         "reply"
                     }
                 }
 
-                div id={ "comment-" (comment.id) "-reply" };
+                div id={ "comment-" (comment.id) "-reply" } x-show="reply" {
+                    (comment_form(&comment.article_slug, Some(&comment.id)))
+                }
 
                 @for child in &comment.children {
                     (self::comment(child))
@@ -94,13 +96,13 @@ pub fn comment(comment: &Comment) -> Markup {
     }
 }
 
-pub fn comment_form(parent_comment_id: Option<&str>) -> Markup {
+pub fn comment_form(article_slug: &str, parent_comment_id: Option<&str>) -> Markup {
     html! {
-        form class="comment-form" hx-post="/comments" hx-target="#comments" {
-            input type="hidden" name="parent_comment_id" value=(generate_token());
+        form class="comment-form" hx-post={ "/" (article_slug) "/comments" } hx-target="#comments" {
+            input type="hidden" name="token" value=(generate_token());
 
             @if let Some(id) = parent_comment_id {
-                input type="hidden" name="parent_comment_id" value=(id);
+                input type="hidden" name="parent_id" value=(id);
             }
 
             div {
@@ -113,27 +115,23 @@ pub fn comment_form(parent_comment_id: Option<&str>) -> Markup {
             div class="author-details" {
                 input
                     type="text"
-                    name="name"
+                    name="author_name"
                     placeholder="Name"
                     required
                     maxlength="255";
                 input
                     type="email"
-                    name="email"
+                    name="author_email"
                     placeholder="Email"
                     required
                     maxlength="255";
                 input
                     type="text"
-                    name="website"
+                    name="author_website"
                     placeholder="Website (optional)"
                     maxlength="255";
             }
             div {
-                @if parent_comment_id.is_some() {
-                    input type="button" value="Cancel" onclick="this.form.parentNode.removeChild(this.form)";
-                }
-
                 input type="submit" value="Submit";
             }
         }

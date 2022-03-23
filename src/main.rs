@@ -1,6 +1,11 @@
-use vial::{Request, Response};
+use poem::{
+    endpoint::StaticFilesEndpoint,
+    get, post,
+    web::{Data, Form, Html, Path},
+    EndpointExt, IntoResponse,
+};
 
-use crate::comments::CommentStore;
+use crate::comments::{CommentStore, PostComment};
 
 mod articles;
 mod comments;
@@ -9,50 +14,115 @@ mod csrf;
 mod database;
 mod pages;
 
-vial::routes! {
-    GET "/" => |_| pages::home().into_string();
-    GET "/articles" => |_| pages::articles().into_string();
-    GET "/tag/:tag" => |request| pages::tag(request.arg("tag").unwrap()).into_string();
-    GET "/about" => |_| pages::about().into_string();
-    GET "/feeds" => |_| pages::feeds().into_string();
-    GET "/stuff" => |_| pages::stuff().into_string();
-    GET "/reply" => |request| {
-        if let Some(id) = request.query("id") {
-            Some(components::comments::comment_form(Some(id)).into_string())
-        } else {
-            None
-        }
-    };
-    GET "/:year/:month/:day/*name" => get_article;
-    GET "/css/style.css" => |_| Response::from(include_str!(concat!(env!("OUT_DIR"), "/main.css")))
-        .with_header("Content-Type", "text/css");
+#[poem::handler]
+fn home() -> Html<String> {
+    Html(pages::home().into_string())
 }
 
-fn get_article(request: Request) -> Option<String> {
-    let slug = format!(
-        "{}/{}/{}/{}",
-        request.arg("year").unwrap(),
-        request.arg("month").unwrap(),
-        request.arg("day").unwrap(),
-        request.arg("name").unwrap()
-    );
+#[poem::handler]
+fn about() -> Html<String> {
+    Html(pages::about().into_string())
+}
 
-    let comments = request.state::<CommentStore>().tree_for_slug(&slug);
+#[poem::handler]
+fn feeds() -> Html<String> {
+    Html(pages::feeds().into_string())
+}
 
-    if let Some(article) = articles::get_by_slug(&slug) {
-        Some(pages::article(&article, &comments).into_string())
-    } else {
-        None
+#[poem::handler]
+fn stuff() -> Html<String> {
+    Html(pages::stuff().into_string())
+}
+
+#[poem::handler]
+fn get_articles() -> Html<String> {
+    Html(pages::articles().into_string())
+}
+
+#[poem::handler]
+async fn post_comment(
+    comment_store: Data<&CommentStore>,
+    Path(request): Path<ArticleSlug>,
+    Form(post): Form<PostComment>,
+) -> Html<String> {
+    let article_slug = request.slug();
+
+    // Post the comment.
+    comment_store.post(&article_slug, post).await;
+
+    // Reload the comment tree.
+    let comments = comment_store.tree_for_slug(&article_slug).await;
+
+    Html(components::comments::comments_section(&article_slug, &comments).into_string())
+}
+
+#[poem::handler]
+fn get_tag(Path(tag): Path<String>) -> Html<String> {
+    Html(pages::tag(&tag).into_string())
+}
+
+#[poem::handler]
+fn style() -> poem::web::WithContentType<&'static str> {
+    include_str!(concat!(env!("OUT_DIR"), "/main.css")).with_content_type("text/css")
+}
+
+#[derive(serde::Deserialize)]
+struct ArticleSlug {
+    year: u16,
+    month: u8,
+    day: u8,
+    name: String,
+}
+
+impl ArticleSlug {
+    fn slug(&self) -> String {
+        format!(
+            "{:04}/{:02}/{:02}/{}",
+            self.year, self.month, self.day, self.name
+        )
     }
 }
 
-fn main() {
+#[poem::handler]
+async fn get_article(
+    comment_store: Data<&CommentStore>,
+    Path(request): Path<ArticleSlug>,
+) -> poem::Result<Html<String>> {
+    let slug = request.slug();
+    let comments = comment_store.tree_for_slug(&slug).await;
+
+    if let Some(article) = articles::get_by_slug(&slug) {
+        Ok(Html(pages::article(&article, &comments).into_string()))
+    } else {
+        Err(poem::Error::from_status(poem::http::StatusCode::NOT_FOUND))
+    }
+}
+
+#[tokio::main]
+async fn main() -> Result<(), std::io::Error> {
     dotenv::dotenv().unwrap();
+    env_logger::init();
 
     let pool = database::create_connection_pool();
     let comment_store = CommentStore::new(pool);
-    vial::use_state!(comment_store);
 
-    vial::asset_dir!("wwwroot");
-    vial::run!().unwrap();
+    let app = poem::Route::new()
+        .at("/", get(home))
+        .at("/about", get(about))
+        .at("/feeds", get(feeds))
+        .at("/stuff", get(stuff))
+        .at("/articles", get(get_articles))
+        .at("/tag/:tag", get(get_tag))
+        .at("/category/:tag", get(get_tag))
+        .at("/:year/:month/:day/:name", get(get_article))
+        .at("/:year/:month/:day/:name/comments", post(post_comment))
+        .at("/css/style.css", get(style))
+        .nest("/assets", StaticFilesEndpoint::new("wwwroot/assets"))
+        .nest("/content", StaticFilesEndpoint::new("wwwroot/content"))
+        .data(comment_store);
+
+    log::info!("listening on {}", "127.0.0.1:7667");
+    poem::Server::new(poem::listener::TcpListener::bind("127.0.0.1:7667"))
+        .run(app)
+        .await
 }

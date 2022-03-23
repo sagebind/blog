@@ -92,7 +92,7 @@ pub fn article(article: &Article, comments: &[Comment]) -> Markup {
                 }
             }
 
-            (comments_section(comments))
+            (comments_section(&article.slug, comments))
         },
     )
 }
@@ -166,6 +166,7 @@ fn layout(title: &str, body: Markup) -> Markup {
             meta name="viewport" content="initial-scale=1";
 
             link rel="stylesheet" href="/css/style.css";
+            script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" {}
             script defer src="https://unpkg.com/htmx.org@1.7.0" {}
         }
         body {

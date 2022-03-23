@@ -1,7 +1,7 @@
-use mysql::{Pool, Opts};
+use sqlx::{mysql::MySqlPoolOptions, MySqlPool};
 use std::env;
 
-pub fn create_connection_pool() -> Pool {
-    let opts = Opts::from_url(&env::var("DATABASE_URL").unwrap()).unwrap();
-    Pool::new(opts).unwrap()
+pub fn create_connection_pool() -> MySqlPool {
+    MySqlPoolOptions::new()
+        .connect_lazy(&env::var("DATABASE_URL").unwrap()).unwrap()
 }

@@ -1,9 +1,10 @@
-use std::{collections::HashMap, env};
-
 use harsh::Harsh;
-use mysql::{prelude::Queryable, Pool};
 use serde::Deserialize;
+use sqlx::{MySqlPool, Row};
+use std::{collections::HashMap, env};
 use time::OffsetDateTime;
+
+use crate::csrf;
 
 #[derive(Clone, Debug)]
 pub struct Comment {
@@ -56,13 +57,24 @@ pub struct Author {
     pub website: Option<String>,
 }
 
+#[derive(Clone, Debug, Deserialize)]
+pub struct PostComment {
+    pub parent_id: Option<String>,
+    pub author_name: String,
+    pub author_email: Option<String>,
+    pub author_website: Option<String>,
+    pub text: String,
+    pub token: String,
+}
+
+#[derive(Clone, Debug)]
 pub struct CommentStore {
-    pool: Pool,
+    pool: MySqlPool,
     hashids: Harsh,
 }
 
 impl CommentStore {
-    pub fn new(pool: Pool) -> Self {
+    pub fn new(pool: MySqlPool) -> Self {
         Self {
             pool,
             hashids: Harsh::builder()
@@ -74,62 +86,59 @@ impl CommentStore {
     }
 
     /// Fetch the entire comment tree for the given article slug.
-    pub fn tree_for_slug(&self, article_slug: &str) -> Vec<Comment> {
-        let mut conn = self.pool.get_conn().unwrap();
-
-        let comments = conn
-            .exec_map(
-                "SELECT
-                    id,
-                    parentId,
-                    slug,
-                    datePublished,
-                    authorName,
-                    authorEmail,
-                    authorWebsite,
-                    score,
-                    text
-                FROM CommentWithScore
-                WHERE slug = ?
-                    AND dateDeleted IS NULL",
-                (article_slug,),
-                |(
-                    id,
-                    parent_id,
-                    article_slug,
-                    date_published,
-                    author_name,
-                    author_email,
-                    author_website,
-                    score,
-                    text,
-                )| {
-                    let parent_id: Option<u64> = parent_id;
-                    let date_published: f64 = date_published;
-
-                    Comment {
-                        id: self.hashids.encode(&[id]),
-                        parent_id: parent_id.map(|id| self.hashids.encode(&[id])),
-                        article_slug,
-                        published: OffsetDateTime::from_unix_timestamp(date_published as i64)
-                            .unwrap(),
-                        author: Author {
-                            name: author_name,
-                            email: author_email,
-                            website: author_website,
-                        },
-                        children: Vec::new(),
-                        score,
-                        text,
-                    }
-                },
-            )
-            .unwrap();
-
-        rebuild_comment_tree(comments)
+    pub async fn tree_for_slug(&self, article_slug: &str) -> Vec<Comment> {
+        rebuild_comment_tree(self.fetch_all_comments_for_slug(article_slug).await)
     }
 
-    pub fn submit(&self, text: String) {
+    async fn fetch_all_comments_for_slug(&self, article_slug: &str) -> Vec<Comment> {
+        sqlx::query(
+            "SELECT
+                id,
+                parentId,
+                slug,
+                datePublished,
+                authorName,
+                authorEmail,
+                authorWebsite,
+                score DIV 1 AS `score`,
+                text
+            FROM CommentWithScore
+            WHERE slug = ?
+                AND dateDeleted IS NULL
+            ORDER BY datePublished ASC",
+        )
+        .bind(article_slug)
+        .map(|row| Comment {
+            id: self.encode_id(row.get("id")),
+            parent_id: row
+                .get::<Option<i64>, _>("parentId")
+                .map(|id| self.encode_id(id)),
+            article_slug: row.get("slug"),
+            published: OffsetDateTime::from_unix_timestamp(
+                row.get::<f64, _>("datePublished") as i64
+            )
+            .unwrap(),
+            author: Author {
+                name: row.get("authorName"),
+                email: row.get("authorEmail"),
+                website: row.get("authorWebsite"),
+            },
+            children: Vec::new(),
+            score: row.get("score"),
+            text: row.get("text"),
+        })
+        .fetch_all(&self.pool)
+        .await
+        .unwrap()
+    }
+
+    pub async fn post(&self, article_slug: &str, post: PostComment) {
+        log::info!("received comment: {:?}", post);
+
+        if !csrf::verify_token(&post.token) {
+            return;
+        }
+
         // SPAM PREVENTION:
         // - limit number of links
         // - don't allow HTML
@@ -137,6 +146,37 @@ impl CommentStore {
         // - validate token time
         // - filter known bad IPs
         // - limit length
+
+        let now = OffsetDateTime::now_utc();
+
+        sqlx::query("
+        INSERT INTO Comment (
+            parentId,
+            slug,
+            datePublished,
+            authorName,
+            authorEmail,
+            authorWebsite,
+            text
+        ) VALUES (?, ?, ?, ?, ?, ?, ?)")
+            .bind(post.parent_id.map(|id| self.decode_id(id)))
+            .bind(article_slug)
+            .bind((now.unix_timestamp_nanos() as f64) / 1_000_000_000.0)
+            .bind(post.author_name)
+            .bind(post.author_email)
+            .bind(post.author_website)
+            .bind(post.text)
+            .execute(&self.pool)
+            .await
+            .unwrap();
+    }
+
+    fn encode_id(&self, id: i64) -> String {
+        self.hashids.encode(&[id as u64])
+    }
+
+    fn decode_id(&self, id: String) -> i64 {
+        self.hashids.decode(&id).unwrap()[0] as i64
     }
 }
 
