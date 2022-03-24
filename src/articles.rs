@@ -5,10 +5,11 @@ use regex::Regex;
 use serde::Deserialize;
 use time::{Date, Month};
 
+use crate::markdown;
+
 static WORD_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r"\b[\w']+\b").unwrap());
 
-static ARTICLES_DIR: Dir = include_dir!("$CARGO_MANIFEST_DIR/articles");
-
+#[derive(Clone, Debug)]
 pub struct Article {
     pub slug: String,
     pub title: String,
@@ -16,6 +17,7 @@ pub struct Article {
     pub date: Date,
     pub tags: Vec<String>,
     pub source: String,
+    pub content_html: String,
     pub word_count: usize,
 }
 
@@ -50,6 +52,7 @@ impl Article {
             date: Date::from_calendar_date(year, date_month, day).unwrap(),
             tags: frontmatter.tags,
             source: source.to_owned(),
+            content_html: markdown::render(source),
             word_count,
         }
     }
@@ -73,9 +76,24 @@ impl Article {
             self.source.clone()
         }
     }
+
+    pub fn canonical_url(&self) -> String {
+        format!(
+            "https://stephencoakley.com/{}",
+            self.slug
+        )
+    }
 }
 
-pub fn get_all(_include_unpublished: bool) -> Vec<Article> {
+pub fn get_all(_include_unpublished: bool) -> &'static [Article] {
+    static ARTICLES: Lazy<Vec<Article>> = Lazy::new(load);
+
+    ARTICLES.as_slice()
+}
+
+fn load() -> Vec<Article> {
+    static ARTICLES_DIR: Dir = include_dir!("$CARGO_MANIFEST_DIR/articles");
+
     ARTICLES_DIR
         .files()
         .sorted_by_key(|file| file.path())
@@ -95,6 +113,7 @@ pub fn get_all(_include_unpublished: bool) -> Vec<Article> {
 
 pub fn get_tagged(tag: &str) -> Vec<Article> {
     get_all(false).into_iter()
+        .cloned()
         .filter(|article| article.has_tag(tag))
         .collect()
 }
@@ -103,6 +122,7 @@ pub fn get_by_slug(slug: &str) -> Option<Article> {
     get_all(false).into_iter()
         .filter(|article| article.slug == slug)
         .next()
+        .cloned()
 }
 
 #[derive(Deserialize)]

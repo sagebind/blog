@@ -1,7 +1,8 @@
+use feeds::Feed;
 use poem::{
     endpoint::StaticFilesEndpoint,
     get, post,
-    web::{Data, Form, Html, Path},
+    web::{Data, Form, Html, Path, Json, WithContentType},
     EndpointExt, IntoResponse,
 };
 
@@ -12,6 +13,8 @@ mod comments;
 mod components;
 mod csrf;
 mod database;
+mod feeds;
+mod markdown;
 mod pages;
 
 #[poem::handler]
@@ -25,7 +28,7 @@ fn about() -> Html<String> {
 }
 
 #[poem::handler]
-fn feeds() -> Html<String> {
+fn get_feeds() -> Html<String> {
     Html(pages::feeds().into_string())
 }
 
@@ -37,6 +40,31 @@ fn stuff() -> Html<String> {
 #[poem::handler]
 fn get_articles() -> Html<String> {
     Html(pages::articles().into_string())
+}
+
+#[poem::handler]
+async fn get_article_comments(
+    comment_store: Data<&CommentStore>,
+    Path(slug): Path<ArticleSlug>,
+) -> Json<Feed> {
+    let comments = comment_store.fetch_all_comments_for_slug(&slug.slug()).await;
+
+    Json(feeds::comments(&comments))
+}
+
+#[poem::handler]
+async fn get_article_feed() -> Json<Feed> {
+    Json(feeds::articles(&articles::get_all(false)))
+}
+
+#[poem::handler]
+async fn get_article_feed_rss() -> WithContentType<String> {
+    feeds::rss::to_rss(feeds::articles(&articles::get_all(false))).with_content_type("application/rss+xml; charset=utf-8")
+}
+
+#[poem::handler]
+async fn get_article_feed_atom() -> WithContentType<String> {
+    feeds::atom::to_atom(feeds::articles(&articles::get_all(false))).with_content_type("application/atom+xml; charset=utf-8")
 }
 
 #[poem::handler]
@@ -109,13 +137,17 @@ async fn main() -> Result<(), std::io::Error> {
     let app = poem::Route::new()
         .at("/", get(home))
         .at("/about", get(about))
-        .at("/feeds", get(feeds))
+        .at("/feeds", get(get_feeds))
         .at("/stuff", get(stuff))
         .at("/articles", get(get_articles))
         .at("/tag/:tag", get(get_tag))
         .at("/category/:tag", get(get_tag))
         .at("/:year/:month/:day/:name", get(get_article))
         .at("/:year/:month/:day/:name/comments", post(post_comment))
+        .at("/feed.json", get(get_article_feed))
+        .at("/feed.rss", get(get_article_feed_rss))
+        .at("/feed.atom", get(get_article_feed_atom))
+        .at("/:year/:month/:day/:name/comments.json", get(get_article_comments))
         .at("/css/style.css", get(style))
         .nest("/assets", StaticFilesEndpoint::new("wwwroot/assets"))
         .nest("/content", StaticFilesEndpoint::new("wwwroot/content"))

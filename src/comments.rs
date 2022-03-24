@@ -90,7 +90,7 @@ impl CommentStore {
         rebuild_comment_tree(self.fetch_all_comments_for_slug(article_slug).await)
     }
 
-    async fn fetch_all_comments_for_slug(&self, article_slug: &str) -> Vec<Comment> {
+    pub async fn fetch_all_comments_for_slug(&self, article_slug: &str) -> Vec<Comment> {
         sqlx::query(
             "SELECT
                 id,

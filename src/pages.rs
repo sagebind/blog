@@ -1,4 +1,4 @@
-use maud::{html, Markup, DOCTYPE};
+use maud::{html, Markup, DOCTYPE, PreEscaped};
 use time::OffsetDateTime;
 
 use crate::{
@@ -64,7 +64,7 @@ pub fn article(article: &Article, comments: &[Comment]) -> Markup {
                     span { (article.estimated_reading_time()) " min read" }
                 }
 
-                (markdown(&article.source))
+                (PreEscaped(&article.content_html))
             }
 
             hr;
