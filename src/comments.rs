@@ -1,10 +1,19 @@
 use harsh::Harsh;
+use once_cell::sync::Lazy;
 use serde::Deserialize;
-use sqlx::{MySqlPool, Row};
+use sqlx::{mysql::MySqlRow, FromRow, MySqlPool, Row};
 use std::{collections::HashMap, env};
 use time::OffsetDateTime;
 
 use crate::csrf;
+
+static HASHIDS: Lazy<Harsh> = Lazy::new(|| {
+    Harsh::builder()
+        .salt(env::var("HASHID_SALT").unwrap())
+        .length(5)
+        .build()
+        .unwrap()
+});
 
 #[derive(Clone, Debug)]
 pub struct Comment {
@@ -45,6 +54,28 @@ impl Comment {
     }
 }
 
+impl<'r> FromRow<'r, MySqlRow> for Comment {
+    fn from_row(row: &'r MySqlRow) -> Result<Self, sqlx::Error> {
+        Ok(Self {
+            id: encode_id(row.get("id")),
+            parent_id: row.get::<Option<i64>, _>("parentId").map(encode_id),
+            article_slug: row.get("slug"),
+            published: OffsetDateTime::from_unix_timestamp(
+                row.get::<f64, _>("datePublished") as i64
+            )
+            .unwrap(),
+            author: Author {
+                name: row.get("authorName"),
+                email: row.get("authorEmail"),
+                website: row.get("authorWebsite"),
+            },
+            children: Vec::new(),
+            score: row.get("score"),
+            text: row.get("text"),
+        })
+    }
+}
+
 #[derive(Clone, Debug, Deserialize)]
 pub struct Author {
     /// The name the comment author supplied.
@@ -70,19 +101,33 @@ pub struct PostComment {
 #[derive(Clone, Debug)]
 pub struct CommentStore {
     pool: MySqlPool,
-    hashids: Harsh,
 }
 
 impl CommentStore {
     pub fn new(pool: MySqlPool) -> Self {
-        Self {
-            pool,
-            hashids: Harsh::builder()
-                .salt(env::var("HASHID_SALT").unwrap())
-                .length(5)
-                .build()
-                .unwrap(),
-        }
+        Self { pool }
+    }
+
+    pub async fn get_newest(&self) -> Vec<Comment> {
+        sqlx::query_as(
+            "SELECT
+                id,
+                parentId,
+                slug,
+                datePublished,
+                authorName,
+                authorEmail,
+                authorWebsite,
+                score DIV 1 AS `score`,
+                text
+            FROM CommentWithScore
+            WHERE dateDeleted IS NULL
+            ORDER BY datePublished DESC
+            LIMIT 50",
+        )
+        .fetch_all(&self.pool)
+        .await
+        .unwrap()
     }
 
     /// Fetch the entire comment tree for the given article slug.
@@ -91,7 +136,7 @@ impl CommentStore {
     }
 
     pub async fn fetch_all_comments_for_slug(&self, article_slug: &str) -> Vec<Comment> {
-        sqlx::query(
+        sqlx::query_as(
             "SELECT
                 id,
                 parentId,
@@ -108,25 +153,6 @@ impl CommentStore {
             ORDER BY datePublished ASC",
         )
         .bind(article_slug)
-        .map(|row| Comment {
-            id: self.encode_id(row.get("id")),
-            parent_id: row
-                .get::<Option<i64>, _>("parentId")
-                .map(|id| self.encode_id(id)),
-            article_slug: row.get("slug"),
-            published: OffsetDateTime::from_unix_timestamp(
-                row.get::<f64, _>("datePublished") as i64
-            )
-            .unwrap(),
-            author: Author {
-                name: row.get("authorName"),
-                email: row.get("authorEmail"),
-                website: row.get("authorWebsite"),
-            },
-            children: Vec::new(),
-            score: row.get("score"),
-            text: row.get("text"),
-        })
         .fetch_all(&self.pool)
         .await
         .unwrap()
@@ -149,7 +175,8 @@ impl CommentStore {
 
         let now = OffsetDateTime::now_utc();
 
-        sqlx::query("
+        sqlx::query(
+            "
         INSERT INTO Comment (
             parentId,
             slug,
@@ -158,25 +185,18 @@ impl CommentStore {
             authorEmail,
             authorWebsite,
             text
-        ) VALUES (?, ?, ?, ?, ?, ?, ?)")
-            .bind(post.parent_id.map(|id| self.decode_id(id)))
-            .bind(article_slug)
-            .bind((now.unix_timestamp_nanos() as f64) / 1_000_000_000.0)
-            .bind(post.author_name)
-            .bind(post.author_email)
-            .bind(post.author_website)
-            .bind(post.text)
-            .execute(&self.pool)
-            .await
-            .unwrap();
-    }
-
-    fn encode_id(&self, id: i64) -> String {
-        self.hashids.encode(&[id as u64])
-    }
-
-    fn decode_id(&self, id: String) -> i64 {
-        self.hashids.decode(&id).unwrap()[0] as i64
+        ) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        )
+        .bind(post.parent_id.map(decode_id))
+        .bind(article_slug)
+        .bind((now.unix_timestamp_nanos() as f64) / 1_000_000_000.0)
+        .bind(post.author_name)
+        .bind(post.author_email)
+        .bind(post.author_website)
+        .bind(post.text)
+        .execute(&self.pool)
+        .await
+        .unwrap();
     }
 }
 
@@ -209,4 +229,12 @@ fn rebuild_comment_tree(comments: Vec<Comment>) -> Vec<Comment> {
     build_subtrees(&mut top_level_comments, &mut comments_by_parent_id);
 
     top_level_comments
+}
+
+fn encode_id(id: i64) -> String {
+    HASHIDS.encode(&[id as u64])
+}
+
+fn decode_id(id: String) -> i64 {
+    HASHIDS.decode(&id).unwrap()[0] as i64
 }

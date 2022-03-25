@@ -3,7 +3,7 @@ use time::format_description::well_known::Rfc3339;
 
 use super::Feed;
 
-pub fn to_atom(feed: Feed) -> String {
+pub fn render(feed: &Feed) -> String {
     html! {
         (PreEscaped("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"))
         feed xmlns="http://www.w3.org/2005/Atom" {
@@ -13,7 +13,7 @@ pub fn to_atom(feed: Feed) -> String {
             link {
                 (feed.feed_url)
             }
-            (PreEscaped("<atom:link href=\"@Model.SelfLink\" rel=\"self\" type=\"application/rss+xml\"/>"))
+            (PreEscaped(format!("<link href=\"{}\" rel=\"self\"/>", feed.feed_url)))
             subtitle {
                 (feed.description)
             }
@@ -23,7 +23,7 @@ pub fn to_atom(feed: Feed) -> String {
                 }
             }
 
-            @for item in feed.items {
+            @for item in &feed.items {
                 entry {
                     id {
                         (item.id)
@@ -35,19 +35,19 @@ pub fn to_atom(feed: Feed) -> String {
                     updated {
                         (item.date_published.format(&Rfc3339).unwrap())
                     }
-                    @for author in item.authors {
+                    @for author in &item.authors {
                         author {
                             name {
                                 (author.name)
                             }
-                            @if let Some(url) = author.url {
+                            @if let Some(url) = author.url.as_ref() {
                                 url {
                                     (url)
                                 }
                             }
                         }
                     }
-                    @if let Some(tags) = item.tags {
+                    @if let Some(tags) = item.tags.as_ref() {
                         @for tag in tags {
                             (PreEscaped(format!("<category term=\"{tag}\"/>")))
                         }

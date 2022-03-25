@@ -3,7 +3,7 @@ use time::{format_description, OffsetDateTime};
 
 use super::Feed;
 
-pub fn to_rss(feed: Feed) -> String {
+pub fn render(feed: &Feed) -> String {
     html! {
         (PreEscaped("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"))
         rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" {
@@ -14,7 +14,7 @@ pub fn to_rss(feed: Feed) -> String {
                 link {
                     (feed.feed_url)
                 }
-                (PreEscaped("<atom:link href=\"@Model.SelfLink\" rel=\"self\" type=\"application/rss+xml\"/>"))
+                (PreEscaped(format!("<atom:link href=\"{}\" rel=\"self\" type=\"application/rss+xml\"/>", feed.feed_url)))
                 description {
                     (feed.description)
                 }
@@ -24,7 +24,7 @@ pub fn to_rss(feed: Feed) -> String {
                     }
                 }
 
-                @for item in feed.items {
+                @for item in &feed.items {
                     item {
                         title {
                             (item.title)
@@ -42,6 +42,13 @@ pub fn to_rss(feed: Feed) -> String {
                         }
                         pubDate {
                             (format_rfc822(item.date_published))
+                        }
+                        @if let Some(tags) = item.tags.as_ref() {
+                            @for tag in tags {
+                                category {
+                                    (tag)
+                                }
+                            }
                         }
                         description {
                             (item.content_html)

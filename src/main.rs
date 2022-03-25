@@ -1,12 +1,19 @@
-use feeds::Feed;
+use std::env;
+
 use poem::{
     endpoint::StaticFilesEndpoint,
-    get, post,
-    web::{Data, Form, Html, Path, Json, WithContentType},
-    EndpointExt, IntoResponse,
+    get,
+    http::StatusCode,
+    post,
+    web::{Data, Form, Html, Path, Query},
+    EndpointExt, IntoResponse, Response, Route,
 };
+use serde::Deserialize;
 
-use crate::comments::{CommentStore, PostComment};
+use crate::{
+    comments::{CommentStore, PostComment},
+    feeds::FeedFormat,
+};
 
 mod articles;
 mod comments;
@@ -42,46 +49,91 @@ fn get_articles() -> Html<String> {
     Html(pages::articles().into_string())
 }
 
+#[derive(Clone, Debug, Deserialize)]
+struct FeedParams {
+    tag: Option<String>,
+}
+
 #[poem::handler]
-async fn get_article_comments(
+async fn get_article_feed(
+    format: Option<Path<FeedFormat>>,
+    Query(params): Query<FeedParams>,
+) -> Response {
+    let format = format.map(|Path(f)| f).unwrap_or_default();
+
+    let feed = if let Some(tag) = params.tag {
+        feeds::articles(
+            format!("Stephen Coakley - {tag}"),
+            format!("Articles tagged \"{tag}\""),
+            format!("https://stephencoakley.com/feed.{format}?tag={tag}"),
+            &articles::get_tagged(tag),
+        )
+    } else {
+        feeds::articles(
+            "Stephen Coakley",
+            "Latest articles from a Disciple of Christ and software engineer. I post infrequently and usually on technical topics.",
+            format!("https://stephencoakley.com/feed.{format}"),
+            articles::get_all(false),
+        )
+    };
+
+    feed.into_response(format)
+}
+
+#[poem::handler]
+async fn get_comments_feed(
     comment_store: Data<&CommentStore>,
-    Path(slug): Path<ArticleSlug>,
-) -> Json<Feed> {
-    let comments = comment_store.fetch_all_comments_for_slug(&slug.slug()).await;
+    format: Option<Path<FeedFormat>>,
+) -> Response {
+    let format = format.map(|Path(f)| f).unwrap_or_default();
+    let comments = comment_store.get_newest().await;
 
-    Json(feeds::comments(&comments))
+    feeds::comments(
+        "Stephen Coakley - Comments",
+        "Comments on all articles",
+        format!("https://stephencoakley.com/comments/feed.{format}"),
+        &comments,
+    )
+    .into_response(format)
 }
 
 #[poem::handler]
-async fn get_article_feed() -> Json<Feed> {
-    Json(feeds::articles(&articles::get_all(false)))
-}
+async fn get_article_comments_feed(
+    comment_store: Data<&CommentStore>,
+    Path((slug, format)): Path<(String, FeedFormat)>,
+    // Path(format): Path<FeedFormat>,
+) -> Response {
+    if let Some(article) = articles::get_by_slug(&slug) {
+        let comments = comment_store.fetch_all_comments_for_slug(&slug).await;
 
-#[poem::handler]
-async fn get_article_feed_rss() -> WithContentType<String> {
-    feeds::rss::to_rss(feeds::articles(&articles::get_all(false))).with_content_type("application/rss+xml; charset=utf-8")
-}
-
-#[poem::handler]
-async fn get_article_feed_atom() -> WithContentType<String> {
-    feeds::atom::to_atom(feeds::articles(&articles::get_all(false))).with_content_type("application/atom+xml; charset=utf-8")
+        feeds::comments(
+            format!("{} - Comments", article.title),
+            format!("Comments on \"{}\"", article.title),
+            format!(
+                "https://stephencoakley.com/{}/comments.{format}",
+                article.slug
+            ),
+            &comments,
+        )
+        .into_response(format)
+    } else {
+        StatusCode::NOT_FOUND.into_response()
+    }
 }
 
 #[poem::handler]
 async fn post_comment(
     comment_store: Data<&CommentStore>,
-    Path(request): Path<ArticleSlug>,
+    Path(slug): Path<String>,
     Form(post): Form<PostComment>,
 ) -> Html<String> {
-    let article_slug = request.slug();
-
     // Post the comment.
-    comment_store.post(&article_slug, post).await;
+    comment_store.post(&slug, post).await;
 
     // Reload the comment tree.
-    let comments = comment_store.tree_for_slug(&article_slug).await;
+    let comments = comment_store.tree_for_slug(&slug).await;
 
-    Html(components::comments::comments_section(&article_slug, &comments).into_string())
+    Html(components::comments::comments_section(&slug, &comments).into_string())
 }
 
 #[poem::handler]
@@ -94,29 +146,11 @@ fn style() -> poem::web::WithContentType<&'static str> {
     include_str!(concat!(env!("OUT_DIR"), "/main.css")).with_content_type("text/css")
 }
 
-#[derive(serde::Deserialize)]
-struct ArticleSlug {
-    year: u16,
-    month: u8,
-    day: u8,
-    name: String,
-}
-
-impl ArticleSlug {
-    fn slug(&self) -> String {
-        format!(
-            "{:04}/{:02}/{:02}/{}",
-            self.year, self.month, self.day, self.name
-        )
-    }
-}
-
 #[poem::handler]
 async fn get_article(
     comment_store: Data<&CommentStore>,
-    Path(request): Path<ArticleSlug>,
+    Path(slug): Path<String>,
 ) -> poem::Result<Html<String>> {
-    let slug = request.slug();
     let comments = comment_store.tree_for_slug(&slug).await;
 
     if let Some(article) = articles::get_by_slug(&slug) {
@@ -131,10 +165,14 @@ async fn main() -> Result<(), std::io::Error> {
     dotenv::dotenv().unwrap();
     env_logger::init();
 
+    // Parse embedded articles at startup.
+    articles::get_all(true);
+
+    log::info!("creating database connection pool...");
     let pool = database::create_connection_pool();
     let comment_store = CommentStore::new(pool);
 
-    let app = poem::Route::new()
+    let app = Route::new()
         .at("/", get(home))
         .at("/about", get(about))
         .at("/feeds", get(get_feeds))
@@ -142,19 +180,31 @@ async fn main() -> Result<(), std::io::Error> {
         .at("/articles", get(get_articles))
         .at("/tag/:tag", get(get_tag))
         .at("/category/:tag", get(get_tag))
-        .at("/:year/:month/:day/:name", get(get_article))
-        .at("/:year/:month/:day/:name/comments", post(post_comment))
-        .at("/feed.json", get(get_article_feed))
-        .at("/feed.rss", get(get_article_feed_rss))
-        .at("/feed.atom", get(get_article_feed_atom))
-        .at("/:year/:month/:day/:name/comments.json", get(get_article_comments))
+        .at("/feed", get(get_article_feed))
+        .at("/feed.:format<rss|atom|json>", get(get_article_feed))
+        .at("/comments/feed", get(get_comments_feed))
+        .at(
+            "/comments/feed.:format<rss|atom|json>",
+            get(get_comments_feed),
+        )
+        .at(r"/:slug<\d{4}/\d{2}/\d{2}/[^/]+>", get(get_article))
+        .at(
+            r"/:slug<\d{4}/\d{2}/\d{2}/[^/]+>/comments",
+            post(post_comment),
+        )
+        .at(
+            r"/:slug<\d{4}/\d{2}/\d{2}/[^/]+>/comments.:format<rss|atom|json>",
+            get(get_article_comments_feed),
+        )
         .at("/css/style.css", get(style))
         .nest("/assets", StaticFilesEndpoint::new("wwwroot/assets"))
         .nest("/content", StaticFilesEndpoint::new("wwwroot/content"))
         .data(comment_store);
 
-    log::info!("listening on {}", "127.0.0.1:7667");
-    poem::Server::new(poem::listener::TcpListener::bind("127.0.0.1:7667"))
+    let addr = env::var("LISTEN_ADDR").unwrap_or_else(|_| String::from("127.0.0.1:5000"));
+
+    log::info!("listening on http://{}", addr);
+    poem::Server::new(poem::listener::TcpListener::bind(addr))
         .run(app)
         .await
 }

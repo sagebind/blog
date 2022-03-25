@@ -91,27 +91,9 @@ pub fn get_all(_include_unpublished: bool) -> &'static [Article] {
     ARTICLES.as_slice()
 }
 
-fn load() -> Vec<Article> {
-    static ARTICLES_DIR: Dir = include_dir!("$CARGO_MANIFEST_DIR/articles");
+pub fn get_tagged(tag: impl AsRef<str>) -> Vec<Article> {
+    let tag = tag.as_ref();
 
-    ARTICLES_DIR
-        .files()
-        .sorted_by_key(|file| file.path())
-        .rev()
-        .map(|file| {
-            let filename = file
-                .path()
-                .file_name()
-                .unwrap()
-                .to_str()
-                .unwrap();
-
-            Article::parse(filename, file.contents_utf8().unwrap())
-        })
-        .collect()
-}
-
-pub fn get_tagged(tag: &str) -> Vec<Article> {
     get_all(false).into_iter()
         .cloned()
         .filter(|article| article.has_tag(tag))
@@ -130,4 +112,26 @@ struct Frontmatter {
     title: String,
     author: String,
     tags: Vec<String>,
+}
+
+fn load() -> Vec<Article> {
+    static ARTICLES_DIR: Dir = include_dir!("$CARGO_MANIFEST_DIR/articles");
+
+    log::info!("parsing articles...");
+
+    ARTICLES_DIR
+        .files()
+        .sorted_by_key(|file| file.path())
+        .rev()
+        .map(|file| {
+            let filename = file
+                .path()
+                .file_name()
+                .unwrap()
+                .to_str()
+                .unwrap();
+
+            Article::parse(filename, file.contents_utf8().unwrap())
+        })
+        .collect()
 }
