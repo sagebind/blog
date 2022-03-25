@@ -166,8 +166,18 @@ fn layout(title: &str, body: Markup) -> Markup {
             meta name="viewport" content="initial-scale=1";
 
             link rel="stylesheet" href="/css/style.css";
-            script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" {}
-            script defer src="https://unpkg.com/htmx.org@1.7.0" {}
+            script defer src="/assets/js/htmx-1.7.0.min.js" {}
+            script defer src="/assets/js/mermaid-8.14.0.min.js" {}
+            script {
+                (PreEscaped("
+                    window.addEventListener('DOMContentLoaded', function() {
+                        mermaid.initialize({
+                            startOnLoad: true,
+                            theme: 'dark'
+                        });
+                    });
+                "))
+            }
         }
         body {
             header hx-boost="true" {
