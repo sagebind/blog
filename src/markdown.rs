@@ -1,42 +1,53 @@
-use comrak::{
-    markdown_to_html_with_plugins, plugins::syntect::SyntectAdapter, ComrakExtensionOptions,
-    ComrakOptions, ComrakParseOptions, ComrakPlugins, ComrakRenderOptions, ComrakRenderPlugins,
-};
+use maud::{html, PreEscaped};
+use pulldown_cmark::{html, CodeBlockKind, Event, Parser, Tag, Options};
+
+use crate::highlight::{find_syntax, highlight};
+
+const OPTIONS: Options = Options::all();
 
 pub fn render(markdown: &str) -> String {
-    let comrak_options = ComrakOptions {
-        extension: ComrakExtensionOptions {
-            strikethrough: true,
-            tagfilter: false,
-            table: true,
-            autolink: true,
-            tasklist: true,
-            superscript: false,
-            header_ids: Some(String::new()),
-            footnotes: true,
-            front_matter_delimiter: Some("+++".into()),
-            description_lists: true,
-        },
-        parse: ComrakParseOptions {
-            smart: true,
-            default_info_string: None,
-        },
-        render: ComrakRenderOptions {
-            hardbreaks: true,
-            github_pre_lang: true,
-            width: 0,
-            unsafe_: true,
-            escape: false,
-        },
-    };
+    let parser = highlight_code(Parser::new_ext(markdown, OPTIONS));
 
-    let syntect = SyntectAdapter::new("base16-eighties.dark");
+    let mut html_buf = String::new();
+    html::push_html(&mut html_buf, parser);
 
-    let plugins = ComrakPlugins {
-        render: ComrakRenderPlugins {
-            codefence_syntax_highlighter: Some(&syntect),
-        },
-    };
+    html_buf
+}
 
-    markdown_to_html_with_plugins(markdown, &comrak_options, &plugins)
+fn highlight_code<'a>(
+    mut events: impl Iterator<Item = Event<'a>>,
+) -> impl Iterator<Item = Event<'a>> {
+    std::iter::from_fn(move || {
+        let event = events.next()?;
+
+        if let Event::Start(Tag::CodeBlock(CodeBlockKind::Fenced(lang))) = &event {
+            if let Some(syntax_ref) = find_syntax(&lang) {
+                let mut code = None;
+
+                loop {
+                    match events.next()? {
+                        Event::Text(text) => code = Some(text),
+                        Event::End(Tag::CodeBlock(_)) => break,
+                        e => panic!("unexpected event: {:?}", e),
+                    }
+                }
+
+                let highlighted = highlight(&code.unwrap(), &syntax_ref);
+
+                return Some(Event::Html(
+                    html! {
+                        pre class={ "language-" (lang) } {
+                            code class={ "language-" (lang) } {
+                                (PreEscaped(highlighted))
+                            }
+                        }
+                    }
+                    .into_string()
+                    .into(),
+                ));
+            }
+        }
+
+        Some(event)
+    })
 }

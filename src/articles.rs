@@ -1,6 +1,8 @@
-use include_dir::{include_dir, Dir};
+use std::fs;
+
 use itertools::Itertools;
 use once_cell::sync::Lazy;
+use rayon::prelude::*;
 use regex::Regex;
 use serde::Deserialize;
 use time::{Date, Month};
@@ -115,23 +117,26 @@ struct Frontmatter {
 }
 
 fn load() -> Vec<Article> {
-    static ARTICLES_DIR: Dir = include_dir!("$CARGO_MANIFEST_DIR/articles");
-
     log::info!("parsing articles...");
 
-    ARTICLES_DIR
-        .files()
-        .sorted_by_key(|file| file.path())
-        .rev()
+    let mut articles = fs::read_dir("articles").unwrap()
+        .map(|e| e.unwrap())
+        .collect_vec()
+        .into_par_iter()
         .map(|file| {
             let filename = file
                 .path()
                 .file_name()
                 .unwrap()
                 .to_str()
+                .map(|s| s.to_owned())
                 .unwrap();
 
-            Article::parse(filename, file.contents_utf8().unwrap())
+            Article::parse(&filename, &fs::read_to_string(file.path()).unwrap())
         })
-        .collect()
+        .collect::<Vec<_>>();
+
+    articles.sort_by(|a, b| b.date.cmp(&a.date));
+
+    articles
 }

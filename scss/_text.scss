@@ -145,28 +145,23 @@ ul {
     margin-left: 0.25em;
 }
 
-pre, code {
+code {
     font-family: $font-mono;
+    font-size: 0.75em;
 }
 
-:not(pre) > code, .tag {
+code, .tag {
     padding: 0.125em 0.5em;
     border-radius: 2px;
     background-color: $color-black !important;
 }
 
-code {
-    font-size: 0.75em;
-}
-
-pre {
-    padding: 0 1rem;
-    line-height: 1;
-}
-
 pre > code {
+    display: block;
+    padding: 1rem;
     line-height: 1.5;
     white-space: pre-wrap;
+    overflow-x: auto;
     cursor: text;
 }
 

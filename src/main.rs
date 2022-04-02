@@ -21,6 +21,7 @@ mod components;
 mod csrf;
 mod database;
 mod feeds;
+mod highlight;
 mod markdown;
 mod pages;
 

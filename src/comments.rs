@@ -158,7 +158,7 @@ impl CommentStore {
         .unwrap()
     }
 
-    pub async fn post(&self, article_slug: &str, post: PostComment) {
+    pub async fn post(&self, article_slug: &str, mut post: PostComment) {
         log::info!("received comment: {:?}", post);
 
         if !csrf::verify_token(&post.token) {
@@ -172,6 +172,9 @@ impl CommentStore {
         // - validate token time
         // - filter known bad IPs
         // - limit length
+
+        // Sanitize any HTML that may be present in the comment text.
+        post.text = ammonia::clean(&post.text);
 
         let now = OffsetDateTime::now_utc();
 
