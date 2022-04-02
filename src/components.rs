@@ -1,6 +1,7 @@
 use maud::{html, Markup, PreEscaped};
-use pulldown_cmark::{html, Options, Parser};
 use time::{Date, OffsetDateTime};
+
+use crate::markdown::render_html;
 
 pub mod comments;
 pub mod gravatar;
@@ -37,16 +38,7 @@ pub fn date(date: Date) -> Markup {
 
 pub fn markdown(markdown: &str) -> Markup {
     html! {
-        (PreEscaped(render_markdown(markdown)))
+        (PreEscaped(render_html(markdown)))
     }
 }
 
-fn render_markdown(markdown: &str) -> String {
-    let options = Options::all();
-    let parser = Parser::new_ext(markdown, options);
-
-    let mut html_output = String::new();
-    html::push_html(&mut html_output, parser);
-
-    html_output
-}

@@ -18,8 +18,8 @@ pub struct Article {
     pub author: String,
     pub date: Date,
     pub tags: Vec<String>,
-    pub source: String,
     pub content_html: String,
+    pub content_text: String,
     pub word_count: usize,
 }
 
@@ -53,8 +53,8 @@ impl Article {
             author: frontmatter.author,
             date: Date::from_calendar_date(year, date_month, day).unwrap(),
             tags: frontmatter.tags,
-            source: source.to_owned(),
-            content_html: markdown::render(source),
+            content_html: markdown::render_html(source),
+            content_text: markdown::render_plaintext(source),
             word_count,
         }
     }
@@ -68,14 +68,14 @@ impl Article {
     }
 
     pub fn summary(&self, len: usize) -> String {
-        if self.source.len() > len {
-            if let Some(i) = &self.source[..len].rfind(" ") {
-                format!("{}...", &self.source[..*i])
+        if self.content_text.len() > len {
+            if let Some(i) = &self.content_text[..len].rfind(" ") {
+                format!("{}...", &self.content_text[..*i])
             } else {
-                self.source.clone()
+                self.content_text.clone()
             }
         } else {
-            self.source.clone()
+            self.content_text.clone()
         }
     }
 
