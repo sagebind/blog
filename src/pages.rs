@@ -1,9 +1,11 @@
-use maud::{html, Markup, DOCTYPE, PreEscaped};
+use maud::{html, Markup, PreEscaped, DOCTYPE};
 use time::OffsetDateTime;
 
 use crate::{
     articles::{self, Article},
-    components::{date, markdown::markdown, comments::comments_section}, comments::Comment,
+    comments::Comment,
+    components::{comments::comments_section, date},
+    markdown,
 };
 
 pub fn home() -> Markup {
@@ -116,7 +118,7 @@ pub fn about() -> Markup {
     layout(
         "Stephen Coakley",
         html! {
-            (markdown(include_str!("../wwwroot/about.md")))
+            (PreEscaped(markdown::render_html(include_str!("../wwwroot/about.md"), true)))
         },
     )
 }
@@ -125,7 +127,7 @@ pub fn feeds() -> Markup {
     layout(
         "Stephen Coakley",
         html! {
-            (markdown(include_str!("../wwwroot/feeds.md")))
+            (PreEscaped(markdown::render_html(include_str!("../wwwroot/feeds.md"), true)))
         },
     )
 }
@@ -134,7 +136,7 @@ pub fn stuff() -> Markup {
     layout(
         "Stephen Coakley",
         html! {
-            (markdown(include_str!("../wwwroot/stuff.md")))
+            (PreEscaped(markdown::render_html(include_str!("../wwwroot/stuff.md"), true)))
         },
     )
 }
@@ -195,7 +197,7 @@ fn layout(title: &str, body: Markup) -> Markup {
             }
         }
         body {
-            header hx-boost="true" {
+            header {
                 nav {
                     a id="logo" class="title" href="/" { "Stephen·Coakley" }
                     div style="flex-grow: 1;" {}

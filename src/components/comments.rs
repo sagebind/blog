@@ -1,9 +1,10 @@
-use maud::{html, Markup};
+use maud::{html, Markup, PreEscaped};
 
 use crate::{
     comments::Comment,
-    components::{date, gravatar::gravatar, markdown},
+    components::{date, gravatar::gravatar},
     csrf::generate_token,
+    markdown,
 };
 
 pub fn comments_section(article_slug: &str, comments: &[Comment]) -> Markup {
@@ -60,7 +61,7 @@ pub fn comment(comment: &Comment) -> Markup {
                     (date(comment.published.date()))
                 }
 
-                (markdown(&comment.text))
+                (PreEscaped(markdown::render_html(&comment.text, false)))
 
                 div class="comment-toolbar" {
                     a title="Upvote"

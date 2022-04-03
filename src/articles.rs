@@ -53,7 +53,7 @@ impl Article {
             author: frontmatter.author,
             date: Date::from_calendar_date(year, date_month, day).unwrap(),
             tags: frontmatter.tags,
-            content_html: markdown::render_html(source),
+            content_html: markdown::render_html(source, true),
             content_text: markdown::render_plaintext(source),
             word_count,
         }

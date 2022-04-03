@@ -1,11 +1,8 @@
-use maud::{html, Markup, PreEscaped};
+use maud::{html, Markup};
 use time::{Date, OffsetDateTime};
-
-use crate::markdown::render_html;
 
 pub mod comments;
 pub mod gravatar;
-pub mod markdown;
 
 pub fn date(date: Date) -> Markup {
     let today = OffsetDateTime::now_utc().date();
@@ -35,10 +32,3 @@ pub fn date(date: Date) -> Markup {
         }
     }
 }
-
-pub fn markdown(markdown: &str) -> Markup {
-    html! {
-        (PreEscaped(render_html(markdown)))
-    }
-}
-

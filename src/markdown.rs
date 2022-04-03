@@ -10,16 +10,28 @@ use regex::Regex;
 
 use crate::highlight::{find_syntax, highlight};
 
-const OPTIONS: Options = Options::all();
-
 /// Render a block of Markdown into HTML.
-pub fn render_html(markdown: &str) -> String {
-    let parser = highlight_code(autolink(Parser::new_ext(markdown, OPTIONS)));
+pub fn render_html(markdown: impl AsRef<str>, trusted: bool) -> String {
+    let options = if trusted {
+        Options::all()
+    } else {
+        Options::ENABLE_SMART_PUNCTUATION | Options::ENABLE_STRIKETHROUGH
+    };
 
-    let mut html_buf = String::new();
-    html::push_html(&mut html_buf, parser);
+    let parser = highlight_code(autolink(Parser::new_ext(markdown.as_ref(), options)));
 
-    html_buf
+    fn render<'a>(parser: impl Iterator<Item = Event<'a>>) -> String {
+        let mut html_buf = String::new();
+        html::push_html(&mut html_buf, parser);
+
+        html_buf
+    }
+
+    if trusted {
+        render(parser)
+    } else {
+        render(nofollow_links(parser))
+    }
 }
 
 /// Render a block of Markdown into plain text.
@@ -83,6 +95,36 @@ fn autolink<'a>(mut events: impl Iterator<Item = Event<'a>>) -> impl Iterator<It
                 Some(event)
             }
             event => Some(event),
+        }
+    })
+}
+
+fn nofollow_links<'a>(
+    mut events: impl Iterator<Item = Event<'a>>,
+) -> impl Iterator<Item = Event<'a>> {
+    iter::from_fn(move || {
+        let mut current_link = None;
+        let mut link_children = Vec::new();
+
+        loop {
+            match events.next()? {
+                Event::Start(link @ Tag::Link(..)) => {
+                    current_link = Some(link);
+                    link_children.clear();
+                }
+                Event::End(Tag::Link(_, url, title)) if current_link.is_some() => {
+                    let mut html = String::new();
+                    html::push_html(&mut html, link_children.drain(..));
+
+                    return Some(Event::Html(html! {
+                        a href=(url) rel="nofollow" title=[Some(title).filter(|s| !s.is_empty())] {
+                            (PreEscaped(html))
+                        }
+                    }.into_string().into()));
+                }
+                event if current_link.is_some() => link_children.push(event),
+                event => return Some(event),
+            }
         }
     })
 }
