@@ -2,7 +2,7 @@ use harsh::Harsh;
 use once_cell::sync::Lazy;
 use serde::Deserialize;
 use sqlx::{mysql::MySqlRow, FromRow, MySqlPool, Row};
-use std::{collections::HashMap, env};
+use std::{collections::HashMap, env, net::IpAddr};
 use time::OffsetDateTime;
 
 use crate::csrf;
@@ -33,12 +33,14 @@ pub struct Comment {
     /// The author of the comment.
     pub author: Author,
 
+    /// Current comment score, sum of all positive and negative votes.
     pub score: i16,
-
-    pub children: Vec<Comment>,
 
     /// The text of the comment in Markdown format.
     pub text: String,
+
+    /// Replies to this comment.
+    pub children: Vec<Comment>,
 }
 
 impl Comment {
@@ -130,6 +132,28 @@ impl CommentStore {
         .unwrap()
     }
 
+    pub async fn get_by_id(&self, id: &str) -> Option<Comment> {
+        sqlx::query_as(
+            "SELECT
+                id,
+                parentId,
+                slug,
+                datePublished,
+                authorName,
+                authorEmail,
+                authorWebsite,
+                score DIV 1 AS `score`,
+                text
+            FROM CommentWithScore
+            WHERE dateDeleted IS NULL
+            AND id = ?",
+        )
+        .bind(decode_id(id)?)
+        .fetch_optional(&self.pool)
+        .await
+        .unwrap()
+    }
+
     /// Fetch the entire comment tree for the given article slug.
     pub async fn tree_for_slug(&self, article_slug: &str) -> Vec<Comment> {
         rebuild_comment_tree(self.fetch_all_comments_for_slug(article_slug).await)
@@ -201,6 +225,47 @@ impl CommentStore {
         .await
         .unwrap();
     }
+
+    pub async fn upvote(&self, comment_id: &str, ip_addr: IpAddr) {
+        self.vote(comment_id, ip_addr, 1).await
+    }
+
+    pub async fn downvote(&self, comment_id: &str, ip_addr: IpAddr) {
+        self.vote(comment_id, ip_addr, -1).await
+    }
+
+    async fn vote(&self, comment_id: &str, ip_addr: IpAddr, value: i8) {
+        // To prevent excessive spam we limit the total number of votes any one
+        // comment can receive.
+        const MAX_VOTES: i16 = 500;
+
+        // Ignore multi-votes.
+        if value.abs() > 1 || value == 0 {
+            return;
+        }
+
+        let comment = match self.get_by_id(comment_id).await {
+            Some(comment) => comment,
+
+            // Invalid comment ID, ignore vote
+            None => return,
+        };
+
+        if comment.score.abs() >= MAX_VOTES {
+            log::debug!(
+                "ignoring vote for comment `{comment_id}`, already exceeded {MAX_VOTES} votes"
+            );
+            return;
+        }
+
+        sqlx::query("REPLACE INTO Vote (commentId, voterIp, vote) VALUES (?, ?, ?)")
+            .bind(decode_id(comment_id).unwrap())
+            .bind(ip_addr.to_string())
+            .bind(value)
+            .execute(&self.pool)
+            .await
+            .unwrap();
+    }
 }
 
 fn rebuild_comment_tree(comments: Vec<Comment>) -> Vec<Comment> {
@@ -238,6 +303,6 @@ fn encode_id(id: i64) -> String {
     HASHIDS.encode(&[id as u64])
 }
 
-fn decode_id(id: String) -> i64 {
-    HASHIDS.decode(&id).unwrap()[0] as i64
+fn decode_id(id: impl AsRef<str>) -> Option<i64> {
+    HASHIDS.decode(id).ok().map(|v| v[0] as i64)
 }

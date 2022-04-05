@@ -5,7 +5,7 @@ use once_cell::sync::Lazy;
 use rayon::prelude::*;
 use regex::Regex;
 use serde::Deserialize;
-use time::{Date, Month};
+use time::Date;
 
 use crate::markdown;
 
@@ -41,17 +41,11 @@ impl Article {
 
         let word_count = WORD_REGEX.find_iter(source).count();
 
-        let mut date_month = Month::January;
-
-        for _ in 1..month {
-            date_month = date_month.next();
-        }
-
         Self {
             slug: format!("{:04}/{:02}/{:02}/{}", year, month, day, slug),
             title: frontmatter.title,
             author: frontmatter.author,
-            date: Date::from_calendar_date(year, date_month, day).unwrap(),
+            date: Date::from_calendar_date(year, month.try_into().unwrap(), day).unwrap(),
             tags: frontmatter.tags,
             content_html: markdown::render_html(source, true),
             content_text: markdown::render_plaintext(source),
@@ -80,10 +74,7 @@ impl Article {
     }
 
     pub fn canonical_url(&self) -> String {
-        format!(
-            "https://stephencoakley.com/{}",
-            self.slug
-        )
+        format!("https://stephencoakley.com/{}", self.slug)
     }
 }
 
@@ -96,14 +87,16 @@ pub fn get_all(_include_unpublished: bool) -> &'static [Article] {
 pub fn get_tagged(tag: impl AsRef<str>) -> Vec<Article> {
     let tag = tag.as_ref();
 
-    get_all(false).into_iter()
+    get_all(false)
+        .into_iter()
         .cloned()
         .filter(|article| article.has_tag(tag))
         .collect()
 }
 
 pub fn get_by_slug(slug: &str) -> Option<Article> {
-    get_all(false).into_iter()
+    get_all(false)
+        .into_iter()
         .filter(|article| article.slug == slug)
         .next()
         .cloned()
@@ -119,7 +112,8 @@ struct Frontmatter {
 fn load() -> Vec<Article> {
     log::info!("parsing articles...");
 
-    let mut articles = fs::read_dir("articles").unwrap()
+    let mut articles = fs::read_dir("articles")
+        .unwrap()
         .map(|e| e.unwrap())
         .collect_vec()
         .into_par_iter()

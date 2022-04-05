@@ -39,7 +39,7 @@ pub fn comments_section(article_slug: &str, comments: &[Comment]) -> Markup {
 
 pub fn comment(comment: &Comment) -> Markup {
     html! {
-        article class="comment" id={ "comment-" (comment.id) } x-data="{ reply: false }" {
+        article class="comment" id={ "comment-" (comment.id) } {
             div class="avatar" {
                 (gravatar(comment.author.email.as_deref()))
             }
@@ -65,14 +65,14 @@ pub fn comment(comment: &Comment) -> Markup {
 
                 div class="comment-toolbar" {
                     a title="Upvote"
-                        hx-post="/comments/upvote/{id}"
+                        hx-post={ "/" (&comment.article_slug) "/comments/" (comment.id) "/upvotes" }
                         hx-target="#comments"
                         tabindex="0" {
                         "▲ upvote"
                     }
 
                     a title="Downvote"
-                        hx-post="/comments/downvote/{id}"
+                        hx-post={ "/" (&comment.article_slug) "/comments/" (comment.id) "/downvotes" }
                         hx-target="#comments"
                         tabindex="0" {
                         "▼ downvote"
@@ -80,13 +80,12 @@ pub fn comment(comment: &Comment) -> Markup {
 
                     a href={ "#comment-" (comment.id) } { "permalink" }
 
-                    a x-on:click="reply = !reply" x-text="reply ? 'close' : 'reply'" {
+                    a id={ "comment-" (comment.id) "-reply-link" } hx-get={ "/" (&comment.article_slug) "/comments/reply?id=" (comment.id) "&show=true" } hx-target={ "#comment-" (comment.id) "-reply" } {
                         "reply"
                     }
                 }
 
-                div id={ "comment-" (comment.id) "-reply" } x-show="reply" {
-                    (comment_form(&comment.article_slug, Some(&comment.id)))
+                div id={ "comment-" (comment.id) "-reply" } {
                 }
 
                 @for child in &comment.children {
@@ -141,13 +140,13 @@ pub fn comment_form(article_slug: &str, parent_comment_id: Option<&str>) -> Mark
 
 fn score_label(score: i16) -> Markup {
     html! {
-        @if score > 1 {
-            span {
-                (score) " points"
-            }
-        } @else if score == 1 {
+        @if score == 1 {
             span {
                 "1 point"
+            }
+        } @else if score != 0 {
+            span {
+                (score) " points"
             }
         }
     }

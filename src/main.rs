@@ -1,5 +1,6 @@
 use std::env;
 
+use maud::html;
 use poem::{
     endpoint::StaticFilesEndpoint,
     get,
@@ -12,7 +13,7 @@ use serde::Deserialize;
 
 use crate::{
     comments::{CommentStore, PostComment},
-    feeds::FeedFormat,
+    feeds::FeedFormat, web::ClientIp,
 };
 
 mod articles;
@@ -24,6 +25,7 @@ mod feeds;
 mod highlight;
 mod markdown;
 mod pages;
+mod web;
 
 #[poem::handler]
 fn home() -> Html<String> {
@@ -102,7 +104,6 @@ async fn get_comments_feed(
 async fn get_article_comments_feed(
     comment_store: Data<&CommentStore>,
     Path((slug, format)): Path<(String, FeedFormat)>,
-    // Path(format): Path<FeedFormat>,
 ) -> Response {
     if let Some(article) = articles::get_by_slug(&slug) {
         let comments = comment_store.fetch_all_comments_for_slug(&slug).await;
@@ -122,6 +123,32 @@ async fn get_article_comments_feed(
     }
 }
 
+#[derive(Clone, Debug, Deserialize)]
+struct ReplyFormParams {
+    id: String,
+    show: bool,
+}
+
+#[poem::handler]
+fn get_comment_reply_form(
+    Path(slug): Path<String>,
+    Query(ReplyFormParams { id, show }): Query<ReplyFormParams>,
+) -> Html<String> {
+    Html(html! {
+        a hx-swap-oob={ "outerHTML:#comment-" (&id) "-reply-link" } id={ "comment-" (&id) "-reply-link" } hx-get={ "/" (&slug) "/comments/reply?id=" (&id) "&show=" (!show) } hx-target={ "#comment-" (&id) "-reply" } {
+            @if show {
+                "close"
+            } @else {
+                "reply"
+            }
+        }
+
+        @if show {
+            (components::comments::comment_form(&slug, Some(&id)))
+        }
+    }.into_string())
+}
+
 #[poem::handler]
 async fn post_comment(
     comment_store: Data<&CommentStore>,
@@ -130,6 +157,34 @@ async fn post_comment(
 ) -> Html<String> {
     // Post the comment.
     comment_store.post(&slug, post).await;
+
+    // Reload the comment tree.
+    let comments = comment_store.tree_for_slug(&slug).await;
+
+    Html(components::comments::comments_section(&slug, &comments).into_string())
+}
+
+#[poem::handler]
+async fn post_comment_upvote(
+    comment_store: Data<&CommentStore>,
+    Path((slug, comment_id)): Path<(String, String)>,
+    ClientIp(addr): ClientIp,
+) -> Html<String> {
+    comment_store.upvote(&comment_id, addr).await;
+
+    // Reload the comment tree.
+    let comments = comment_store.tree_for_slug(&slug).await;
+
+    Html(components::comments::comments_section(&slug, &comments).into_string())
+}
+
+#[poem::handler]
+async fn post_comment_downvote(
+    comment_store: Data<&CommentStore>,
+    Path((slug, comment_id)): Path<(String, String)>,
+    ClientIp(addr): ClientIp,
+) -> Html<String> {
+    comment_store.downvote(&comment_id, addr).await;
 
     // Reload the comment tree.
     let comments = comment_store.tree_for_slug(&slug).await;
@@ -190,8 +245,20 @@ async fn main() -> Result<(), std::io::Error> {
         )
         .at(r"/:slug<\d{4}/\d{2}/\d{2}/[^/]+>", get(get_article))
         .at(
+            r"/:slug<\d{4}/\d{2}/\d{2}/[^/]+>/comments/reply",
+            get(get_comment_reply_form),
+        )
+        .at(
             r"/:slug<\d{4}/\d{2}/\d{2}/[^/]+>/comments",
             post(post_comment),
+        )
+        .at(
+            r"/:slug<\d{4}/\d{2}/\d{2}/[^/]+>/comments/:id/upvotes",
+            post(post_comment_upvote),
+        )
+        .at(
+            r"/:slug<\d{4}/\d{2}/\d{2}/[^/]+>/comments/:id/downvotes",
+            post(post_comment_downvote),
         )
         .at(
             r"/:slug<\d{4}/\d{2}/\d{2}/[^/]+>/comments.:format<rss|atom|json>",

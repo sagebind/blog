@@ -1,5 +1,5 @@
 use maud::{html, PreEscaped};
-use time::{format_description, OffsetDateTime};
+use time::format_description::well_known::Rfc2822;
 
 use super::Feed;
 
@@ -20,7 +20,7 @@ pub fn render(feed: &Feed) -> String {
                 }
                 @if let Some(date) = feed.last_updated() {
                     pubDate {
-                        (format_rfc822(date))
+                        (date.format(&Rfc2822).unwrap())
                     }
                 }
 
@@ -41,7 +41,7 @@ pub fn render(feed: &Feed) -> String {
                             (item.id)
                         }
                         pubDate {
-                            (format_rfc822(item.date_published))
+                            (item.date_published.format(&Rfc2822).unwrap())
                         }
                         @if let Some(tags) = item.tags.as_ref() {
                             @for tag in tags {
@@ -58,8 +58,4 @@ pub fn render(feed: &Feed) -> String {
             }
         }
     }.into_string()
-}
-
-fn format_rfc822(datetime: OffsetDateTime) -> String {
-    datetime.format(&format_description::parse("[weekday repr:short], [day padding:zero] [month repr:short] [year] [hour]:[minute]:[second] +0000").unwrap()).unwrap()
 }
