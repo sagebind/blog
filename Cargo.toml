@@ -50,7 +50,7 @@ features = ["formatting", "serde-well-known"]
 
 [dependencies.tokio]
 version = "1.17.0"
-features = ["rt-multi-thread", "macros"]
+features = ["rt-multi-thread", "macros", "signal"]
 
 [build-dependencies]
 grass = "0.10"

@@ -13,7 +13,8 @@ use serde::Deserialize;
 
 use crate::{
     comments::{CommentStore, PostComment},
-    feeds::FeedFormat, web::ClientIp,
+    feeds::FeedFormat,
+    web::ClientIp,
 };
 
 mod articles;
@@ -218,7 +219,7 @@ async fn get_article(
 
 #[tokio::main]
 async fn main() -> Result<(), std::io::Error> {
-    dotenv::dotenv().unwrap();
+    dotenv::dotenv().ok();
     env_logger::init();
 
     // Parse embedded articles at startup.
@@ -269,10 +270,16 @@ async fn main() -> Result<(), std::io::Error> {
         .nest("/content", StaticFilesEndpoint::new("wwwroot/content"))
         .data(comment_store);
 
-    let addr = env::var("LISTEN_ADDR").unwrap_or_else(|_| String::from("127.0.0.1:5000"));
+    let addr = env::var("LISTEN_ADDR").unwrap_or_else(|_| String::from("127.0.0.1:80"));
 
     log::info!("listening on http://{}", addr);
     poem::Server::new(poem::listener::TcpListener::bind(addr))
-        .run(app)
+        .run_with_graceful_shutdown(
+            app,
+            async {
+                tokio::signal::ctrl_c().await.ok();
+            },
+            None,
+        )
         .await
 }
