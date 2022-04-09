@@ -5,7 +5,7 @@ use sqlx::{mysql::MySqlRow, FromRow, MySqlPool, Row};
 use std::{collections::HashMap, env, net::IpAddr};
 use time::OffsetDateTime;
 
-use crate::csrf;
+use crate::{csrf, url};
 
 static HASHIDS: Lazy<Harsh> = Lazy::new(|| {
     Harsh::builder()
@@ -14,6 +14,9 @@ static HASHIDS: Lazy<Harsh> = Lazy::new(|| {
         .build()
         .unwrap()
 });
+
+/// Maximum length allowed for a comment.
+pub const MAX_TEXT_LENGTH: usize = 8192;
 
 #[derive(Clone, Debug)]
 pub struct Comment {
@@ -185,20 +188,33 @@ impl CommentStore {
     pub async fn post(&self, article_slug: &str, mut post: PostComment) {
         log::info!("received comment: {:?}", post);
 
+        // SPAM PREVENTION:
+        // - validate form token
+        // - limit length
+        // - limit number of links
+        // - sanitize HTML
+
         if !csrf::verify_token(&post.token) {
             return;
         }
 
-        // SPAM PREVENTION:
-        // - limit number of links
-        // - don't allow HTML
-        // - validate CSRF token
-        // - validate token time
-        // - filter known bad IPs
-        // - limit length
+        // The max length is enforced by the frontend, so if we exceed that then
+        // this is probably coming from a spambot.
+        if post.text.chars().count() > MAX_TEXT_LENGTH {
+            return;
+        }
+
+        if url::count(&post.text) > 10 {
+            return;
+        }
 
         // Sanitize any HTML that may be present in the comment text.
         post.text = ammonia::clean(&post.text);
+
+        // If the comment is blank then it should also be ignored.
+        if post.text.trim().is_empty() {
+            return;
+        }
 
         let now = OffsetDateTime::now_utc();
 

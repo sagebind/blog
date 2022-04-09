@@ -1,7 +1,7 @@
 use maud::{html, Markup, PreEscaped};
 
 use crate::{
-    comments::Comment,
+    comments::{Comment, MAX_TEXT_LENGTH},
     components::{date, gravatar::gravatar},
     csrf::generate_token,
     markdown,
@@ -110,7 +110,7 @@ pub fn comment_form(article_slug: &str, parent_comment_id: Option<&str>) -> Mark
                     name="text"
                     placeholder="Comment text (supports Markdown)"
                     required
-                    maxlength="8192" {}
+                    maxlength=(MAX_TEXT_LENGTH) {}
             }
             div class="author-details" {
                 input

@@ -27,6 +27,7 @@ mod highlight;
 mod markdown;
 mod pages;
 mod web;
+mod url;
 
 #[poem::handler]
 fn home() -> Html<String> {

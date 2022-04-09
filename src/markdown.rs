@@ -4,11 +4,12 @@
 use std::iter;
 
 use maud::{html, PreEscaped};
-use once_cell::sync::Lazy;
 use pulldown_cmark::{html, CodeBlockKind, Event, LinkType, Options, Parser, Tag};
-use regex::Regex;
 
-use crate::highlight::{find_syntax, highlight};
+use crate::{
+    highlight::{find_syntax, highlight},
+    url,
+};
 
 /// Render a block of Markdown into HTML.
 pub fn render_html(markdown: impl AsRef<str>, trusted: bool) -> String {
@@ -53,9 +54,6 @@ pub fn render_plaintext(markdown: &str) -> String {
 
 /// Detect URLs in plain text and transform them into links automatically.
 fn autolink<'a>(mut events: impl Iterator<Item = Event<'a>>) -> impl Iterator<Item = Event<'a>> {
-    static LINK_REGEX: Lazy<Regex> =
-        Lazy::new(|| Regex::new(r#"https?://[\w\-]+(\.[\w\-]+)+([\w/\-@:%=+~]+)?(\.[\w/\-@:%=+~]+)*(\?[\w/\-@:%=+~]+)?#?[\w/\-@:%=+~]*"#).unwrap());
-
     let mut stack = Vec::new();
     let mut inside_code_block = false;
     let mut preparsed_count = 0;
@@ -70,18 +68,17 @@ fn autolink<'a>(mut events: impl Iterator<Item = Event<'a>>) -> impl Iterator<It
 
         match stack.pop().or_else(|| events.next())? {
             Event::Text(text) if !preparsed && !inside_code_block => {
-                if let Some(m) = LINK_REGEX.find(&text) {
-                    let url = m.as_str().to_string();
+                if let Some((prefix, url, suffix)) = url::find(&text) {
                     let link = Tag::Link(LinkType::Autolink, url.clone().into(), "".into());
 
-                    stack.push(Event::Text(text[m.end()..].to_string().into()));
+                    stack.push(Event::Text(suffix.into()));
                     stack.push(Event::End(link.clone()));
                     stack.push(Event::Text(url.into()));
                     stack.push(Event::Start(link.clone()));
 
                     preparsed_count += 3;
 
-                    Some(Event::Text(text[..m.start()].to_string().into()))
+                    return Some(Event::Text(prefix.into()));
                 } else {
                     Some(Event::Text(text))
                 }
