@@ -57,13 +57,12 @@ $image-scan-lines: repeating-linear-gradient(
     }
 }
 
-@import "vendor/sanitize";
 @import "fonts";
+@import "vendor/sanitize";
 @import "text";
 @import "layout";
 @import "nav";
 @import "theme";
 @import "forms";
-@import "vendor/highlightjs/tomorrow-night-eighties";
 @import "mermaid";
 @import "comments";

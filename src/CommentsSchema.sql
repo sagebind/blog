@@ -28,7 +28,7 @@ SELECT
     Comment.authorName,
     Comment.authorEmail,
     Comment.authorWebsite,
-    coalesce(sum(Vote.vote), 0) AS score,
+    coalesce(sum(Vote.vote), 0) DIV 1 AS score,
     Comment.text
 FROM Comment
 LEFT JOIN Vote ON Vote.commentId = Comment.id

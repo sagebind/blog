@@ -2,4 +2,6 @@
 /obj
 /out
 /wwwroot/**/*.css
+/target/
 *.db
+.env

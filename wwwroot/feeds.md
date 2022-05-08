@@ -1,6 +1,6 @@
 # Feeds
 
-Want to stay up-to-date about my writings? You can subscribe to my posts with any [feed reader](https://en.wikipedia.org/wiki/News_aggregator){rel="nofollow"}. I currently prefer [Inoreader](https://inoreader.com){rel="nofollow"} myself, but any will do. Below are some feeds provided by my website; you can also find links to more in-context in various other places.
+Want to stay up-to-date about my writings? You can subscribe to my posts with any <a href="https://en.wikipedia.org/wiki/News_aggregator" rel="nofollow">feed reader</a>. I currently prefer <a href="https://inoreader.com" rel="nofollow">Inoreader</a> myself, but any will do. Below are some feeds provided by my website; you can also find links to more in-context in various other places.
 
 - [All articles](/feed)
 - [Articles about programming and software engineering](/feed?tag=programming)

@@ -13,9 +13,9 @@ I won't be explaining all the aliases I have since most of them are boring, but 
 
 ## `git aliases`
 
-Even though aliases are useful, I'll ~~often~~ sometimes forget what aliases I have or what they do. This alias helps me remember, because `git aliases` is really easy to remember.
+Even though aliases are useful, I'll ~~sometimes~~ often forget what aliases I have or what they do. This alias helps me remember, because `git aliases` is really easy to remember.
 
-```
+```sh
 aliases = config --get-regexp "^alias\\."
 ```
 
@@ -23,7 +23,7 @@ aliases = config --get-regexp "^alias\\."
 
 This one is pretty simple; it just shows a diff between the current branch and whatever changes you have staged. It's not much shorter than `git diff --staged`, but it is easier to remember.
 
-```
+```sh
 staged = diff --staged
 ```
 
@@ -31,7 +31,7 @@ staged = diff --staged
 
 Like the last one, this alias just gives a shorter name for a common action. I amend commits more than I'd care to admit, so this alias is useful for me.
 
-```
+```sh
 amend = commit --amend
 ```
 
@@ -39,7 +39,7 @@ amend = commit --amend
 
 Does what you might expect; takes some sort of ref, like a commit hash, and returns 1 or 0 if the current branch contains that commit. This is something I discovered that you could do one time when I needed it, but there's no way anyone could remember a command like `merge-base --is-ancestor`. So this alias just gives it a friendly name.
 
-```
+```sh
 contains = merge-base --is-ancestor
 ```
 
@@ -49,7 +49,7 @@ I don't need this one often, but when I do, it saves me from having to look some
 
 I open GitHub pull requests a lot, and my usual workflow for doing so is to branch off of `master`, make some commits, then push the branch and open a PR from the GitHub website. A slight annoyance in this process in the past for me was remembering to set the remote branch name before I could push the new branch to the remote repository. This alias does it for me.
 
-```
+```sh
 pub = "!git push -u origin $(git rev-parse --abbrev-ref HEAD)"
 ```
 
@@ -65,7 +65,7 @@ This alias lets me speed up that process, and also has come in handy for other t
 
 The biggest use I get out of this alias is making sure I have everything committed. Sometimes I'll work on a project and then forget about it for a little while without committing. When I want to double-check that I'm not forgetting anything, I run `git all status --short` to quickly scan which repos have uncommitted changes that I need to take care of.
 
-```
+```sh
 all = "!find . -type d -name .git -prune -execdir pwd ';' -execdir git $@ ';' #"
 ```
 
