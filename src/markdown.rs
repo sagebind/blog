@@ -3,8 +3,11 @@
 
 use std::iter;
 
+use dashmap::DashMap;
 use maud::{html, PreEscaped};
+use once_cell::sync::Lazy;
 use pulldown_cmark::{html, CodeBlockKind, Event, LinkType, Options, Parser, Tag};
+use sha1::{Sha1, Digest};
 
 use crate::{
     highlight::{find_syntax, highlight},
@@ -13,13 +16,22 @@ use crate::{
 
 /// Render a block of Markdown into HTML.
 pub fn render_html(markdown: impl AsRef<str>, trusted: bool) -> String {
+    static CACHE: Lazy<DashMap<([u8; 20], bool), String>> = Lazy::new(DashMap::new);
+
+    let markdown = markdown.as_ref();
+    let hash = Sha1::digest(markdown).into();
+
+    if let Some(result) = CACHE.get(&(hash, trusted)) {
+        return result.clone();
+    }
+
     let options = if trusted {
         Options::all()
     } else {
         Options::ENABLE_SMART_PUNCTUATION | Options::ENABLE_STRIKETHROUGH
     };
 
-    let parser = highlight_code(autolink(Parser::new_ext(markdown.as_ref(), options)));
+    let parser = highlight_code(autolink(Parser::new_ext(markdown, options)));
 
     fn render<'a>(parser: impl Iterator<Item = Event<'a>>) -> String {
         let mut html_buf = String::new();
@@ -28,11 +40,15 @@ pub fn render_html(markdown: impl AsRef<str>, trusted: bool) -> String {
         html_buf
     }
 
-    if trusted {
+    let result = if trusted {
         render(parser)
     } else {
         render(nofollow_links(parser))
-    }
+    };
+
+    CACHE.insert((hash, trusted), result.clone());
+
+    result
 }
 
 /// Render a block of Markdown into plain text.
