@@ -130,7 +130,7 @@ pub fn comments(
         favicon: "https://stephencoakley.com/assets/images/favicon.ico".into(),
         language: None,
         authors: vec![],
-        items: comments.into_iter().map(|comment| comment.into()).collect(),
+        items: comments.iter().map(|comment| comment.into()).collect(),
     }
 }
 

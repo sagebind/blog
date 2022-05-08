@@ -134,7 +134,7 @@ fn highlight_code<'a>(
         let event = events.next()?;
 
         if let Event::Start(Tag::CodeBlock(CodeBlockKind::Fenced(lang))) = &event {
-            if let Some(syntax_ref) = find_syntax(&lang) {
+            if let Some(syntax_ref) = find_syntax(lang) {
                 let mut code = None;
 
                 loop {
@@ -145,7 +145,7 @@ fn highlight_code<'a>(
                     }
                 }
 
-                let highlighted = highlight(&code.unwrap(), &syntax_ref);
+                let highlighted = highlight(&code.unwrap(), syntax_ref);
 
                 return Some(Event::Html(
                     html! {

@@ -12,7 +12,7 @@ impl<'a> FromRequest<'a> for ClientIp {
             .headers()
             .get("X-Forwarded-For")
             .and_then(|value| value.to_str().ok())
-            .and_then(|s| s.split(",").next())
+            .and_then(|s| s.split(',').next())
             .map(|s| s.trim())
             .and_then(|s| IpAddr::from_str(s).ok());
 

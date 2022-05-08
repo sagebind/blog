@@ -30,7 +30,7 @@ impl Default for Config {
 }
 
 pub fn find_syntax(name: &str) -> Option<&'static SyntaxReference> {
-    CONFIG.syntax_set.syntaxes().into_iter().find(|syntax| {
+    CONFIG.syntax_set.syntaxes().iter().find(|syntax| {
         syntax.name.eq_ignore_ascii_case(name)
             || syntax
                 .file_extensions

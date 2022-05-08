@@ -20,8 +20,8 @@ pub fn home() -> Markup {
 
             h1 { "Latest Articles" }
 
-            @for article in articles::get_all(false).into_iter().take(4) {
-                (article_summary(&article))
+            @for article in articles::get_all(false).iter().take(4) {
+                (article_summary(article))
             }
 
             a class="button" href="/articles" { "See more articles" }
@@ -36,7 +36,7 @@ pub fn articles() -> Markup {
             h1 { "Articles" }
 
             @for article in articles::get_all(false) {
-                (article_summary(&article))
+                (article_summary(article))
             }
         },
     )

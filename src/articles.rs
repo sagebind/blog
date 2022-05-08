@@ -25,7 +25,7 @@ pub struct Article {
 
 impl Article {
     fn parse(filename: &str, mut source: &str) -> Self {
-        let mut split = filename.splitn(4, "-");
+        let mut split = filename.splitn(4, '-');
         let year = split.next().unwrap().parse::<i32>().unwrap();
         let month = split.next().unwrap().parse::<u8>().unwrap();
         let day = split.next().unwrap().parse::<u8>().unwrap();
@@ -63,7 +63,7 @@ impl Article {
 
     pub fn summary(&self, len: usize) -> String {
         if self.content_text.len() > len {
-            if let Some(i) = &self.content_text[..len].rfind(" ") {
+            if let Some(i) = &self.content_text[..len].rfind(' ') {
                 format!("{}...", &self.content_text[..*i])
             } else {
                 self.content_text.clone()
@@ -88,7 +88,7 @@ pub fn get_tagged(tag: impl AsRef<str>) -> Vec<Article> {
     let tag = tag.as_ref();
 
     get_all(false)
-        .into_iter()
+        .iter()
         .cloned()
         .filter(|article| article.has_tag(tag))
         .collect()
@@ -96,9 +96,7 @@ pub fn get_tagged(tag: impl AsRef<str>) -> Vec<Article> {
 
 pub fn get_by_slug(slug: &str) -> Option<Article> {
     get_all(false)
-        .into_iter()
-        .filter(|article| article.slug == slug)
-        .next()
+        .iter().find(|article| article.slug == slug)
         .cloned()
 }
 
