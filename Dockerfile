@@ -8,4 +8,7 @@ COPY --from=builder /usr/src/blog/target/release/stephencoakley-blog /usr/local/
 WORKDIR /var/blog
 COPY articles articles
 COPY wwwroot wwwroot
+
+EXPOSE 80
+
 CMD ["blog"]
