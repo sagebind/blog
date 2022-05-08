@@ -20,17 +20,21 @@ spec:
           image: ghcr.io/sagebind/blog/app:latest
           imagePullPolicy: "Always"
           env:
-            - name: ConnectionString
+            - name: RUST_LOG
+              value: stephencoakley_blog=info
+            - name: RUST_BACKTRACE
+              value: "1"
+            - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
                   name: blog
-                  key: ConnectionString
-            - name: ApiTokenSecretKey
+                  key: DATABASE_URL
+            - name: CSRF_TOKEN_KEY
               valueFrom:
                 secretKeyRef:
                   name: blog
-                  key: ApiTokenSecretKey
-            - name: IdSalt
+                  key: CSRF_TOKEN_KEY
+            - name: HASHID_SALT
               valueFrom:
                 secretKeyRef:
                   name: blog
