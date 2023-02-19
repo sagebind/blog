@@ -51,7 +51,7 @@ version = "0.3"
 features = ["formatting", "serde-well-known"]
 
 [dependencies.tokio]
-version = "1.17.0"
+version = "1.18.5"
 features = ["rt-multi-thread", "macros", "signal"]
 
 [build-dependencies]
