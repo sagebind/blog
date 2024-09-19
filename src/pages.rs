@@ -200,7 +200,7 @@ fn layout(title: &str, body: Markup) -> Markup {
             header {
                 nav {
                     a id="logo" class="title" href="/" { "Stephen·Coakley" }
-                    div style="flex-grow: 1;" {}
+                    .spacer {}
                     div class="links" {
                         a class="button" href="/articles" { "Articles" }
                         a class="button" href="/stuff" { "Stuff" }

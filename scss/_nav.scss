@@ -14,6 +14,10 @@ nav {
     text-transform: uppercase;
     font-weight: bold;
 
+    .spacer {
+        flex-grow: 1;
+    }
+
     .links {
         display: flex;
         align-items: center;
