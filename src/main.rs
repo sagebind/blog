@@ -25,6 +25,7 @@ mod database;
 mod feeds;
 mod highlight;
 mod markdown;
+mod middleware;
 mod pages;
 mod web;
 mod url;
@@ -269,6 +270,7 @@ async fn main() -> Result<(), std::io::Error> {
         .at("/css/style.css", get(style))
         .nest("/assets", StaticFilesEndpoint::new("wwwroot/assets"))
         .nest("/content", StaticFilesEndpoint::new("wwwroot/content"))
+        .with(middleware::headers::security_headers())
         .data(comment_store);
 
     let addr = env::var("LISTEN_ADDR").unwrap_or_else(|_| String::from("127.0.0.1:80"));
