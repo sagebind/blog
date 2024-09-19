@@ -47,6 +47,12 @@ spec:
           resources:
             limits:
               memory: 256M
+          livenessProbe:
+            httpGet:
+              port: http
+              path: /
+            failureThreshold: 1
+            periodSeconds: 10
 
 ---
 
