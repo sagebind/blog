@@ -10,14 +10,14 @@ jobs:
       - name: Build Docker image
         run: |
           export TAG=${GITHUB_SHA:0:8}
-          docker-compose build
+          docker compose build
 
       - name: Push Docker image
         run: |
           export TAG=${GITHUB_SHA:0:8}
 
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-          docker-compose push
+          docker compose push
         if: github.ref == 'refs/heads/master'
 
       - name: Update deployment config
