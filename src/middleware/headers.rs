@@ -13,7 +13,8 @@ pub fn security_headers() -> SetHeader {
             "default-src 'self'; \
                 frame-ancestors 'self'; \
                 form-action 'self'; \
-                img-src 'self' www.gravatar.com s.gravatar.com;",
+                img-src 'self' data: www.gravatar.com s.gravatar.com; \
+                style-src 'self' 'unsafe-inline';",
         )
         .appending(
             "permissions-policy",

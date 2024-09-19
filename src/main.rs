@@ -1,4 +1,4 @@
-use std::env;
+use std::{env, time::Duration};
 
 use maud::html;
 use poem::{
@@ -282,7 +282,7 @@ async fn main() -> Result<(), std::io::Error> {
             async {
                 tokio::signal::ctrl_c().await.ok();
             },
-            None,
+            Some(Duration::from_secs(5)),
         )
         .await
 }

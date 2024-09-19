@@ -170,31 +170,7 @@ fn layout(title: &str, body: Markup) -> Markup {
             link rel="stylesheet" href="/css/style.css";
             script defer src="/assets/js/htmx-1.7.0.min.js" {}
             script defer src="/assets/js/mermaid-8.14.0.min.js" {}
-            script {
-                (PreEscaped("
-                    window.addEventListener('DOMContentLoaded', function() {
-                        mermaid.initialize({
-                            startOnLoad: true,
-                            theme: 'dark'
-                        });
-
-                        var mermaidCounter = 0;
-
-                        document.querySelectorAll('pre > code.language-mermaid').forEach(function (code) {
-                            var container = document.createElement('div');
-                            container.className = 'mermaid-chart';
-                            container.id = 'mermaid-chart-' + (mermaidCounter++);
-
-                            mermaid.render(container.id, code.textContent, function (svg) {
-                                container.innerHTML = svg;
-                                if (code.parentElement.parentElement) {
-                                    code.parentElement.parentElement.replaceChild(container, code.parentElement);
-                                }
-                            });
-                        });
-                    });
-                "))
-            }
+            script src="/assets/js/init.js" {}
         }
         body {
             header {
