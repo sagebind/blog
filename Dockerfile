@@ -1,9 +1,9 @@
-FROM docker.io/rust:1 AS builder
+FROM docker.io/rust:1-bookworm AS builder
 WORKDIR /usr/src/blog
 COPY . .
 RUN cargo build --release
 
-FROM debian:buster-slim
+FROM debian:bookworm-slim
 COPY --from=builder /usr/src/blog/target/release/stephencoakley-blog /usr/local/bin/blog
 WORKDIR /var/blog
 COPY articles articles
