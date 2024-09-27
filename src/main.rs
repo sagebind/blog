@@ -206,6 +206,11 @@ fn style() -> poem::web::WithContentType<&'static str> {
 }
 
 #[poem::handler]
+fn robots() -> &'static str {
+    include_str!("robots.txt")
+}
+
+#[poem::handler]
 async fn get_article(
     comment_store: Data<&CommentStore>,
     Path(slug): Path<String>,
@@ -268,6 +273,7 @@ async fn main() -> Result<(), std::io::Error> {
             get(get_article_comments_feed),
         )
         .at("/css/style.css", get(style))
+        .at("/robots.txt", get(robots))
         .nest("/assets", StaticFilesEndpoint::new("wwwroot/assets"))
         .nest("/content", StaticFilesEndpoint::new("wwwroot/content"))
         .with(middleware::headers::security_headers())
