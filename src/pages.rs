@@ -144,64 +144,66 @@ pub fn stuff() -> Markup {
 fn layout(title: &str, body: Markup) -> Markup {
     html! {
         (DOCTYPE)
-        head lang="en" {
-            meta charset="utf-8";
-            meta name="viewport" content="width=device-width";
+        html lang="en" {
+            head {
+                meta charset="utf-8";
+                meta name="viewport" content="width=device-width";
 
-            title { (title) }
+                title { (title) }
 
-            meta name="description" content="I'm a software developer based in Wisconsin";
-            meta name="keywords" content="Stephen Coakley, programming, web development, apps, Rust";
-            meta name="author" content="Stephen Coakley";
+                meta name="description" content="I'm a software developer based in Wisconsin";
+                meta name="keywords" content="Stephen Coakley, programming, web development, apps, Rust";
+                meta name="author" content="Stephen Coakley";
 
-            link rel="alternate" type="application/feed+json" href="/feed.json" title="Blog Feed";
-            link rel="alternate" type="application/atom+xml" href="/feed.atom" title="Blog Feed";
-            link rel="alternate" type="application/rss+xml" href="/feed.rss" title="Blog Feed";
+                link rel="alternate" type="application/feed+json" href="/feed.json" title="Blog Feed";
+                link rel="alternate" type="application/atom+xml" href="/feed.atom" title="Blog Feed";
+                link rel="alternate" type="application/rss+xml" href="/feed.rss" title="Blog Feed";
 
-            link rel="icon" type="image/png" href="/assets/images/favicon.128.png" sizes="128x128";
-            link rel="icon" type="image/png" href="/assets/images/favicon.64.png" sizes="64x64";
-            link rel="icon" type="image/png" href="/assets/images/favicon.48.png" sizes="48x48";
-            link rel="icon" type="image/png" href="/assets/images/favicon.32.png" sizes="32x32";
-            link rel="shortcut icon" href="/assets/images/favicon.ico";
-            link rel="icon" type="image/png" href="/assets/images/favicon.16.png" sizes="16x16";
+                link rel="icon" type="image/png" href="/assets/images/favicon.128.png" sizes="128x128";
+                link rel="icon" type="image/png" href="/assets/images/favicon.64.png" sizes="64x64";
+                link rel="icon" type="image/png" href="/assets/images/favicon.48.png" sizes="48x48";
+                link rel="icon" type="image/png" href="/assets/images/favicon.32.png" sizes="32x32";
+                link rel="shortcut icon" href="/assets/images/favicon.ico";
+                link rel="icon" type="image/png" href="/assets/images/favicon.16.png" sizes="16x16";
 
-            meta name="viewport" content="initial-scale=1";
+                meta name="viewport" content="initial-scale=1";
 
-            link rel="stylesheet" href="/css/style.css";
-            script defer src="/assets/js/htmx-1.7.0.min.js" {}
-            script defer src="/assets/js/mermaid-8.14.0.min.js" {}
-            script src="/assets/js/init.js" {}
-        }
-        body {
-            header {
-                nav {
-                    a id="logo" class="title" href="/" { "Stephen·Coakley" }
-                    .spacer {}
-                    div class="links" {
-                        a class="button" href="/articles" { "Articles" }
-                        a class="button" href="/stuff" { "Stuff" }
-                        a class="button" href="/feeds" { "Feeds" }
-                        a class="button" href="/about" { "About" }
+                link rel="stylesheet" href="/css/style.css";
+                script defer src="/assets/js/htmx-1.7.0.min.js" {}
+                script defer src="/assets/js/mermaid-8.14.0.min.js" {}
+                script src="/assets/js/init.js" {}
+            }
+            body {
+                header {
+                    nav {
+                        a id="logo" class="title" href="/" { "Stephen·Coakley" }
+                        .spacer {}
+                        div class="links" {
+                            a class="button" href="/articles" { "Articles" }
+                            a class="button" href="/stuff" { "Stuff" }
+                            a class="button" href="/feeds" { "Feeds" }
+                            a class="button" href="/about" { "About" }
+                        }
                     }
                 }
-            }
 
-            main role="main" {
-                (body)
-            }
-
-            footer {
-                hr;
-                p class="center" {
-                    a title="Email" href="mailto:me@stephencoakley.com" { "Email" }
-                    " | "
-                    a title="GitHub" href="https://github.com/sagebind" { "GitHub" }
-                    " | "
-                    a href="/feeds" { "Feeds" }
+                main role="main" {
+                    (body)
                 }
 
-                p class="center copyright" {
-                    "© " (OffsetDateTime::now_utc().year()) " Stephen Coakley"
+                footer {
+                    hr;
+                    p class="center" {
+                        a title="Email" href="mailto:me@stephencoakley.com" { "Email" }
+                        " | "
+                        a title="GitHub" href="https://github.com/sagebind" { "GitHub" }
+                        " | "
+                        a href="/feeds" { "Feeds" }
+                    }
+
+                    p class="center copyright" {
+                        "© " (OffsetDateTime::now_utc().year()) " Stephen Coakley"
+                    }
                 }
             }
         }
