@@ -172,6 +172,8 @@ fn layout(title: &str, body: Markup) -> Markup {
                 script defer src="/assets/js/htmx-1.7.0.min.js" {}
                 script defer src="/assets/js/mermaid-8.14.0.min.js" {}
                 script src="/assets/js/init.js" {}
+
+                script data-goatcounter="https://stats.stephencoakley.com/count" async src="//stats.stephencoakley.com/count.js" {}
             }
             body {
                 header {
