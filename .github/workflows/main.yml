@@ -19,15 +19,3 @@ jobs:
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
           docker compose push
         if: github.ref == 'refs/heads/master'
-
-      - name: Update deployment config
-        run: sed -i s/:latest/:${GITHUB_SHA:0:8}/ config/deployment.yaml
-        if: github.ref == 'refs/heads/master'
-
-      - name: Deploy
-        uses: sagebind/doks-kubectl-action@master
-        if: github.ref == 'refs/heads/master'
-        with:
-          access_token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-          cluster: nyc1
-          args: apply -f config/deployment.yaml
