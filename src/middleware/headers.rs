@@ -15,7 +15,8 @@ pub fn security_headers() -> SetHeader {
                 form-action 'self'; \
                 img-src 'self' data: www.gravatar.com s.gravatar.com; \
                 style-src 'self' 'unsafe-inline'; \
-                script-src 'self' stats.stephencoakley.com static.cloudflareinsights.com;",
+                script-src 'self' stats.stephencoakley.com; \
+                connect-src https://stats.stephencoakley.com/count;",
         )
         .appending(
             "permissions-policy",
