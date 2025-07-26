@@ -14,7 +14,8 @@ pub fn security_headers() -> SetHeader {
                 frame-ancestors 'self'; \
                 form-action 'self'; \
                 img-src 'self' data: www.gravatar.com s.gravatar.com; \
-                style-src 'self' 'unsafe-inline';",
+                style-src 'self' 'unsafe-inline'; \
+                script-src 'self' static.cloudflareinsights.com;",
         )
         .appending(
             "permissions-policy",
