@@ -7,14 +7,18 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
+      - name: Generate image tag
+        id: generate-image-tag
+        run: echo "tag=${GITHUB_SHA:0:8}-$(date +%s)" >> "$GITHUB_OUTPUT"
+
       - name: Build Docker image
         run: |
-          export TAG=${GITHUB_SHA:0:8}
+          export TAG=${{ steps.generate-image-tag.outputs.tag }}
           docker compose build
 
       - name: Push Docker image
         run: |
-          export TAG=${GITHUB_SHA:0:8}
+          export TAG=${{ steps.generate-image-tag.outputs.tag }}
 
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
           docker compose push
