@@ -11,6 +11,7 @@ use crate::{
 pub fn home() -> Markup {
     layout(
         "Stephen Coakley",
+        "/",
         html! {
             p {
                 big { "Hello there!" } " I'm a full-time software engineer that is passionate about web and system "
@@ -32,6 +33,7 @@ pub fn home() -> Markup {
 pub fn articles() -> Markup {
     layout(
         "Articles - Stephen Coakley",
+        "/articles",
         html! {
             h1 { "Articles" }
 
@@ -45,6 +47,7 @@ pub fn articles() -> Markup {
 pub fn article(article: &Article, comments: &[Comment]) -> Markup {
     layout(
         "Articles - Stephen Coakley",
+        &format!("/{}", article.slug),
         html! {
             article {
                 h1 { (&article.title) }
@@ -104,6 +107,7 @@ pub fn tag(tag: &str) -> Markup {
 
     layout(
         &title,
+        &format!("/tag/{tag}"),
         html! {
             h1 { (title) }
 
@@ -117,6 +121,7 @@ pub fn tag(tag: &str) -> Markup {
 pub fn about() -> Markup {
     layout(
         "Stephen Coakley",
+        "/about",
         html! {
             (PreEscaped(markdown::render_html(include_str!("../wwwroot/about.md"), true)))
         },
@@ -126,6 +131,7 @@ pub fn about() -> Markup {
 pub fn feeds() -> Markup {
     layout(
         "Stephen Coakley",
+        "/feeds",
         html! {
             (PreEscaped(markdown::render_html(include_str!("../wwwroot/feeds.md"), true)))
         },
@@ -135,13 +141,14 @@ pub fn feeds() -> Markup {
 pub fn stuff() -> Markup {
     layout(
         "Stephen Coakley",
+        "/stuff",
         html! {
             (PreEscaped(markdown::render_html(include_str!("../wwwroot/stuff.md"), true)))
         },
     )
 }
 
-fn layout(title: &str, body: Markup) -> Markup {
+fn layout(title: &str, canonical_path: &str, body: Markup) -> Markup {
     html! {
         (DOCTYPE)
         html lang="en" {
@@ -154,6 +161,8 @@ fn layout(title: &str, body: Markup) -> Markup {
                 meta name="description" content="I'm a software developer based in Wisconsin";
                 meta name="keywords" content="Stephen Coakley, programming, web development, apps, Rust";
                 meta name="author" content="Stephen Coakley";
+
+                link rel="canonical" href={"https://stephencoakley.com" (canonical_path)};
 
                 link rel="alternate" type="application/feed+json" href="/feed.json" title="Blog Feed";
                 link rel="alternate" type="application/atom+xml" href="/feed.atom" title="Blog Feed";
