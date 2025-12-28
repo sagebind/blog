@@ -4,9 +4,9 @@ use maud::html;
 use poem::{
     endpoint::StaticFilesEndpoint,
     get,
-    http::StatusCode,
+    http::{HeaderName, StatusCode},
     post,
-    web::{Data, Form, Html, Path, Query},
+    web::{Data, Form, Html, Path, Query, WithHeader},
     EndpointExt, IntoResponse, Response, Route,
 };
 use serde::Deserialize;
@@ -27,8 +27,10 @@ mod highlight;
 mod markdown;
 mod middleware;
 mod pages;
-mod web;
 mod url;
+mod web;
+
+const X_ROBOTS_TAG: HeaderName = HeaderName::from_static("x-robots-tag");
 
 #[poem::handler]
 fn home() -> Html<String> {
@@ -84,6 +86,8 @@ async fn get_article_feed(
     };
 
     feed.into_response(format)
+        .with_header(X_ROBOTS_TAG, "noindex")
+        .into_response()
 }
 
 #[poem::handler]
@@ -101,6 +105,8 @@ async fn get_comments_feed(
         &comments,
     )
     .into_response(format)
+    .with_header(X_ROBOTS_TAG, "noindex")
+    .into_response()
 }
 
 #[poem::handler]
@@ -121,6 +127,8 @@ async fn get_article_comments_feed(
             &comments,
         )
         .into_response(format)
+        .with_header(X_ROBOTS_TAG, "noindex")
+        .into_response()
     } else {
         StatusCode::NOT_FOUND.into_response()
     }
@@ -136,7 +144,7 @@ struct ReplyFormParams {
 fn get_comment_reply_form(
     Path(slug): Path<String>,
     Query(ReplyFormParams { id, show }): Query<ReplyFormParams>,
-) -> Html<String> {
+) -> WithHeader<Html<String>> {
     Html(html! {
         a hx-swap-oob={ "outerHTML:#comment-" (&id) "-reply-link" } id={ "comment-" (&id) "-reply-link" } hx-get={ "/" (&slug) "/comments/reply?id=" (&id) "&show=" (!show) } hx-target={ "#comment-" (&id) "-reply" } {
             @if show {
@@ -150,6 +158,7 @@ fn get_comment_reply_form(
             (components::comments::comment_form(&slug, Some(&id)))
         }
     }.into_string())
+    .with_header(X_ROBOTS_TAG, "noindex")
 }
 
 #[poem::handler]
