@@ -12,6 +12,7 @@ While most of the content has been preserved since the beginning, the code has u
 - _August 2015_ - Deployment as a Docker image.
 - _December 2015_ - From-scratch standalone PHP app using [Icicle] as a web server and Markdown files.
 - _June 2018_ - [ASP.NET Core] app using Razor and Markdown files.
+- _April 2022_ - [Poem] Rust app with [Maud], [htmx], and Markdown files.
 
 ## License
 
@@ -20,8 +21,11 @@ All source code is released into the public domain. Article contents are copyrig
 
 [ASP.NET Core]: https://docs.microsoft.com/en-us/aspnet/core/
 [CommonMark]: http://commonmark.org
+[htmx]: https://htmx.org
 [Icicle]: https://github.com/icicleio
 [Laravel]: https://laravel.com
+[Maud]: https://maud.lambda.xyz
 [MySQL]: https://www.mysql.com
+[Poem]: https://github.com/poem-web/poem
 [Slim]: https://www.slimframework.com
 [TOML]: https://github.com/toml-lang/toml
