@@ -39,7 +39,7 @@ version = "1"
 features = ["derive"]
 
 [dependencies.sqlx]
-version = "0.5"
+version = "0.8"
 features = ["mysql", "runtime-tokio-rustls"]
 
 [dependencies.syntect]
