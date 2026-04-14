@@ -2,7 +2,7 @@ use bytemuck::{Pod, Zeroable};
 use data_encoding::BASE64URL;
 use hmac::{Hmac, Mac};
 use once_cell::sync::Lazy;
-use rand::{thread_rng, RngCore};
+use rand::{rng, RngCore};
 use sha2::Sha256;
 use std::env;
 use time::OffsetDateTime;
@@ -45,7 +45,7 @@ impl Token {
 
     fn with_timestamp(timestamp: OffsetDateTime) -> Self {
         let mut salt = [0; 32];
-        thread_rng().fill_bytes(&mut salt);
+        rng().fill_bytes(&mut salt);
 
         let timestamp = timestamp.unix_timestamp();
 
@@ -98,7 +98,7 @@ fn get_hmac_key() -> Vec<u8> {
         log::warn!("no CSRF token key configured, generating a random one");
 
         let mut key = vec![0; 64];
-        thread_rng().fill_bytes(&mut key);
+        rng().fill_bytes(&mut key);
 
         key
     }
