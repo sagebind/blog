@@ -57,5 +57,5 @@ features = ["rt-multi-thread", "macros", "signal"]
 grass = "0.13"
 
 [build-dependencies.comrak]
-version = "0.17"
+version = "0.52"
 features = ["syntect"]
