@@ -3,7 +3,8 @@ body {
     background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAARklEQVR42u3U0QkAIAhAQe2//QdtAFsiKvBuAeGJRgAAAAAAAABcUFXz5fzRfQECdA+QP958Zi5P0AkIIAAAAAAAAABwzAbVywoigh1x+wAAAABJRU5ErkJggg==");
     background-position: center 48px;
 
-    ::-moz-selection, ::selection {
+    ::-moz-selection,
+    ::selection {
         background: fade-out($color-primary, 0.5);
     }
 }
@@ -29,6 +30,20 @@ figure {
         right: 0;
         bottom: 0;
         left: 0;
-        background: $image-scan-lines;
+        background-image: $image-scan-lines;
+        background-repeat: repeat;
+        animation-name: scan-lines;
+        animation-duration: 100s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+    }
+}
+
+@keyframes scan-lines {
+    from {
+        background-position-y: 0px;
+    }
+    to {
+        background-position-y: -256px;
     }
 }

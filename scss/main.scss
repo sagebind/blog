@@ -26,9 +26,8 @@ $default-transition-duration: 200ms;
 
 $image-scan-lines: repeating-linear-gradient(
     transparent 0px,
-    transparent 1px,
-    hsla(0, 0%, 20%, 0.2) 2px,
-    hsla(0, 0%, 20%, 0.2) 3px
+    hsla(32, 80%, 62%, 0.1) 2px,
+    transparent 4px
 );
 
 @mixin border($color: $color-primary) {
@@ -38,7 +37,9 @@ $image-scan-lines: repeating-linear-gradient(
         style: solid;
         color: $color;
     }
-    box-shadow: 0 0 0.5rem -0.25rem $color, inset 0 0 0.5rem -0.25rem $color;
+    box-shadow:
+        0 0 0.5rem -0.25rem $color,
+        inset 0 0 0.5rem -0.25rem $color;
 }
 
 @mixin container($width: $content-max-width) {
@@ -51,7 +52,9 @@ $image-scan-lines: repeating-linear-gradient(
 
 @mixin transition {
     transition: {
-        property: border-color, background-color, background-position, background-size, color, box-shadow, opacity;
+        property:
+            border-color, background-color, background-position,
+            background-size, color, box-shadow, opacity;
         duration: $default-transition-duration;
         timing-function: ease;
     }
