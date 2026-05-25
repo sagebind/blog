@@ -42,7 +42,7 @@ version = "0.8"
 features = ["mysql", "runtime-tokio-rustls"]
 
 [dependencies.syntect]
-version = "4"
+version = "5"
 features = ["default-fancy"]
 
 [dependencies.time]
