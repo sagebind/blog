@@ -1,10 +1,9 @@
 use bytemuck::{Pod, Zeroable};
 use data_encoding::BASE64URL;
 use hmac::{Hmac, Mac};
-use once_cell::sync::Lazy;
-use rand::{rng, RngCore};
+use rand::{RngCore, rng};
 use sha2::Sha256;
-use std::env;
+use std::{env, sync::LazyLock};
 use time::OffsetDateTime;
 
 /// Generate a new token.
@@ -86,7 +85,7 @@ impl Token {
 }
 
 fn create_hmac() -> Hmac<Sha256> {
-    static KEY: Lazy<Vec<u8>> = Lazy::new(get_hmac_key);
+    static KEY: LazyLock<Vec<u8>> = LazyLock::new(get_hmac_key);
 
     Hmac::new_from_slice(KEY.as_slice()).unwrap()
 }

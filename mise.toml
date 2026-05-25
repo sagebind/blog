@@ -1,0 +1,9 @@
+[settings]
+idiomatic_version_file_enable_tools = ["rust"]
+
+[tools]
+watchexec = "latest"
+
+[tasks.run]
+run = "cargo run"
+sources = ["Cargo.*", "scss/**", "src/**/*.rs"]

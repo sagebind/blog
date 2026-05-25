@@ -1,15 +1,13 @@
-use std::fs;
-
 use itertools::Itertools;
-use once_cell::sync::Lazy;
 use rayon::prelude::*;
 use regex::Regex;
 use serde::Deserialize;
+use std::{fs, sync::LazyLock};
 use time::Date;
 
 use crate::markdown;
 
-static WORD_REGEX: Lazy<Regex> = Lazy::new(|| Regex::new(r"\b[\w']+\b").unwrap());
+static WORD_REGEX: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\b[\w']+\b").unwrap());
 
 #[derive(Clone, Debug)]
 pub struct Article {
@@ -79,7 +77,7 @@ impl Article {
 }
 
 pub fn get_all(_include_unpublished: bool) -> &'static [Article] {
-    static ARTICLES: Lazy<Vec<Article>> = Lazy::new(load);
+    static ARTICLES: LazyLock<Vec<Article>> = LazyLock::new(load);
 
     ARTICLES.as_slice()
 }
@@ -96,7 +94,8 @@ pub fn get_tagged(tag: impl AsRef<str>) -> Vec<Article> {
 
 pub fn get_by_slug(slug: &str) -> Option<Article> {
     get_all(false)
-        .iter().find(|article| article.slug == slug)
+        .iter()
+        .find(|article| article.slug == slug)
         .cloned()
 }
 

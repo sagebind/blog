@@ -1,13 +1,12 @@
 use harsh::Harsh;
-use once_cell::sync::Lazy;
 use serde::Deserialize;
-use sqlx::{mysql::MySqlRow, FromRow, MySqlPool, Row};
-use std::{collections::HashMap, env, net::IpAddr};
+use sqlx::{FromRow, MySqlPool, Row, mysql::MySqlRow};
+use std::{collections::HashMap, env, net::IpAddr, sync::LazyLock};
 use time::OffsetDateTime;
 
 use crate::{csrf, url};
 
-static HASHIDS: Lazy<Harsh> = Lazy::new(|| {
+static HASHIDS: LazyLock<Harsh> = LazyLock::new(|| {
     Harsh::builder()
         .salt(env::var("HASHID_SALT").unwrap())
         .length(5)

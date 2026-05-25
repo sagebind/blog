@@ -1,9 +1,9 @@
 //! Helpers for scanning text for URLs.
 
-use once_cell::sync::Lazy;
 use regex::Regex;
+use std::sync::LazyLock;
 
-static REGEX: Lazy<Regex> = Lazy::new(|| {
+static REGEX: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(r#"https?://[\w\-]+(\.[\w\-]+)+([\w/\-@:%=+~]+)?(\.[\w/\-@:%=+~]+)*(\?[\w/\-@:%=+~]+)?#?[\w/\-@:%=+~]*"#).unwrap()
 });
 

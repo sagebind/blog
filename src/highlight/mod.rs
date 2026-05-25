@@ -1,13 +1,13 @@
-use once_cell::sync::Lazy;
+use std::sync::LazyLock;
 use syntect::{
     easy::HighlightLines,
     highlighting::{Theme, ThemeSet},
-    html::{append_highlighted_html_for_styled_line, IncludeBackground},
+    html::{IncludeBackground, append_highlighted_html_for_styled_line},
     parsing::{SyntaxDefinition, SyntaxReference, SyntaxSet},
     util::LinesWithEndings,
 };
 
-static CONFIG: Lazy<Config> = Lazy::new(Config::default);
+static CONFIG: LazyLock<Config> = LazyLock::new(Config::default);
 
 struct Config {
     syntax_set: SyntaxSet,

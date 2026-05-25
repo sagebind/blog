@@ -1,13 +1,11 @@
 //! Markdown parsing and rendering based on pulldown-cmark with some added
 //! features.
 
-use std::iter;
-
 use dashmap::DashMap;
-use maud::{html, PreEscaped};
-use once_cell::sync::Lazy;
-use pulldown_cmark::{html, CodeBlockKind, Event, LinkType, Options, Parser, Tag};
-use sha1::{Sha1, Digest};
+use maud::{PreEscaped, html};
+use pulldown_cmark::{CodeBlockKind, Event, LinkType, Options, Parser, Tag, html};
+use sha1::{Digest, Sha1};
+use std::{iter, sync::LazyLock};
 
 use crate::{
     highlight::{find_syntax, highlight},
@@ -16,7 +14,7 @@ use crate::{
 
 /// Render a block of Markdown into HTML.
 pub fn render_html(markdown: impl AsRef<str>, trusted: bool) -> String {
-    static CACHE: Lazy<DashMap<([u8; 20], bool), String>> = Lazy::new(DashMap::new);
+    static CACHE: LazyLock<DashMap<([u8; 20], bool), String>> = LazyLock::new(DashMap::new);
 
     let markdown = markdown.as_ref();
     let hash = Sha1::digest(markdown).into();
